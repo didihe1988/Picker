@@ -27,7 +27,7 @@ public class User implements Serializable {
 	@Column(name = "user_password")
 	private String password;
 
-	@Column(name = "user_lastVisit") 
+	@Column(name = "user_lastVisit")
 	private Date lastVisit;
 
 	public User() {
@@ -72,6 +72,12 @@ public class User implements Serializable {
 
 	public void setLastVisit(Date lastVisit) {
 		this.lastVisit = lastVisit;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password="
+				+ password + ", lastVisit=" + lastVisit + "]";
 	}
 
 }

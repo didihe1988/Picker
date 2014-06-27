@@ -30,7 +30,8 @@ public class LoginController extends BaseController {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		System.out.println(username + ":" + password);
-		boolean isValidUser = userService.hasMatchUser(username, password);
+		/*boolean isValidUser = userService.hasMatchUser(username, password);
+		
 		if (!isValidUser) {
 			return "/login";
 		} else {
@@ -40,7 +41,13 @@ public class LoginController extends BaseController {
 			System.out.println(user.getPassword());
 			setSessionUser(request, user);
 			return "redirect:/book/list.do";
-		}
+		}*/
+		return "redirect:/register/addUser.do";
+	}
+
+	@RequestMapping(value = "/login/hibernate_test.do")
+	public String test() {
+		return "redirect:/register/addUser.do";
 	}
 
 }

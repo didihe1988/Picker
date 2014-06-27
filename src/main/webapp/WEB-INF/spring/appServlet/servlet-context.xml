@@ -30,5 +30,6 @@
 	<context:component-scan base-package="com.didihe1988.picker.serviceImpl" />
 	<context:component-scan base-package="com.didihe1988.picker.service" />
 	<context:component-scan base-package="com.didihe1988.picker.controller" />
+	<context:component-scan base-package="com.didihe1988.picker.daoImpl" />
 
 </beans:beans>
