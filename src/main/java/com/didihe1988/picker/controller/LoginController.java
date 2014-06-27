@@ -18,21 +18,28 @@ import com.didihe1988.picker.service.UserService;
 @Controller
 public class LoginController extends BaseController {
 	@Autowired
-	UserService userService;
+	private UserService userService;
 
+	/*
+	 * String loginCheck(HttpServletRequest request,
+	 * 
+	 * @ModelAttribute("loginForm") LoginForm loginForm)
+	 */
 	@RequestMapping(value = "/login/loginCheck.do", method = RequestMethod.POST)
-	public String loginCheck(HttpServletRequest request,
-			@ModelAttribute("loginForm") LoginForm loginForm) {
-		boolean isValidUser = userService.hasMatchUser(loginForm.getUsername(),
-				loginForm.getPassword());
+	public String loginCheck(HttpServletRequest request) {
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		System.out.println(username + ":" + password);
+		boolean isValidUser = userService.hasMatchUser(username, password);
 		if (!isValidUser) {
 			return "/login";
 		} else {
-			User user = userService.findUserByUserName(loginForm.getUsername());
+			User user = userService.findUserByUserName(username);
 			user.setLastVisit(new Date());
 			userService.updateUser(user);
+			System.out.println(user.getPassword());
 			setSessionUser(request, user);
-			return "/book/list";
+			return "redirect:/book/list.do";
 		}
 	}
 

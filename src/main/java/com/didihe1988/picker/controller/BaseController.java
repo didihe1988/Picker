@@ -7,14 +7,14 @@ import com.didihe1988.picker.model.User;
 
 public class BaseController {
 	protected User getSessionUser(HttpServletRequest request) {
-		return (User) request.getSession().getAttribute(Constant.USER_CONTEXT);
+		return (User) request.getSession().getAttribute(Constant.USER);
 	}
 
 	protected void setSessionUser(HttpServletRequest request, User user) {
-		request.getSession().setAttribute(Constant.USER_CONTEXT, user);
+		request.getSession().setAttribute(Constant.USER, user);
 	}
 
 	protected void removeSessionUser(HttpServletRequest request) {
-		request.getSession().removeAttribute(Constant.USER_CONTEXT);
+		request.getSession().removeAttribute(Constant.USER);
 	}
 }

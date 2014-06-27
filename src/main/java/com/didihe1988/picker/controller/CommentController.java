@@ -17,7 +17,7 @@ import com.didihe1988.picker.service.CommentService;
 @Controller
 public class CommentController extends BaseController {
 	@Autowired
-	CommentService commentService;
+	private CommentService commentService;
 
 	private final static Logger logger = LoggerFactory
 			.getLogger(CommentController.class);

@@ -11,7 +11,7 @@ import com.didihe1988.picker.utils.MD5Utils;
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
-	UserMapper userMapper;
+	private UserMapper userMapper;
 
 	@Override
 	public boolean hasMatchUser(String username, String password) {

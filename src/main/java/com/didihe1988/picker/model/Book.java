@@ -1,10 +1,38 @@
 package com.didihe1988.picker.model;
 
-public class Book {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "book")
+public class Book implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue
+	@Column(name = "bood_id")
 	private int id;
+
+	@Column(name = "book_name")
 	private String bookName;
+
+	@Column(name = "book_isbn")
 	private String isbn;
+
+	@Column(name = "book_press")
 	private String press;
+
+	public Book() {
+
+	}
 
 	public Book(int id, String bookName, String isbn, String press) {
 		super();

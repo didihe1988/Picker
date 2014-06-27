@@ -3,7 +3,11 @@ package com.didihe1988.picker.model;
 public class LoginForm {
 	private String username;
 	private String password;
-
+	
+	public LoginForm() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public String getUsername() {
 		return username;
 	}

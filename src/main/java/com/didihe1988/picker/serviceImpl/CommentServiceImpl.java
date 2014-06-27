@@ -13,7 +13,7 @@ import com.didihe1988.picker.service.CommentService;
 public class CommentServiceImpl implements CommentService {
 
 	@Autowired
-	CommentMapper commentMapper;
+	private CommentMapper commentMapper;
 
 	@Override
 	public void addComment(Comment comment) {

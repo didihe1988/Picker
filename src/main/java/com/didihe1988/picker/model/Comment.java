@@ -1,7 +1,37 @@
 package com.didihe1988.picker.model;
 
-public class Comment extends Message {
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "comment")
+public class Comment implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue
+	@Column(name = "comment_id")
+	public int id;
+
+	@Column(name = "comment_receiverid")
+	public int receiverId;
+
+	@Column(name = "comment_producerid")
+	public int producerId;
+
+	@Column(name = "comment_content")
 	private String content;
+
+	public Comment() {
+
+	}
 
 	public String getContent() {
 		return content;
@@ -11,8 +41,31 @@ public class Comment extends Message {
 		this.content = content;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getReceiverId() {
+		return receiverId;
+	}
+
+	public void setReceiverId(int receiverId) {
+		this.receiverId = receiverId;
+	}
+
+	public int getProducerId() {
+		return producerId;
+	}
+
+	public void setProducerId(int producerId) {
+		this.producerId = producerId;
+	}
+
 	public Comment(int id, int receiverId, int producerId, String content) {
-		super(id, receiverId, producerId);
 		this.content = content;
 	}
 

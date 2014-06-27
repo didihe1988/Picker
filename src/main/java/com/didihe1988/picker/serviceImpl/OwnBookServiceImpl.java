@@ -11,7 +11,7 @@ import com.didihe1988.picker.service.OwnBookService;
 @Service
 public class OwnBookServiceImpl implements OwnBookService {
 	@Autowired
-	OwnBookMapper ownBookMapper;
+	private OwnBookMapper ownBookMapper;
 
 	@Override
 	public void addBook(int bookId, int userId) {

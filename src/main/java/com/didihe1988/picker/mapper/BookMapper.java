@@ -3,8 +3,12 @@ package com.didihe1988.picker.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import com.didihe1988.picker.model.Book;
 
+@Repository
 public class BookMapper {
 	/*
 	 * public List<Book> queryBookByUserId(int id) { List<Book> bookList = new
@@ -15,6 +19,7 @@ public class BookMapper {
 
 	public BookMapper() {
 		if (bookList == null) {
+			bookList = new ArrayList<Book>();
 			bookList.add(new Book(0, "lalala", "isbn" + 1, "press"));
 			bookList.add(new Book(1, "jinpingmei", "isbn" + 2, "press"));
 			bookList.add(new Book(2, "weijifen", "isbn" + 3, "press"));

@@ -3,8 +3,11 @@ package com.didihe1988.picker.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.didihe1988.picker.model.Comment;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import com.didihe1988.picker.model.Comment;
+@Repository
 public class CommentMapper {
 	public void insertComment(Comment comment) {
 		System.out.println(comment.toString());

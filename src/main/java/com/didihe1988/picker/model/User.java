@@ -1,13 +1,38 @@
 package com.didihe1988.picker.model;
 
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-public class User {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user")
+public class User implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue
+	@Column(name = "user_id")
 	private int id;
+
+	@Column(name = "user_name")
 	private String username;
+
+	@Column(name = "user_password")
 	private String password;
+
+	@Column(name = "user_lastVisit") 
 	private Date lastVisit;
+
+	public User() {
+
+	}
 
 	public User(int id, String username, String password, Date lastVisit) {
 		super();

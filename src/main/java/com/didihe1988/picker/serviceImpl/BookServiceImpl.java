@@ -1,7 +1,5 @@
 package com.didihe1988.picker.serviceImpl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +11,7 @@ import com.didihe1988.picker.service.BookService;
 public class BookServiceImpl implements BookService {
 
 	@Autowired
-	BookMapper bookMapper;
+	private BookMapper bookMapper;
 
 	@Override
 	public Book findBookById(int id) {
