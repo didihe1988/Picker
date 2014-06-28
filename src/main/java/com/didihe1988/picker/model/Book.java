@@ -74,4 +74,10 @@ public class Book implements Serializable {
 		this.press = press;
 	}
 
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", bookName=" + bookName + ", isbn=" + isbn
+				+ ", press=" + press + "]";
+	}
+
 }

@@ -11,7 +11,7 @@ import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.MD5Utils;
 
 @Service
-@Transactional
+
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 	public boolean hasMatchUser(String username, String password) {
 		// TODO Auto-generated method stub
 		String passwordAfterMD5 = MD5Utils.getMd5String(username.substring(2))
-				+ MD5Utils.getMd5String(password);
+				+ MD5Utils.getMd5String(password).substring(2);
 		return userMapper.getMatchCount(username, passwordAfterMD5) > 0;
 	}
 
@@ -41,8 +41,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void addUser(User user) {
 		// TODO Auto-generated method stub
-		String passwordAfterMD5 = MD5Utils.getMd5String(user.getUsername()
-				.substring(2)) + MD5Utils.getMd5String(user.getPassword());
+		String passwordAfterMD5 = MD5Utils.getMd5String(user.getPassword()).substring(0,6)+user.getUsername().substring(2);
 		user.setPassword(passwordAfterMD5);
 		System.out.println("UserSerivceImpl" + user.toString());
 		userDao.addUser(user);

@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.User;
@@ -41,15 +42,17 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void updateUser(User user) {
 		// TODO Auto-generated method stub
-		getCurrentSession().update(user);
+		Session session = getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		session.update(user);
+		transaction.commit();
 	}
 
 	@Override
 	public void addUser(User user) {
 		// TODO Auto-generated method stub
 		System.out.println("UserDaoImpl" + user.toString());
-		// getCurrentSession().save(user);
-		Session session = sessionFactory.getCurrentSession();
+		Session session = getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		session.save(user);
 		transaction.commit();
@@ -58,7 +61,10 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void deleteUser(User user) {
 		// TODO Auto-generated method stub
-		getCurrentSession().delete(user);
+		Session session = getCurrentSession();
+		Transaction transaction = session.beginTransaction();
+		session.delete(user);
+		transaction.commit();
 	}
 
 }

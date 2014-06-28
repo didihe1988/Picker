@@ -1,7 +1,5 @@
 package com.didihe1988.picker.dao;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.didihe1988.picker.model.User;
 
 public interface UserDao {
