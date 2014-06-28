@@ -22,21 +22,33 @@ public class BoughtDaoImpl implements BoughtDao {
 	}
 
 	@Override
-	public void addBought(Bought bought) {
+	public int addBought(Bought bought) {
 		// TODO Auto-generated method stub
-		Session session = getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		session.save(bought);
-		transaction.commit();
+		if (isBoughtExists(bought)) {
+			return -1;
+		}
+		getCurrentSession().save(bought);
+		return 1;
 	}
 
 	@Override
-	public void deleteBought(Bought bought) {
+	public int deleteBought(Bought bought) {
 		// TODO Auto-generated method stub
-		Session session = getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		session.delete(bought);
-		transaction.commit();
+		if (!isBoughtExists(bought)) {
+			return -1;
+		}
+		getCurrentSession().delete(bought);
+		return 1;
+	}
+
+	@Override
+	public int updateBought(Bought bought) {
+		// TODO Auto-generated method stub
+		if (!isBoughtExists(bought)) {
+			return -1;
+		}
+		getCurrentSession().update(bought);
+		return 1;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -47,5 +59,19 @@ public class BoughtDaoImpl implements BoughtDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
 		return query.list();
+	}
+
+	@Override
+	public Boolean isBoughtExists(Bought bought) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Bought as b where b.userId = ? and b.bookId = ? ";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bought.getUserId());
+		query.setInteger(1, bought.getBookId());
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 }

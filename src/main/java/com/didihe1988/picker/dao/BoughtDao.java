@@ -5,9 +5,13 @@ import java.util.List;
 import com.didihe1988.picker.model.Bought;
 
 public interface BoughtDao {
-	public void addBought(Bought bought);
+	public int addBought(Bought bought);
 
-	public void deleteBought(Bought bought);
+	public int deleteBought(Bought bought);
+
+	public int updateBought(Bought bought);
 
 	public List<BoughtDao> queryBoughtByUserId(int userId);
+
+	public Boolean isBoughtExists(Bought bought);
 }

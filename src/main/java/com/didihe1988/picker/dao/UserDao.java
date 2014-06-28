@@ -3,13 +3,18 @@ package com.didihe1988.picker.dao;
 import com.didihe1988.picker.model.User;
 
 public interface UserDao {
-	public int getMatchCount(String username, String password);
+	public Long getMatchCount(String username, String password);
 
-	public User getUserByUserName(String username);
+	public User queryUserById(int id);
 
-	public void updateUser(User user);
+	public User queryUserByUserName(String username);
 
-	public void addUser(User user);
+	public int updateUser(User user);
 
-	public void deleteUser(User user);
+	public int addUser(User user);
+
+	public int deleteUser(User user);
+
+	public boolean isUserExists(User user);	
+	
 }
