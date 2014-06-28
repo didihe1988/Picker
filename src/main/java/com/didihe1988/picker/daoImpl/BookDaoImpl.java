@@ -24,10 +24,7 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public Book queryBookById(int id) {
 		// TODO Auto-generated method stub
-		//Session session = getCurrentSession();
-		//Transaction transaction = session.getTransaction();
 		Book book = (Book) getCurrentSession().get(Book.class, id);
-		//transaction.commit();
 		return book;
 	}
 
@@ -35,41 +32,61 @@ public class BookDaoImpl implements BookDao {
 	public int queryBookIdByISBN(String isbn) {
 		// TODO Auto-generated method stub
 		String hql = "from Book as b where b.isbn=?";
-		Session session = getCurrentSession();
-		Transaction transaction = session.getTransaction();
-		Query query = session.createQuery(hql);
+		Query query = getCurrentSession().createQuery(hql);
 		query.setString(0, isbn);
-		int id = ((Book) query.list().get(0)).getId();
-		transaction.commit();
-		return id;
+		// isbn not eixsts
+		if (query.list().size() == 0) {
+			return -1;
+		} else {
+			return ((Book) query.list().get(0)).getId();
+		}
 	}
 
 	@Override
-	public void addBook(Book book) {
+	public int addBook(Book book) {
 		// TODO Auto-generated method stub
-		/*
-		 * Session session = getCurrentSession(); Transaction transaction =
-		 * session.beginTransaction(); session.save(book); transaction.commit();
-		 */
+		// book exists
+		if (queryBookIdByISBN(book.getIsbn()) > 0) {
+			return -1;
+		}
 		getCurrentSession().save(book);
+		return 1;
+
 	}
 
 	@Override
-	public void deleteBook(Book book) {
+	public int deleteBook(Book book) {
 		// TODO Auto-generated method stub
-		Session session = getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		session.delete(book);
-		transaction.commit();
+		if(!isBookExists(book))
+		{
+			return -1;
+		}
+		getCurrentSession().delete(book);
+		return 1;
 	}
 
 	@Override
-	public void updateBook(Book book) {
+	public int updateBook(Book book) {
 		// TODO Auto-generated method stub
-		Session session = getCurrentSession();
-		Transaction transaction = session.beginTransaction();
-		session.update(book);
-		transaction.commit();
+		if(!isBookExists(book))
+		{
+			return -1;
+		}
+		getCurrentSession().update(book);
+		return 1;
+	}
+
+	@Override
+	public boolean isBookExists(Book book) {
+		// TODO Auto-generated method s
+		String hql = "select count(*) from Book b where b.id = ?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, book.getId());
+		Long count = (Long)query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }

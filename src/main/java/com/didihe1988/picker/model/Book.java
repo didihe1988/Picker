@@ -18,7 +18,7 @@ public class Book implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
-	@Column(name = "bood_id")
+	@Column(name = "book_id")
 	private int id;
 
 	@Column(name = "book_name")

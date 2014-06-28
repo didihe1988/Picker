@@ -7,9 +7,11 @@ public interface BookDao {
 
 	public int queryBookIdByISBN(String isbn);
 
-	public void addBook(Book book);
+	public int addBook(Book book);
 
-	public void deleteBook(Book book);
+	public int deleteBook(Book book);
 
-	public void updateBook(Book book);
+	public int updateBook(Book book);
+
+	public boolean isBookExists(Book book);
 }

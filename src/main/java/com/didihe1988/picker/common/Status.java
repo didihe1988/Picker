@@ -5,4 +5,6 @@ public class Status {
 	public static final int ERROR = 1;
 	public static final int EXISTS = 2;
 	public static final int NOT_EXISTS = 3;
+	public static final int UNCHANGED=4;
+	
 }
