@@ -15,7 +15,7 @@ import javax.persistence.Table;
 public class Bought implements Serializable {
 
 	/**
-	 * 
+	 * 似乎应该加上外键
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -25,7 +25,7 @@ public class Bought implements Serializable {
 	@Id
 	@Column(name = "bought_bookid")
 	private int bookId;
-
+	
 	public int getUserId() {
 		return userId;
 	}
@@ -42,9 +42,19 @@ public class Bought implements Serializable {
 		this.bookId = bookId;
 	}
 
+	public Bought()
+	{
+		
+	}
 	public Bought(int userId, int bookId) {
 		super();
 		this.userId = userId;
 		this.bookId = bookId;
 	}
+
+	@Override
+	public String toString() {
+		return "Bought [userId=" + userId + ", bookId=" + bookId + "]";
+	}
+	
 }

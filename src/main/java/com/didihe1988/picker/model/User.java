@@ -80,4 +80,6 @@ public class User implements Serializable {
 				+ password + ", lastVisit=" + lastVisit + "]";
 	}
 
+	
+
 }

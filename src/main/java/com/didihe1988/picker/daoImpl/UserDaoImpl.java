@@ -15,6 +15,7 @@ import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.User;
 
 @Repository
+@Transactional
 public class UserDaoImpl implements UserDao {
 	@Autowired
 	private SessionFactory sessionFactory;

@@ -11,7 +11,7 @@ import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.MD5Utils;
 
 @Service
-
+@Transactional
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper userMapper;

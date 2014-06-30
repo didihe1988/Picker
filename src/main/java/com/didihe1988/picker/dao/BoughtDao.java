@@ -11,7 +11,9 @@ public interface BoughtDao {
 
 	public int updateBought(Bought bought);
 
-	public List<BoughtDao> queryBoughtByUserId(int userId);
+	public List<Bought> queryBoughtByUserId(int userId);
 
 	public Boolean isBoughtExists(Bought bought);
+	
+	public Bought queryBoughtByUserIdAndBookId(int userId,int bookId);
 }
