@@ -60,10 +60,6 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public boolean isCommentExists(Comment comment) {
 		// TODO Auto-generated method stub
-		if(comment==null)
-		{
-			return false;
-		}
 		String hql = "select count(*) from Comment c where c.id = ?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, comment.getId());

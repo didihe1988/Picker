@@ -87,10 +87,6 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public boolean isUserExists(User user) {
 		// TODO Auto-generated method stub
-		if(user==null)
-		{
-			return false;
-		}
 		String hql = "select count(*) from User u where u.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, user.getId());

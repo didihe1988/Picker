@@ -38,10 +38,6 @@ public class BookDaoImpl implements BookDao {
 		if (query.list().size() == 0) {
 			return -1;
 		} else {
-			if(query.list().get(0)==null)
-			{
-				return -1;
-			}
 			return ((Book) query.list().get(0)).getId();
 		}
 	}
@@ -83,10 +79,6 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public boolean isBookExists(Book book) {
 		// TODO Auto-generated method s
-		if(book==null)
-		{
-			return false;
-		}
 		String hql = "select count(*) from Book b where b.id = ?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, book.getId());
