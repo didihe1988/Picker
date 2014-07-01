@@ -55,6 +55,16 @@ public class BoughtDaoImpl implements BoughtDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<Bought> queryBoughtByBookId(int bookId) {
+		// TODO Auto-generated method stub
+		String hql = "from Bought as b where b.bookId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		return query.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Bought> queryBoughtByUserId(int userId) {
 		// TODO Auto-generated method stub
 		String hql = "from Bought as b where b.userId=?";
@@ -66,6 +76,10 @@ public class BoughtDaoImpl implements BoughtDao {
 	@Override
 	public Boolean isBoughtExists(Bought bought) {
 		// TODO Auto-generated method stub
+		if(bought==null)
+		{
+			return false;
+		}
 		String hql = "select count(*) from Bought as b where b.userId = ? and b.bookId = ? ";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bought.getUserId());

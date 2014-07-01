@@ -43,7 +43,7 @@ public class BoughtDaoTest {
 			}
 		}
 	}
-
+ 
 	// TestqueryBoughtByUserIdAndBookId
 	@Test
 	public void test03() {
@@ -72,5 +72,20 @@ public class BoughtDaoTest {
 		Bought bought = new Bought(2, 4);
 		boolean isBoughtExists = boughtDao.isBoughtExists(bought);
 		assertSame(false, isBoughtExists);
+	}
+	
+	//TestqueryBoughtByBookId
+	@Test
+	public void test07() 
+	{
+		List<Bought> list = boughtDao.queryBoughtByBookId(4);
+		assertNotNull(list);
+		if (list != null) {
+			for (int i = 0; i < list.size(); i++) {
+				System.out.print(list.get(i).toString());
+				System.out.print("dsadsdasdsad");
+				
+			}
+		}
 	}
 }
