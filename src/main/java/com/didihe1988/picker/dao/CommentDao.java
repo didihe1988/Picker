@@ -12,4 +12,6 @@ public interface CommentDao {
 	public int updateComment(Comment comment);
 
 	public boolean isCommentExists(Comment comment);
+	
+	
 }
