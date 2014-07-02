@@ -14,4 +14,8 @@ public interface BookDao {
 	public int updateBook(Book book);
 
 	public boolean isBookExists(Book book);
+	
+	public int incrementFollowNum(int bookId);
+	
+	public int incrementComment(int bookId);
 }

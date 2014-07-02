@@ -5,9 +5,15 @@ import com.didihe1988.picker.model.User;
 public interface UserService {
 	public boolean hasMatchUser(String username, String password);
 
-	public User findUserByUserName(String username);
+	public User getUserByUserName(String username);
 
-	public void updateUser(User user);
+	public User getUserById(int id);
 
-	public void addUser(User user);
+	public int updateUser(User user);
+
+	public int addUser(User user);
+
+	public int deleteUser(User user);
+
+	public boolean isUserExists(User user);
 }

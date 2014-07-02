@@ -1,5 +1,7 @@
 package com.didihe1988.picker.daoImpl;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -60,8 +62,7 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public boolean isCommentExists(Comment comment) {
 		// TODO Auto-generated method stub
-		if(comment==null)
-		{
+		if (comment == null) {
 			return false;
 		}
 		String hql = "select count(*) from Comment c where c.id = ?";
@@ -72,6 +73,15 @@ public class CommentDaoImpl implements CommentDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<Comment> queryCommentByBookId(int id) {
+		// TODO Auto-generated method stub
+		String hql = "from Comment as c where c.bookId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.list();
 	}
 
 }

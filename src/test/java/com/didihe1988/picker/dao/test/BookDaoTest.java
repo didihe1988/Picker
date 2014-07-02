@@ -40,6 +40,8 @@ public class BookDaoTest {
 		book.setBookName("The silence of lamps");
 		book.setIsbn("1234567");
 		book.setPress("press01");
+		book.setFollowNum(10);
+		book.setCommentNum(10);
 		int status = bookDao.addBook(book);
 		assertSame(1, status);
 	}
@@ -110,5 +112,21 @@ public class BookDaoTest {
 		book.setId(20);
 		int status=bookDao.updateBook(book);
 		assertSame(-1, status);
+	}
+	
+	//testincrementFollowNum
+	@Test
+	public void test12() 
+	{
+		int result=bookDao.incrementFollowNum(1);
+		System.out.println(result);
+	}
+	
+	//testIncrementCommentNum
+	@Test
+	public void test13() 
+	{
+		int result=bookDao.incrementComment(1);
+		System.out.println(result);
 	}
 }

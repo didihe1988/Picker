@@ -1,5 +1,7 @@
 package com.didihe1988.picker.dao;
 
+import java.util.List;
+
 import com.didihe1988.picker.model.Comment;
 
 public interface CommentDao {
@@ -12,6 +14,7 @@ public interface CommentDao {
 	public int updateComment(Comment comment);
 
 	public boolean isCommentExists(Comment comment);
-	
-	
+
+	public List<Comment> queryCommentByBookId(int id);
+
 }

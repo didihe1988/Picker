@@ -30,6 +30,12 @@ public class Book implements Serializable {
 	@Column(name = "book_press")
 	private String press;
 
+	@Column(name = "book_follownum")
+	private int followNum;
+
+	@Column(name = "book_commentnum")
+	private int commentNum;
+
 	public Book() {
 
 	}
@@ -72,6 +78,22 @@ public class Book implements Serializable {
 
 	public void setPress(String press) {
 		this.press = press;
+	}
+
+	public int getFollowNum() {
+		return followNum;
+	}
+
+	public void setFollowNum(int followNum) {
+		this.followNum = followNum;
+	}
+
+	public int getCommentNum() {
+		return commentNum;
+	}
+
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
 	}
 
 	@Override

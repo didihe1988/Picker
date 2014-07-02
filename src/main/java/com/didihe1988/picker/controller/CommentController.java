@@ -30,7 +30,7 @@ public class CommentController extends BaseController {
 
 	@RequestMapping(value = "/comment/list.do")
 	public String list(int bookId, ModelMap modelMap) {
-		List<Comment> commentList = commentService.findAllByBookId(bookId);
+		List<Comment> commentList = commentService.getCommentByBookId(1);
 		assert commentList != null;
 		logger.debug(commentList.toString());
 		modelMap.addAttribute("commentList", commentList);

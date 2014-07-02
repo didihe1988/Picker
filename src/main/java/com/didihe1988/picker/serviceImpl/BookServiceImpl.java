@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.didihe1988.picker.mapper.BookMapper;
+import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.service.BookService;
 
@@ -13,23 +14,69 @@ import com.didihe1988.picker.service.BookService;
 public class BookServiceImpl implements BookService {
 
 	@Autowired
-	private BookMapper bookMapper;
+	private BookDao bookDao;
 
 	@Override
 	public Book findBookById(int id) {
 		// TODO Auto-generated method stub
-		return bookMapper.queryBookById(id);
+		return bookDao.queryBookById(id);
 	}
 
 	@Override
 	public int getBookIdByISBN(String isbn) {
 		// TODO Auto-generated method stub
-		return bookMapper.queryBookIdByISBN(isbn);
+		int result = bookDao.queryBookIdByISBN(isbn);
+		if (result == -1) {
+			return Status.NOT_EXISTS;
+		}
+		return result;
 	}
 
-	/*
-	 * @Override public List<Book> findAllByUserId(int id) { // TODO
-	 * Auto-generated method stub return bookMapper.queryBookByUserId(id); }
-	 */
+	@Override
+	public int addBook(Book book) {
+		// TODO Auto-generated method stub
+		if (book == null) {
+			return Status.NULLPOINTER;
+		}
+		int status = bookDao.addBook(book);
+		if (status == -1) {
+			return Status.EXISTS;
+		}
+		return Status.SUCCESS;
+	}
 
+	@Override
+	public int deleteBook(Book book) {
+		// TODO Auto-generated method stub
+		if (book == null) {
+			return Status.NULLPOINTER;
+		}
+		int status = bookDao.deleteBook(book);
+		if (status == -1) {
+			return Status.NOT_EXISTS;
+		}
+		return Status.SUCCESS;
+	}
+
+	@Override
+	public int updateBook(Book book) {
+		// TODO Auto-generated method stub
+		if (book == null) {
+			return Status.NULLPOINTER;
+		}
+		int status = bookDao.updateBook(book);
+		if (status == -1) {
+			return Status.NOT_EXISTS;
+		}
+		return Status.SUCCESS;
+	}
+
+	@Override
+	public boolean isBookExists(Book book) {
+		// TODO Auto-generated method stub
+		if (book == null) {
+			return false;
+		}
+		return bookDao.isBookExists(book);
+	}
 }

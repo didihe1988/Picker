@@ -38,8 +38,7 @@ public class BookDaoImpl implements BookDao {
 		if (query.list().size() == 0) {
 			return -1;
 		} else {
-			if(query.list().get(0)==null)
-			{
+			if (query.list().get(0) == null) {
 				return -1;
 			}
 			return ((Book) query.list().get(0)).getId();
@@ -61,8 +60,7 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public int deleteBook(Book book) {
 		// TODO Auto-generated method stub
-		if(!isBookExists(book))
-		{
+		if (!isBookExists(book)) {
 			return -1;
 		}
 		getCurrentSession().delete(book);
@@ -72,8 +70,7 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public int updateBook(Book book) {
 		// TODO Auto-generated method stub
-		if(!isBookExists(book))
-		{
+		if (!isBookExists(book)) {
 			return -1;
 		}
 		getCurrentSession().update(book);
@@ -83,18 +80,35 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public boolean isBookExists(Book book) {
 		// TODO Auto-generated method s
-		if(book==null)
-		{
+		if (book == null) {
 			return false;
 		}
 		String hql = "select count(*) from Book b where b.id = ?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, book.getId());
-		Long count = (Long)query.uniqueResult();
+		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int incrementFollowNum(int bookId) {
+		// TODO Auto-generated method stub
+		String hql = "update Book as book set book.followNum =book.followNum+1 where book.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public int incrementComment(int bookId) {
+		// TODO Auto-generated method stub
+		String hql = "update Book as book set book.commentNum =book.commentNum+1 where book.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		return query.executeUpdate();
 	}
 
 }

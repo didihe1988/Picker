@@ -4,7 +4,8 @@ package com.didihe1988.picker.dao.test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
-import org.apache.catalina.valves.CometConnectionManagerValve;
+import java.util.List;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,16 +22,18 @@ import com.didihe1988.picker.model.Comment;
 		"classpath:root-context.xml" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CommentDaoTest {
-	@Autowired	CommentDao commentDao;
+	@Autowired	
+	private CommentDao commentDao;
 	
 	//testAddComment
 	@Test
 	public void test01()
 	{
 		Comment comment=new Comment();
-		comment.setContent("miao");
+		comment.setContent("lalala");
 		comment.setProducerId(1);
 		comment.setReceiverId(3);
+		comment.setBookId(1);
 		int status=commentDao.addComment(comment);
 		assertSame(1, status);
 	}
@@ -79,6 +82,21 @@ public class CommentDaoTest {
 		Comment comment=commentDao.queryCommentById(4);
 		int status=commentDao.deleteComment(comment);
 		assertSame(1, status);
+	}
+	
+	//testQueryCommentByBookId
+	@Test
+	public void test08()
+	{
+		List<Comment> list=commentDao.queryCommentByBookId(1);
+		assertNotNull(list);
+		if(list!=null)
+		{
+			for(int i=0;i<list.size();i++)
+			{
+				System.out.print(list.get(0).toString());
+			}
+		}
 	}
 	
 	

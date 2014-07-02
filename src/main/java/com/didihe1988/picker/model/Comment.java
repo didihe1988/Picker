@@ -20,6 +20,9 @@ public class Comment implements Serializable {
 	@Column(name = "comment_id")
 	public int id;
 
+	@Column(name = "comment_bookid")
+	private int bookId;
+
 	@Column(name = "comment_receiverid")
 	public int receiverId;
 
@@ -28,7 +31,7 @@ public class Comment implements Serializable {
 
 	@Column(name = "comment_content")
 	private String content;
-
+	
 	public Comment() {
 
 	}
@@ -65,14 +68,24 @@ public class Comment implements Serializable {
 		this.producerId = producerId;
 	}
 
+	public int getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
+	}
+
 	public Comment(int id, int receiverId, int producerId, String content) {
 		this.content = content;
 	}
 
 	@Override
 	public String toString() {
-		return "Comment [content=" + content + ", id=" + id + ", receiverId="
-				+ receiverId + ", producerId=" + producerId + "]";
+		return "Comment [id=" + id + ", bookId=" + bookId + ", receiverId="
+				+ receiverId + ", producerId=" + producerId + ", content="
+				+ content + "]";
 	}
 
+	
 }
