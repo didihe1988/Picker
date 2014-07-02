@@ -30,6 +30,9 @@ public class User implements Serializable {
 	@Column(name = "user_lastVisit")
 	private Date lastVisit;
 
+	@Column(name = "user_favoritenum")
+	private int favoriteNum;
+
 	public User() {
 
 	}
@@ -77,9 +80,8 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password="
-				+ password + ", lastVisit=" + lastVisit + "]";
+				+ password + ", lastVisit=" + lastVisit + ", favoriteNum="
+				+ favoriteNum + "]";
 	}
-
-	
 
 }

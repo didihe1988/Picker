@@ -87,8 +87,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public boolean isUserExists(User user) {
 		// TODO Auto-generated method stub
-		if(user==null)
-		{
+		if (user == null) {
 			return false;
 		}
 		String hql = "select count(*) from User u where u.id =?";
@@ -99,6 +98,24 @@ public class UserDaoImpl implements UserDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int incrementFavoriteNum(int id) {
+		// TODO Auto-generated method stub
+		String hql = "update User as user set user.favoriteNum =user.favoriteNum+1 where user.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public int decrementFavoriteNum(int id) {
+		// TODO Auto-generated method stub
+		String hql = "update User as user set user.favoriteNum =user.favoriteNum-1 where user.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
 	}
 
 }

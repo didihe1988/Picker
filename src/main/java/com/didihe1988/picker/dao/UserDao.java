@@ -17,4 +17,7 @@ public interface UserDao {
 
 	public boolean isUserExists(User user);	
 	
+	public int incrementFavoriteNum(int id);
+	
+	public int decrementFavoriteNum(int id);
 }

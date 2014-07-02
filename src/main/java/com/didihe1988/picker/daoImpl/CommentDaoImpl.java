@@ -84,4 +84,22 @@ public class CommentDaoImpl implements CommentDao {
 		return query.list();
 	}
 
+	@Override
+	public int incrementFavoriteNum(int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Comment as comment set comment.favoriteNum =comment.favoriteNum+1 where comment.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public int decrementFavoriteNumk(int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Comment as comment set comment.favoriteNum =comment.favoriteNum-1 where comment.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
 }

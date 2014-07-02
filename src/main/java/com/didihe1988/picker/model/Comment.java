@@ -31,7 +31,10 @@ public class Comment implements Serializable {
 
 	@Column(name = "comment_content")
 	private String content;
-	
+
+	@Column(name = "comment_favoritenum")
+	private int favoriteNum;
+
 	public Comment() {
 
 	}
@@ -84,8 +87,7 @@ public class Comment implements Serializable {
 	public String toString() {
 		return "Comment [id=" + id + ", bookId=" + bookId + ", receiverId="
 				+ receiverId + ", producerId=" + producerId + ", content="
-				+ content + "]";
+				+ content + ", favoriteNum=" + favoriteNum + "]";
 	}
 
-	
 }

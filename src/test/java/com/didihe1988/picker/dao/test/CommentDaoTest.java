@@ -99,6 +99,12 @@ public class CommentDaoTest {
 		}
 	}
 	
+	//testincrementFavoriteNum
+	@Test
+	public void test09() 
+	{
+		int result=commentDao.incrementFavoriteNum(1);
+	}
 	
 	
 	
