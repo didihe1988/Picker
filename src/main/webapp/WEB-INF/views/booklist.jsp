@@ -23,7 +23,7 @@
 	<hr>
 	<h4>BookList</h4>
 	<c:forEach var="book" items="${bookList}" varStatus="status">
-		 bookid: ${book.id}   bookname: ${book.bookName}   isbn: ${book.isbn}   press: ${book.press}
+		 bookid: ${book.id}   bookname: ${book.bookName}   isbn: ${book.isbn}   press: ${book.press} followNum: ${book.followNum}  commentNum: ${book.commentNum}          
 		<br>
 	</c:forEach>
 </body>

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.didihe1988.picker.model.LoginForm;
 import com.didihe1988.picker.model.User;
@@ -30,24 +31,19 @@ public class LoginController extends BaseController {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		System.out.println(username + ":" + password);
-		/*boolean isValidUser = userService.hasMatchUser(username, password);
-		
-		if (!isValidUser) {
+
+		boolean isValid = userService.hasMatchUser(username, password);
+
+		if (!isValid) {
 			return "/login";
 		} else {
-			User user = userService.findUserByUserName(username);
+			User user = userService.getUserByUserName(username);
 			user.setLastVisit(new Date());
 			userService.updateUser(user);
-			System.out.println(user.getPassword());
 			setSessionUser(request, user);
 			return "redirect:/book/list.do";
-		}*/
-		return "redirect:/register/addUser.do";
-	}
+		}
 
-	@RequestMapping(value = "/login/hibernate_test.do")
-	public String test() {
-		return "redirect:/register/addUser.do";
+		// return "redirect:/register/addUser.do";
 	}
-
 }

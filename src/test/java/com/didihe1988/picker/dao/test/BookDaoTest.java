@@ -38,7 +38,7 @@ public class BookDaoTest {
 	public void test02() {
 		Book book = new Book();
 		book.setBookName("The silence of lamps");
-		book.setIsbn("1234567");
+		book.setIsbn("134325352145689");
 		book.setPress("press01");
 		book.setFollowNum(10);
 		book.setCommentNum(10);

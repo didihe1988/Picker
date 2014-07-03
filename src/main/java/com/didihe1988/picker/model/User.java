@@ -9,6 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.DateSerializer;
+
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
@@ -45,6 +48,12 @@ public class User implements Serializable {
 		this.lastVisit = lastVisit;
 	}
 
+	public User(String username, String password, Date lastVisit) {
+		this.username = username;
+		this.password = password;
+		this.lastVisit = lastVisit;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -69,6 +78,7 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
+	@JsonSerialize(using = DateSerializer.class)
 	public Date getLastVisit() {
 		return lastVisit;
 	}

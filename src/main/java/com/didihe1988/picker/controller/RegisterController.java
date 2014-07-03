@@ -2,26 +2,29 @@ package com.didihe1988.picker.controller;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.UserService;
 
 @Controller
-
 public class RegisterController extends BaseController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping(value = "/register/addUser.do")
-	public void addUser() {
-		User user = new User();
-		user.setLastVisit(new Date());
-		user.setUsername("didihe1988");
-		user.setPassword("mini2440");
+	@RequestMapping(value = "/register/addUser.do", method = RequestMethod.POST)
+	public void addUser(HttpServletRequest request) {
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		User user = new User(username, password, new Date());
 		userService.addUser(user);
+		// 测试通过 没有写返回界面 直接返回到了addUser.jsp
 	}
 }
