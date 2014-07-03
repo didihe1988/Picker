@@ -1,5 +1,7 @@
 package com.didihe1988.picker.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,7 +11,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "favorite")
 @IdClass(Favorite.class)
-public class Favorite {
+public class Favorite implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "favorite_commentid")

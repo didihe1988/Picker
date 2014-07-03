@@ -27,6 +27,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 	public int incrementCommentFavorite(int commentId) {
 		// TODO Auto-generated method stub
 		Comment comment = commentDao.queryCommentById(commentId);
+		if (comment == null) {
+			return -1;
+		}
 		int userId = comment.getProducerId();
 		Favorite favorite = new Favorite(commentId, userId);
 		if (!favoriteDao.isFavoriteExists(favorite)) {
@@ -41,6 +44,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 	public int decrementCommentFavorite(int commentId) {
 		// TODO Auto-generated method stub
 		Comment comment = commentDao.queryCommentById(commentId);
+		if (comment == null) {
+			return -1;
+		}
 		int userId = comment.getProducerId();
 		Favorite favorite = new Favorite(commentId, userId);
 		if (favoriteDao.isFavoriteExists(favorite)) {
