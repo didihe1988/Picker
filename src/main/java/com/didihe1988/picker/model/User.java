@@ -87,6 +87,14 @@ public class User implements Serializable {
 		this.lastVisit = lastVisit;
 	}
 
+	public int getFavoriteNum() {
+		return favoriteNum;
+	}
+
+	public void setFavoriteNum(int favoriteNum) {
+		this.favoriteNum = favoriteNum;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password="

@@ -13,6 +13,7 @@ import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.CommentService;
+import com.didihe1988.picker.service.FavoriteService;
 
 @Controller
 public class BookDetailController extends BaseController {
@@ -21,6 +22,9 @@ public class BookDetailController extends BaseController {
 
 	@Autowired
 	private CommentService commentService;
+
+	@Autowired
+	private FavoriteService favoriteService;
 
 	@RequestMapping(value = "book/detail.do")
 	public String showBookDetailAndComment(HttpServletRequest request,

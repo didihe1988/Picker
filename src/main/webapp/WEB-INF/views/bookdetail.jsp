@@ -27,6 +27,8 @@
 				<td>producerId</td>
 				<td>content</td>
 				<td>favoriteNum</td>
+				<td>favorite</td>
+				<td>unfavorite</td>
 			</tr>
 			<c:forEach var="comment" items="${commentList}" varStatus="status">
 				<tr>
@@ -36,6 +38,16 @@
 					<td>${comment.producerId}</td>
 					<td>${comment.content}</td>
 					<td>${comment.favoriteNum}</td>
+					<a
+						href=<c:url value="/comment/increment_favorite.do">
+						 <c:param name="commentId" value="${comment.id}"/> 
+						 <c:param name="bookId" value="${comment.bookId}"/> 
+						</c:url>><td>favorite</td></a>
+					<a
+						href=<c:url value="/comment/decrement_favorite.do">
+						 <c:param name="commentId" value="${comment.id}"/> 
+						 <c:param name="bookId" value="${comment.bookId}"/> 
+						</c:url>><td>unfavorite</td></a>
 				</tr>
 			</c:forEach>
 		</table>
