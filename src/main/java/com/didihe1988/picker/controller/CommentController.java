@@ -2,6 +2,8 @@ package com.didihe1988.picker.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +31,23 @@ public class CommentController extends BaseController {
 	}
 
 	@RequestMapping(value = "/comment/list.do")
-	public String list(int bookId, ModelMap modelMap) {
-		List<Comment> commentList = commentService.getCommentByBookId(1);
+	public String list(HttpServletRequest request, ModelMap modelMap) {
+		int bookId = Integer.parseInt(request.getParameter("bookId"));
+		List<Comment> commentList = commentService.getCommentByBookId(bookId);
 		assert commentList != null;
-		logger.debug(commentList.toString());
+		for (int i = 0; i < commentList.size(); i++) {
+			System.out.println(commentList.get(i).toString());
+		}
 		modelMap.addAttribute("commentList", commentList);
 		return "/comment/list.do";
 	}
-	
-	
+
+	@RequestMapping(value = "/comment/delete.do")
+	public String delete(HttpServletRequest request) {
+		int commentId = Integer.parseInt(request.getParameter("commentId"));
+		Comment comment = commentService.getCommentById(commentId);
+		commentService.deleteComment(comment);
+		return "/comment/list.do";
+	}
+
 }

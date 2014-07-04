@@ -79,6 +79,14 @@ public class Comment implements Serializable {
 		this.bookId = bookId;
 	}
 
+	public int getFavoriteNum() {
+		return favoriteNum;
+	}
+
+	public void setFavoriteNum(int favoriteNum) {
+		this.favoriteNum = favoriteNum;
+	}
+
 	public Comment(int id, int receiverId, int producerId, String content) {
 		this.content = content;
 	}

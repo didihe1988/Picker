@@ -35,7 +35,7 @@ public class LoginController extends BaseController {
 		boolean isValid = userService.hasMatchUser(username, password);
 
 		if (!isValid) {
-			return "/login";
+			return "login";
 		} else {
 			User user = userService.getUserByUserName(username);
 			user.setLastVisit(new Date());

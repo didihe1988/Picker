@@ -26,14 +26,18 @@ public class CommentDaoTest {
 	private CommentDao commentDao;
 	
 	//testAddComment
+	/**
+	 * 
+	 */
 	@Test
 	public void test01()
 	{
 		Comment comment=new Comment();
-		comment.setContent("lalala");
+		comment.setContent("mini2440");
 		comment.setProducerId(1);
 		comment.setReceiverId(3);
-		comment.setBookId(1);
+		comment.setBookId(4);
+		comment.setFavoriteNum(2);
 		int status=commentDao.addComment(comment);
 		assertSame(1, status);
 	}

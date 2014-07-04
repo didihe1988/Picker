@@ -65,7 +65,7 @@ public class BookController extends BaseController {
 	 * bookList.add(bookService.findBookById(bookIdList.get(i))); } return
 	 * bookList; }
 	 */
-
+	/*
 	@RequestMapping(value = "/book/detail.do")
 	public String detail(HttpServletRequest request, Model model) {
 		int bookId = Integer.parseInt(request.getParameter("bookId"));
@@ -73,6 +73,6 @@ public class BookController extends BaseController {
 		assert book != null;
 		model.addAttribute("book", book);
 		return "book/detail";
-	}
+	}*/
 
 }

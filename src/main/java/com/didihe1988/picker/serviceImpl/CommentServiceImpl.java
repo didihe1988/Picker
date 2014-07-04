@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.dao.CommentDao;
-import com.didihe1988.picker.mapper.CommentMapper;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.service.CommentService;
 
