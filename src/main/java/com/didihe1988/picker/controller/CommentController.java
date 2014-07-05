@@ -54,13 +54,14 @@ public class CommentController extends BaseController {
 		commentService.deleteComment(comment);
 		return "/comment/list.do";
 	}
-	
+
 	@RequestMapping(value = "/comment/increment_favorite.do")
 	public String incrementFavorite(HttpServletRequest request) {
 		System.out.println("increment_favorite");
 		int commentId = Integer.parseInt(request.getParameter("commentId"));
 		int bookId = Integer.parseInt(request.getParameter("bookId"));
-		favoriteService.incrementCommentFavorite(commentId);
+		int userId = getSessionUser(request).getId();
+		favoriteService.incrementCommentFavorite(commentId, userId);
 		return "redirect:/book/detail.do?bookId=" + bookId;
 	}
 
@@ -69,7 +70,8 @@ public class CommentController extends BaseController {
 		System.out.println("decrement_favorite");
 		int commentId = Integer.parseInt(request.getParameter("commentId"));
 		int bookId = Integer.parseInt(request.getParameter("bookId"));
-		favoriteService.decrementCommentFavorite(commentId);
+		int userId = getSessionUser(request).getId();
+		favoriteService.decrementCommentFavorite(commentId, userId);
 		return "redirect:/book/detail.do?bookId=" + bookId;
 	}
 }

@@ -24,13 +24,13 @@ public class FavoriteServiceImpl implements FavoriteService {
 	private FavoriteDao favoriteDao;
 
 	@Override
-	public int incrementCommentFavorite(int commentId) {
+	public int incrementCommentFavorite(int commentId, int userId) {
 		// TODO Auto-generated method stub
 		Comment comment = commentDao.queryCommentById(commentId);
 		if (comment == null) {
 			return -1;
 		}
-		int userId = comment.getProducerId();
+		// int userId = comment.getProducerId();
 		Favorite favorite = new Favorite(commentId, userId);
 		if (!favoriteDao.isFavoriteExists(favorite)) {
 			userDao.incrementFavoriteNum(userId);
@@ -41,13 +41,13 @@ public class FavoriteServiceImpl implements FavoriteService {
 	}
 
 	@Override
-	public int decrementCommentFavorite(int commentId) {
+	public int decrementCommentFavorite(int commentId, int userId) {
 		// TODO Auto-generated method stub
 		Comment comment = commentDao.queryCommentById(commentId);
 		if (comment == null) {
 			return -1;
 		}
-		int userId = comment.getProducerId();
+		// int userId = comment.getProducerId();
 		Favorite favorite = new Favorite(commentId, userId);
 		if (favoriteDao.isFavoriteExists(favorite)) {
 			userDao.decrementFavoriteNum(userId);
