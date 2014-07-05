@@ -16,4 +16,10 @@ public interface FollowDao {
 	public boolean isFollowExists(Follow follow);
 
 	public List<Follow> queryFollowByFollowerId(int followerId);
+	
+	public List<Follow> queryUnckeckedFollowByFollowerId(int followerId);
+
+	public int updateFollowSetIsCheckedReverse(int id);
+
+	public boolean isFollowExists(int id);
 }

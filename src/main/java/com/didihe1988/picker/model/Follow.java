@@ -2,6 +2,14 @@ package com.didihe1988.picker.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "follow")
 public class Follow implements Serializable {
 
 	/**
@@ -12,10 +20,21 @@ public class Follow implements Serializable {
 	public static final int FOLLOW_QUESTION = 0;
 	public static final int FOLLOW_USER = 1;
 
+	@Id
+	@GeneratedValue
+	@Column(name = "follow_id")
 	private int id;
+
+	@Column(name = "follow_sourcetype")
 	private int sourceType;
+
+	@Column(name = "follow_followerid")
 	private int followerId;
+
+	@Column(name = "follow_sourceid")
 	private int sourceId;
+
+	@Column(name = "follow_ischecked")
 	private boolean isChecked;
 
 	public int getId() {
