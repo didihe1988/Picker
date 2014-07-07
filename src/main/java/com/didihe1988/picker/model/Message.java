@@ -2,18 +2,24 @@ package com.didihe1988.picker.model;
 
 import java.io.Serializable;
 
-
 public class Message implements Serializable {
 
 	/**
 	 * 
 	 */
+	public static final int MESSAGE_FOLLOWED_COMMENT = 1;
+	public static final int MESSAGE_FOLLOWED_FAVORITE = 2;
+	public static final int MESSAGE_FOLLOWED_FOLLOW_COMMENT = 3;
+	public static final int MESSAGE_COMMENT_UPDATE = 4;
+
 	private static final long serialVersionUID = 1L;
 
 	private int id;
-	private int sourceId;
-	//自己被赞、被评论  关注的人赞了、评论了、写了笔记
-	private String type;
+	// 消息接受者的id session里的user
+	private int receiverId;
+	private boolean isChecked;
+	private int type;
+	public int sourceId;
 
 	public int getId() {
 		return id;
@@ -21,6 +27,30 @@ public class Message implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getReceiverId() {
+		return receiverId;
+	}
+
+	public void setReceiverId(int receiverId) {
+		this.receiverId = receiverId;
+	}
+
+	public boolean isChecked() {
+		return isChecked;
+	}
+
+	public void setChecked(boolean isChecked) {
+		this.isChecked = isChecked;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 	public int getSourceId() {
@@ -31,16 +61,35 @@ public class Message implements Serializable {
 		this.sourceId = sourceId;
 	}
 
-	public String getType() {
-		return type;
+	@Override
+	public String toString() {
+		return "Message [id=" + id + ", receiverId=" + receiverId
+				+ ", isChecked=" + isChecked + ", type=" + type + ", sourceId="
+				+ sourceId + "]";
 	}
 
-	public void setType(String type) {
+	public Message(int id, int receiverId, boolean isChecked, int type,
+			int sourceId) {
+		super();
+		this.id = id;
+		this.receiverId = receiverId;
+		this.isChecked = isChecked;
 		this.type = type;
+		this.sourceId = sourceId;
+	}
+	
+	public Message(int receiverId, boolean isChecked, int type,
+			int sourceId) {
+		super();
+		this.receiverId = receiverId;
+		this.isChecked = isChecked;
+		this.type = type;
+		this.sourceId = sourceId;
 	}
 
 	public Message() {
-
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 }

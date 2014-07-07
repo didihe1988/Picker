@@ -28,7 +28,6 @@ public class FollowDaoTest {
 	public void test01() {
 		Follow follow = new Follow();
 		follow.setFollowerId(1);
-		follow.setChecked(false);
 		follow.setSourceType(Follow.FOLLOW_COMMENT);
 		follow.setSourceId(3);
 		int status = followDao.addFollow(follow);
@@ -45,7 +44,6 @@ public class FollowDaoTest {
 	@Test
 	public void test03() {
 		Follow follow = followDao.queryFollowById(1);
-		follow.setChecked(true);
 		followDao.updateFollow(follow);
 	}
 

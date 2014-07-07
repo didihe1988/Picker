@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.Follow;
+import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
+import com.didihe1988.picker.service.FollowService;
+import com.didihe1988.picker.service.MessageService;
 
 @Controller
 public class CommentController extends BaseController {
@@ -25,6 +28,12 @@ public class CommentController extends BaseController {
 
 	@Autowired
 	private FavoriteService favoriteService;
+
+	@Autowired
+	private FollowService followService;
+
+	@Autowired
+	private MessageService messageService;
 
 	private final static Logger logger = LoggerFactory
 			.getLogger(CommentController.class);
@@ -62,6 +71,14 @@ public class CommentController extends BaseController {
 		int bookId = Integer.parseInt(request.getParameter("bookId"));
 		int userId = getSessionUser(request).getId();
 		favoriteService.incrementCommentFavorite(commentId, userId);
+		List<Follow> followList = followService
+				.getFollowByFollowedUserId(userId);
+		for (int i = 0; i < followList.size(); i++) {
+			Follow follow = followList.get(i);
+			Message message = new Message(follow.getFollowerId(), false,
+					Message.MESSAGE_FOLLOWED_FAVORITE, commentId);
+			messageService.addMessage(message);
+		}
 		return "redirect:/book/detail.do?bookId=" + bookId;
 	}
 

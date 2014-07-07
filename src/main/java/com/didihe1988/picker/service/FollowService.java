@@ -14,10 +14,12 @@ public interface FollowService {
 	public int updateFollow(Follow follow);
 
 	public boolean isFollowExists(Follow follow);
-	
-	public int setFollowchecked(int id);
+
+	// public int setFollowchecked(int id);
 
 	public List<Follow> getFollowByFollowerId(int followerId);
 
-	public List<Follow> getUnckeckedFollowByFollowerId(int followerId);
+	public List<Follow> getFollowByFollowedUserId(int followedUserId);
+
+	// public List<Follow> getUnckeckedFollowByFollowerId(int followerId);
 }

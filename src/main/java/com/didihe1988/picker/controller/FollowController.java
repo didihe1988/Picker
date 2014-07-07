@@ -29,25 +29,21 @@ public class FollowController {
 		}
 		return "followlist";
 	}
-
-	@RequestMapping(value = "follow/list_unchecked.do")
-	public String listUnchecked(HttpServletRequest request, ModelMap modelMap) {
-		int followerId = Integer.parseInt(request.getParameter("followerId"));
-		List<Follow> followList = followService
-				.getUnckeckedFollowByFollowerId(followerId);
-		modelMap.addAttribute("followList", followList);
-		System.out.println("unchecked followlist");
-		for (int i = 0; i < followList.size(); i++) {
-			System.out.println(followList.get(i).toString());
-		}
-		return "followlist";
-	}
-
-	@RequestMapping(value = "follow/set_ckecked.do")
-	public String setFollowChecked(HttpServletRequest request) {
-		int followId = Integer.parseInt(request.getParameter("followId"));
-		followService.setFollowchecked(followId);
-		return "followlist";
-	}
-
+	/*
+	 * @RequestMapping(value = "follow/list_unchecked.do") public String
+	 * listUnchecked(HttpServletRequest request, ModelMap modelMap) { int
+	 * followerId = Integer.parseInt(request.getParameter("followerId"));
+	 * List<Follow> followList = followService
+	 * .getUnckeckedFollowByFollowerId(followerId);
+	 * modelMap.addAttribute("followList", followList);
+	 * System.out.println("unchecked followlist"); for (int i = 0; i <
+	 * followList.size(); i++) {
+	 * System.out.println(followList.get(i).toString()); } return "followlist";
+	 * }
+	 * 
+	 * @RequestMapping(value = "follow/set_ckecked.do") public String
+	 * setFollowChecked(HttpServletRequest request) { int followId =
+	 * Integer.parseInt(request.getParameter("followId"));
+	 * followService.setFollowchecked(followId); return "followlist"; }
+	 */
 }
