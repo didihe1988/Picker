@@ -71,10 +71,12 @@ public class CommentController extends BaseController {
 		int bookId = Integer.parseInt(request.getParameter("bookId"));
 		int userId = getSessionUser(request).getId();
 		favoriteService.incrementCommentFavorite(commentId, userId);
+		//获取关注列表
 		List<Follow> followList = followService
 				.getFollowByFollowedUserId(userId);
 		for (int i = 0; i < followList.size(); i++) {
 			Follow follow = followList.get(i);
+			//添加消息
 			Message message = new Message(follow.getFollowerId(), false,
 					Message.MESSAGE_FOLLOWED_FAVORITE, commentId);
 			messageService.addMessage(message);

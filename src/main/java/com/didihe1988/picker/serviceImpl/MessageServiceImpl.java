@@ -57,7 +57,7 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<Message> queryMessageByReceiverId(int receiverId) {
+	public List<Message> getMessageByReceiverId(int receiverId) {
 		// TODO Auto-generated method stub
 		return messageDao.queryMessageByReceiverId(receiverId);
 	}
