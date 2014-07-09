@@ -77,4 +77,10 @@ public class MessageServiceImpl implements MessageService {
 		return messageDao.queryMessageById(id);
 	}
 
+	@Override
+	public int setMessageChecked(int id) {
+		// TODO Auto-generated method stub
+		return messageDao.setMessageChecked(id);
+	}
+
 }

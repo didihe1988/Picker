@@ -80,7 +80,7 @@ public class FollowServiceImpl implements FollowService {
 	@Override
 	public List<Follow> getFollowByFollowedUserId(int followedUserId) {
 		// TODO Auto-generated method stub
-		return null;
+		return followDao.queryFollowByFollowedUserId(followedUserId);
 	}
 
 }

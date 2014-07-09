@@ -59,17 +59,6 @@ public class FollowDaoImpl implements FollowDao {
 	}
 
 	@Override
-	public int updateFollowSetIsCheckedReverse(int id) {
-		if (!isFollowExists(id)) {
-			return -1;
-		}
-		// 有没有sql语句直接把true设成false false设成true
-		String hql = "update Follow as follow set follow.isChecked false";
-		Query query = getCurrentSession().createQuery(hql);
-		return query.executeUpdate();
-	}
-
-	@Override
 	public boolean isFollowExists(int id) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Follow f where f.id =?";
@@ -110,10 +99,11 @@ public class FollowDaoImpl implements FollowDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Follow> queryUnckeckedFollowByFollowerId(int followerId) {
-		String hql = "from Follow as follow where follow.followerId =? and follow.isChecked = false";
+	public List<Follow> queryFollowByFollowedUserId(int followedUserId) {
+		// TODO Auto-generated method stub
+		String hql = "from Follow as follow where follow.sourceId = ?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, followerId);
+		query.setInteger(0, followedUserId);
 		return query.list();
 	}
 

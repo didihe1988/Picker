@@ -16,4 +16,7 @@ public interface MessageDao {
 	public boolean isMessageExists(Message message);
 
 	public List<Message> queryMessageByReceiverId(int receiverId);
+
+	public int setMessageChecked(int id);
+	
 }

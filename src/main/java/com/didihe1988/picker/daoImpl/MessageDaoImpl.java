@@ -85,4 +85,12 @@ public class MessageDaoImpl implements MessageDao {
 		return query.list();
 	}
 
+	@Override
+	public int setMessageChecked(int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Message as message set message.isChecked =false";
+		Query query = getCurrentSession().createQuery(hql);
+		return query.executeUpdate();
+	}
+
 }

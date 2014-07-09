@@ -28,8 +28,8 @@ public class FollowDaoTest {
 	public void test01() {
 		Follow follow = new Follow();
 		follow.setFollowerId(1);
-		follow.setSourceType(Follow.FOLLOW_COMMENT);
-		follow.setSourceId(3);
+		follow.setSourceType(Follow.FOLLOW_USER);
+		follow.setSourceId(2);
 		int status = followDao.addFollow(follow);
 		assertSame(1, status);
 	}
@@ -54,16 +54,5 @@ public class FollowDaoTest {
 		System.out.println(list);
 	}
 
-	@Test
-	public void test05() {
-		List<Follow> list = followDao.queryUnckeckedFollowByFollowerId(1);
-		assertNotNull(list);
-		System.out.println(list);
-	}
 
-	@Test
-	public void test06() {
-		Follow follow = followDao.queryFollowById(2);
-		followDao.deleteFollow(follow);
-	}
 }

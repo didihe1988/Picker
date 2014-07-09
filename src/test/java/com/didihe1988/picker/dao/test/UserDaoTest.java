@@ -29,8 +29,8 @@ public class UserDaoTest {
 	@Test
 	public void test01() {
 		User user = new User();
-		user.setUsername("didihe1988");
-		String passwordAfterMd5 = encryptByMD5("didihe1988", "mini2440");
+		user.setUsername("didihe1834");
+		String passwordAfterMd5 = encryptByMD5(user.getUsername(), "lalala");
 		user.setPassword(passwordAfterMd5);
 		user.setLastVisit(new Date());
 		userDao.addUser(user);

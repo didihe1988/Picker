@@ -16,4 +16,6 @@ public interface MessageService {
 	public boolean isMessageExists(Message message);
 
 	public Message getMessageById(int id);
+
+	public int setMessageChecked(int id);
 }

@@ -17,4 +17,9 @@ public class BaseController {
 	protected void removeSessionUser(HttpServletRequest request) {
 		request.getSession().removeAttribute(Constant.USER);
 	}
+
+	protected int getIntegerFromReqeust(HttpServletRequest request,
+			String parameter) {
+		return Integer.parseInt(request.getParameter(parameter));
+	}
 }
