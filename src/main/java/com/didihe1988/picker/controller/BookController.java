@@ -19,9 +19,10 @@ import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
 import com.didihe1988.picker.service.OwnBookService;
+import com.didihe1988.picker.utils.HttpUtils;
 
 @Controller
-public class BookController extends BaseController {
+public class BookController  {
 	@Autowired
 	private BookService bookService;
 	@Autowired
@@ -36,7 +37,7 @@ public class BookController extends BaseController {
 
 	@RequestMapping(value = "/book/list.do")
 	public String list(HttpServletRequest request, ModelMap modelMap) {
-		int userId = getSessionUser(request).getId();
+		int userId = HttpUtils.getSessionUser(request).getId();
 		logger.debug("userId:" + userId);
 		List<Bought> boughtList = boughtService.getBoughtByUserId(userId);
 		assert boughtList != null;

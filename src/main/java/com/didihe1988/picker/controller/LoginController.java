@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.didihe1988.picker.model.LoginForm;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.UserService;
+import com.didihe1988.picker.utils.HttpUtils;
 
 @Controller
-public class LoginController extends BaseController {
+public class LoginController {
 	@Autowired
 	private UserService userService;
 
@@ -40,7 +41,7 @@ public class LoginController extends BaseController {
 			User user = userService.getUserByUserName(username);
 			user.setLastVisit(new Date());
 			userService.updateUser(user);
-			setSessionUser(request, user);
+			HttpUtils.setSessionUser(request, user);
 			return "redirect:/book/list.do";
 		}
 

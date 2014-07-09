@@ -15,7 +15,7 @@ import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.UserService;
 
 @Controller
-public class RegisterController extends BaseController {
+public class RegisterController {
 	@Autowired
 	UserService userService;
 

@@ -11,16 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.service.FollowService;
+import com.didihe1988.picker.utils.HttpUtils;
 
 @Controller
-public class FollowController extends BaseController {
+public class FollowController {
 
 	@Autowired
 	private FollowService followService;
 
 	@RequestMapping(value = "follow/list_byfollowerid.do")
 	public String listByFollowerId(HttpServletRequest request, ModelMap modelMap) {
-		int followerId = Integer.parseInt(request.getParameter("followerId"));
+		int followerId = HttpUtils.getIntegerFromReqeust(request, "followerId");
 		List<Follow> followList = followService
 				.getFollowByFollowerId(followerId);
 		modelMap.addAttribute("followList", followList);
@@ -33,8 +34,8 @@ public class FollowController extends BaseController {
 	@RequestMapping(value = "follow/list_byfolloweduserid.do")
 	public String listByFollowedUserId(HttpServletRequest request,
 			ModelMap modelMap) {
-		int followedUserId = Integer.parseInt(request
-				.getParameter("followedUserId"));
+		int followedUserId = HttpUtils.getIntegerFromReqeust(request,
+				"followedUserId");
 		List<Follow> followList = followService
 				.getFollowByFollowedUserId(followedUserId);
 		modelMap.addAttribute("followList", followList);
@@ -46,9 +47,9 @@ public class FollowController extends BaseController {
 
 	@RequestMapping(value = "follow/add.do")
 	public String addFollow(HttpServletRequest request) {
-		int sourceType = Integer.parseInt(request.getParameter("sourceType"));
-		int followerId = getSessionUser(request).getId();
-		int sourceId = Integer.parseInt(request.getParameter("sourceId"));
+		int sourceType = HttpUtils.getIntegerFromReqeust(request, "sourceType");
+		int followerId = HttpUtils.getSessionUser(request).getId();
+		int sourceId = HttpUtils.getIntegerFromReqeust(request, "sourceId");
 		Follow follow = new Follow(sourceType, followerId, sourceId);
 		followService.addFollow(follow);
 		return "followlist";
@@ -56,7 +57,7 @@ public class FollowController extends BaseController {
 
 	@RequestMapping(value = "follow/delete.do")
 	public String deleteFollow(HttpServletRequest request) {
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = HttpUtils.getIntegerFromReqeust(request, "id");
 		Follow follow = followService.getFollowById(id);
 		if (follow == null) {
 			return "followlist";

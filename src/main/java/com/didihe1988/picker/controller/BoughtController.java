@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
+import com.didihe1988.picker.utils.HttpUtils;
 
 @Controller
-public class BoughtController extends BaseController {
+public class BoughtController {
 	@Autowired
 	private BoughtService boughtService;
 
@@ -22,7 +23,7 @@ public class BoughtController extends BaseController {
 	public String addBought(HttpServletRequest request) {
 		String isbn = request.getParameter("isbn");
 		int bookId = bookService.getBookIdByISBN(isbn);
-		int userId = getSessionUser(request).getId();
+		int userId = HttpUtils.getSessionUser(request).getId();
 		// logger.debug(userId + "-" + bookId);
 		boughtService.addBought(new Bought(userId, bookId));
 		return "/book/list";
@@ -30,9 +31,9 @@ public class BoughtController extends BaseController {
 
 	@RequestMapping(value = "/bought/delete.do")
 	public String delete(HttpServletRequest request) {
-		String bookId = request.getParameter("bookId");
-		int userId = getSessionUser(request).getId();
-		boughtService.deleteBought(new Bought(userId, Integer.parseInt(bookId)));
+		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
+		int userId = HttpUtils.getSessionUser(request).getId();
+		boughtService.deleteBought(new Bought(userId, bookId));
 		return "/book/list";
 	}
 }

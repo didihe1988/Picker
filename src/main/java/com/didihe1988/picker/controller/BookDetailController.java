@@ -14,9 +14,10 @@ import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
+import com.didihe1988.picker.utils.HttpUtils;
 
 @Controller
-public class BookDetailController extends BaseController {
+public class BookDetailController {
 	@Autowired
 	private BookService bookService;
 
@@ -29,7 +30,7 @@ public class BookDetailController extends BaseController {
 	@RequestMapping(value = "book/detail.do")
 	public String showBookDetailAndComment(HttpServletRequest request,
 			ModelMap modelMap) {
-		int bookId = Integer.parseInt(request.getParameter("bookId"));
+		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
 		Book book = bookService.findBookById(bookId);
 		List<Comment> commentList = commentService.getCommentByBookId(bookId);
 		assert commentList != null;
