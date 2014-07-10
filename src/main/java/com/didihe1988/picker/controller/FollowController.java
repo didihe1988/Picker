@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.mockito.asm.tree.IntInsnNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,7 +20,7 @@ public class FollowController {
 	@Autowired
 	private FollowService followService;
 
-	@RequestMapping(value = "follow/list_byfollowerid.do")
+	@RequestMapping(value = "/follow/list_byfollowerid.do")
 	public String listByFollowerId(HttpServletRequest request, ModelMap modelMap) {
 		int followerId = HttpUtils.getIntegerFromReqeust(request, "followerId");
 		List<Follow> followList = followService
@@ -31,7 +32,7 @@ public class FollowController {
 		return "followlist";
 	}
 
-	@RequestMapping(value = "follow/list_byfolloweduserid.do")
+	@RequestMapping(value = "/follow/list_byfolloweduserid.do")
 	public String listByFollowedUserId(HttpServletRequest request,
 			ModelMap modelMap) {
 		int followedUserId = HttpUtils.getIntegerFromReqeust(request,
@@ -45,17 +46,29 @@ public class FollowController {
 		return "followlist";
 	}
 
-	@RequestMapping(value = "follow/add.do")
-	public String addFollow(HttpServletRequest request) {
-		int sourceType = HttpUtils.getIntegerFromReqeust(request, "sourceType");
-		int followerId = HttpUtils.getSessionUser(request).getId();
-		int sourceId = HttpUtils.getIntegerFromReqeust(request, "sourceId");
-		Follow follow = new Follow(sourceType, followerId, sourceId);
-		followService.addFollow(follow);
+	@RequestMapping(value = "/follow/listall_fortest.do")
+	public String listAllForTest(ModelMap modelMap) {
+		List<Follow> followList = followService.getAllFollowForTest();
+		System.out.print(followList);
+		modelMap.addAttribute("followList", followList);
 		return "followlist";
 	}
 
-	@RequestMapping(value = "follow/delete.do")
+	@RequestMapping(value = "/follow/add.do")
+	public String addFollow(HttpServletRequest request) {
+		int sourceType = HttpUtils.getIntegerFromReqeust(request, "sourceType");
+		int sourceId = HttpUtils.getIntegerFromReqeust(request, "sourceId");
+		int followerId = HttpUtils.getSessionUser(request).getId();
+		// 自己不能关注自己
+		if ((sourceId == followerId) && (sourceType == Follow.FOLLOW_USER)) {
+			return "followlist";
+		}
+		Follow follow = new Follow(sourceType, followerId, sourceId);
+		followService.addFollow(follow);
+		return "/follow/listall_fortest.do";
+	}
+
+	@RequestMapping(value = "/follow/delete.do")
 	public String deleteFollow(HttpServletRequest request) {
 		int id = HttpUtils.getIntegerFromReqeust(request, "id");
 		Follow follow = followService.getFollowById(id);

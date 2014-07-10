@@ -107,4 +107,13 @@ public class FollowDaoImpl implements FollowDao {
 		return query.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Follow> queryAllForTest() {
+		// TODO Auto-generated method stub
+		String hql = "from Follow";
+		Query query = getCurrentSession().createQuery(hql);
+		return query.list();
+	}
+
 }

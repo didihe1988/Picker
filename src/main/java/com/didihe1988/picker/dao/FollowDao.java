@@ -24,4 +24,6 @@ public interface FollowDao {
 	// public int updateFollowSetIsCheckedReverse(int id);
 
 	public boolean isFollowExists(int id);
+	
+	public List<Follow> queryAllForTest();
 }

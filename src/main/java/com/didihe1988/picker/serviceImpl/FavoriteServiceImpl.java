@@ -51,7 +51,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		Favorite favorite = new Favorite(commentId, userId);
 		if (favoriteDao.isFavoriteExists(favorite)) {
 			userDao.decrementFavoriteNum(userId);
-			commentDao.decrementFavoriteNumk(userId);
+			commentDao.decrementFavoriteNumk(commentId);
 			favoriteDao.deleteFavorite(favorite);
 		}
 		return 1;

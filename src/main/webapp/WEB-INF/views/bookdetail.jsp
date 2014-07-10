@@ -25,6 +25,7 @@
 				<td>bookId</td>
 				<td>receiverId</td>
 				<td>producerId</td>
+				<td>followProducer</td>
 				<td>content</td>
 				<td>favoriteNum</td>
 				<td>favorite</td>
@@ -36,6 +37,11 @@
 					<td>${comment.bookId}</td>
 					<td>${comment.receiverId}</td>
 					<td>${comment.producerId}</td>
+					<a
+						href=<c:url value="/follow/add.do">
+						 <c:param name="sourceType" value="1"/> 
+						 <c:param name="sourceId" value="${comment.producerId}"/> 
+						</c:url>><td>followProducer</td></a>
 					<td>${comment.content}</td>
 					<td>${comment.favoriteNum}</td>
 					<a

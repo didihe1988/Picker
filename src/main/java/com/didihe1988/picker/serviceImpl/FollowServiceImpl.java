@@ -83,4 +83,10 @@ public class FollowServiceImpl implements FollowService {
 		return followDao.queryFollowByFollowedUserId(followedUserId);
 	}
 
+	@Override
+	public List<Follow> getAllFollowForTest() {
+		// TODO Auto-generated method stub
+		return followDao.queryAllForTest();
+	}
+
 }

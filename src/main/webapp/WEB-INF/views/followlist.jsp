@@ -22,7 +22,7 @@
 			<c:forEach var="follow" items="${followList}" varStatus="status">
 				<tr>
 					<td>${follow.id}</td>
-					<td>${follow.followerd}</td>
+					<td>${follow.followerId}</td>
 					<td>${follow.sourceType}</td>
 					<td>${follow.sourceId}</td>
 				</tr>

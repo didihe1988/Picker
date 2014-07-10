@@ -19,7 +19,7 @@ public class MessageController {
 	@Autowired
 	private MessageService messageService;
 
-	@RequestMapping(value = "message/list.do")
+	@RequestMapping(value = "/message/list.do")
 	public String list(HttpServletRequest request, ModelMap modelMap) {
 		int receiverId = HttpUtils.getIntegerFromReqeust(request, "receiverId");
 		List<Message> messageList = messageService
@@ -29,14 +29,14 @@ public class MessageController {
 		return "messagelist";
 	}
 
-	@RequestMapping(value = "message/setchecked.do")
+	@RequestMapping(value = "/message/setchecked.do")
 	public String setChecked(HttpServletRequest request) {
 		int id = HttpUtils.getIntegerFromReqeust(request, "id");
 		messageService.setMessageChecked(id);
 		return "messagelist";
 	}
 
-	@RequestMapping(value = "message/add.do")
+	@RequestMapping(value = "/message/add.do")
 	public String addMessage(HttpServletRequest request) {
 		int type = HttpUtils.getIntegerFromReqeust(request, "type");
 		int sourceId = HttpUtils.getIntegerFromReqeust(request, "sourceId");
@@ -47,7 +47,7 @@ public class MessageController {
 		return "";
 	}
 
-	@RequestMapping(value = "message/delete.do")
+	@RequestMapping(value = "/message/delete.do")
 	public String deleteMessage(HttpServletRequest request) {
 		int id = HttpUtils.getIntegerFromReqeust(request, "id");
 		Message message = messageService.getMessageById(id);

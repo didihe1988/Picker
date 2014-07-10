@@ -20,6 +20,8 @@ public interface FollowService {
 	public List<Follow> getFollowByFollowerId(int followerId);
 
 	public List<Follow> getFollowByFollowedUserId(int followedUserId);
+	
+	public List<Follow> getAllFollowForTest();
 
 	// public List<Follow> getUnckeckedFollowByFollowerId(int followerId);
 }
