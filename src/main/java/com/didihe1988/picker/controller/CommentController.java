@@ -1,26 +1,18 @@
 package com.didihe1988.picker.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.didihe1988.picker.model.Comment;
-import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
-import com.didihe1988.picker.service.FollowService;
-import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.utils.HttpUtils;
 
 @Controller
@@ -30,35 +22,39 @@ public class CommentController {
 
 	@Autowired
 	private FavoriteService favoriteService;
+	/*
+	 * @Autowired private FollowService followService;
+	 * 
+	 * @Autowired private MessageService messageService;
+	 */
 
 	@Autowired
-	private FollowService followService;
-
-	@Autowired
-	private MessageService messageService;
+	private MessageFactory messageFactory;
 
 	private final static Logger logger = LoggerFactory
 			.getLogger(CommentController.class);
 
 	@RequestMapping(value = "/comment/add.do", method = RequestMethod.POST)
 	public String add(HttpServletRequest request) {
-		int userId=HttpUtils.getSessionUser(request).getId();
-		String content=request.getParameter("content");
-		int bookId=HttpUtils.getIntegerFromReqeust(request, "bookId");
-		int receiverId=HttpUtils.getIntegerFromReqeust(request, "receiverId");
-		int producerId=HttpUtils.getIntegerFromReqeust(request, "producerId");
-		//add Message
-		List<Follow> followList=followService.getFollowByFollowedUserId(userId);
-		for(int i=0;i<followList.size();i++)
-		{
-			Follow  follow=followList.get(i);
-			Message message=new Message(follow.getFollowerId(), false, Message.MESSAGE_FOLLOWED_COMMENT, userId);
-			messageService.addMessage(message);
-		}
-		
-		//addComment
-		Comment comment=new Comment(receiverId, producerId, content);
+		int userId = HttpUtils.getSessionUser(request).getId();
+		String content = request.getParameter("content");
+		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
+		int receiverId = HttpUtils.getIntegerFromReqeust(request, "receiverId");
+		int producerId = HttpUtils.getIntegerFromReqeust(request, "producerId");
+		Comment comment = new Comment(bookId, receiverId, producerId, content);
 		commentService.addComment(comment);
+		/*
+		 * // add Message List<Follow> followList =
+		 * followService.getFollowByFollowedUserId(userId); for (int i = 0; i <
+		 * followList.size(); i++) { Follow follow = followList.get(i); Message
+		 * message = new Message(follow.getFollowerId(), false,
+		 * Message.MESSAGE_FOLLOWED_COMMENT, userId);
+		 * messageService.addMessage(message); }
+		 */
+
+		messageFactory.addMessage(userId, userId,
+				Message.MESSAGE_FOLLOWED_COMMENT);
+		// addComment
 		return "book/detail.do?bookId=" + comment.getBookId();
 	}
 
@@ -89,16 +85,16 @@ public class CommentController {
 		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
 		int userId = HttpUtils.getSessionUser(request).getId();
 		favoriteService.incrementCommentFavorite(commentId, userId);
-		// 获取关注列表
-		List<Follow> followList = followService
-				.getFollowByFollowedUserId(userId);
-		for (int i = 0; i < followList.size(); i++) {
-			Follow follow = followList.get(i);
-			// 添加消息
-			Message message = new Message(follow.getFollowerId(), false,
-					Message.MESSAGE_FOLLOWED_FAVORITE, commentId);
-			messageService.addMessage(message);
-		}
+		/*
+		 * // 获取关注列表 List<Follow> followList = followService
+		 * .getFollowByFollowedUserId(userId); for (int i = 0; i <
+		 * followList.size(); i++) { Follow follow = followList.get(i); // 添加消息
+		 * Message message = new Message(follow.getFollowerId(), false,
+		 * Message.MESSAGE_FOLLOWED_FAVORITE, commentId);
+		 * messageService.addMessage(message); }
+		 */
+		messageFactory.addMessage(userId, commentId,
+				Message.MESSAGE_FOLLOWED_FAVORITE);
 		return "redirect:/book/detail.do?bookId=" + bookId;
 	}
 

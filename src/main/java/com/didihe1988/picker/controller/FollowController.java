@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.didihe1988.picker.factory.MessageFactory;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.service.FollowService;
@@ -20,9 +21,12 @@ public class FollowController {
 
 	@Autowired
 	private FollowService followService;
+	/*
+	 * @Autowired private MessageService messageService;
+	 */
 
 	@Autowired
-	private MessageService messageService;
+	private MessageFactory messageFactory;
 
 	@RequestMapping(value = "/follow/list_byfollowerid.do")
 	public String listByFollowerId(HttpServletRequest request, ModelMap modelMap) {
@@ -68,20 +72,21 @@ public class FollowController {
 		if ((sourceId == followerId) && (sourceType == Follow.FOLLOW_USER)) {
 			return "followlist";
 		}
-		// 如果是关注一个问题，那么给他的follower一个message
-		if (sourceType == Follow.FOLLOW_COMMENT) {
-			List<Follow> followList = followService
-					.getFollowByFollowedUserId(userId);
-			for (int i = 0; i < followList.size(); i++) {
-				Follow follow = followList.get(i);
-				Message message = new Message(follow.getFollowerId(), false,
-						Message.MESSAGE_FOLLOWED_FOLLOW_COMMENT, userId);
-				messageService.addMessage(message);
-			}
-
-		}
 		Follow follow = new Follow(sourceType, followerId, sourceId);
 		followService.addFollow(follow);
+		// 如果是关注一个问题，那么给他的follower一个message
+		if (sourceType == Follow.FOLLOW_COMMENT) {
+			/*
+			 * List<Follow> followList = followService
+			 * .getFollowByFollowedUserId(userId); for (int i = 0; i <
+			 * followList.size(); i++) { Follow follow = followList.get(i);
+			 * Message message = new Message(follow.getFollowerId(), false,
+			 * Message.MESSAGE_FOLLOWED_FOLLOW_COMMENT, userId);
+			 * messageService.addMessage(message); }
+			 */
+			messageFactory.addMessage(userId, userId,
+					Message.MESSAGE_FOLLOWED_FOLLOW_COMMENT);
+		}
 		return "/follow/listall_fortest.do";
 	}
 

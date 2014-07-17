@@ -87,11 +87,13 @@ public class Comment implements Serializable {
 		this.favoriteNum = favoriteNum;
 	}
 
-	public Comment(int id, int receiverId, int producerId, String content) {
-		this.content = content;
-	}
 	
-	public Comment(int receiverId, int producerId, String content) {
+
+	public Comment(int bookId, int receiverId, int producerId, String content) {
+		super();
+		this.bookId = bookId;
+		this.receiverId = receiverId;
+		this.producerId = producerId;
 		this.content = content;
 	}
 
