@@ -1,5 +1,6 @@
 package com.didihe1988.picker.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +41,23 @@ public class CommentController {
 			.getLogger(CommentController.class);
 
 	@RequestMapping(value = "/comment/add.do", method = RequestMethod.POST)
-	public String add(@RequestBody Comment comment) {
+	public String add(HttpServletRequest request) {
+		int userId=HttpUtils.getSessionUser(request).getId();
+		String content=request.getParameter("content");
+		int bookId=HttpUtils.getIntegerFromReqeust(request, "bookId");
+		int receiverId=HttpUtils.getIntegerFromReqeust(request, "receiverId");
+		int producerId=HttpUtils.getIntegerFromReqeust(request, "producerId");
+		//add Message
+		List<Follow> followList=followService.getFollowByFollowedUserId(userId);
+		for(int i=0;i<followList.size();i++)
+		{
+			Follow  follow=followList.get(i);
+			Message message=new Message(follow.getFollowerId(), false, Message.MESSAGE_FOLLOWED_COMMENT, userId);
+			messageService.addMessage(message);
+		}
+		
+		//addComment
+		Comment comment=new Comment(receiverId, producerId, content);
 		commentService.addComment(comment);
 		return "book/detail.do?bookId=" + comment.getBookId();
 	}

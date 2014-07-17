@@ -22,6 +22,7 @@
 		<table border="1">
 			<tr>
 				<td>commentId</td>
+				<td>followCommend</td>
 				<td>bookId</td>
 				<td>receiverId</td>
 				<td>producerId</td>
@@ -34,6 +35,11 @@
 			<c:forEach var="comment" items="${commentList}" varStatus="status">
 				<tr>
 					<td>${comment.id}</td>
+					<a
+						href=<c:url value="/follow/add.do">
+						 <c:param name="sourceType" value="0"/> 
+						 <c:param name="sourceId" value="${comment.id}"/> 
+						</c:url>><td>followComment</td></a>
 					<td>${comment.bookId}</td>
 					<td>${comment.receiverId}</td>
 					<td>${comment.producerId}</td>
@@ -41,7 +47,7 @@
 						href=<c:url value="/follow/add.do">
 						 <c:param name="sourceType" value="1"/> 
 						 <c:param name="sourceId" value="${comment.producerId}"/> 
-						</c:url>><td>followProducer</td></a>
+						</c:url>><td>followProduceUser</td></a>
 					<td>${comment.content}</td>
 					<td>${comment.favoriteNum}</td>
 					<a

@@ -90,6 +90,10 @@ public class Comment implements Serializable {
 	public Comment(int id, int receiverId, int producerId, String content) {
 		this.content = content;
 	}
+	
+	public Comment(int receiverId, int producerId, String content) {
+		this.content = content;
+	}
 
 	@Override
 	public String toString() {

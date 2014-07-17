@@ -4,14 +4,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.mockito.asm.tree.IntInsnNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.didihe1988.picker.model.Follow;
+import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.service.FollowService;
+import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.utils.HttpUtils;
 
 @Controller
@@ -19,6 +20,9 @@ public class FollowController {
 
 	@Autowired
 	private FollowService followService;
+
+	@Autowired
+	private MessageService messageService;
 
 	@RequestMapping(value = "/follow/list_byfollowerid.do")
 	public String listByFollowerId(HttpServletRequest request, ModelMap modelMap) {
@@ -59,9 +63,22 @@ public class FollowController {
 		int sourceType = HttpUtils.getIntegerFromReqeust(request, "sourceType");
 		int sourceId = HttpUtils.getIntegerFromReqeust(request, "sourceId");
 		int followerId = HttpUtils.getSessionUser(request).getId();
+		int userId = followerId;
 		// 自己不能关注自己
 		if ((sourceId == followerId) && (sourceType == Follow.FOLLOW_USER)) {
 			return "followlist";
+		}
+		// 如果是关注一个问题，那么给他的follower一个message
+		if (sourceType == Follow.FOLLOW_COMMENT) {
+			List<Follow> followList = followService
+					.getFollowByFollowedUserId(userId);
+			for (int i = 0; i < followList.size(); i++) {
+				Follow follow = followList.get(i);
+				Message message = new Message(follow.getFollowerId(), false,
+						Message.MESSAGE_FOLLOWED_FOLLOW_COMMENT, userId);
+				messageService.addMessage(message);
+			}
+
 		}
 		Follow follow = new Follow(sourceType, followerId, sourceId);
 		followService.addFollow(follow);
