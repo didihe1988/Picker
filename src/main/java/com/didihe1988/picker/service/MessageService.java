@@ -12,6 +12,8 @@ public interface MessageService {
 	public int deleteMessage(Message message);
 
 	public List<Message> getMessageByReceiverId(int receiverId);
+	
+	public List<Message> getMessageByReceiverIdAndType(int receiverId,int type);
 
 	public boolean isMessageExists(Message message);
 

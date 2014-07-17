@@ -12,6 +12,13 @@ public class Message implements Serializable {
 	public static final int MESSAGE_FOLLOWED_FOLLOW_COMMENT = 3;
 	public static final int MESSAGE_COMMENT_UPDATE = 4;
 
+	// to display
+	public static final int MESSAGE_UNCHECKED = 5;
+	public static final int MESSAGE_CHECKED = 6;
+	public static final int MESSAGE_COMMENT = 7;
+	public static final int MESSAGE_FOLLOWED = 8;
+	public static final int MESSAGE_ALL= 7;
+
 	private static final long serialVersionUID = 1L;
 
 	private int id;
@@ -77,9 +84,8 @@ public class Message implements Serializable {
 		this.type = type;
 		this.sourceId = sourceId;
 	}
-	
-	public Message(int receiverId, boolean isChecked, int type,
-			int sourceId) {
+
+	public Message(int receiverId, boolean isChecked, int type, int sourceId) {
 		super();
 		this.receiverId = receiverId;
 		this.isChecked = isChecked;

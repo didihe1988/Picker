@@ -83,4 +83,10 @@ public class MessageServiceImpl implements MessageService {
 		return messageDao.setMessageChecked(id);
 	}
 
+	@Override
+	public List<Message> getMessageByReceiverIdAndType(int receiverId, int type) {
+		// TODO Auto-generated method stub
+		return messageDao.queryMessageByReceiverIdAndType(receiverId, type);
+	}
+
 }

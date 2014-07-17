@@ -19,4 +19,6 @@ public interface MessageDao {
 
 	public int setMessageChecked(int id);
 	
+	public List<Message> queryMessageByReceiverIdAndType(int receiverId, int type);
+	
 }

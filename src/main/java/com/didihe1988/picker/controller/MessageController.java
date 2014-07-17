@@ -29,6 +29,16 @@ public class MessageController {
 		return "messagelist";
 	}
 
+	@RequestMapping(value = "/message/list_type.do")
+	public String listByType(HttpServletRequest request, ModelMap modelMap) {
+		int receiverId = HttpUtils.getIntegerFromReqeust(request, "receiverId");
+		int type = HttpUtils.getIntegerFromReqeust(request, "type");
+		List<Message> messageList = messageService.getMessageByReceiverIdAndType(receiverId, type);
+		System.out.println(messageList);
+		modelMap.addAttribute("messageList", messageList);
+		return "messagelist";
+	}
+
 	@RequestMapping(value = "/message/setchecked.do")
 	public String setChecked(HttpServletRequest request) {
 		int id = HttpUtils.getIntegerFromReqeust(request, "id");

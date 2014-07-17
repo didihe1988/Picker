@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.didihe1988.picker.factory.MessageFactory;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.service.CommentService;
@@ -30,9 +32,6 @@ public class CommentController {
 
 	@Autowired
 	private MessageFactory messageFactory;
-
-	private final static Logger logger = LoggerFactory
-			.getLogger(CommentController.class);
 
 	@RequestMapping(value = "/comment/add.do", method = RequestMethod.POST)
 	public String add(HttpServletRequest request) {
