@@ -14,6 +14,10 @@ public class HttpUtils {
 		request.getSession().setAttribute(Constant.USER, user);
 	}
 
+	public static void setSessionUserId(HttpServletRequest request, int userId) {
+		request.getSession().setAttribute(Constant.USERID, userId);
+	}
+
 	public static void removeSessionUser(HttpServletRequest request) {
 		request.getSession().removeAttribute(Constant.USER);
 	}

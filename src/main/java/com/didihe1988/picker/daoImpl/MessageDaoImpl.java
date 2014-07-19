@@ -106,7 +106,9 @@ public class MessageDaoImpl implements MessageDao {
 		}
 		// 这个早晨起来再看看
 		else if (type == Message.MESSAGE_FOLLOWED) {
-			hql = "from Message as message where message.receiverId = ? and message.type between 1 and 3";
+			// hql =
+			// "from Message as message where message.receiverId = ? and message.type between 1 and 3";
+			hql = "from Message as message where message.receiverId = ? and message.type=1,2,3";
 		}
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, receiverId);

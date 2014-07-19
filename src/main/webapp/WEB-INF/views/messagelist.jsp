@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Followlist</title>
+<title>Messagelist</title>
 </head>
 <body>
 	<hr>
-	<h4>FollowList</h4>
+	<h4>MessageList</h4>
 
 	<div>
 		<table border="1">

@@ -42,6 +42,7 @@ public class LoginController {
 			user.setLastVisit(new Date());
 			userService.updateUser(user);
 			HttpUtils.setSessionUser(request, user);
+			HttpUtils.setSessionUserId(request, user.getId());
 			return "redirect:/book/list.do";
 		}
 

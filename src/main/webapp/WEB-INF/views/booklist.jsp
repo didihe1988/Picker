@@ -3,18 +3,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.didihe1988.picker.model.User"%>
+<%@ page import="com.didihe1988.picker.common.Constant"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Booklist</title>
 </head>
+<%
+	int userId = (Integer) session.getAttribute(Constant.USERID);
+%>
+<a href="/message/list.do?receiverId=" <%=userId%>>Check current
+	user's message</a>
 <body>
 	<!-- <a href="/book/list_android.do">test list_anroid.do</a>-->
 	<!--  我在想session应该搁user还是userid -->
 	<div>
 		<%
-			User user = (User) request.getSession().getAttribute("picker_user");
+			User user = (User) request.getSession().getAttribute(Constant.USER);
 		%>
 		<h4>User(session):</h4>
 		id-<%=user.getId()%><br> username -
@@ -62,7 +68,7 @@
 			</c:forEach>
 		</table>
 	</div>
-	
+
 	<!--  
 	<a href="/picker/book/detail.do?bookId=4">test_hyperlink01</a>
 	<a href="/picker/register.html">test_hyperlink02</a> -->
