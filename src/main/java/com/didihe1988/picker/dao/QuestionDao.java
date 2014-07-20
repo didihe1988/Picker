@@ -19,4 +19,8 @@ public interface QuestionDao {
 
 	public List<Question> queryQuestionByBookId(int id);
 
+	public int incrementFavoriteNum(int id);
+
+	public int decrementFavoriteNum(int id);
+
 }

@@ -64,7 +64,7 @@ public class QuestionDaoImpl implements QuestionDao {
 		if (question == null) {
 			return false;
 		}
-		String hql = "select count(*) from Question q where q.id = ?";
+		String hql = "select count(*) from Question as q where q.id = ?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, question.getId());
 		Long count = (Long) query.uniqueResult();
@@ -94,7 +94,7 @@ public class QuestionDaoImpl implements QuestionDao {
 	}
 
 	@Override
-	public int decrementFavoriteNumk(int id) {
+	public int decrementFavoriteNum(int id) {
 		// TODO Auto-generated method stub
 		String hql = "update Question as q set q.favoriteNum=q.favoriteNum-1 and where q.id =?";
 		Query query = getCurrentSession().createQuery(hql);

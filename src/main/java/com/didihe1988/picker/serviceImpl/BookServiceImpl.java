@@ -79,4 +79,27 @@ public class BookServiceImpl implements BookService {
 		}
 		return bookDao.isBookExists(book);
 	}
+
+	@Override
+	public int incrementQuestionNum(int id) {
+		// TODO Auto-generated method stub
+		if (findBookById(id) == null) {
+			return Status.NOT_EXISTS;
+		}
+		int status = bookDao.incrementComment(id);
+		// 这个应该怎样判断返回 测试一下判断hibernate的返回值
+		return Status.SUCCESS;
+	}
+
+	@Override
+	public int decrementQuestionNum(int id) {
+		// TODO Auto-generated method stub
+		if (findBookById(id) == null) {
+			return Status.NOT_EXISTS;
+		}
+		int status = bookDao.decrementQuestionNum(id);
+		// 这个应该怎样判断返回
+		return Status.SUCCESS;
+	}
+
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.CommentDao;
 import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.dao.UserDao;
@@ -28,7 +29,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		// TODO Auto-generated method stub
 		Comment comment = commentDao.queryCommentById(commentId);
 		if (comment == null) {
-			return -1;
+			return Status.NOT_EXISTS;
 		}
 		// int userId = comment.getProducerId();
 		Favorite favorite = new Favorite(commentId, userId);
@@ -37,7 +38,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 			commentDao.incrementFavoriteNum(commentId);
 			favoriteDao.addFavorite(favorite);
 		}
-		return 1;
+		return Status.SUCCESS;
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		// TODO Auto-generated method stub
 		Comment comment = commentDao.queryCommentById(commentId);
 		if (comment == null) {
-			return -1;
+			return Status.NOT_EXISTS;
 		}
 		// int userId = comment.getProducerId();
 		Favorite favorite = new Favorite(commentId, userId);
@@ -54,7 +55,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 			commentDao.decrementFavoriteNumk(commentId);
 			favoriteDao.deleteFavorite(favorite);
 		}
-		return 1;
+		return Status.SUCCESS;
 	}
 
 }

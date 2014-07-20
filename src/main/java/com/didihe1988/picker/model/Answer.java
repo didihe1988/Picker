@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "question")
-public class Question implements Serializable {
+@Table(name = "answer")
+public class Answer implements Serializable {
 
 	/**
 	 * 
@@ -20,26 +20,30 @@ public class Question implements Serializable {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "question_id")
+	@Column(name = "answer_id")
 	private int id;
 
-	@Column(name = "question_bookid")
-	private int bookId;
+	@Column(name = "answer_questionid")
+	private int questionId;
 
-	@Column(name = "question_askerid")
-	private int askerId;
-
-	@Column(name = "question_content")
+	@Column(name = "answer_content")
 	private String content;
 
-	@Column(name = "question_favoritenum")
+	@Column(name = "answer_favoritenum")
 	private int favoriteNum;
 
-	@Column(name = "question_date")
+	@Column(name = "answer_date")
 	private Date date;
 
-	public Question() {
+	public Answer() {
 
+	}
+
+	public Answer(int questionId, String content, Date date) {
+		super();
+		this.questionId = questionId;
+		this.content = content;
+		this.date = date;
 	}
 
 	public int getId() {
@@ -50,20 +54,12 @@ public class Question implements Serializable {
 		this.id = id;
 	}
 
-	public int getBookId() {
-		return bookId;
+	public int getQuestionId() {
+		return questionId;
 	}
 
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
-	}
-
-	public int getAskerId() {
-		return askerId;
-	}
-
-	public void setAskerId(int askerId) {
-		this.askerId = askerId;
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
 	}
 
 	public String getContent() {
@@ -90,20 +86,11 @@ public class Question implements Serializable {
 		this.date = date;
 	}
 
-	public Question(int bookId, int askerId, String content, Date date) {
-		super();
-		this.bookId = bookId;
-		this.askerId = askerId;
-		this.content = content;
-		this.favoriteNum = favoriteNum;
-		this.date = date;
-	}
-
 	@Override
 	public String toString() {
-		return "Question [id=" + id + ", bookId=" + bookId + ", askerId="
-				+ askerId + ", content=" + content + ", favoriteNum="
-				+ favoriteNum + ", date=" + date + "]";
+		return "Answer [id=" + id + ", questionId=" + questionId + ", content="
+				+ content + ", favoriteNum=" + favoriteNum + ", date=" + date
+				+ "]";
 	}
 
 }

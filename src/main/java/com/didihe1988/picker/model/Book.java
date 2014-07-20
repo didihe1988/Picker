@@ -36,6 +36,9 @@ public class Book implements Serializable {
 	@Column(name = "book_commentnum")
 	private int commentNum;
 
+	@Column(name = "book_questionnum")
+	private int questionNum;
+
 	public Book() {
 
 	}
@@ -96,12 +99,20 @@ public class Book implements Serializable {
 		this.commentNum = commentNum;
 	}
 
+	public int getQuestionNum() {
+		return questionNum;
+	}
+
+	public void setQuestionNum(int questionNum) {
+		this.questionNum = questionNum;
+	}
+
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", bookName=" + bookName + ", isbn=" + isbn
 				+ ", press=" + press + ", followNum=" + followNum
-				+ ", commentNum=" + commentNum + "]";
+				+ ", commentNum=" + commentNum + ", questionNum=" + questionNum
+				+ "]";
 	}
 
-	
 }

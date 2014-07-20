@@ -13,8 +13,10 @@ public interface BookService {
 	public int deleteBook(Book book);
 
 	public int updateBook(Book book);
-	
+
 	public boolean isBookExists(Book book);
-	
-	
+
+	public int incrementQuestionNum(int id);
+
+	public int decrementQuestionNum(int id);
 }

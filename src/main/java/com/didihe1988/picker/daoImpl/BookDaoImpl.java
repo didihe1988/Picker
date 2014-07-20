@@ -111,4 +111,22 @@ public class BookDaoImpl implements BookDao {
 		return query.executeUpdate();
 	}
 
+	@Override
+	public int incrementQuestionNum(int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Book as book set book.questionNum =book.questionNum+1 where book.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public int decrementQuestionNum(int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Book as book set book.questionNum =book.questionNum-1 where book.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
 }

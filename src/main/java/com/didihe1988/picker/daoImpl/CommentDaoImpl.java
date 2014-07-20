@@ -75,6 +75,7 @@ public class CommentDaoImpl implements CommentDao {
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> queryCommentByBookId(int id) {
 		// TODO Auto-generated method stub
