@@ -18,7 +18,7 @@ public class Comment implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "comment_id")
-	public int id;
+	private int id;
 
 	@Column(name = "comment_bookid")
 	private int bookId;
