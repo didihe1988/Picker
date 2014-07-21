@@ -2,7 +2,7 @@ package com.didihe1988.picker.service;
 
 import com.didihe1988.picker.model.Book;
 
-public interface BookService {
+public interface BookService{
 	// public List<Book> findAllByUserId(int id);
 	public Book findBookById(int id);
 

@@ -16,13 +16,15 @@ public class MessageFactory {
 	@Autowired
 	private MessageService messageService;
 
-	public void addMessage(int userId, int sourseId, int type) {
+	public void addMessage(int userId, int mainSourceId, int relatedSourceId,
+			int type) {
+		// 先写Followed类型的 晚些时候写Question类型的
 		List<Follow> followList = followService
 				.getFollowByFollowedUserId(userId);
 		for (int i = 0; i < followList.size(); i++) {
 			Follow follow = followList.get(i);
 			Message message = new Message(follow.getFollowerId(), false, type,
-					sourseId);
+					mainSourceId, relatedSourceId);
 			messageService.addMessage(message);
 		}
 	}

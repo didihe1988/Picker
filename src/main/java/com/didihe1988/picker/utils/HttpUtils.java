@@ -10,6 +10,10 @@ public class HttpUtils {
 		return (User) request.getSession().getAttribute(Constant.USER);
 	}
 
+	public static int getSessionUserId(HttpServletRequest request) {
+		return (Integer) request.getSession().getAttribute(Constant.USERID);
+	}
+
 	public static void setSessionUser(HttpServletRequest request, User user) {
 		request.getSession().setAttribute(Constant.USER, user);
 	}

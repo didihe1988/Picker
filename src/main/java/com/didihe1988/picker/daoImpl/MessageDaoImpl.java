@@ -98,17 +98,20 @@ public class MessageDaoImpl implements MessageDao {
 			int type) {
 		// TODO Auto-generated method stub
 		String hql = "";
+		//未查看的消息
 		if (type == Message.MESSAGE_UNCHECKED) {
 			hql = "from Message as message where message.receiverId = ? and message.isChecked =false";
-
-		} else if (type == Message.MESSAGE_COMMENT) {
+			
+		}
+		//有关问题的消息
+		else if (type == Message.MESSAGE_QUESTION) {
 			hql = "from Message as message where message.receiverId = ? and message.type =4";
 		}
-		// 这个早晨起来再看看
+		// 有关被关注人的消息
 		else if (type == Message.MESSAGE_FOLLOWED) {
 			// hql =
 			// "from Message as message where message.receiverId = ? and message.type between 1 and 3";
-			hql = "from Message as message where message.receiverId = ? and message.type=1,2,3";
+			hql = "from Message as message where message.receiverId = ? and message.type=1,2,3，4";
 		}
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, receiverId);

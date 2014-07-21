@@ -16,7 +16,7 @@ public class Follow implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static final int FOLLOW_COMMENT = 0;
+	public static final int FOLLOW_QUESTION = 0;
 	public static final int FOLLOW_USER = 1;
 	
 	/*

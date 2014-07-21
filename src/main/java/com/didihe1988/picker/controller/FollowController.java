@@ -75,17 +75,13 @@ public class FollowController {
 		Follow follow = new Follow(sourceType, followerId, sourceId);
 		followService.addFollow(follow);
 		// 如果是关注一个问题，那么给他的follower一个message
-		if (sourceType == Follow.FOLLOW_COMMENT) {
+		if (sourceType == Follow.FOLLOW_QUESTION) {
 			/*
-			 * List<Follow> followList = followService
-			 * .getFollowByFollowedUserId(userId); for (int i = 0; i <
-			 * followList.size(); i++) { Follow follow = followList.get(i);
-			 * Message message = new Message(follow.getFollowerId(), false,
-			 * Message.MESSAGE_FOLLOWED_FOLLOW_COMMENT, userId);
-			 * messageService.addMessage(message); }
+			 * userId:找到follower userId：mainSourceType
+			 * sourceId:relatedSourceType
 			 */
-			messageFactory.addMessage(userId, userId,
-					Message.MESSAGE_FOLLOWED_FOLLOW_COMMENT);
+			messageFactory.addMessage(userId, userId, sourceId,
+					Message.MESSAGE_FOLLOWED_FOLLOWQUESTION);
 		}
 		return "/follow/listall_fortest.do";
 	}
