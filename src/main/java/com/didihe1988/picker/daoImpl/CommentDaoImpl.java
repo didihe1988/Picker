@@ -11,10 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.CommentDao;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
-public class CommentDaoImpl implements CommentDao {
+public class CommentDaoImpl implements CommentDao, DeleteValidation {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -101,6 +102,20 @@ public class CommentDaoImpl implements CommentDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();
+	}
+
+	@Override
+	public boolean checkDeleteValidation(int ownerId, int objectId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Comment as c where c.producerId =? and f.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, ownerId);
+		query.setInteger(1, objectId);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -11,10 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.model.Follow;
+import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
-public class FollowDaoImpl implements FollowDao {
+public class FollowDaoImpl implements FollowDao, DeleteValidation {
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -114,6 +115,21 @@ public class FollowDaoImpl implements FollowDao {
 		String hql = "from Follow";
 		Query query = getCurrentSession().createQuery(hql);
 		return query.list();
+	}
+
+	// 关注人 可以取消他已经关注的人/问题
+	@Override
+	public boolean checkDeleteValidation(int ownerId, int objectId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Follow as f where f.followerId =? and f.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, ownerId);
+		query.setInteger(1, objectId);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -12,6 +12,8 @@ public interface AnswerService {
 	public int updateAnswer(Answer answer);
 
 	public boolean isAnswerExists(Answer answer);
+	
+	public boolean isAnswerOfUserExists(int userId);
 
 	public Answer getAnswerById(int id);
 

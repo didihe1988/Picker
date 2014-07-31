@@ -9,10 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.model.Favorite;
+import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
-public class FavoriteDaoImpl implements FavoriteDao {
+public class FavoriteDaoImpl implements FavoriteDao, DeleteValidation {
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -64,6 +65,20 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
 		query.setInteger(1, commentId);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean checkDeleteValidation(int ownerId, int objectId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Favorite as f where f.userId =? and f.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, ownerId);
+		query.setInteger(1, objectId);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;

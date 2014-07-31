@@ -66,6 +66,12 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
+	public boolean isAnswerOfUserExists(int userId) {
+		// TODO Auto-generated method stub
+		return answerDao.isAnswerOfUserExists(userId);
+	}
+
+	@Override
 	public Answer getAnswerById(int id) {
 		// TODO Auto-generated method stub
 		return answerDao.queryAnswerById(id);

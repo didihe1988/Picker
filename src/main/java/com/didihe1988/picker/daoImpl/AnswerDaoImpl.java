@@ -11,10 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.model.Answer;
+import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
-public class AnswerDaoImpl implements AnswerDao {
+public class AnswerDaoImpl implements AnswerDao, DeleteValidation {
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -96,6 +97,33 @@ public class AnswerDaoImpl implements AnswerDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return (Integer) query.uniqueResult();
+	}
+
+	@Override
+	public boolean isAnswerOfUserExists(int userId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Answer as a where a.replierId = ?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, userId);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean checkDeleteValidation(int ownerId, int objectId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Answer as a where a.replierId =? and a.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, ownerId);
+		query.setInteger(1, objectId);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }

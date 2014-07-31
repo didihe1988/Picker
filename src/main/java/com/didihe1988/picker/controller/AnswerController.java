@@ -25,11 +25,14 @@ public class AnswerController {
 		int userId = HttpUtils.getSessionUserId(request);
 		int questionId = HttpUtils.getIntegerFromReqeust(request, "questionId");
 		String content = HttpUtils.getStringFromReqeust(request, "content");
-		Answer answer = new Answer(questionId, content);
+		Answer answer = new Answer(questionId, userId, content);
 		answerService.addAnswer(answer);
 		int answerId = answerService.getLatestAnswerIdByQuestionId(questionId);
 		messageFactory.addMessage(userId, userId, answerId,
 				Message.MESSAGE_FOLLOWED_ANSWER_QUESTION);
 		return "";
 	}
+	
+	
+	
 }

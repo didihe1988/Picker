@@ -11,10 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.model.Question;
+import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
-public class QuestionDaoImpl implements QuestionDao {
+public class QuestionDaoImpl implements QuestionDao, DeleteValidation {
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -120,6 +121,20 @@ public class QuestionDaoImpl implements QuestionDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return (Integer) query.uniqueResult();
+	}
+
+	@Override
+	public boolean checkDeleteValidation(int ownerId, int objectId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Question as q where q.askerId =? and q.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, ownerId);
+		query.setInteger(1, objectId);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }
