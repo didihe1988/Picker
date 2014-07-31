@@ -50,9 +50,10 @@ public class CommentController {
 		 * Message.MESSAGE_FOLLOWED_COMMENT, userId);
 		 * messageService.addMessage(message); }
 		 */
-
-		messageFactory.addMessage(userId, userId,
-				Message.MESSAGE_FOLLOWED_COMMENT);
+		/*
+		 * messageFactory.addMessage(userId, userId,
+		 * Message.MESSAGE_FOLLOWED_COMMENT);
+		 */
 		// addComment
 		return "book/detail.do?bookId=" + comment.getBookId();
 	}
@@ -92,8 +93,10 @@ public class CommentController {
 		 * Message.MESSAGE_FOLLOWED_FAVORITE, commentId);
 		 * messageService.addMessage(message); }
 		 */
-		messageFactory.addMessage(userId, commentId,
-				Message.MESSAGE_FOLLOWED_FAVORITE);
+		/*
+		 * messageFactory.addMessage(userId, commentId,
+		 * Message.MESSAGE_FOLLOWED_FAVORITE);
+		 */
 		return "redirect:/book/detail.do?bookId=" + bookId;
 	}
 
