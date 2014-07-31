@@ -84,4 +84,18 @@ public class AnswerDaoImpl implements AnswerDao {
 		return query.list();
 	}
 
+	@Override
+	public int queryLatestAnswerIdByQuestionId(int id) {
+		// TODO Auto-generated method stub
+		/*
+		 * List<Answer> answerList = this.queryAnswerByQuestionId(id); Answer
+		 * answer = answerList.get(answerList.size() - 1); if (answer == null) {
+		 * return 0; } return answer.getId();
+		 */
+		String hql = "select max(a.id) from Answer as a where a.questionId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return (Integer) query.uniqueResult();
+	}
+
 }

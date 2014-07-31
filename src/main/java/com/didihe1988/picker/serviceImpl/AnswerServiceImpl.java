@@ -77,4 +77,10 @@ public class AnswerServiceImpl implements AnswerService {
 		return answerDao.queryAnswerByQuestionId(id);
 	}
 
+	@Override
+	public int getLatestAnswerIdByQuestionId(int id) {
+		// TODO Auto-generated method stub
+		return answerDao.queryLatestAnswerIdByQuestionId(id);
+	}
+
 }

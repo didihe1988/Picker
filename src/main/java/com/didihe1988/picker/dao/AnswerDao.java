@@ -17,4 +17,6 @@ public interface AnswerDao {
 
 	public List<Answer> queryAnswerByQuestionId(int id);
 
+	public int queryLatestAnswerIdByQuestionId(int id);
+
 }

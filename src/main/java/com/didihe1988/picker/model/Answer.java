@@ -26,6 +26,9 @@ public class Answer implements Serializable {
 	@Column(name = "answer_questionid")
 	private int questionId;
 
+	@Column(name = "answer_replierid")
+	private int replierId;
+
 	@Column(name = "answer_content")
 	private String content;
 
@@ -39,17 +42,16 @@ public class Answer implements Serializable {
 
 	}
 
-	public Answer(int questionId, String content, Date date) {
+	public Answer(int questionId, int replierId, String content, Date date) {
 		super();
 		this.questionId = questionId;
+		this.replierId = replierId;
 		this.content = content;
 		this.date = date;
 	}
 
-	public Answer(int questionId, String content) {
-		this.questionId = questionId;
-		this.content = content;
-		this.date = new Date();
+	public Answer(int questionId, int replierId, String content) {
+		this(questionId, replierId, content, new Date());
 	}
 
 	public int getId() {

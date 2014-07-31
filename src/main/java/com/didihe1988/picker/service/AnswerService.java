@@ -16,4 +16,6 @@ public interface AnswerService {
 	public Answer getAnswerById(int id);
 
 	public List<Answer> getAnswerByQuestionId(int id);
+	
+	public int getLatestAnswerIdByQuestionId(int id);
 }

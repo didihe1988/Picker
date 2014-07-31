@@ -32,7 +32,9 @@
 	<context:component-scan base-package="com.didihe1988.picker.service" />
 	<context:component-scan base-package="com.didihe1988.picker.controller" />
 	 <context:component-scan base-package="com.didihe1988.picker.daoImpl" 
-		/> 
+		/>
+	<context:component-scan base-package="com.didihe1988.picker.factory" />
+		 
 	<!-- <context:component-scan base-package="com.didihe1988.picker" use-default-filters="false"> 
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" 
 		/> </context:component-scan> -->

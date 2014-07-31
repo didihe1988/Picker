@@ -113,4 +113,13 @@ public class QuestionDaoImpl implements QuestionDao {
 
 	}
 
+	@Override
+	public int getLatestQuestionIdByBookId(int id) {
+		// TODO Auto-generated method stub
+		String hql = "select max(q.id) from Question as q where q.bookId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return (Integer) query.uniqueResult();
+	}
+
 }

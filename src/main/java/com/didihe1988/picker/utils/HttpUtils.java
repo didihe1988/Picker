@@ -36,4 +36,9 @@ public class HttpUtils {
 			String parameter) {
 		return Integer.parseInt(request.getParameter(parameter));
 	}
+
+	public static String getStringFromReqeust(HttpServletRequest request,
+			String parameter) {
+		return (String) request.getParameter(parameter);
+	}
 }

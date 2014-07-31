@@ -18,6 +18,8 @@ public interface QuestionDao {
 	public List<Question> queryQuestionByAskerId(int id);
 
 	public List<Question> queryQuestionByBookId(int id);
+	
+	public int getLatestQuestionIdByBookId(int id);
 
 	public int incrementFavoriteNum(int id);
 
