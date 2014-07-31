@@ -93,12 +93,16 @@ public class Message implements Serializable {
 	public Message(int receiverId, boolean isChecked, int type,
 			int mainSourceId, int relatedSourceId) {
 		super();
-		this.id = id;
 		this.receiverId = receiverId;
 		this.isChecked = isChecked;
 		this.type = type;
 		this.mainSourceId = mainSourceId;
 		this.relatedSourceId = relatedSourceId;
+	}
+
+	public Message(int receiverId, int type, int mainSourceId,
+			int relatedSourceId) {
+		this(receiverId, false, type, mainSourceId, relatedSourceId);
 	}
 
 	public Message() {

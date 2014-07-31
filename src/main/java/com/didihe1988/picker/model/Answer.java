@@ -46,6 +46,12 @@ public class Answer implements Serializable {
 		this.date = date;
 	}
 
+	public Answer(int questionId, String content) {
+		this.questionId = questionId;
+		this.content = content;
+		this.date = new Date();
+	}
+
 	public int getId() {
 		return id;
 	}

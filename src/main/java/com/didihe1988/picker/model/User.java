@@ -54,6 +54,12 @@ public class User implements Serializable {
 		this.lastVisit = lastVisit;
 	}
 
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+		this.lastVisit = new Date();
+	}
+
 	public int getId() {
 		return id;
 	}

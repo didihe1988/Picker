@@ -1,6 +1,5 @@
 package com.didihe1988.picker.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +28,7 @@ public class QuestionController {
 		int userId = HttpUtils.getSessionUserId(request);
 		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
 		String content = (String) request.getAttribute("content");
-		Question question = new Question(bookId, userId, content, new Date());
+		Question question = new Question(bookId, userId, content);
 		questionService.addQuestion(question);
 		// 暂时只想出这种方法获得新Question的Id 可以专门写一个方法
 		List<Question> questionList = questionService

@@ -95,8 +95,11 @@ public class Question implements Serializable {
 		this.bookId = bookId;
 		this.askerId = askerId;
 		this.content = content;
-		this.favoriteNum = favoriteNum;
 		this.date = date;
+	}
+	
+	public Question(int bookId, int askerId, String content) {
+		this(bookId, askerId, content, new Date());
 	}
 
 	@Override

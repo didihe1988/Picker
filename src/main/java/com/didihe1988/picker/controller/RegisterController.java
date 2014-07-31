@@ -23,7 +23,7 @@ public class RegisterController {
 	public void addUser(HttpServletRequest request) {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		User user = new User(username, password, new Date());
+		User user = new User(username, password);
 		userService.addUser(user);
 		// 测试通过 没有写返回界面 直接返回到了addUser.jsp
 	}

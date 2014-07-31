@@ -33,7 +33,8 @@ public class MessageController {
 	public String listByType(HttpServletRequest request, ModelMap modelMap) {
 		int receiverId = HttpUtils.getIntegerFromReqeust(request, "receiverId");
 		int type = HttpUtils.getIntegerFromReqeust(request, "type");
-		List<Message> messageList = messageService.getMessageByReceiverIdAndType(receiverId, type);
+		List<Message> messageList = messageService
+				.getMessageByReceiverIdAndType(receiverId, type);
 		System.out.println(messageList);
 		modelMap.addAttribute("messageList", messageList);
 		return "messagelist";
@@ -49,9 +50,14 @@ public class MessageController {
 	@RequestMapping(value = "/message/add.do")
 	public String addMessage(HttpServletRequest request) {
 		int type = HttpUtils.getIntegerFromReqeust(request, "type");
-		int sourceId = HttpUtils.getIntegerFromReqeust(request, "sourceId");
+		int mainSourceId = HttpUtils.getIntegerFromReqeust(request,
+				"mainSourceId");
 		int receiverId = HttpUtils.getIntegerFromReqeust(request, "receiverId");
-		Message message = new Message(receiverId, false, type, sourceId);
+		int relatedSourceId = HttpUtils.getIntegerFromReqeust(request,
+				"relatedSourceId");
+
+		Message message = new Message(receiverId, type, mainSourceId,
+				relatedSourceId);
 		messageService.addMessage(message);
 		// return "messagelist";
 		return "";

@@ -2,10 +2,16 @@ package com.didihe1988.picker.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
+
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.User;
 
 public class HttpUtils {
+	private HttpUtils() {
+
+	}
+
 	public static User getSessionUser(HttpServletRequest request) {
 		return (User) request.getSession().getAttribute(Constant.USER);
 	}
