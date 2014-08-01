@@ -12,14 +12,15 @@ public class Message implements Serializable {
 	public static final int MESSAGE_FOLLOWED_FAVORITE = 3;
 	public static final int MESSAGE_FOLLOWED_FOLLOWQUESTION = 4;
 	public static final int MESSAGE_FOLLOWED_ADDBOUGHT = 5;
-	public static final int MESSAGE_QUESTION_UPDATE = 6;
+	public static final int MESSAGE_FOLLOWED_ADDCOMMENT = 6;
+	public static final int MESSAGE_QUESTION_UPDATE = 7;
 
 	// to display
-	public static final int MESSAGE_UNCHECKED = 7;
-	public static final int MESSAGE_CHECKED = 8;
-	public static final int MESSAGE_QUESTION = 9;
-	public static final int MESSAGE_FOLLOWED = 10;
-	public static final int MESSAGE_ALL = 11;
+	public static final int MESSAGE_UNCHECKED = 8;
+	public static final int MESSAGE_CHECKED = 9;
+	public static final int MESSAGE_QUESTION = 10;
+	public static final int MESSAGE_FOLLOWED = 11;
+	public static final int MESSAGE_ALL = 12;
 
 	private static final long serialVersionUID = 1L;
 

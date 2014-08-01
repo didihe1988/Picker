@@ -83,4 +83,10 @@ public class CommentServiceImpl implements CommentService {
 		return commentDao.queryCommentByBookId(bookId);
 	}
 
+	@Override
+	public int getLatestCommentIdByUserId(int id) {
+		// TODO Auto-generated method stub
+		return commentDao.getLatestCommentIdByUserId(id);
+	}
+
 }

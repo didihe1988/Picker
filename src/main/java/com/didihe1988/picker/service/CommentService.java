@@ -14,6 +14,8 @@ public interface CommentService {
 	public Comment getCommentById(int id);
 
 	public boolean isCommentExists(Comment comment);
-	
+
 	public List<Comment> getCommentByBookId(int bookId);
+
+	public int getLatestCommentIdByUserId(int id);
 }

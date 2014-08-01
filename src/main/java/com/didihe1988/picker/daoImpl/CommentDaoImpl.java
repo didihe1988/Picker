@@ -118,4 +118,13 @@ public class CommentDaoImpl implements CommentDao, DeleteValidation {
 		return false;
 	}
 
+	@Override
+	public int getLatestCommentIdByUserId(int id) {
+		// TODO Auto-generated method stub
+		String hql = "select max(c.id) from Comment as c where c.producerId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return (Integer) query.uniqueResult();
+	}
+
 }

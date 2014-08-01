@@ -35,6 +35,12 @@ public class Question implements Serializable {
 	@Column(name = "question_favoritenum")
 	private int favoriteNum;
 
+	@Column(name = "question_commentnum")
+	private int commentNum;
+
+	@Column(name = "question_follownum")
+	private int followNum;
+
 	@Column(name = "question_date")
 	private Date date;
 
@@ -90,6 +96,22 @@ public class Question implements Serializable {
 		this.date = date;
 	}
 
+	public int getCommentNum() {
+		return commentNum;
+	}
+
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
+	}
+
+	public int getFollowNum() {
+		return followNum;
+	}
+
+	public void setFollowNum(int followNum) {
+		this.followNum = followNum;
+	}
+
 	public Question(int bookId, int askerId, String content, Date date) {
 		super();
 		this.bookId = bookId;
@@ -97,7 +119,7 @@ public class Question implements Serializable {
 		this.content = content;
 		this.date = date;
 	}
-	
+
 	public Question(int bookId, int askerId, String content) {
 		this(bookId, askerId, content, new Date());
 	}
@@ -106,7 +128,8 @@ public class Question implements Serializable {
 	public String toString() {
 		return "Question [id=" + id + ", bookId=" + bookId + ", askerId="
 				+ askerId + ", content=" + content + ", favoriteNum="
-				+ favoriteNum + ", date=" + date + "]";
+				+ favoriteNum + ", commentNum=" + commentNum + ", followNum="
+				+ followNum + ", date=" + date + "]";
 	}
 
 }

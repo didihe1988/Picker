@@ -20,4 +20,6 @@ public interface CommentDao {
 	public int incrementFavoriteNum(int id);
 
 	public int decrementFavoriteNumk(int id);
+	
+	public int getLatestCommentIdByUserId(int id);
 }

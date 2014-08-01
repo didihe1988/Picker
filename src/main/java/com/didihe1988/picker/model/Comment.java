@@ -1,6 +1,7 @@
 package com.didihe1988.picker.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,16 +16,17 @@ public class Comment implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+	public static final int COMMENT_QUESTION = 0;
+	public static final int COMMENT_ANSWER = 1;
+
 	@Id
 	@GeneratedValue
 	@Column(name = "comment_id")
 	private int id;
 
-	@Column(name = "comment_bookid")
-	private int bookId;
-
-	@Column(name = "comment_receiverid")
-	public int receiverId;
+	@Column(name = "comment_commentedid")
+	private int commentedId;
 
 	@Column(name = "comment_producerid")
 	public int producerId;
@@ -32,8 +34,14 @@ public class Comment implements Serializable {
 	@Column(name = "comment_content")
 	private String content;
 
+	@Column(name = "comment_type")
+	private int type;
+
 	@Column(name = "comment_favoritenum")
 	private int favoriteNum;
+
+	@Column(name = "comment_date")
+	private Date date;
 
 	public Comment() {
 
@@ -55,12 +63,28 @@ public class Comment implements Serializable {
 		this.id = id;
 	}
 
-	public int getReceiverId() {
-		return receiverId;
+	public int getCommentedId() {
+		return commentedId;
 	}
 
-	public void setReceiverId(int receiverId) {
-		this.receiverId = receiverId;
+	public void setCommentedId(int commentedId) {
+		this.commentedId = commentedId;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public int getProducerId() {
@@ -71,14 +95,6 @@ public class Comment implements Serializable {
 		this.producerId = producerId;
 	}
 
-	public int getBookId() {
-		return bookId;
-	}
-
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
-	}
-
 	public int getFavoriteNum() {
 		return favoriteNum;
 	}
@@ -87,21 +103,38 @@ public class Comment implements Serializable {
 		this.favoriteNum = favoriteNum;
 	}
 
-	
-
-	public Comment(int bookId, int receiverId, int producerId, String content) {
+	public Comment(int id, int commentedId, int producerId, String content,
+			int type, int favoriteNum, Date date) {
 		super();
-		this.bookId = bookId;
-		this.receiverId = receiverId;
+		this.id = id;
+		this.commentedId = commentedId;
 		this.producerId = producerId;
 		this.content = content;
+		this.type = type;
+		this.favoriteNum = favoriteNum;
+		this.date = date;
+	}
+
+	public Comment(int commentedId, int producerId, String content, int type,
+			Date date) {
+		super();
+		this.commentedId = commentedId;
+		this.producerId = producerId;
+		this.content = content;
+		this.type = type;
+		this.date = date;
+	}
+
+	public Comment(int commentedId, int producerId, String content, int type) {
+		this(commentedId, producerId, content, type, new Date());
 	}
 
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", bookId=" + bookId + ", receiverId="
-				+ receiverId + ", producerId=" + producerId + ", content="
-				+ content + ", favoriteNum=" + favoriteNum + "]";
+		return "Comment [id=" + id + ", commentedId=" + commentedId
+				+ ", producerId=" + producerId + ", content=" + content
+				+ ", type=" + type + ", favoriteNum=" + favoriteNum + ", date="
+				+ date + "]";
 	}
 
 }

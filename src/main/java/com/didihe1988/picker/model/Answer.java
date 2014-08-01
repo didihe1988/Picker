@@ -35,6 +35,9 @@ public class Answer implements Serializable {
 	@Column(name = "answer_favoritenum")
 	private int favoriteNum;
 
+	@Column(name = "answer_commentnum")
+	private int commentNum;
+
 	@Column(name = "answer_date")
 	private Date date;
 

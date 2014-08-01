@@ -35,27 +35,21 @@ public class CommentController {
 
 	@RequestMapping(value = "/comment/add.do", method = RequestMethod.POST)
 	public String add(HttpServletRequest request) {
-		int userId = HttpUtils.getSessionUser(request).getId();
-		String content = request.getParameter("content");
-		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
-		int receiverId = HttpUtils.getIntegerFromReqeust(request, "receiverId");
+		int userId = HttpUtils.getSessionUserId(request);
+		int commentedId = HttpUtils.getIntegerFromReqeust(request,
+				"commentedId");
 		int producerId = HttpUtils.getIntegerFromReqeust(request, "producerId");
-		Comment comment = new Comment(bookId, receiverId, producerId, content);
-		commentService.addComment(comment);
-		/*
-		 * // add Message List<Follow> followList =
-		 * followService.getFollowByFollowedUserId(userId); for (int i = 0; i <
-		 * followList.size(); i++) { Follow follow = followList.get(i); Message
-		 * message = new Message(follow.getFollowerId(), false,
-		 * Message.MESSAGE_FOLLOWED_COMMENT, userId);
-		 * messageService.addMessage(message); }
-		 */
-		/*
-		 * messageFactory.addMessage(userId, userId,
-		 * Message.MESSAGE_FOLLOWED_COMMENT);
-		 */
+		String content = HttpUtils.getStringFromReqeust(request, "content");
+		int type = HttpUtils.getIntegerFromReqeust(request, "type");
 		// addComment
-		return "book/detail.do?bookId=" + comment.getBookId();
+		Comment comment = new Comment(commentedId, producerId, content, type);
+		commentService.addComment(comment);
+		// add Message
+		int commentId = commentService.getLatestCommentIdByUserId(userId);
+		messageFactory.addMessage(userId, userId, commentId,
+				Message.MESSAGE_FOLLOWED_ADDCOMMENT);
+		// return "book/detail.do?bookId=" + comment.getBookId();
+		return "";
 	}
 
 	@RequestMapping(value = "/comment/list.do")
