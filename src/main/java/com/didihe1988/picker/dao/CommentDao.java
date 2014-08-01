@@ -17,9 +17,5 @@ public interface CommentDao {
 
 	public List<Comment> queryCommentByBookId(int id);
 
-	public int incrementFavoriteNum(int id);
-
-	public int decrementFavoriteNumk(int id);
-	
 	public int getLatestCommentIdByUserId(int id);
 }

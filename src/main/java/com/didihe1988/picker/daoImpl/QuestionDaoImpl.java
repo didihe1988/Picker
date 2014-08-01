@@ -10,12 +10,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.QuestionDao;
+import com.didihe1988.picker.dao.daoInterface.NumOperation;
 import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
-public class QuestionDaoImpl implements QuestionDao, DeleteValidation {
+public class QuestionDaoImpl implements QuestionDao, DeleteValidation,
+		NumOperation {
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -85,24 +87,6 @@ public class QuestionDaoImpl implements QuestionDao, DeleteValidation {
 		return query.list();
 	}
 
-	@Override
-	public int incrementFavoriteNum(int id) {
-		// TODO Auto-generated method stub
-		String hql = "update Question as q set q.favoriteNum=q.favoriteNum+1 and where q.id =?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, id);
-		return query.executeUpdate();
-	}
-
-	@Override
-	public int decrementFavoriteNum(int id) {
-		// TODO Auto-generated method stub
-		String hql = "update Question as q set q.favoriteNum=q.favoriteNum-1 and where q.id =?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, id);
-		return query.executeUpdate();
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Question> queryQuestionByBookId(int id) {
@@ -111,6 +95,30 @@ public class QuestionDaoImpl implements QuestionDao, DeleteValidation {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.list();
+
+	}
+
+	/*
+	 * property:favoriteNum commentNum followNum
+	 */
+	@Override
+	public int incrementNum(String property, int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Question as q set q." + property + "=q."
+				+ property + "+1 and where q.id =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public int decrementNum(String property, int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Question as q set q." + property + "=q."
+				+ property + "-1 and where q.id =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
 
 	}
 
@@ -136,5 +144,4 @@ public class QuestionDaoImpl implements QuestionDao, DeleteValidation {
 		}
 		return false;
 	}
-
 }

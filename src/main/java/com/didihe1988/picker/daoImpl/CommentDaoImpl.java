@@ -10,12 +10,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.CommentDao;
+import com.didihe1988.picker.dao.daoInterface.NumOperation;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
-public class CommentDaoImpl implements CommentDao, DeleteValidation {
+public class CommentDaoImpl implements CommentDao, DeleteValidation,
+		NumOperation {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -87,24 +89,6 @@ public class CommentDaoImpl implements CommentDao, DeleteValidation {
 	}
 
 	@Override
-	public int incrementFavoriteNum(int id) {
-		// TODO Auto-generated method stub
-		String hql = "update Comment as comment set comment.favoriteNum =comment.favoriteNum+1 where comment.id=?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, id);
-		return query.executeUpdate();
-	}
-
-	@Override
-	public int decrementFavoriteNumk(int id) {
-		// TODO Auto-generated method stub
-		String hql = "update Comment as comment set comment.favoriteNum =comment.favoriteNum-1 where comment.id=?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, id);
-		return query.executeUpdate();
-	}
-
-	@Override
 	public boolean checkDeleteValidation(int ownerId, int objectId) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Comment as c where c.producerId =? and f.id=?";
@@ -125,6 +109,27 @@ public class CommentDaoImpl implements CommentDao, DeleteValidation {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return (Integer) query.uniqueResult();
+	}
+
+	@Override
+	public int incrementNum(String property, int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Comment as c set c." + property + "=c." + property
+				+ "+1 and where c.id =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public int decrementNum(String property, int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Comment as c set c." + property + "=c." + property
+				+ "-1 and where c.id =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+
 	}
 
 }

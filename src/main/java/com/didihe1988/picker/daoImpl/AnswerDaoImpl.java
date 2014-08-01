@@ -10,12 +10,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.AnswerDao;
+import com.didihe1988.picker.dao.daoInterface.NumOperation;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
-public class AnswerDaoImpl implements AnswerDao, DeleteValidation {
+public class AnswerDaoImpl implements AnswerDao, DeleteValidation, NumOperation {
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -126,4 +127,27 @@ public class AnswerDaoImpl implements AnswerDao, DeleteValidation {
 		return false;
 	}
 
+	/*
+	 * property:favoriteNum commentNum
+	 */
+	@Override
+	public int incrementNum(String property, int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Answer as a set a." + property + "=a." + property
+				+ "+1 and where a.id =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public int decrementNum(String property, int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Answer as a set a." + property + "=a." + property
+				+ "-1 and where a.id =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+
+	}
 }
