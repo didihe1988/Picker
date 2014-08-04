@@ -16,8 +16,7 @@ import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
-public class QuestionDaoImpl implements QuestionDao, DeleteValidation,
-		NumOperation {
+public class QuestionDaoImpl implements QuestionDao{
 	@Autowired
 	private SessionFactory sessionFactory;
 

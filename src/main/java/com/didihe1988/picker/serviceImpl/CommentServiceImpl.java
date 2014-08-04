@@ -20,7 +20,7 @@ public class CommentServiceImpl implements CommentService {
 	private CommentDao commentDao;
 	@Autowired
 	private BookDao bookDao;
-
+	
 	@Override
 	public int addComment(Comment comment) {
 		// TODO Auto-generated method stub
@@ -32,7 +32,7 @@ public class CommentServiceImpl implements CommentService {
 			return Status.EXISTS;
 		}
 		// Í¼ÊéµÄcommentNum++
-		bookDao.incrementComment(comment.getBookId());
+		//bookDao.incrementComment(comment.getBookId());
 		return Status.SUCCESS;
 	}
 
@@ -88,5 +88,7 @@ public class CommentServiceImpl implements CommentService {
 		// TODO Auto-generated method stub
 		return commentDao.getLatestCommentIdByUserId(id);
 	}
+	
+	
 
 }

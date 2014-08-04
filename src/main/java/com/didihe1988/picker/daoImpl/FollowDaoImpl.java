@@ -15,7 +15,7 @@ import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
-public class FollowDaoImpl implements FollowDao, DeleteValidation {
+public class FollowDaoImpl implements FollowDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 

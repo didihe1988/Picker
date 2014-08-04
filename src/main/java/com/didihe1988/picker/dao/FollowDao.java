@@ -3,8 +3,9 @@ package com.didihe1988.picker.dao;
 import java.util.List;
 
 import com.didihe1988.picker.model.Follow;
+import com.didihe1988.picker.validation.DeleteValidation;
 
-public interface FollowDao {
+public interface FollowDao extends DeleteValidation {
 	public Follow queryFollowById(int id);
 
 	public int addFollow(Follow follow);
@@ -24,6 +25,6 @@ public interface FollowDao {
 	// public int updateFollowSetIsCheckedReverse(int id);
 
 	public boolean isFollowExists(int id);
-	
+
 	public List<Follow> queryAllForTest();
 }

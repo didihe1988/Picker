@@ -13,7 +13,7 @@ import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
-public class FavoriteDaoImpl implements FavoriteDao, DeleteValidation {
+public class FavoriteDaoImpl implements FavoriteDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 

@@ -16,8 +16,7 @@ import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
-public class CommentDaoImpl implements CommentDao, DeleteValidation,
-		NumOperation {
+public class CommentDaoImpl implements CommentDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -89,20 +88,6 @@ public class CommentDaoImpl implements CommentDao, DeleteValidation,
 	}
 
 	@Override
-	public boolean checkDeleteValidation(int ownerId, int objectId) {
-		// TODO Auto-generated method stub
-		String hql = "select count(*) from Comment as c where c.producerId =? and f.id=?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, ownerId);
-		query.setInteger(1, objectId);
-		Long count = (Long) query.uniqueResult();
-		if (count > 0) {
-			return true;
-		}
-		return false;
-	}
-
-	@Override
 	public int getLatestCommentIdByUserId(int id) {
 		// TODO Auto-generated method stub
 		String hql = "select max(c.id) from Comment as c where c.producerId=?";
@@ -130,6 +115,20 @@ public class CommentDaoImpl implements CommentDao, DeleteValidation,
 		query.setInteger(0, id);
 		return query.executeUpdate();
 
+	}
+
+	@Override
+	public boolean checkDeleteValidation(int ownerId, int objectId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Comment as c where c.producerId =? and f.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, ownerId);
+		query.setInteger(1, objectId);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }

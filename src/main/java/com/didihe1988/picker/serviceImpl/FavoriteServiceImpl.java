@@ -35,11 +35,13 @@ public class FavoriteServiceImpl implements FavoriteService {
 		Favorite favorite = new Favorite(commentId, userId);
 		if (!favoriteDao.isFavoriteExists(favorite)) {
 			userDao.incrementFavoriteNum(userId);
-			commentDao.incrementFavoriteNum(commentId);
+			commentDao.
 			favoriteDao.addFavorite(favorite);
 		}
 		return Status.SUCCESS;
 	}
+	
+	
 
 	@Override
 	public int decrementCommentFavorite(int commentId, int userId) {
