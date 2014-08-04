@@ -50,7 +50,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		Favorite favorite = new Favorite(commentId, userId,
 				Favorite.FAVORITE_COMMENT);
 		if (!favoriteDao.isFavoriteExists(favorite)) {
-			userDao.incrementFavoriteNum(userId);
+			userDao.incrementNum(Constant.FAVORITE_NUM, userId);
 			commentDao.incrementNum(Constant.FAVORITE_NUM, commentId);
 			favoriteDao.addFavorite(favorite);
 		}
@@ -68,7 +68,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		Favorite favorite = new Favorite(commentId, userId,
 				Favorite.FAVORITE_COMMENT);
 		if (favoriteDao.isFavoriteExists(favorite)) {
-			userDao.decrementFavoriteNum(userId);
+			userDao.decrementNum(Constant.FAVORITE_NUM, userId);
 			commentDao.decrementNum(Constant.FAVORITE_NUM, commentId);
 			favoriteDao.deleteFavorite(favorite);
 		}
@@ -85,7 +85,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		Favorite favorite = new Favorite(questionId, userId,
 				Favorite.FAVORITE_QUESTION);
 		if (!favoriteDao.isFavoriteExists(favorite)) {
-			userDao.incrementFavoriteNum(userId);
+			userDao.incrementNum(Constant.FAVORITE_NUM, userId);
 			questionDao.incrementNum(Constant.FAVORITE_NUM, questionId);
 			favoriteDao.addFavorite(favorite);
 		}
@@ -102,7 +102,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		Favorite favorite = new Favorite(questionId, userId,
 				Favorite.FAVORITE_QUESTION);
 		if (favoriteDao.isFavoriteExists(favorite)) {
-			userDao.decrementFavoriteNum(userId);
+			userDao.decrementNum(Constant.FAVORITE_NUM, userId);
 			questionDao.decrementNum(Constant.FAVORITE_NUM, questionId);
 			favoriteDao.deleteFavorite(favorite);
 		}
@@ -119,7 +119,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		Favorite favorite = new Favorite(answerId, userId,
 				Favorite.FAVORITE_ANSWER);
 		if (!favoriteDao.isFavoriteExists(favorite)) {
-			userDao.incrementFavoriteNum(userId);
+			userDao.incrementNum(Constant.FAVORITE_NUM, userId);
 			answerDao.incrementNum(Constant.FAVORITE_NUM, answerId);
 			favoriteDao.addFavorite(favorite);
 		}
@@ -136,7 +136,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 		Favorite favorite = new Favorite(answerId, userId,
 				Favorite.FAVORITE_ANSWER);
 		if (favoriteDao.isFavoriteExists(favorite)) {
-			userDao.decrementFavoriteNum(userId);
+			userDao.decrementNum(Constant.FAVORITE_NUM, userId);
 			answerDao.decrementNum(Constant.FAVORITE_NUM, answerId);
 			favoriteDao.deleteFavorite(favorite);
 		}

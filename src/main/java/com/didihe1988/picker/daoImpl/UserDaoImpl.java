@@ -101,18 +101,20 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public int incrementFavoriteNum(int id) {
+	public int incrementNum(String property, int id) {
 		// TODO Auto-generated method stub
-		String hql = "update User as user set user.favoriteNum =user.favoriteNum+1 where user.id=?";
+		String hql = "update User as u set u." + property + "=u." + property
+				+ "+1 and where u.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();
 	}
 
 	@Override
-	public int decrementFavoriteNum(int id) {
+	public int decrementNum(String property, int id) {
 		// TODO Auto-generated method stub
-		String hql = "update User as user set user.favoriteNum =user.favoriteNum-1 where user.id=?";
+		String hql = "update User as u set u." + property + "=u." + property
+				+ "-1 and where u.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();

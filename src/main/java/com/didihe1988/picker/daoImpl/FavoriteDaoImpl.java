@@ -47,10 +47,11 @@ public class FavoriteDaoImpl implements FavoriteDao {
 		if (favorite == null) {
 			return false;
 		}
-		String hql = "select count(*) from Favorite f where f.userId =? and f.commentId=?";
+		String hql = "select count(*) from Favorite f where f.userId =? and f.objectId=? and f.type=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, favorite.getUserId());
-		query.setInteger(1, favorite.getCommentId());
+		query.setInteger(1, favorite.getObjectId());
+		query.setInteger(2, favorite.getType());
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;

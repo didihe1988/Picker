@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.dao.CommentDao;
+import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.service.CommentService;
 
@@ -18,9 +21,15 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	private CommentDao commentDao;
+	/*
+	 * @Autowired private BookDao bookDao;
+	 */
 	@Autowired
-	private BookDao bookDao;
-	
+	private QuestionDao questionDao;
+
+	@Autowired
+	private AnswerDao answerDao;
+
 	@Override
 	public int addComment(Comment comment) {
 		// TODO Auto-generated method stub
@@ -32,7 +41,16 @@ public class CommentServiceImpl implements CommentService {
 			return Status.EXISTS;
 		}
 		// Í¼ÊéµÄcommentNum++
-		//bookDao.incrementComment(comment.getBookId());
+		// bookDao.incrementComment(comment.getBookId());
+
+		// commentNum++
+		if (comment.getType() == Comment.COMMENT_QUESTION) {
+			questionDao.incrementNum(Constant.COMMENT_NUM,
+					comment.getCommentedId());
+		} else if (comment.getType() == Comment.COMMENT_ANSWER) {
+			answerDao.incrementNum(Constant.COMMENT_NUM,
+					comment.getCommentedId());
+		}
 		return Status.SUCCESS;
 	}
 
@@ -45,6 +63,15 @@ public class CommentServiceImpl implements CommentService {
 		int status = commentDao.deleteComment(comment);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
+		}
+
+		// commentNum--
+		if (comment.getType() == Comment.COMMENT_QUESTION) {
+			questionDao.decrementNum(Constant.COMMENT_NUM,
+					comment.getCommentedId());
+		} else if (comment.getType() == Comment.COMMENT_ANSWER) {
+			answerDao.decrementNum(Constant.COMMENT_NUM,
+					comment.getCommentedId());
 		}
 		return Status.SUCCESS;
 	}
@@ -88,7 +115,5 @@ public class CommentServiceImpl implements CommentService {
 		// TODO Auto-generated method stub
 		return commentDao.getLatestCommentIdByUserId(id);
 	}
-	
-	
 
 }

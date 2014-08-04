@@ -36,6 +36,9 @@ public class User implements Serializable {
 	@Column(name = "user_favoritenum")
 	private int favoriteNum;
 
+	@Column(name = "user_follownum")
+	private int followNum;
+
 	public User() {
 
 	}
@@ -101,11 +104,19 @@ public class User implements Serializable {
 		this.favoriteNum = favoriteNum;
 	}
 
+	public int getFollowNum() {
+		return followNum;
+	}
+
+	public void setFollowNum(int followNum) {
+		this.followNum = followNum;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password="
 				+ password + ", lastVisit=" + lastVisit + ", favoriteNum="
-				+ favoriteNum + "]";
+				+ favoriteNum + ", followNum=" + followNum + "]";
 	}
 
 }

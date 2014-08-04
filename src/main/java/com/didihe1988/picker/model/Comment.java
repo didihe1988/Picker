@@ -29,7 +29,7 @@ public class Comment implements Serializable {
 	private int commentedId;
 
 	@Column(name = "comment_producerid")
-	public int producerId;
+	private int producerId;
 
 	@Column(name = "comment_content")
 	private String content;
