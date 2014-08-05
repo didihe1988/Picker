@@ -14,6 +14,7 @@ import com.didihe1988.picker.dao.CommentDao;
 import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.service.CommentService;
+import com.didihe1988.picker.utils.HttpUtils;
 
 @Service
 @Transactional
@@ -60,10 +61,11 @@ public class CommentServiceImpl implements CommentService {
 		if (comment == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = commentDao.deleteComment(comment);
-		if (status == -1) {
-			return Status.NOT_EXISTS;
+		if (!commentDao.checkDeleteValidation(comment.getProducerId(),
+				comment.getId())) {
+			return Status.INVALID;
 		}
+		commentDao.deleteComment(comment);
 
 		// commentNum--
 		if (comment.getType() == Comment.COMMENT_QUESTION) {
@@ -114,6 +116,12 @@ public class CommentServiceImpl implements CommentService {
 	public int getLatestCommentIdByUserId(int id) {
 		// TODO Auto-generated method stub
 		return commentDao.getLatestCommentIdByUserId(id);
+	}
+
+	@Override
+	public boolean checkDeleteValidation(int userId, int commenetId) {
+		// TODO Auto-generated method stub
+		return commentDao.checkDeleteValidation(userId, commenetId);
 	}
 
 }

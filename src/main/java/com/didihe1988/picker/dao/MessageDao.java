@@ -15,10 +15,13 @@ public interface MessageDao {
 
 	public boolean isMessageExists(Message message);
 
+	public boolean isUncheckedMessageExists(int receiverId);
+
 	public List<Message> queryMessageByReceiverId(int receiverId);
 
 	public int setMessageChecked(int id);
-	
-	public List<Message> queryMessageByReceiverIdAndType(int receiverId, int type);
-	
+
+	public List<Message> queryMessageByReceiverIdAndType(int receiverId,
+			int type);
+
 }

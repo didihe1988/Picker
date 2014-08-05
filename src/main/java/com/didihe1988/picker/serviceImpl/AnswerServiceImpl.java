@@ -36,10 +36,12 @@ public class AnswerServiceImpl implements AnswerService {
 		if (answer == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = answerDao.deleteAnswer(answer);
-		if (status == -1) {
-			return Status.NOT_EXISTS;
+		// 删除之间检验是否存在
+		if (!answerDao.checkDeleteValidation(answer.getReplierId(),
+				answer.getId())) {
+			return Status.INVALID;
 		}
+		answerDao.deleteAnswer(answer);
 		return Status.SUCCESS;
 	}
 
@@ -87,6 +89,12 @@ public class AnswerServiceImpl implements AnswerService {
 	public int getLatestAnswerIdByQuestionId(int id) {
 		// TODO Auto-generated method stub
 		return answerDao.queryLatestAnswerIdByQuestionId(id);
+	}
+
+	@Override
+	public boolean checkDeleteValidation(int userId, int answerId) {
+		// TODO Auto-generated method stub
+		return answerDao.checkDeleteValidation(userId, answerId);
 	}
 
 }

@@ -72,6 +72,12 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
+	public boolean isUncheckedMessageExists(int receiverId) {
+		// TODO Auto-generated method stub
+		return messageDao.isUncheckedMessageExists(receiverId);
+	}
+
+	@Override
 	public Message getMessageById(int id) {
 		// TODO Auto-generated method stub
 		return messageDao.queryMessageById(id);

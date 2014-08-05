@@ -18,4 +18,6 @@ public interface CommentService {
 	public List<Comment> getCommentByBookId(int bookId);
 
 	public int getLatestCommentIdByUserId(int id);
+
+	public boolean checkDeleteValidation(int userId, int commentId);
 }

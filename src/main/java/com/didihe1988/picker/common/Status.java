@@ -12,4 +12,5 @@ public class Status {
 	public static final int UNCHANGED = 4;
 	public static final int NULLPOINTER = 5;
 	public static final int UNKOWN = 6;
+	public static final int INVALID = 7;
 }

@@ -18,5 +18,6 @@ public interface QuestionService {
 	public List<Question> getQuestionByAskerId(int id);
 
 	public List<Question> getQuestionByBookId(int id);
-	
+
+	public boolean checkDeleteValidation(int userId, int questionId);
 }

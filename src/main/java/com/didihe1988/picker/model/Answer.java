@@ -97,6 +97,22 @@ public class Answer implements Serializable {
 		this.date = date;
 	}
 
+	public int getReplierId() {
+		return replierId;
+	}
+
+	public void setReplierId(int replierId) {
+		this.replierId = replierId;
+	}
+
+	public int getCommentNum() {
+		return commentNum;
+	}
+
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
+	}
+
 	@Override
 	public String toString() {
 		return "Answer [id=" + id + ", questionId=" + questionId + ", content="

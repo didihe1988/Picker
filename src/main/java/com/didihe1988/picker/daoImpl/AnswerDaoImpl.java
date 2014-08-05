@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.AnswerDao;
+import com.didihe1988.picker.dao.daoInterface.DeleteValidation;
 import com.didihe1988.picker.dao.daoInterface.NumOperation;
 import com.didihe1988.picker.model.Answer;
-import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional

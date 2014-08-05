@@ -20,4 +20,6 @@ public interface AnswerService {
 	public List<Answer> getAnswerByQuestionId(int id);
 	
 	public int getLatestAnswerIdByQuestionId(int id);
+	
+	public boolean checkDeleteValidation(int userId, int answerId);
 }

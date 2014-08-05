@@ -84,7 +84,12 @@ public class QuestionServiceImpl implements QuestionService {
 		// TODO Auto-generated method stub
 		return questionDao.queryQuestionByBookId(id);
 	}
-	
-	
+
+	// ºÏ≤‚ «∑Òœ‘ æ…æ≥˝∞¥≈•
+	@Override
+	public boolean checkDeleteValidation(int userId, int questionId) {
+		// TODO Auto-generated method stub
+		return questionDao.checkDeleteValidation(userId, questionId);
+	}
 
 }

@@ -75,6 +75,19 @@ public class MessageDaoImpl implements MessageDao {
 		return false;
 	}
 
+	@Override
+	public boolean isUncheckedMessageExists(int receiverId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Message message where message.receiverId =? and message.isChecked=false";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, receiverId);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Message> queryMessageByReceiverId(int receiverId) {
@@ -98,12 +111,12 @@ public class MessageDaoImpl implements MessageDao {
 			int type) {
 		// TODO Auto-generated method stub
 		String hql = "";
-		//未查看的消息
+		// 未查看的消息
 		if (type == Message.MESSAGE_UNCHECKED) {
 			hql = "from Message as message where message.receiverId = ? and message.isChecked =false";
-			
+
 		}
-		//有关问题的消息
+		// 有关问题的消息
 		else if (type == Message.MESSAGE_QUESTION) {
 			hql = "from Message as message where message.receiverId = ? and message.type =4";
 		}

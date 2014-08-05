@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.CommentDao;
+import com.didihe1988.picker.dao.daoInterface.DeleteValidation;
 import com.didihe1988.picker.dao.daoInterface.NumOperation;
 import com.didihe1988.picker.model.Comment;
-import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
@@ -79,11 +79,23 @@ public class CommentDaoImpl implements CommentDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Comment> queryCommentByBookId(int id) {
+	public List<Comment> queryCommentListByQuestionId(int id) {
 		// TODO Auto-generated method stub
-		String hql = "from Comment as c where c.bookId=?";
+		String hql = "from Comment as c where c.commentedId=? and c.type=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
+		query.setInteger(1, Comment.COMMENT_QUESTION);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Comment> queryCommentListByAnswerId(int id) {
+		// TODO Auto-generated method stub
+		String hql = "from Comment as c where c.commentedId=? and c.type=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		query.setInteger(1, Comment.COMMENT_ANSWER);
 		return query.list();
 	}
 

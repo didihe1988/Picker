@@ -16,6 +16,8 @@ public interface MessageService {
 	public List<Message> getMessageByReceiverIdAndType(int receiverId,int type);
 
 	public boolean isMessageExists(Message message);
+	
+	public boolean isUncheckedMessageExists(int receiverId);
 
 	public Message getMessageById(int id);
 

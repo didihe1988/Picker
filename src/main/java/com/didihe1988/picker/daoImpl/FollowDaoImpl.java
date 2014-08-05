@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.FollowDao;
+import com.didihe1988.picker.dao.daoInterface.DeleteValidation;
 import com.didihe1988.picker.model.Follow;
-import com.didihe1988.picker.validation.DeleteValidation;
 
 @Repository
 @Transactional
