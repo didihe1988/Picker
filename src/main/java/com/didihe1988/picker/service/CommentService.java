@@ -15,9 +15,12 @@ public interface CommentService {
 
 	public boolean isCommentExists(Comment comment);
 
-	public List<Comment> getCommentByBookId(int bookId);
-
 	public int getLatestCommentIdByUserId(int id);
 
 	public boolean checkDeleteValidation(int userId, int commentId);
+	
+	public List<Comment> getCommentListByQuestionId(int id);
+
+	public List<Comment> getCommentListByAnswerId(int id);
+
 }

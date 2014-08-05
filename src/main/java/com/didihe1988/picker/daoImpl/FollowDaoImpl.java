@@ -90,21 +90,11 @@ public class FollowDaoImpl implements FollowDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Follow> queryFollowByFollowerId(int followerId) {
+	public List<Follow> queryFollowListByFollowerId(int followerId) {
 		// TODO Auto-generated method stub
 		String hql = "from Follow as follow where follow.followerId = ?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, followerId);
-		return query.list();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Follow> queryFollowByFollowedUserId(int followedUserId) {
-		// TODO Auto-generated method stub
-		String hql = "from Follow as follow where follow.sourceId = ?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, followedUserId);
 		return query.list();
 	}
 
@@ -130,6 +120,27 @@ public class FollowDaoImpl implements FollowDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<Follow> queryFollowListByFollowedUserId(int followedUserId) {
+		// TODO Auto-generated method stub
+		return queryFollowListBySourceId(followedUserId, Follow.FOLLOW_USER);
+	}
+
+	@Override
+	public List<Follow> queryFollowListByQuestionId(int questionId) {
+		// TODO Auto-generated method stub
+		return queryFollowListBySourceId(questionId, Follow.FOLLOW_QUESTION);
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<Follow> queryFollowListBySourceId(int sourceId, int sourceType) {
+		String hql = "from Follow as follow where follow.sourceId = ?and follow.sourceType=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, sourceId);
+		query.setInteger(1, sourceType);
+		return query.list();
 	}
 
 }

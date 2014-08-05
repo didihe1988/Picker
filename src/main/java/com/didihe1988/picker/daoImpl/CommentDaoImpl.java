@@ -77,25 +77,25 @@ public class CommentDaoImpl implements CommentDao {
 		return false;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> queryCommentListByQuestionId(int id) {
 		// TODO Auto-generated method stub
-		String hql = "from Comment as c where c.commentedId=? and c.type=?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, id);
-		query.setInteger(1, Comment.COMMENT_QUESTION);
-		return query.list();
+		return queryCommentListByCommentedId(id, Comment.COMMENT_QUESTION);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Comment> queryCommentListByAnswerId(int id) {
 		// TODO Auto-generated method stub
+		return queryCommentListByCommentedId(id, Comment.COMMENT_ANSWER);
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<Comment> queryCommentListByCommentedId(int commentedId,
+			int type) {
 		String hql = "from Comment as c where c.commentedId=? and c.type=?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, id);
-		query.setInteger(1, Comment.COMMENT_ANSWER);
+		query.setInteger(0, commentedId);
+		query.setInteger(1, type);
 		return query.list();
 	}
 

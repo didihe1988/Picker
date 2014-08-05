@@ -99,15 +99,21 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	@Override
-	public List<Follow> getFollowByFollowerId(int followerId) {
+	public List<Follow> getFollowListByFollowerId(int followerId) {
 		// TODO Auto-generated method stub
-		return followDao.queryFollowByFollowerId(followerId);
+		return followDao.queryFollowListByFollowerId(followerId);
 	}
 
 	@Override
-	public List<Follow> getFollowByFollowedUserId(int followedUserId) {
+	public List<Follow> getFollowListByFollowedUserId(int followedUserId) {
 		// TODO Auto-generated method stub
-		return followDao.queryFollowByFollowedUserId(followedUserId);
+		return followDao.queryFollowListByFollowedUserId(followedUserId);
+	}
+
+	@Override
+	public List<Follow> queryFollowListByQuestionId(int questionId) {
+		// TODO Auto-generated method stub
+		return followDao.queryFollowListByQuestionId(questionId);
 	}
 
 	@Override

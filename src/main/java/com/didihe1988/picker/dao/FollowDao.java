@@ -16,13 +16,11 @@ public interface FollowDao extends DeleteValidation {
 
 	public boolean isFollowExists(Follow follow);
 
-	public List<Follow> queryFollowByFollowerId(int followerId);
+	public List<Follow> queryFollowListByFollowerId(int followerId);
 
-	public List<Follow> queryFollowByFollowedUserId(int followedUserId);
-
-	// public List<Follow> queryUnckeckedFollowByFollowerId(int followerId);
-
-	// public int updateFollowSetIsCheckedReverse(int id);
+	public List<Follow> queryFollowListByFollowedUserId(int followedUserId);
+	
+	public List<Follow> queryFollowListByQuestionId(int questionId);
 
 	public boolean isFollowExists(int id);
 

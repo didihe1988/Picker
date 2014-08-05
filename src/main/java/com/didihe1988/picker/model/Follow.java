@@ -37,7 +37,7 @@ public class Follow implements Serializable {
 	@Column(name = "follow_followerid")
 	private int followerId;
 	
-	//关注的人或是关注的问题
+	//被关注的人或是关注的问题
 	@Column(name = "follow_sourceid")
 	private int sourceId;
 

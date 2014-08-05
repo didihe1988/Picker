@@ -107,12 +107,6 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public List<Comment> getCommentByBookId(int bookId) {
-		// TODO Auto-generated method stub
-		return commentDao.queryCommentByBookId(bookId);
-	}
-
-	@Override
 	public int getLatestCommentIdByUserId(int id) {
 		// TODO Auto-generated method stub
 		return commentDao.getLatestCommentIdByUserId(id);
@@ -122,6 +116,18 @@ public class CommentServiceImpl implements CommentService {
 	public boolean checkDeleteValidation(int userId, int commenetId) {
 		// TODO Auto-generated method stub
 		return commentDao.checkDeleteValidation(userId, commenetId);
+	}
+
+	@Override
+	public List<Comment> getCommentListByQuestionId(int id) {
+		// TODO Auto-generated method stub
+		return commentDao.queryCommentListByQuestionId(id);
+	}
+
+	@Override
+	public List<Comment> getCommentListByAnswerId(int id) {
+		// TODO Auto-generated method stub
+		return commentDao.queryCommentListByAnswerId(id);
 	}
 
 }
