@@ -2,8 +2,6 @@ package com.didihe1988.picker.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
-
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.User;
 
@@ -40,5 +38,21 @@ public class HttpUtils {
 	public static String getStringFromReqeust(HttpServletRequest request,
 			String parameter) {
 		return (String) request.getParameter(parameter);
+	}
+
+	// É¾³ý·´Ð±Ïß
+	public static String deleteBackslash(String rawString) {
+		int length = rawString.length();
+		Character backslash = new Character('\\');
+		StringBuffer stringBuffer = new StringBuffer();
+		for (int i = 0; i < length; i++) {
+			Character character = new Character(rawString.charAt(i));
+			// returns the value 0 if the argument Character is equal to this
+			// Character
+			if (character.compareTo(backslash) != 0) {
+				stringBuffer.append(character);
+			}
+		}
+		return stringBuffer.toString();
 	}
 }
