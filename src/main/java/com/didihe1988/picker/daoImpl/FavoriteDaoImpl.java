@@ -1,5 +1,7 @@
 package com.didihe1988.picker.daoImpl;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -85,6 +87,16 @@ public class FavoriteDaoImpl implements FavoriteDao {
 			return true;
 		}
 		return false;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Favorite> queryFavoriteListByUserId(int userId) {
+		// TODO Auto-generated method stub
+		String hql = "from Favorite as f where f.userId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, userId);
+		return query.list();
 	}
 
 }

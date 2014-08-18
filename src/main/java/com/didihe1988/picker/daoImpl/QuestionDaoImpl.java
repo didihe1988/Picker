@@ -10,13 +10,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.QuestionDao;
-import com.didihe1988.picker.dao.daoInterface.DeleteValidation;
-import com.didihe1988.picker.dao.daoInterface.NumOperation;
 import com.didihe1988.picker.model.Question;
 
 @Repository
 @Transactional
-public class QuestionDaoImpl implements QuestionDao{
+public class QuestionDaoImpl implements QuestionDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -66,9 +64,10 @@ public class QuestionDaoImpl implements QuestionDao{
 		if (question == null) {
 			return false;
 		}
-		String hql = "select count(*) from Question as q where q.id = ?";
+		String hql = "select count(*) from Question as q where q.bookId = ? and q.askerId=?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, question.getId());
+		query.setInteger(0, question.getBookId());
+		query.setInteger(1, question.getAskerId());
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;

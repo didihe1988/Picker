@@ -1,5 +1,9 @@
 package com.didihe1988.picker.service;
 
+import java.util.List;
+
+import com.didihe1988.picker.model.Favorite;
+
 public interface FavoriteService {
 	public int incrementCommentFavorite(int commentId, int userId);
 
@@ -12,4 +16,6 @@ public interface FavoriteService {
 	public int incrementAnswerFavorite(int answerId, int userId);
 
 	public int decrementAnswerFavorite(int answerId, int userId);
+	
+	public List<Favorite> getFavoriteListByUserId(int userId);
 }

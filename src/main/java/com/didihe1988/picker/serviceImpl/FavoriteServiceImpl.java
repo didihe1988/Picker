@@ -1,5 +1,7 @@
 package com.didihe1988.picker.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -141,6 +143,16 @@ public class FavoriteServiceImpl implements FavoriteService {
 			favoriteDao.deleteFavorite(favorite);
 		}
 		return Status.SUCCESS;
+	}
+
+	/*
+	 * 
+	 * 用于功能:获得用户点过的赞 感觉是用户足迹的一种体现
+	 */
+	@Override
+	public List<Favorite> getFavoriteListByUserId(int userId) {
+		// TODO Auto-generated method stub
+		return favoriteDao.queryFavoriteListByUserId(userId);
 	}
 
 }

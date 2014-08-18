@@ -22,7 +22,7 @@ public class MessageFactory {
 			int type) {
 		// 先写Followed类型的 晚些时候写Question类型的
 		List<Follow> followList = followService
-				.getFollowByFollowedUserId(userId);
+				.getFollowListByFollowedUserId(userId);
 		for (int i = 0; i < followList.size(); i++) {
 			Follow follow = followList.get(i);
 			Message message = new Message(follow.getFollowerId(), false, type,
