@@ -16,7 +16,7 @@ import com.didihe1988.picker.model.Answer;
 
 @Repository
 @Transactional
-public class AnswerDaoImpl implements AnswerDao{
+public class AnswerDaoImpl implements AnswerDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -101,7 +101,7 @@ public class AnswerDaoImpl implements AnswerDao{
 	}
 
 	@Override
-	public boolean isAnswerOfUserExists(int userId) {
+	public boolean isAnswerOfUserAlreadyExists(int userId) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Answer as a where a.replierId = ?";
 		Query query = getCurrentSession().createQuery(hql);

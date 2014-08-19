@@ -21,6 +21,6 @@ public interface AnswerDao extends DeleteValidation, NumOperation {
 
 	public int queryLatestAnswerIdByQuestionId(int id);
 	
-	public boolean isAnswerOfUserExists(int userId);
+	public boolean isAnswerOfUserAlreadyExists(int userId);
 
 }

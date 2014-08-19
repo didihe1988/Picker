@@ -70,7 +70,7 @@ public class AnswerServiceImpl implements AnswerService {
 	@Override
 	public boolean isAnswerOfUserExists(int userId) {
 		// TODO Auto-generated method stub
-		return answerDao.isAnswerOfUserExists(userId);
+		return answerDao.isAnswerOfUserAlreadyExists(userId);
 	}
 
 	@Override
