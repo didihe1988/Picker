@@ -28,7 +28,8 @@ public class QuestionController {
 		int userId = HttpUtils.getSessionUserId(request);
 		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
 		String content = (String) request.getAttribute("content");
-		Question question = new Question(bookId, userId, content);
+		String title = (String) request.getAttribute("title");
+		Question question = new Question(bookId, userId, title, content);
 		questionService.addQuestion(question);
 		// 暂时只想出这种方法获得新Question的Id 可以专门写一个方法
 		List<Question> questionList = questionService

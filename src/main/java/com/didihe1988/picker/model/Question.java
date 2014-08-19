@@ -29,6 +29,9 @@ public class Question implements Serializable {
 	@Column(name = "question_askerid")
 	private int askerId;
 
+	@Column(name = "question_title")
+	private String title;
+
 	@Column(name = "question_content")
 	private String content;
 
@@ -112,24 +115,34 @@ public class Question implements Serializable {
 		this.followNum = followNum;
 	}
 
-	public Question(int bookId, int askerId, String content, Date date) {
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Question(int bookId, int askerId, String title, String content,
+			Date date) {
 		super();
 		this.bookId = bookId;
 		this.askerId = askerId;
+		this.title = title;
 		this.content = content;
 		this.date = date;
 	}
 
-	public Question(int bookId, int askerId, String content) {
-		this(bookId, askerId, content, new Date());
+	public Question(int bookId, int askerId, String title, String content) {
+		this(bookId, askerId, title, content, new Date());
 	}
 
 	@Override
 	public String toString() {
 		return "Question [id=" + id + ", bookId=" + bookId + ", askerId="
-				+ askerId + ", content=" + content + ", favoriteNum="
-				+ favoriteNum + ", commentNum=" + commentNum + ", followNum="
-				+ followNum + ", date=" + date + "]";
+				+ askerId + ", title=" + title + ", content=" + content
+				+ ", favoriteNum=" + favoriteNum + ", commentNum=" + commentNum
+				+ ", followNum=" + followNum + ", date=" + date + "]";
 	}
 
 }

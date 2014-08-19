@@ -1,0 +1,80 @@
+package com.didihe1988.picker.serviceImpl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.NoteDao;
+import com.didihe1988.picker.model.Note;
+import com.didihe1988.picker.service.NoteService;
+
+@Service
+@Transactional
+public class NoteServiceImpl implements NoteService {
+	@Autowired
+	private NoteDao noteDao;
+
+	@Override
+	public int addNote(Note note) {
+		// TODO Auto-generated method stub
+		if (note == null) {
+			return Status.NULLPOINTER;
+		}
+		noteDao.addNote(note);
+		return Status.SUCCESS;
+	}
+
+	@Override
+	public int deleteNote(Note note) {
+		// TODO Auto-generated method stub
+		if (note == null) {
+			return Status.NULLPOINTER;
+		}
+		int status = noteDao.deleteNote(note);
+		if (status == -1) {
+			return Status.NOT_EXISTS;
+		}
+		return Status.SUCCESS;
+	}
+
+	@Override
+	public int updateNote(Note note) {
+		// TODO Auto-generated method stub
+		if (note == null) {
+			return Status.NULLPOINTER;
+		}
+		int status = noteDao.updateNote(note);
+		if (status == -1) {
+			return Status.NOT_EXISTS;
+		}
+		return Status.SUCCESS;
+	}
+
+	@Override
+	public Note getNoteById(int id) {
+		// TODO Auto-generated method stub
+		return noteDao.queryNoteById(id);
+	}
+
+	@Override
+	public boolean isNoteExistsById(int id) {
+		// TODO Auto-generated method stub
+		return noteDao.isNoteExistsById(id);
+	}
+
+	@Override
+	public List<Note> getNoteListByUserId(int id) {
+		// TODO Auto-generated method stub
+		return noteDao.queryNoteListByUserId(id);
+	}
+
+	@Override
+	public List<Note> getNoteListByBookId(int id) {
+		// TODO Auto-generated method stub
+		return noteDao.queryNoteListByBookId(id);
+	}
+
+}
