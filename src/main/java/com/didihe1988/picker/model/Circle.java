@@ -16,6 +16,7 @@ public class Circle implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static final String CIRCLE_MEMBER_NUM = "memberNum";
 
 	@Id
 	@GeneratedValue
@@ -81,7 +82,7 @@ public class Circle implements Serializable {
 	public String toString() {
 		return "Circle [id=" + id + ", name=" + name + ", establishTime="
 				+ establishTime + ", establisherId=" + establisherId
-				+ ", describe=" + describe + "]";
+				+ ", describe=" + describe + ", memberNum=" + memberNum + "]";
 	}
 
 	public Circle(int id, String name, Date establishTime, int establisherId,

@@ -1,4 +1,4 @@
-package com.didihe1988.picker.dao;
+/*package com.didihe1988.picker.dao;
 
 import com.didihe1988.picker.model.Talk;
 
@@ -16,3 +16,4 @@ public interface TalkDao {
 	public int getLatestTalkIdByTalkerId(int id);
 	
 }
+*/

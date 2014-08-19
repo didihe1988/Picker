@@ -6,14 +6,12 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
+/*
 @Entity
 @Table(name = "talk")
 public class Talk implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	@Column(name = "talk_id")
 	private int id;
@@ -99,4 +97,4 @@ public class Talk implements Serializable {
 		this.time = time;
 	}
 
-}
+}*/

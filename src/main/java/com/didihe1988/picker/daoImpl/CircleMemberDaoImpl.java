@@ -96,10 +96,27 @@ public class CircleMemberDaoImpl implements CircleMemberDao {
 	public boolean isCircleMemberExistsByCircleIdMemberId(
 			CircleMember circleMember) {
 		// TODO Auto-generated method stub
-		String hql = "select count(*) from CircleMember as c where c.circleId = ?and c.memberId=?";
+		String hql = "select count(*) from CircleMember as c where c.circleId = ? and c.memberId=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, circleMember.getCircleId());
 		query.setInteger(1, circleMember.getMemberId());
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @description 本人可以删除自己已加入的圈子
+	 */
+	@Override
+	public boolean checkDeleteValidation(int ownerId, int objectId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from CircleMember as c where c.memberId =? and c.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, ownerId);
+		query.setInteger(1, objectId);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;

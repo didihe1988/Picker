@@ -43,7 +43,7 @@ public class CircleDaoImpl implements CircleDao {
 	public int incrementNum(String property, int id) {
 		// TODO Auto-generated method stub
 		String hql = "update Circle as c set c." + property + "=c." + property
-				+ "+1 and where a.id =?";
+				+ "+1  where c.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();
@@ -121,6 +121,20 @@ public class CircleDaoImpl implements CircleDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.list();
+	}
+
+	@Override
+	public boolean isEstablisherOfCircle(int userId, int circleId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Circle as c where c.establisherId = ? and c.id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, userId);
+		query.setInteger(1, circleId);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }

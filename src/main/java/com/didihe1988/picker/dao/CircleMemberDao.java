@@ -5,7 +5,7 @@ import java.util.List;
 import com.didihe1988.picker.dao.daoInterface.DeleteValidation;
 import com.didihe1988.picker.model.CircleMember;
 
-public interface CircleMemberDao e {
+public interface CircleMemberDao extends DeleteValidation{
 	public CircleMember queryCircleMemberById(int id);
 
 	public int addCircleMember(CircleMember circleMember);
@@ -22,5 +22,6 @@ public interface CircleMemberDao e {
 	public List<CircleMember> queryCircleMemberListByCircleId(int id);
 
 	public List<CircleMember> queryCircleMemberListByMemberId(int id);
+	
 
 }

@@ -1,4 +1,4 @@
-package com.didihe1988.picker.daoImpl;
+/*package com.didihe1988.picker.daoImpl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -59,4 +59,4 @@ public class TalkDaoImpl implements TalkDao {
 		return 0;
 	}
 
-}
+}*/
