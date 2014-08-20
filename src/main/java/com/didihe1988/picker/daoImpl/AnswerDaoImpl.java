@@ -134,7 +134,7 @@ public class AnswerDaoImpl implements AnswerDao {
 	public int incrementNum(String property, int id) {
 		// TODO Auto-generated method stub
 		String hql = "update Answer as a set a." + property + "=a." + property
-				+ "+1 and where a.id =?";
+				+ "+1 where a.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();
@@ -144,7 +144,7 @@ public class AnswerDaoImpl implements AnswerDao {
 	public int decrementNum(String property, int id) {
 		// TODO Auto-generated method stub
 		String hql = "update Answer as a set a." + property + "=a." + property
-				+ "-1 and where a.id =?";
+				+ "-1 where a.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();

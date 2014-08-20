@@ -130,4 +130,24 @@ public class NoteDaoImpl implements NoteDao {
 		return query.list();
 	}
 
+	@Override
+	public int incrementNum(String property, int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Note as n set n." + property + "=n." + property
+				+ "+1  where n.id =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public int decrementNum(String property, int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Note as n set n." + property + "=n." + property
+				+ "-1 where n.id =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
 }

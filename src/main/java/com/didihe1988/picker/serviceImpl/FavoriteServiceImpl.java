@@ -11,11 +11,13 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.dao.CommentDao;
 import com.didihe1988.picker.dao.FavoriteDao;
+import com.didihe1988.picker.dao.NoteDao;
 import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Favorite;
+import com.didihe1988.picker.model.Note;
 import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.service.FavoriteService;
 
@@ -33,6 +35,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private NoteDao noteDao;
 
 	@Autowired
 	private FavoriteDao favoriteDao;
@@ -55,8 +60,10 @@ public class FavoriteServiceImpl implements FavoriteService {
 			userDao.incrementNum(Constant.FAVORITE_NUM, userId);
 			commentDao.incrementNum(Constant.FAVORITE_NUM, commentId);
 			favoriteDao.addFavorite(favorite);
+			return Status.SUCCESS;
+		} else {
+			return Status.EXISTS;
 		}
-		return Status.SUCCESS;
 	}
 
 	@Override
@@ -73,8 +80,11 @@ public class FavoriteServiceImpl implements FavoriteService {
 			userDao.decrementNum(Constant.FAVORITE_NUM, userId);
 			commentDao.decrementNum(Constant.FAVORITE_NUM, commentId);
 			favoriteDao.deleteFavorite(favorite);
+			return Status.SUCCESS;
+		} else {
+			return Status.NOT_EXISTS;
 		}
-		return Status.SUCCESS;
+
 	}
 
 	@Override
@@ -90,8 +100,11 @@ public class FavoriteServiceImpl implements FavoriteService {
 			userDao.incrementNum(Constant.FAVORITE_NUM, userId);
 			questionDao.incrementNum(Constant.FAVORITE_NUM, questionId);
 			favoriteDao.addFavorite(favorite);
+			return Status.SUCCESS;
+		} else {
+			return Status.EXISTS;
 		}
-		return Status.SUCCESS;
+
 	}
 
 	@Override
@@ -107,8 +120,11 @@ public class FavoriteServiceImpl implements FavoriteService {
 			userDao.decrementNum(Constant.FAVORITE_NUM, userId);
 			questionDao.decrementNum(Constant.FAVORITE_NUM, questionId);
 			favoriteDao.deleteFavorite(favorite);
+			return Status.SUCCESS;
+		} else {
+			return Status.NOT_EXISTS;
 		}
-		return Status.SUCCESS;
+
 	}
 
 	@Override
@@ -124,8 +140,11 @@ public class FavoriteServiceImpl implements FavoriteService {
 			userDao.incrementNum(Constant.FAVORITE_NUM, userId);
 			answerDao.incrementNum(Constant.FAVORITE_NUM, answerId);
 			favoriteDao.addFavorite(favorite);
+			return Status.SUCCESS;
+		} else {
+			return Status.EXISTS;
 		}
-		return Status.SUCCESS;
+
 	}
 
 	@Override
@@ -141,14 +160,49 @@ public class FavoriteServiceImpl implements FavoriteService {
 			userDao.decrementNum(Constant.FAVORITE_NUM, userId);
 			answerDao.decrementNum(Constant.FAVORITE_NUM, answerId);
 			favoriteDao.deleteFavorite(favorite);
+			return Status.SUCCESS;
+		} else {
+			return Status.NOT_EXISTS;
 		}
-		return Status.SUCCESS;
+
 	}
 
-	/*
-	 * 
-	 * 用于功能:获得用户点过的赞 感觉是用户足迹的一种体现
-	 */
+	@Override
+	public int incrementNoteFavorite(int noteId, int userId) {
+		// TODO Auto-generated method stub
+		Note note = noteDao.queryNoteById(noteId);
+		if (note == null) {
+			return Status.NOT_EXISTS;
+		}
+		Favorite favorite = new Favorite(noteId, userId, Favorite.FAVORITE_NOTE);
+		if (!favoriteDao.isFavoriteExists(favorite)) {
+			userDao.incrementNum(Constant.FAVORITE_NUM, userId);
+			noteDao.incrementNum(Constant.FAVORITE_NUM, noteId);
+			favoriteDao.addFavorite(favorite);
+			return Status.SUCCESS;
+		} else {
+			return Status.EXISTS;
+		}
+	}
+
+	@Override
+	public int decrementNoteFavorite(int noteId, int userId) {
+		// TODO Auto-generated method stub
+		Note note = noteDao.queryNoteById(noteId);
+		if (note == null) {
+			return Status.NOT_EXISTS;
+		}
+		Favorite favorite = new Favorite(noteId, userId, Favorite.FAVORITE_NOTE);
+		if (favoriteDao.isFavoriteExists(favorite)) {
+			userDao.decrementNum(Constant.FAVORITE_NUM, userId);
+			noteDao.decrementNum(Constant.FAVORITE_NUM, noteId);
+			favoriteDao.deleteFavorite(favorite);
+			return Status.SUCCESS;
+		} else {
+			return Status.NOT_EXISTS;
+		}
+	}
+
 	@Override
 	public List<Favorite> getFavoriteListByUserId(int userId) {
 		// TODO Auto-generated method stub

@@ -103,7 +103,7 @@ public class QuestionDaoImpl implements QuestionDao {
 	public int incrementNum(String property, int id) {
 		// TODO Auto-generated method stub
 		String hql = "update Question as q set q." + property + "=q."
-				+ property + "+1 and where q.id =?";
+				+ property + "+1 where q.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();
@@ -113,7 +113,7 @@ public class QuestionDaoImpl implements QuestionDao {
 	public int decrementNum(String property, int id) {
 		// TODO Auto-generated method stub
 		String hql = "update Question as q set q." + property + "=q."
-				+ property + "-1 and where q.id =?";
+				+ property + "-1  where q.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();

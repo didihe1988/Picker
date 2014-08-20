@@ -112,7 +112,7 @@ public class CommentDaoImpl implements CommentDao {
 	public int incrementNum(String property, int id) {
 		// TODO Auto-generated method stub
 		String hql = "update Comment as c set c." + property + "=c." + property
-				+ "+1 and where c.id =?";
+				+ "+1 where c.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();
@@ -122,7 +122,7 @@ public class CommentDaoImpl implements CommentDao {
 	public int decrementNum(String property, int id) {
 		// TODO Auto-generated method stub
 		String hql = "update Comment as c set c." + property + "=c." + property
-				+ "-1 and where c.id =?";
+				+ "-1 where c.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();

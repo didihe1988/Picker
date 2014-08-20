@@ -104,7 +104,7 @@ public class UserDaoImpl implements UserDao {
 	public int incrementNum(String property, int id) {
 		// TODO Auto-generated method stub
 		String hql = "update User as u set u." + property + "=u." + property
-				+ "+1 and where u.id =?";
+				+ "+1  where u.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();
@@ -114,7 +114,7 @@ public class UserDaoImpl implements UserDao {
 	public int decrementNum(String property, int id) {
 		// TODO Auto-generated method stub
 		String hql = "update User as u set u." + property + "=u." + property
-				+ "-1 and where u.id =?";
+				+ "-1  where u.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();

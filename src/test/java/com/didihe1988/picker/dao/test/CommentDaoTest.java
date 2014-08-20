@@ -1,6 +1,5 @@
 package com.didihe1988.picker.dao.test;
 
-
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
@@ -22,97 +21,77 @@ import com.didihe1988.picker.model.Comment;
 		"classpath:root-context.xml" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CommentDaoTest {
-	@Autowired	
+	@Autowired
 	private CommentDao commentDao;
-	
-	//testAddComment
+
+	// testAddComment
 	/**
 	 * 
 	 */
 	@Test
-	public void test01()
-	{
-		Comment comment=new Comment();
-		comment.setContent("mini2440");
-		comment.setProducerId(1);
-		comment.setReceiverId(3);
-		comment.setBookId(4);
-		comment.setFavoriteNum(2);
-		int status=commentDao.addComment(comment);
+	public void test01() {
+		Comment comment = new Comment(1, 1, "henhao", Comment.COMMENT_ANSWER);
+		int status = commentDao.addComment(comment);
 		assertSame(1, status);
 	}
-	
-	//testQueryCommentById
+
+	// testQueryCommentById
 	@Test
-	public void test02() 
-	{
-		Comment comment=commentDao.queryCommentById(1);
+	public void test02() {
+		Comment comment = commentDao.queryCommentById(1);
 		assertNotNull(comment);
 		System.out.println(comment.toString());
 	}
-	
-	//testIsCommentExists
+
+	// testIsCommentExists
 	@Test
-	public void test03() 
-	{
-		Comment comment=commentDao.queryCommentById(1);
-		boolean isCommentExists=commentDao.isCommentExists(comment);
+	public void test03() {
+		Comment comment = commentDao.queryCommentById(1);
+		boolean isCommentExists = commentDao.isCommentExists(comment);
 		assertSame(true, isCommentExists);
 	}
-	
-	//testIsCommentExists comment not exists
+
+	// testIsCommentExists comment not exists
 	@Test
-	public void test04() 
-	{
-		Comment comment=commentDao.queryCommentById(20);
-		boolean isCommentExists=commentDao.isCommentExists(comment);
+	public void test04() {
+		Comment comment = commentDao.queryCommentById(20);
+		boolean isCommentExists = commentDao.isCommentExists(comment);
 		assertSame(false, isCommentExists);
 	}
-	
-	//testUpdateComment
+
+	// testUpdateComment
 	@Test
-	public void test05() 
-	{
-		Comment comment=commentDao.queryCommentById(4);
+	public void test05() {
+		Comment comment = commentDao.queryCommentById(4);
 		comment.setContent("lalala");
-		int status=commentDao.updateComment(comment);
+		int status = commentDao.updateComment(comment);
 		assertSame(1, status);
 	}
-	
-	//testDeleteComment
+
+	// testDeleteComment
 	@Test
-	public void test07() 
-	{
-		Comment comment=commentDao.queryCommentById(4);
-		int status=commentDao.deleteComment(comment);
+	public void test07() {
+		Comment comment = commentDao.queryCommentById(4);
+		int status = commentDao.deleteComment(comment);
 		assertSame(1, status);
 	}
-	
-	//testQueryCommentByBookId
+
+	// testQueryCommentByBookId
 	@Test
-	public void test08()
-	{
-		List<Comment> list=commentDao.queryCommentByBookId(1);
+	public void test08() {
+		List<Comment> list = commentDao.queryCommentByBookId(1);
 		assertNotNull(list);
-		if(list!=null)
-		{
-			for(int i=0;i<list.size();i++)
-			{
+		if (list != null) {
+			for (int i = 0; i < list.size(); i++) {
 				System.out.print(list.get(0).toString());
 			}
 		}
 	}
-	
-	//testincrementFavoriteNum
+
+	// testincrementFavoriteNum
 	@Test
-	public void test09() 
-	{
-		int result=commentDao.incrementFavoriteNum(1);
+	public void test09() {
+		int result = commentDao.incrementFavoriteNum(1);
 	}
-	
-	
-	
-	
-	
-	
+
 }

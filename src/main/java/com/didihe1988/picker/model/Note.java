@@ -40,6 +40,9 @@ public class Note implements Serializable {
 	@Column(name = "note_ispublic")
 	private boolean isPublic;
 
+	@Column(name = "note_favoritenum")
+	private int favoriteNum;
+
 	public int getId() {
 		return id;
 	}
@@ -95,15 +98,21 @@ public class Note implements Serializable {
 	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
-	
-	
+
+	public int getFavoriteNum() {
+		return favoriteNum;
+	}
+
+	public void setFavoriteNum(int favoriteNum) {
+		this.favoriteNum = favoriteNum;
+	}
 
 	@Override
 	public String toString() {
 		return "Note [id=" + id + ", bookId=" + bookId + ", userId=" + userId
 				+ ", title=" + title + ", content=" + content
 				+ ", publishTime=" + publishTime + ", isPublic=" + isPublic
-				+ "]";
+				+ ", favoriteNum=" + favoriteNum + "]";
 	}
 
 	public Note() {

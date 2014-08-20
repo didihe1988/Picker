@@ -20,6 +20,7 @@ public class Favorite implements Serializable {
 	public static final int FAVORITE_COMMENT = 0;
 	public static final int FAVORITE_QUESTION = 1;
 	public static final int FAVORITE_ANSWER = 2;
+	public static final int FAVORITE_NOTE = 3;
 
 	@Id
 	@Column(name = "favorite_objectid")
