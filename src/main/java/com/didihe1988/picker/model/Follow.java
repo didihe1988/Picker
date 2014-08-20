@@ -18,12 +18,6 @@ public class Follow implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public static final int FOLLOW_QUESTION = 0;
 	public static final int FOLLOW_USER = 1;
-	
-	/*
-	 * public static final int FOLLOW_COMMENT = 0; public static final int
-	 * FOLLOW_USER_FAVORITE = 1; public static final int FOLLOW_USER_COMMENT =
-	 * 2; public static final int FOLLOW_USER_FOLLOWED_COMMENT = 3;
-	 */
 
 	@Id
 	@GeneratedValue
@@ -36,8 +30,8 @@ public class Follow implements Serializable {
 	// 关注者id 关注别人的人 也就是session里的userId
 	@Column(name = "follow_followerid")
 	private int followerId;
-	
-	//被关注的人或是关注的问题
+
+	// 被关注的人或是关注的问题
 	@Column(name = "follow_sourceid")
 	private int sourceId;
 
