@@ -66,15 +66,21 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public List<Note> getNoteListByUserId(int id) {
+	public List<Note> getALlNoteListByUserId(int id) {
 		// TODO Auto-generated method stub
-		return noteDao.queryNoteListByUserId(id);
+		return noteDao.queryAllNoteListByUserId(id);
 	}
 
 	@Override
-	public List<Note> getNoteListByBookId(int id) {
+	public List<Note> getALLNoteListByBookId(int id) {
 		// TODO Auto-generated method stub
-		return noteDao.queryNoteListByBookId(id);
+		return noteDao.queryAllNoteListByBookId(id);
+	}
+
+	@Override
+	public List<Note> getPublicNoteListByBookId(int id) {
+		// TODO Auto-generated method stub
+		return noteDao.queryNoteListByBookId(id, true);
 	}
 
 }

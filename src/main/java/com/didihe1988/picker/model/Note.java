@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -15,7 +17,8 @@ public class Note implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	@Id
+	@GeneratedValue
 	@Column(name = "note_id")
 	private int id;
 
@@ -92,6 +95,8 @@ public class Note implements Serializable {
 	public void setBookId(int bookId) {
 		this.bookId = bookId;
 	}
+	
+	
 
 	@Override
 	public String toString() {

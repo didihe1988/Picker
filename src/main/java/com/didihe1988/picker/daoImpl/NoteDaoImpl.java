@@ -23,7 +23,7 @@ public class NoteDaoImpl implements NoteDao {
 	}
 
 	/**
-	 * @description  检测user是否拥有该note 
+	 * @description 检测user是否拥有该note
 	 */
 	@Override
 	public boolean checkDeleteValidation(int ownerId, int objectId) {
@@ -90,7 +90,29 @@ public class NoteDaoImpl implements NoteDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Note> queryNoteListByUserId(int id) {
+	public List<Note> queryNoteListByUserId(int id, boolean isPublic) {
+		// TODO Auto-generated method stub
+		String hql = "from Note as n where n.userId=? and n.isPublic =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		query.setBoolean(1, isPublic);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Note> queryNoteListByBookId(int id, boolean isPublic) {
+		// TODO Auto-generated method stub
+		String hql = "from Note as n where n.bookId=? and n.isPublic =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		query.setBoolean(1, isPublic);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Note> queryAllNoteListByUserId(int id) {
 		// TODO Auto-generated method stub
 		String hql = "from Note as n where n.userId=?";
 		Query query = getCurrentSession().createQuery(hql);
@@ -100,7 +122,7 @@ public class NoteDaoImpl implements NoteDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Note> queryNoteListByBookId(int id) {
+	public List<Note> queryAllNoteListByBookId(int id) {
 		// TODO Auto-generated method stub
 		String hql = "from Note as n where n.bookId=?";
 		Query query = getCurrentSession().createQuery(hql);

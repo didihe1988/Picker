@@ -15,7 +15,9 @@ public interface NoteService {
 
 	public boolean isNoteExistsById(int id);
 
-	public List<Note> getNoteListByUserId(int id);
+	public List<Note> getALlNoteListByUserId(int id);
 
-	public List<Note> getNoteListByBookId(int id);
+	public List<Note> getALLNoteListByBookId(int id);
+
+	public List<Note> getPublicNoteListByBookId(int id);
 }
