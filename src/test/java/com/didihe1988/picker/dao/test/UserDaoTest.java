@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.utils.MD5Utils;
+import com.didihe1988.picker.utils.StringUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:servlet-context.xml",
@@ -130,7 +130,7 @@ public class UserDaoTest {
 	}
 
 	private String encryptByMD5(String username, String password) {
-		String passwordAfterMD5 = MD5Utils.getMd5String(password).substring(0,
+		String passwordAfterMD5 = StringUtils.getMd5String(password).substring(0,
 				6)
 				+ username.substring(2);
 		return passwordAfterMD5;

@@ -143,4 +143,16 @@ public class FollowDaoImpl implements FollowDao {
 		return query.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Follow> queryFollowListByFollowerIdByType(int followerId,
+			int type) {
+		// TODO Auto-generated method stub
+		String hql = "from Follow as follow where follow.followerId = ? and type=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, followerId);
+		query.setInteger(1, type);
+		return query.list();
+	}
+
 }

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.MessageDao;
+import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.service.MessageService;
 
@@ -16,6 +18,56 @@ import com.didihe1988.picker.service.MessageService;
 public class MessageServiceImpl implements MessageService {
 	@Autowired
 	private MessageDao messageDao;
+
+	@Autowired
+	private FollowDao followDao;
+
+	/*
+	 * 用户关注的人产生的消息
+	 */
+	@Override
+	public void addMessageByFollowedUser(int type, int producerId,
+			String producerName, int relatedSourceId,
+			String relatedSourceContent) {
+		List<Follow> followList = followDao
+				.queryFollowListByFollowedUserId(producerId);
+		for (Follow follow : followList) {
+			Message message = new Message(follow.getFollowerId(), type,
+					producerId, producerName, relatedSourceId,
+					relatedSourceContent);
+			messageDao.addMessage(message);
+		}
+	}
+
+	/*
+	 * 用户关注的问题产生的消息
+	 */
+	@Override
+	public void addMessageByFollowedQuestion(int type, int producerId,
+			String producerName, int relatedSourceId,
+			String relatedSourceContent) {
+		List<Follow> followList = followDao
+				.queryFollowListByQuestionId(producerId);
+		for (Follow follow : followList) {
+			Message message = new Message(follow.getFollowerId(), type,
+					producerId, producerName, relatedSourceId,
+					relatedSourceContent);
+			messageDao.addMessage(message);
+		}
+	}
+
+	/*
+	 * xxx赞了/关注了 您的XXX
+	 */
+	@Override
+	public void addMessageByRecerver(int receiverId, int type, int producerId,
+			String producerName, int relatedSourceId,
+			String relatedSourceContent) {
+		Message message = new Message(receiverId, type, producerId,
+				producerName, relatedSourceId, relatedSourceContent);
+		messageDao.addMessage(message);
+
+	}
 
 	@Override
 	public int addMessage(Message message) {

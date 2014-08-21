@@ -2,7 +2,6 @@ package com.didihe1988.picker.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +31,6 @@ public class BoughtController {
 		int userId = HttpUtils.getSessionUser(request).getId();
 		// logger.debug(userId + "-" + bookId);
 		boughtService.addBought(new Bought(userId, bookId));
-		messageFactory.addMessage(userId, userId, bookId,
-				Message.MESSAGE_FOLLOWED_ADDBOUGHT);
 		return "/book/list";
 	}
 

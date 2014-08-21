@@ -150,4 +150,5 @@ public class AnswerDaoImpl implements AnswerDao {
 		return query.executeUpdate();
 
 	}
+
 }

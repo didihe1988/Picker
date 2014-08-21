@@ -98,20 +98,49 @@ public class FollowServiceImpl implements FollowService {
 		return followDao.isFollowExists(follow);
 	}
 
+	/**
+	 * @description 用户可以查看自己关注的所有内容
+	 */
 	@Override
 	public List<Follow> getFollowListByFollowerId(int followerId) {
 		// TODO Auto-generated method stub
 		return followDao.queryFollowListByFollowerId(followerId);
 	}
 
+	/**
+	 * @description 用户可以查看自己关注的所有问题
+	 */
+	@Override
+	public List<Follow> getFollowListByFollowerIdByQuestion(int followerId) {
+		// TODO Auto-generated method stub
+		return followDao.queryFollowListByFollowerIdByType(followerId,
+				Follow.FOLLOW_QUESTION);
+	}
+
+	/**
+	 * @description 用户可以查看自己关注的所有用户
+	 */
+	@Override
+	public List<Follow> getFollowListByFollowerIdByUser(int followerId) {
+		// TODO Auto-generated method stub
+		return followDao.queryFollowListByFollowerIdByType(followerId,
+				Follow.FOLLOW_USER);
+	}
+
+	/**
+	 * @description 该用户被那些人关注
+	 */
 	@Override
 	public List<Follow> getFollowListByFollowedUserId(int followedUserId) {
 		// TODO Auto-generated method stub
 		return followDao.queryFollowListByFollowedUserId(followedUserId);
 	}
 
+	/**
+	 * @description 该问题被那些人关注
+	 */
 	@Override
-	public List<Follow> queryFollowListByQuestionId(int questionId) {
+	public List<Follow> getFollowListByQuestionId(int questionId) {
 		// TODO Auto-generated method stub
 		return followDao.queryFollowListByQuestionId(questionId);
 	}

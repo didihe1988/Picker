@@ -22,4 +22,5 @@ public interface AnswerService {
 	public int getLatestAnswerIdByQuestionId(int id);
 	
 	public boolean checkDeleteValidation(int userId, int answerId);
+	
 }

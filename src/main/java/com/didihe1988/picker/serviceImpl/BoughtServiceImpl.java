@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.dao.BoughtDao;
+import com.didihe1988.picker.dao.MessageDao;
 import com.didihe1988.picker.model.Bought;
+import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.service.BoughtService;
 
 @Service
@@ -18,7 +20,7 @@ public class BoughtServiceImpl implements BoughtService {
 
 	@Autowired
 	private BoughtDao boughtDao;
-	@Autowired 
+	@Autowired
 	private BookDao bookDao;
 
 	@Override
@@ -32,10 +34,9 @@ public class BoughtServiceImpl implements BoughtService {
 			return Status.EXISTS;
 		}
 		/*
-		 * 	还要增加图书的关注数
-		 *  要不要检验一下status
+		 * 还要增加图书的关注数 要不要检验一下status
 		 */
-		bookDao.incrementFollowNum(bought.getBookId());
+		// bookDao.incrementFollowNum(bought.getBookId());
 		return Status.SUCCESS;
 	}
 

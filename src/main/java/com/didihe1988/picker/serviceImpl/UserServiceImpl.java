@@ -8,7 +8,7 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.UserService;
-import com.didihe1988.picker.utils.MD5Utils;
+import com.didihe1988.picker.utils.StringUtils;
 
 @Service
 @Transactional
@@ -84,13 +84,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private String encryptByMD5(User user) {
-		String passwordAfterMD5 = MD5Utils.getMd5String(user.getPassword())
+		String passwordAfterMD5 = StringUtils.getMd5String(user.getPassword())
 				.substring(0, 6) + user.getUsername().substring(2);
 		return passwordAfterMD5;
 	}
 
 	private String encryptByMD5(String username, String password) {
-		String passwordAfterMD5 = MD5Utils.getMd5String(password).substring(0,
+		String passwordAfterMD5 = StringUtils.getMd5String(password).substring(0,
 				6)
 				+ username.substring(2);
 		return passwordAfterMD5;

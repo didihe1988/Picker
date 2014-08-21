@@ -21,9 +21,9 @@ public class FollowController {
 
 	@Autowired
 	private FollowService followService;
-	/*
-	 * @Autowired private MessageService messageService;
-	 */
+
+	@Autowired
+	private MessageService messageService;
 
 	@Autowired
 	private MessageFactory messageFactory;
@@ -64,16 +64,30 @@ public class FollowController {
 
 	@RequestMapping(value = "/follow/add.do")
 	public String addFollow(HttpServletRequest request) {
+		/*
+		 * 添加follow
+		 */
 		int sourceType = HttpUtils.getIntegerFromReqeust(request, "sourceType");
 		int sourceId = HttpUtils.getIntegerFromReqeust(request, "sourceId");
-		int followerId = HttpUtils.getSessionUser(request).getId();
+		int followerId = HttpUtils.getSessionUserId(request);
 		int userId = followerId;
+		String userName = HttpUtils.getSessionUserName(request);
 		// 自己不能关注自己
 		if ((sourceId == followerId) && (sourceType == Follow.FOLLOW_USER)) {
 			return "followlist";
 		}
 		Follow follow = new Follow(sourceType, followerId, sourceId);
 		followService.addFollow(follow);
+
+		/*
+		 * XXX关注了您
+		 */
+		if (sourceType == Follow.FOLLOW_USER) {
+			messageService.addMessageByRecerver(userId,
+					Message.MESSAGE_USER_FOLLOWED, followerId, userName,
+					sourceId, Message.NULL_RelatedSourceContent);
+		}
+
 		// 如果是关注一个问题，那么给他的follower一个message
 		if (sourceType == Follow.FOLLOW_QUESTION) {
 			/*

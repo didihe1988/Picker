@@ -15,14 +15,31 @@ public interface FollowService {
 
 	public boolean isFollowExists(Follow follow);
 
-
+	/**
+	 * @description 用户可以查看自己关注的所有内容
+	 */
 	public List<Follow> getFollowListByFollowerId(int followerId);
 
+	/**
+	 * @description 用户可以查看自己关注的所有问题
+	 */
+	public List<Follow> getFollowListByFollowerIdByQuestion(int followerId);
+
+	/**
+	 * @description 用户可以查看自己关注的所有用户
+	 */
+	public List<Follow> getFollowListByFollowerIdByUser(int followerId);
+
+	/**
+	 * @description 该用户被那些人关注
+	 */
 	public List<Follow> getFollowListByFollowedUserId(int followedUserId);
-	
-	public List<Follow> queryFollowListByQuestionId(int questionId);
-	
+
+	/**
+	 * @description 该问题被那些人关注
+	 */
+	public List<Follow> getFollowListByQuestionId(int questionId);
+
 	public List<Follow> getAllFollowForTest();
 
-	
 }
