@@ -32,12 +32,13 @@ public class BookDetailController {
 			ModelMap modelMap) {
 		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
 		Book book = bookService.findBookById(bookId);
-		List<Comment> commentList = commentService.getCommentByBookId(bookId);
-		assert commentList != null;
-		for (int i = 0; i < commentList.size(); i++) {
-			System.out.println(commentList.get(i).toString());
-		}
-		modelMap.addAttribute("commentList", commentList);
+		/*
+		 * List<Comment> commentList =
+		 * commentService.getCommentByBookId(bookId); assert commentList !=
+		 * null; for (int i = 0; i < commentList.size(); i++) {
+		 * System.out.println(commentList.get(i).toString()); }
+		 */
+	//	modelMap.addAttribute("commentList", commentList);
 		modelMap.addAttribute("book", book);
 		return "/bookdetail";
 	}

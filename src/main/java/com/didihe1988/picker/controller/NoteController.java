@@ -34,18 +34,25 @@ public class NoteController {
 		String userName = HttpUtils.getSessionUserName(request);
 		int status = favoriteService.incrementNoteFavorite(noteId, userId);
 
-		/*
-		 * XXX赞了您的笔记
-		 */
 		if (status == Status.SUCCESS) {
+			/*
+			 * XXX赞了您的笔记
+			 */
 			Note note = noteService.getNoteById(noteId);
 			String relatedSourceContent = StringUtils.confineStringLength(
 					note.getContent(), Constant.MESSAGE_LENGTH);
 			messageService.addMessageByRecerver(note.getUserId(),
 					Message.MESSAGE_YOUR_ANSWER_FAVORITED, userId, userName,
 					noteId, relatedSourceContent);
-		}
 
+			/*
+			 * 通知关注者 小明 (被关注者)赞了XXX的笔记
+			 */
+
+			messageService.addMessageByFollowedUser(
+					Message.MESSAGE_FOLLOWED_FAVORITE_NOTE, userId, userName,
+					noteId, relatedSourceContent);
+		}
 		return "";
 	}
 }

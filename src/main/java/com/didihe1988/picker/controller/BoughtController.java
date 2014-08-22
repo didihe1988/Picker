@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.didihe1988.picker.factory.MessageFactory;
 import com.didihe1988.picker.model.Bought;
-import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
 import com.didihe1988.picker.utils.HttpUtils;
@@ -20,9 +18,6 @@ public class BoughtController {
 
 	@Autowired
 	private BookService bookService;
-
-	@Autowired
-	private MessageFactory messageFactory;
 
 	@RequestMapping(value = "/bought/add_byisbn.do")
 	public String addBought(HttpServletRequest request) {

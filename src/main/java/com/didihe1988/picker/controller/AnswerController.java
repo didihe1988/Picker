@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
-import com.didihe1988.picker.factory.MessageFactory;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Message;
-import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.MessageService;
@@ -49,19 +47,20 @@ public class AnswerController {
 		String userName = HttpUtils.getSessionUserName(request);
 		int answerId = answerService.getLatestAnswerIdByQuestionId(questionId);
 
+		String relatedSourceContent = StringUtils.confineStringLength(content,
+				Constant.MESSAGE_LENGTH);
 		/*
 		 * 通知提问者XXX回答了您的问题
 		 */
 		messageService.addMessageByRecerver(askerId,
 				Message.MESSAGE_YOUR_QUESTION_UPDATE, userId, userName,
-				answerId, answer.getContent());
-
+				answerId, relatedSourceContent);
 		/*
-		 * int answerId =
-		 * answerService.getLatestAnswerIdByQuestionId(questionId);
-		 * messageFactory.addMessage(userId, userId, answerId,
-		 * Message.MESSAGE_FOLLOWED_ANSWER_QUESTION);
+		 * 通知关注者 小明 (被关注者)回答了一个问题
 		 */
+		messageService.addMessageByFollowedUser(
+				Message.MESSAGE_FOLLOWED_ANSWER_QUESTION, userId, userName,
+				answerId, relatedSourceContent);
 		return "";
 
 	}
@@ -73,15 +72,22 @@ public class AnswerController {
 		String userName = HttpUtils.getSessionUserName(request);
 		int status = favoriteService.incrementAnswerFavorite(answerId, userId);
 
-		/*
-		 * XXX赞了您的回答
-		 */
 		if (status == Status.SUCCESS) {
+			/*
+			 * XXX赞了您的回答
+			 */
 			Answer answer = answerService.getAnswerById(answerId);
 			String relatedSourceContent = StringUtils.confineStringLength(
 					answer.getContent(), Constant.MESSAGE_LENGTH);
 			messageService.addMessageByRecerver(answer.getReplierId(),
 					Message.MESSAGE_YOUR_ANSWER_FAVORITED, userId, userName,
+					answerId, relatedSourceContent);
+
+			/*
+			 * 通知关注者 小明 (被关注者)赞了XXX的问题
+			 */
+			messageService.addMessageByFollowedUser(
+					Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, userId, userName,
 					answerId, relatedSourceContent);
 		}
 

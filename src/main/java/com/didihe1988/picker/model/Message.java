@@ -36,6 +36,10 @@ public class Message implements Serializable {
 	public static final int MESSAGE_YOUR_ANSWER_FAVORITED = 11;
 	public static final int MESSAGE_YOUR_COMMENT_FAVORITED = 12;
 	public static final int MESSAGE_YOUR_NOTE_FAVORITED = 13;
+
+	public static final int MESSAGE_YOUR_ANSWER_COMMENTED = 14;
+	public static final int MESSAGE_YOUR_QUESTION_COMMENTED = 15;
+
 	public static final int MESSAGE_USER_FOLLOWED = 9;
 
 	// to display

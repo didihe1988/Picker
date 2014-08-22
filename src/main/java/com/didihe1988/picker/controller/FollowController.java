@@ -9,12 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.didihe1988.picker.factory.MessageFactory;
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.service.FollowService;
 import com.didihe1988.picker.service.MessageService;
+import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.StringUtils;
 
 @Controller
 public class FollowController {
@@ -26,13 +29,13 @@ public class FollowController {
 	private MessageService messageService;
 
 	@Autowired
-	private MessageFactory messageFactory;
+	private QuestionService questionService;
 
 	@RequestMapping(value = "/follow/list_byfollowerid.do")
 	public String listByFollowerId(HttpServletRequest request, ModelMap modelMap) {
 		int followerId = HttpUtils.getIntegerFromReqeust(request, "followerId");
 		List<Follow> followList = followService
-				.getFollowByFollowerId(followerId);
+				.getFollowListByFollowerId(followerId);
 		modelMap.addAttribute("followList", followList);
 		for (int i = 0; i < followList.size(); i++) {
 			System.out.println(followList.get(i).toString());
@@ -46,7 +49,7 @@ public class FollowController {
 		int followedUserId = HttpUtils.getIntegerFromReqeust(request,
 				"followedUserId");
 		List<Follow> followList = followService
-				.getFollowByFollowedUserId(followedUserId);
+				.getFollowListByFollowedUserId(followedUserId);
 		modelMap.addAttribute("followList", followList);
 		for (int i = 0; i < followList.size(); i++) {
 			System.out.println(followList.get(i).toString());
@@ -88,15 +91,18 @@ public class FollowController {
 					sourceId, Message.NULL_RelatedSourceContent);
 		}
 
-		// 如果是关注一个问题，那么给他的follower一个message
+		/*
+		 * 通知关注者 小明 (被关注者)关注了一个XXX问题
+		 */
 		if (sourceType == Follow.FOLLOW_QUESTION) {
-			/*
-			 * userId:找到follower userId：mainSourceType
-			 * sourceId:relatedSourceType
-			 */
-			messageFactory.addMessage(userId, userId, sourceId,
-					Message.MESSAGE_FOLLOWED_FOLLOWQUESTION);
+			Question question = questionService.getQuestionById(sourceId);
+			String relatedSourceContent = StringUtils.confineStringLength(
+					question.getContent(), Constant.MESSAGE_LENGTH);
+			messageService.addMessageByFollowedUser(
+					Message.MESSAGE_FOLLOWED_FOLLOWQUESTION, userId, userName,
+					sourceId, relatedSourceContent);
 		}
+
 		return "/follow/listall_fortest.do";
 	}
 

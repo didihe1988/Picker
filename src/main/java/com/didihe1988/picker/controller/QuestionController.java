@@ -1,7 +1,5 @@
 package com.didihe1988.picker.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
-import com.didihe1988.picker.factory.MessageFactory;
-import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.service.FavoriteService;
@@ -34,18 +30,26 @@ public class QuestionController {
 
 	@RequestMapping(value = "/question/add.do", method = RequestMethod.POST)
 	public String add(HttpServletRequest request) {
+		/*
+		 * 添加问题
+		 */
 		int userId = HttpUtils.getSessionUserId(request);
 		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
 		String content = (String) request.getAttribute("content");
 		String title = (String) request.getAttribute("title");
 		Question question = new Question(bookId, userId, title, content);
 		questionService.addQuestion(question);
-		// 暂时只想出这种方法获得新Question的Id 可以专门写一个方法
-		List<Question> questionList = questionService
-				.getQuestionByAskerId(userId);
-		messageFactory.addMessage(userId, userId,
-				questionList.get(questionList.size() - 1).getId(),
-				Message.MESSAGE_FOLLOWED_ASKQUESTION);
+
+		/*
+		 * 通知关注者 小明 (被关注者)提出了一个问题
+		 */
+		String userName = HttpUtils.getSessionUserName(request);
+		int questionId = questionService.getLatestQuestionIdByBookId(bookId);
+		String relatedSourceContent = StringUtils.confineStringLength(content,
+				Constant.MESSAGE_LENGTH);
+		messageService.addMessageByFollowedUser(
+				Message.MESSAGE_FOLLOWED_ASKQUESTION, userId, userName,
+				questionId, relatedSourceContent);
 		return "";
 	}
 
@@ -57,16 +61,23 @@ public class QuestionController {
 		int status = favoriteService.incrementQuestionFavorite(questionId,
 				userId);
 
-		/*
-		 * XXX赞了您的问题
-		 */
 		if (status == Status.SUCCESS) {
+			/*
+			 * XXX赞了您的问题
+			 */
 			Question question = questionService.getQuestionById(questionId);
 			String relatedSourceContent = StringUtils.confineStringLength(
 					question.getContent(), Constant.MESSAGE_LENGTH);
 			messageService.addMessageByRecerver(question.getAskerId(),
 					Message.MESSAGE_YOUR_QUESTION_FAVORITED, userId, userName,
 					questionId, relatedSourceContent);
+
+			/*
+			 * 通知关注者 小明 (被关注者)赞了XXX的问题
+			 */
+			messageService.addMessageByFollowedUser(
+					Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, userId,
+					userName, questionId, relatedSourceContent);
 		}
 
 		return "";

@@ -92,4 +92,10 @@ public class QuestionServiceImpl implements QuestionService {
 		return questionDao.checkDeleteValidation(userId, questionId);
 	}
 
+	@Override
+	public int getLatestQuestionIdByBookId(int id) {
+		// TODO Auto-generated method stub
+		return questionDao.getLatestQuestionIdByBookId(id);
+	}
+
 }

@@ -47,21 +47,19 @@ public class MessageController {
 		return "messagelist";
 	}
 
-	@RequestMapping(value = "/message/add.do")
-	public String addMessage(HttpServletRequest request) {
-		int type = HttpUtils.getIntegerFromReqeust(request, "type");
-		int mainSourceId = HttpUtils.getIntegerFromReqeust(request,
-				"mainSourceId");
-		int receiverId = HttpUtils.getIntegerFromReqeust(request, "receiverId");
-		int relatedSourceId = HttpUtils.getIntegerFromReqeust(request,
-				"relatedSourceId");
-
-		Message message = new Message(receiverId, type, mainSourceId,
-				relatedSourceId);
-		messageService.addMessage(message);
-		// return "messagelist";
-		return "";
-	}
+	/*
+	 * @RequestMapping(value = "/message/add.do") public String
+	 * addMessage(HttpServletRequest request) { int type =
+	 * HttpUtils.getIntegerFromReqeust(request, "type"); int mainSourceId =
+	 * HttpUtils.getIntegerFromReqeust(request, "mainSourceId"); int receiverId
+	 * = HttpUtils.getIntegerFromReqeust(request, "receiverId"); int
+	 * relatedSourceId = HttpUtils.getIntegerFromReqeust(request,
+	 * "relatedSourceId");
+	 * 
+	 * Message message =new Message(receiverId, type, producerId, producerName,
+	 * relatedSourceId, relatedSourceContent);
+	 * messageService.addMessage(message); // return "messagelist"; return ""; }
+	 */
 
 	@RequestMapping(value = "/message/delete.do")
 	public String deleteMessage(HttpServletRequest request) {
