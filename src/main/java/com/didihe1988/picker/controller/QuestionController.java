@@ -3,9 +3,10 @@ package com.didihe1988.picker.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
@@ -17,7 +18,7 @@ import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
-@Controller
+@RestController
 public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
@@ -27,6 +28,12 @@ public class QuestionController {
 
 	@Autowired
 	private FavoriteService favoriteService;
+
+	@RequestMapping(value = "/question/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public Question getQuestion(@PathVariable int id) {
+		Question question = questionService.getQuestionById(id);
+		return question;
+	}
 
 	@RequestMapping(value = "/question/add.do", method = RequestMethod.POST)
 	public String add(HttpServletRequest request) {

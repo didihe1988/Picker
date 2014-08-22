@@ -3,9 +3,10 @@ package com.didihe1988.picker.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
@@ -21,7 +22,7 @@ import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
-@Controller
+@RestController
 public class CommentController {
 	@Autowired
 	private CommentService commentService;
@@ -37,6 +38,12 @@ public class CommentController {
 
 	@Autowired
 	private AnswerService answerService;
+
+	@RequestMapping(value = "/comment/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public Comment getComment(@PathVariable int id) {
+		Comment comment = commentService.getCommentById(id);
+		return comment;
+	}
 
 	@RequestMapping(value = "/comment/add.do", method = RequestMethod.POST)
 	public String add(HttpServletRequest request) {
@@ -80,18 +87,17 @@ public class CommentController {
 		// return "book/detail.do?bookId=" + comment.getBookId();
 		return "";
 	}
+
 	/*
-	@RequestMapping(value = "/comment/list.do")
-	public String list(HttpServletRequest request, ModelMap modelMap) {
-		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
-		List<Comment> commentList = commentService.getCommentListByAnswerId(id)
-		assert commentList != null;
-		for (int i = 0; i < commentList.size(); i++) {
-			System.out.println(commentList.get(i).toString());
-		}
-		modelMap.addAttribute("commentList", commentList);
-		return "/comment/list.do";
-	}*/
+	 * @RequestMapping(value = "/comment/list.do") public String
+	 * list(HttpServletRequest request, ModelMap modelMap) { int bookId =
+	 * HttpUtils.getIntegerFromReqeust(request, "bookId"); List<Comment>
+	 * commentList = commentService.getCommentListByAnswerId(id) assert
+	 * commentList != null; for (int i = 0; i < commentList.size(); i++) {
+	 * System.out.println(commentList.get(i).toString()); }
+	 * modelMap.addAttribute("commentList", commentList); return
+	 * "/comment/list.do"; }
+	 */
 
 	@RequestMapping(value = "/comment/delete.do")
 	public String delete(HttpServletRequest request) {

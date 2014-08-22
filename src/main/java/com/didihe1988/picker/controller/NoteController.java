@@ -3,8 +3,10 @@ package com.didihe1988.picker.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
@@ -16,7 +18,7 @@ import com.didihe1988.picker.service.NoteService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
-@Controller
+@RestController
 public class NoteController {
 	@Autowired
 	private NoteService noteService;
@@ -27,7 +29,13 @@ public class NoteController {
 	@Autowired
 	private FavoriteService favoriteService;
 
-	@RequestMapping(value = "/answer/increment_favorite.do")
+	@RequestMapping(value = "/note/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public Note getNote(@PathVariable int id) {
+		Note note = noteService.getNoteById(id);
+		return note;
+	}
+
+	@RequestMapping(value = "/note/increment_favorite.do")
 	public String incrementFavorite(HttpServletRequest request) {
 		int noteId = HttpUtils.getIntegerFromReqeust(request, "noteId");
 		int userId = HttpUtils.getSessionUserId(request);

@@ -1,20 +1,16 @@
 package com.didihe1988.picker.controller;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.UserService;
 
-@Controller
+@RestController
 public class RegisterController {
 	@Autowired
 	UserService userService;

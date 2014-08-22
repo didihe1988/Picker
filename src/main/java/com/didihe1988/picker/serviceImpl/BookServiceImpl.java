@@ -17,7 +17,7 @@ public class BookServiceImpl implements BookService {
 	private BookDao bookDao;
 
 	@Override
-	public Book findBookById(int id) {
+	public Book getBookById(int id) {
 		// TODO Auto-generated method stub
 		return bookDao.queryBookById(id);
 	}
@@ -83,7 +83,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public int incrementQuestionNum(int id) {
 		// TODO Auto-generated method stub
-		if (findBookById(id) == null) {
+		if (getBookById(id) == null) {
 			return Status.NOT_EXISTS;
 		}
 		int status = bookDao.incrementComment(id);
@@ -94,7 +94,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public int decrementQuestionNum(int id) {
 		// TODO Auto-generated method stub
-		if (findBookById(id) == null) {
+		if (getBookById(id) == null) {
 			return Status.NOT_EXISTS;
 		}
 		int status = bookDao.decrementQuestionNum(id);

@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.AnswerDao;
-import com.didihe1988.picker.dao.daoInterface.DeleteValidation;
-import com.didihe1988.picker.dao.daoInterface.NumOperation;
 import com.didihe1988.picker.model.Answer;
 
 @Repository
@@ -81,6 +79,16 @@ public class AnswerDaoImpl implements AnswerDao {
 	public List<Answer> queryAnswerByQuestionId(int id) {
 		// TODO Auto-generated method stub
 		String hql = "from Answer as a where a.questionId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Answer> queryAnswerByReplierId(int id) {
+		// TODO Auto-generated method stub
+		String hql = "from Answer as a where a.replierId=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.list();

@@ -33,11 +33,35 @@ public class User implements Serializable {
 	@Column(name = "user_lastVisit")
 	private Date lastVisit;
 
+	@Column(name = "user_registertime")
+	private Date registerTime;
+
 	@Column(name = "user_favoritenum")
 	private int favoriteNum;
 
+	/*
+	 * ±»¹Ø×¢Êý
+	 */
 	@Column(name = "user_follownum")
 	private int followNum;
+
+	@Column(name = "user_followothersnum")
+	private int followOthersNum;
+
+	@Column(name = "user_questionNum")
+	private int questionNum;
+
+	@Column(name = "user_answernum")
+	private int answerNum;
+
+	@Column(name = "user_notenum")
+	private int noteNum;
+
+	@Column(name = "user_circlenum")
+	private int circleNum;
+
+	@Column(name = "user_avatarurl")
+	private String avatarUrl;
 
 	public User() {
 

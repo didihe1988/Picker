@@ -97,4 +97,10 @@ public class AnswerServiceImpl implements AnswerService {
 		return answerDao.checkDeleteValidation(userId, answerId);
 	}
 
+	@Override
+	public List<Answer> getAnswerByReplierId(int id) {
+		// TODO Auto-generated method stub
+		return answerDao.queryAnswerByReplierId(id);
+	}
+
 }

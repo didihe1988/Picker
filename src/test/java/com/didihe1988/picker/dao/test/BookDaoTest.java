@@ -36,12 +36,7 @@ public class BookDaoTest {
 	// testAddBook
 	@Test
 	public void test02() {
-		Book book = new Book();
-		book.setBookName("The silence of lamps");
-		book.setIsbn("134325352145689");
-		book.setPress("press01");
-		book.setFollowNum(10);
-		book.setCommentNum(10);
+		Book book=new Book("lalala", "9787532734191","dota","press1988");
 		int status = bookDao.addBook(book);
 		assertSame(1, status);
 	}
@@ -81,7 +76,7 @@ public class BookDaoTest {
 		int status = bookDao.deleteBook(book);
 		assertSame(1, status);
 	}
-	
+
 	@Test
 	public void test08() {
 		Book book = bookDao.queryBookById(5);
@@ -110,23 +105,21 @@ public class BookDaoTest {
 	public void test11() {
 		Book book = bookDao.queryBookById(11);
 		book.setId(20);
-		int status=bookDao.updateBook(book);
+		int status = bookDao.updateBook(book);
 		assertSame(-1, status);
 	}
-	
-	//testincrementFollowNum
+
+	// testincrementFollowNum
 	@Test
-	public void test12() 
-	{
-		int result=bookDao.incrementFollowNum(1);
+	public void test12() {
+		int result = bookDao.incrementFollowNum(1);
 		System.out.println(result);
 	}
-	
-	//testIncrementCommentNum
+
+	// testIncrementCommentNum
 	@Test
-	public void test13() 
-	{
-		int result=bookDao.incrementComment(1);
+	public void test13() {
+		int result = bookDao.incrementComment(1);
 		System.out.println(result);
 	}
 }

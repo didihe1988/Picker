@@ -12,15 +12,17 @@ public interface AnswerService {
 	public int updateAnswer(Answer answer);
 
 	public boolean isAnswerExists(Answer answer);
-	
+
 	public boolean isAnswerOfUserExists(int userId);
 
 	public Answer getAnswerById(int id);
 
 	public List<Answer> getAnswerByQuestionId(int id);
-	
+
+	public List<Answer> getAnswerByReplierId(int id);
+
 	public int getLatestAnswerIdByQuestionId(int id);
-	
+
 	public boolean checkDeleteValidation(int userId, int answerId);
-	
+
 }
