@@ -81,7 +81,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
 	public List<Question> getQuestions(@PathVariable int id) {
-		return questionService.getQuestionByAskerId(id);
+		return questionService.getQuestionListByAskerId(id);
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class UserController {
 			Book book = bookService.getBookById(bought.getBookId());
 			bookList.add(book);
 		}
-		return bookList; 
+		return bookList;
 	}
 
 	/**

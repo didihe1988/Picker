@@ -44,6 +44,8 @@ public class CommentController {
 		Comment comment = commentService.getCommentById(id);
 		return comment;
 	}
+	
+	
 
 	@RequestMapping(value = "/comment/add.do", method = RequestMethod.POST)
 	public String add(HttpServletRequest request) {
@@ -87,17 +89,6 @@ public class CommentController {
 		// return "book/detail.do?bookId=" + comment.getBookId();
 		return "";
 	}
-
-	/*
-	 * @RequestMapping(value = "/comment/list.do") public String
-	 * list(HttpServletRequest request, ModelMap modelMap) { int bookId =
-	 * HttpUtils.getIntegerFromReqeust(request, "bookId"); List<Comment>
-	 * commentList = commentService.getCommentListByAnswerId(id) assert
-	 * commentList != null; for (int i = 0; i < commentList.size(); i++) {
-	 * System.out.println(commentList.get(i).toString()); }
-	 * modelMap.addAttribute("commentList", commentList); return
-	 * "/comment/list.do"; }
-	 */
 
 	@RequestMapping(value = "/comment/delete.do")
 	public String delete(HttpServletRequest request) {

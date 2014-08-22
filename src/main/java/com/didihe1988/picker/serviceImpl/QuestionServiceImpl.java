@@ -74,13 +74,13 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public List<Question> getQuestionByAskerId(int id) {
+	public List<Question> getQuestionListByAskerId(int id) {
 		// TODO Auto-generated method stub
 		return questionDao.queryQuestionByAskerId(id);
 	}
 
 	@Override
-	public List<Question> getQuestionByBookId(int id) {
+	public List<Question> getQuestionListByBookId(int id) {
 		// TODO Auto-generated method stub
 		return questionDao.queryQuestionByBookId(id);
 	}

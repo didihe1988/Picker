@@ -15,11 +15,12 @@ public interface QuestionService {
 
 	public boolean isQuestionExists(Question question);
 
-	public List<Question> getQuestionByAskerId(int id);
+	public List<Question> getQuestionListByAskerId(int id);
 
-	public List<Question> getQuestionByBookId(int id);
+	public List<Question> getQuestionListByBookId(int id);
 
 	public int getLatestQuestionIdByBookId(int id);
 
 	public boolean checkDeleteValidation(int userId, int questionId);
+
 }

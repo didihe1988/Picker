@@ -16,16 +16,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
+import com.didihe1988.picker.model.Note;
+import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
+import com.didihe1988.picker.service.NoteService;
+import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.utils.HttpUtils;
 
 @RestController
 public class BookController {
 	@Autowired
 	private BookService bookService;
+
 	@Autowired
 	private BoughtService boughtService;
+
+	@Autowired
+	private QuestionService questionService;
+
+	@Autowired
+	private NoteService noteService;
 
 	private final static Logger logger = LoggerFactory
 			.getLogger(BookController.class);
@@ -53,6 +64,22 @@ public class BookController {
 	public Book getBook(@PathVariable int id) {
 		Book book = bookService.getBookById(id);
 		return book;
+	}
+
+	/**
+	 * @description 本书下提出的问题
+	 */
+	@RequestMapping(value = "/book/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<Question> getQuestions(@PathVariable int id) {
+		return questionService.getQuestionListByBookId(id);
+	}
+
+	/**
+	 * @description 本书下写的笔记
+	 */
+	@RequestMapping(value = "/book/{id}/notes", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<Note> getNotes(@PathVariable int id) {
+		return noteService.getPublicNoteListByBookId(id);
 	}
 
 }
