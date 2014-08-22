@@ -83,4 +83,10 @@ public class NoteServiceImpl implements NoteService {
 		return noteDao.queryNoteListByBookId(id, true);
 	}
 
+	@Override
+	public List<Note> getPublicNoteListByUserId(int id) {
+		// TODO Auto-generated method stub
+		return noteDao.queryNoteListByUserId(id, true);
+	}
+
 }

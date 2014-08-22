@@ -17,6 +17,8 @@ public interface NoteService {
 
 	public List<Note> getALlNoteListByUserId(int id);
 
+	public List<Note> getPublicNoteListByUserId(int id);
+
 	public List<Note> getALLNoteListByBookId(int id);
 
 	public List<Note> getPublicNoteListByBookId(int id);
