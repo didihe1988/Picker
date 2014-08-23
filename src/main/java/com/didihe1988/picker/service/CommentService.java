@@ -18,9 +18,7 @@ public interface CommentService {
 	public int getLatestCommentIdByUserId(int id);
 
 	public boolean checkDeleteValidation(int userId, int commentId);
-	
-	public List<Comment> getCommentListByQuestionId(int id);
 
-	public List<Comment> getCommentListByAnswerId(int id);
+	public List<Comment> getCommentListByCommentedId(int commentedId, int type);
 
 }

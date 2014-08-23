@@ -1,5 +1,7 @@
 package com.didihe1988.picker.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Answer;
+import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.service.AnswerService;
+import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.QuestionService;
@@ -33,12 +37,23 @@ public class AnswerController {
 	@Autowired
 	private FavoriteService favoriteService;
 
+	@Autowired
+	private CommentService commentService;
+
 	@RequestMapping(value = "/answer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public Answer getAnswer(@PathVariable int id) {
 		Answer answer = answerService.getAnswerById(id);
 		return answer;
 	}
-	
+
+	/**
+	 * @description 该回答下的评论
+	 */
+	@RequestMapping(value = "/answer/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<Comment> getCommets(@PathVariable int id) {
+		return commentService.getCommentListByCommentedId(id,
+				Comment.COMMENT_ANSWER);
+	}
 
 	@RequestMapping(value = "/answer/add.do")
 	public String add(HttpServletRequest request) {
@@ -70,6 +85,7 @@ public class AnswerController {
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ANSWER_QUESTION, userId, userName,
 				answerId, relatedSourceContent);
+
 		return "";
 
 	}
@@ -102,6 +118,5 @@ public class AnswerController {
 
 		return "";
 	}
-	
 
 }

@@ -90,8 +90,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private String encryptByMD5(String username, String password) {
-		String passwordAfterMD5 = StringUtils.getMd5String(password).substring(0,
-				6)
+		String passwordAfterMD5 = StringUtils.getMd5String(password).substring(
+				0, 6)
 				+ username.substring(2);
 		return passwordAfterMD5;
 	}

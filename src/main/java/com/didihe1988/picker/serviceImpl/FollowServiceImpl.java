@@ -46,6 +46,8 @@ public class FollowServiceImpl implements FollowService {
 		// followNum++
 		if (follow.getSourceType() == Follow.FOLLOW_USER) {
 			userDao.incrementNum(Constant.FOLLOW_NUM, follow.getSourceId());
+			userDao.incrementNum(Constant.FOLLOW_OTHERSNUM,
+					follow.getFollowerId());
 		} else {
 			// Follow.FOLLOW_QUESTION
 			questionDao.incrementNum(Constant.FOLLOW_NUM, follow.getSourceId());

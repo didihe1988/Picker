@@ -17,9 +17,7 @@ public interface CommentDao extends NumOperation, DeleteValidation {
 
 	public boolean isCommentExists(Comment comment);
 
-	public List<Comment> queryCommentListByQuestionId(int id);
-
-	public List<Comment> queryCommentListByAnswerId(int id);
+	public List<Comment> queryCommentListByCommentedId(int commentedId, int type);
 
 	public int getLatestCommentIdByUserId(int id);
 

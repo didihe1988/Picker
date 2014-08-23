@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.NoteDao;
+import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Note;
 import com.didihe1988.picker.service.NoteService;
 
@@ -17,6 +19,9 @@ public class NoteServiceImpl implements NoteService {
 	@Autowired
 	private NoteDao noteDao;
 
+	@Autowired
+	private UserDao userDao;
+
 	@Override
 	public int addNote(Note note) {
 		// TODO Auto-generated method stub
@@ -24,6 +29,10 @@ public class NoteServiceImpl implements NoteService {
 			return Status.NULLPOINTER;
 		}
 		noteDao.addNote(note);
+		/*
+		 * 
+		 */
+		userDao.incrementNum(Constant.NOTE_NUM, note.getUserId());
 		return Status.SUCCESS;
 	}
 

@@ -17,6 +17,7 @@ public class CircleServiceImpl implements CircleService {
 	@Autowired
 	private CircleDao circleDao;
 
+
 	@Override
 	public int addCircle(Circle circle) {
 		// TODO Auto-generated method stub

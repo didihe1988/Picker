@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AnswerDao;
+import com.didihe1988.picker.dao.QuestionDao;
+import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.service.AnswerService;
 
@@ -16,6 +19,12 @@ import com.didihe1988.picker.service.AnswerService;
 public class AnswerServiceImpl implements AnswerService {
 	@Autowired
 	private AnswerDao answerDao;
+
+	@Autowired
+	private QuestionDao questionDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	@Override
 	public int addAnswer(Answer answer) {
@@ -27,6 +36,15 @@ public class AnswerServiceImpl implements AnswerService {
 		if (status == -1) {
 			return Status.EXISTS;
 		}
+
+		/*
+		 * Question answerNum++
+		 */
+		questionDao.incrementNum(Constant.ANSWER_NUM, answer.getQuestionId());
+		/*
+		 * User answerNum++
+		 */
+		userDao.incrementNum(Constant.ANSWER_NUM, answer.getReplierId());
 		return Status.SUCCESS;
 	}
 

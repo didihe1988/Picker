@@ -119,15 +119,9 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public List<Comment> getCommentListByQuestionId(int id) {
+	public List<Comment> getCommentListByCommentedId(int commentedId, int type) {
 		// TODO Auto-generated method stub
-		return commentDao.queryCommentListByQuestionId(id);
-	}
-
-	@Override
-	public List<Comment> getCommentListByAnswerId(int id) {
-		// TODO Auto-generated method stub
-		return commentDao.queryCommentListByAnswerId(id);
+		return commentDao.queryCommentListByCommentedId(commentedId, type);
 	}
 
 }

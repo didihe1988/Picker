@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.QuestionDao;
+import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.service.QuestionService;
 
@@ -16,6 +18,9 @@ import com.didihe1988.picker.service.QuestionService;
 public class QuestionServiceImpl implements QuestionService {
 	@Autowired
 	private QuestionDao questionDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	@Override
 	public int addQuestion(Question question) {
@@ -27,8 +32,11 @@ public class QuestionServiceImpl implements QuestionService {
 		if (status == -1) {
 			return Status.EXISTS;
 		}
-		// Í¼ÊéµÄquestionNum++
-		// bookDao incrementQuestion
+
+		/*
+		 * User questionNum++
+		 */
+		userDao.incrementNum(Constant.QUESTION_NUM, question.getAskerId());
 		return Status.SUCCESS;
 	}
 

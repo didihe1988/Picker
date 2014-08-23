@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.CircleDao;
 import com.didihe1988.picker.dao.CircleMemberDao;
+import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.service.CircleMemberService;
@@ -21,6 +23,9 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 
 	@Autowired
 	private CircleDao circleDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	@Override
 	public int addCircleMember(CircleMember circleMember) {
@@ -36,6 +41,11 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 		 * CircleµÄmemberNum++
 		 */
 		circleDao.incrementNum("memberNum", circleMember.getCircleId());
+
+		/*
+		 * User circleNum++
+		 */
+		userDao.incrementNum(Constant.CIRCLE_NUM, circleMember.getMemberId());
 		return Status.SUCCESS;
 
 	}

@@ -5,8 +5,6 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.omg.CORBA.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,7 +75,7 @@ public class UserDaoImpl implements UserDao {
 		String hql = "from User as u where u.username=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setString(0, username);
-		List list = query.list();
+		List<User> list = query.list();
 		if (list.size() == 0) {
 			return null;
 		}

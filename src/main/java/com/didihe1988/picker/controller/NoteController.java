@@ -1,5 +1,7 @@
 package com.didihe1988.picker.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Note;
+import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.NoteService;
@@ -29,10 +33,22 @@ public class NoteController {
 	@Autowired
 	private FavoriteService favoriteService;
 
+	@Autowired
+	private CommentService commentService;
+
 	@RequestMapping(value = "/note/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public Note getNote(@PathVariable int id) {
 		Note note = noteService.getNoteById(id);
 		return note;
+	}
+
+	/**
+	 * @description 该笔记下的评论
+	 */
+	@RequestMapping(value = "/note/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<Comment> getCommets(@PathVariable int id) {
+		return commentService.getCommentListByCommentedId(id,
+				Comment.COMMENT_NOTE);
 	}
 
 	@RequestMapping(value = "/note/increment_favorite.do")

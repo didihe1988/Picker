@@ -1,5 +1,7 @@
 package com.didihe1988.picker.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.model.Answer;
+import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Question;
+import com.didihe1988.picker.service.AnswerService;
+import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.QuestionService;
@@ -29,10 +35,33 @@ public class QuestionController {
 	@Autowired
 	private FavoriteService favoriteService;
 
+	@Autowired
+	private AnswerService answerService;
+
+	@Autowired
+	private CommentService commentService;
+
 	@RequestMapping(value = "/question/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public Question getQuestion(@PathVariable int id) {
 		Question question = questionService.getQuestionById(id);
 		return question;
+	}
+
+	/**
+	 * @description 该问题下的回答
+	 */
+	@RequestMapping(value = "/question/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<Answer> getAnswers(@PathVariable int id) {
+		return answerService.getAnswerByQuestionId(id);
+	}
+
+	/**
+	 * @description 该问题下的评论
+	 */
+	@RequestMapping(value = "/question/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
+	public List<Comment> getCommets(@PathVariable int id) {
+		return commentService.getCommentListByCommentedId(id,
+				Comment.COMMENT_QUESTION);
 	}
 
 	@RequestMapping(value = "/question/add.do", method = RequestMethod.POST)

@@ -16,4 +16,5 @@ public interface UserService {
 	public int deleteUser(User user);
 
 	public boolean isUserExists(User user);
+
 }
