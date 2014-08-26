@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Question;
+import com.didihe1988.picker.model.QuestionDp;
 import com.didihe1988.picker.service.QuestionService;
 
 @Service
@@ -21,6 +23,9 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private BookDao bookDao;
 
 	@Override
 	public int addQuestion(Question question) {
@@ -104,6 +109,18 @@ public class QuestionServiceImpl implements QuestionService {
 	public int getLatestQuestionIdByBookId(int id) {
 		// TODO Auto-generated method stub
 		return questionDao.getLatestQuestionIdByBookId(id);
+	}
+
+	@Override
+	public QuestionDp getQuestionDpByQuestionId(int id) {
+		// TODO Auto-generated method stub
+		Question question = getQuestionById(id);
+		String bookName = bookDao.queryBookById(question.getBookId())
+				.getBookName();
+		String askerName = userDao.queryUserById(question.getAskerId())
+				.getUsername();
+		QuestionDp questionDp = new QuestionDp(question, bookName, askerName);
+		return questionDp;
 	}
 
 }

@@ -12,6 +12,7 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.CommentDp;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.service.AnswerService;
@@ -44,8 +45,11 @@ public class CommentController {
 		Comment comment = commentService.getCommentById(id);
 		return comment;
 	}
-	
-	
+
+	@RequestMapping(value = "/commentdp/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public CommentDp getCommentDp(@PathVariable int id) {
+		return commentService.getCommentDpByCommentId(id);
+	}
 
 	@RequestMapping(value = "/comment/add.do", method = RequestMethod.POST)
 	public String add(HttpServletRequest request) {

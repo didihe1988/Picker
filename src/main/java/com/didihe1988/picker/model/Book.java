@@ -39,6 +39,9 @@ public class Book implements Serializable {
 	@Column(name = "book_questionnum")
 	private int questionNum;
 
+	@Column(name = "book_imageurl")
+	private String imageUrl;
+
 	public int getId() {
 		return id;
 	}
@@ -95,12 +98,20 @@ public class Book implements Serializable {
 		this.writer = writer;
 	}
 
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	public Book() {
 
 	}
 
 	public Book(int id, String bookName, String isbn, String writer,
-			String press, int followNum, int questionNum) {
+			String press, int followNum, int questionNum, String imageUrl) {
 		super();
 		this.id = id;
 		this.bookName = bookName;
@@ -109,20 +120,24 @@ public class Book implements Serializable {
 		this.press = press;
 		this.followNum = followNum;
 		this.questionNum = questionNum;
+		this.imageUrl = imageUrl;
 	}
 
-	public Book(String bookName, String isbn, String writer, String press) {
+	public Book(String bookName, String isbn, String writer, String press,
+			String imageUrl) {
 		this.bookName = bookName;
 		this.isbn = isbn;
 		this.writer = writer;
 		this.press = press;
+		this.imageUrl = imageUrl;
 	}
 
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", bookName=" + bookName + ", isbn=" + isbn
 				+ ", writer=" + writer + ", press=" + press + ", followNum="
-				+ followNum + ", questionNum=" + questionNum + "]";
+				+ followNum + ", questionNum=" + questionNum + ", imageUrl="
+				+ imageUrl + "]";
 	}
 
 }

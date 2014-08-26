@@ -12,6 +12,7 @@ import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Answer;
+import com.didihe1988.picker.model.AnswerDp;
 import com.didihe1988.picker.service.AnswerService;
 
 @Service
@@ -119,6 +120,17 @@ public class AnswerServiceImpl implements AnswerService {
 	public List<Answer> getAnswerByReplierId(int id) {
 		// TODO Auto-generated method stub
 		return answerDao.queryAnswerByReplierId(id);
+	}
+
+	@Override
+	public AnswerDp getAnswerDpByAnswerId(int id) {
+		// TODO Auto-generated method stub
+		Answer answer = answerDao.queryAnswerById(id);
+		String questionName = questionDao.queryQuestionById(
+				answer.getQuestionId()).getTitle();
+		String replierName = userDao.queryUserById(answer.getReplierId())
+				.getUsername();
+		return new AnswerDp(answer, questionName, replierName);
 	}
 
 }

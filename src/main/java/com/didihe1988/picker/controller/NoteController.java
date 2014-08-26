@@ -15,6 +15,7 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Note;
+import com.didihe1988.picker.model.NoteDp;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.MessageService;
@@ -40,6 +41,11 @@ public class NoteController {
 	public Note getNote(@PathVariable int id) {
 		Note note = noteService.getNoteById(id);
 		return note;
+	}
+
+	@RequestMapping(value = "/notedp/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public NoteDp getNoteDp(@PathVariable int id) {
+		return noteService.getNoteDpByNoteId(id);
 	}
 
 	/**

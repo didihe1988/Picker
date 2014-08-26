@@ -17,31 +17,35 @@ public class Note implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue
 	@Column(name = "note_id")
-	private int id;
+	protected int id;
 
 	@Column(name = "note_bookid")
-	private int bookId;
+	protected int bookId;
 
 	@Column(name = "note_userid")
-	private int userId;
+	protected int userId;
 
 	@Column(name = "note_title")
-	private String title;
+	protected String title;
 
 	@Column(name = "note_content")
-	private String content;
+	protected String content;
 
 	@Column(name = "note_publishtime")
-	private Date publishTime;
+	protected Date publishTime;
 
 	@Column(name = "note_ispublic")
-	private boolean isPublic;
+	protected boolean isPublic;
 
 	@Column(name = "note_favoritenum")
-	private int favoriteNum;
+	protected int favoriteNum;
+
+	@Column(name = "note_commentnum")
+	protected int commentNum;
 
 	public int getId() {
 		return id;
@@ -107,12 +111,21 @@ public class Note implements Serializable {
 		this.favoriteNum = favoriteNum;
 	}
 
+	public int getCommentNum() {
+		return commentNum;
+	}
+
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
+	}
+
 	@Override
 	public String toString() {
 		return "Note [id=" + id + ", bookId=" + bookId + ", userId=" + userId
 				+ ", title=" + title + ", content=" + content
 				+ ", publishTime=" + publishTime + ", isPublic=" + isPublic
-				+ ", favoriteNum=" + favoriteNum + "]";
+				+ ", favoriteNum=" + favoriteNum + ", commentNum=" + commentNum
+				+ "]";
 	}
 
 	public Note() {

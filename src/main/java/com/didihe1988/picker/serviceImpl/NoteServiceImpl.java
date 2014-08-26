@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.dao.NoteDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Note;
+import com.didihe1988.picker.model.NoteDp;
 import com.didihe1988.picker.service.NoteService;
 
 @Service
@@ -21,6 +23,9 @@ public class NoteServiceImpl implements NoteService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private BookDao bookDao;
 
 	@Override
 	public int addNote(Note note) {
@@ -98,4 +103,12 @@ public class NoteServiceImpl implements NoteService {
 		return noteDao.queryNoteListByUserId(id, true);
 	}
 
+	@Override
+	public NoteDp getNoteDpByNoteId(int id) {
+		// TODO Auto-generated method stub
+		Note note = noteDao.queryNoteById(id);
+		String userName = userDao.queryUserById(note.getUserId()).getUsername();
+		String bookName = bookDao.queryBookById(note.getBookId()).getBookName();
+		return new NoteDp(note, bookName, userName);
+	}
 }

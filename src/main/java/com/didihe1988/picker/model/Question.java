@@ -21,34 +21,34 @@ public class Question implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "question_id")
-	private int id;
+	protected int id;
 
 	@Column(name = "question_bookid")
-	private int bookId;
+	protected int bookId;
 
 	@Column(name = "question_askerid")
-	private int askerId;
+	protected int askerId;
 
 	@Column(name = "question_title")
-	private String title;
+	protected String title;
 
 	@Column(name = "question_content")
-	private String content;
+	protected String content;
 
 	@Column(name = "question_favoritenum")
-	private int favoriteNum;
+	protected int favoriteNum;
 
 	@Column(name = "question_answernum")
-	private int answerNum;
+	protected int answerNum;
 
 	@Column(name = "question_commentnum")
-	private int commentNum;
+	protected int commentNum;
 
 	@Column(name = "question_follownum")
-	private int followNum;
+	protected int followNum;
 
 	@Column(name = "question_date")
-	private Date date;
+	protected Date date;
 
 	public Question() {
 
@@ -132,6 +132,22 @@ public class Question implements Serializable {
 
 	public void setAnswerNum(int answerNum) {
 		this.answerNum = answerNum;
+	}
+
+	public Question(int id, int bookId, int askerId, String title,
+			String content, int favoriteNum, int answerNum, int commentNum,
+			int followNum, Date date) {
+		super();
+		this.id = id;
+		this.bookId = bookId;
+		this.askerId = askerId;
+		this.title = title;
+		this.content = content;
+		this.favoriteNum = favoriteNum;
+		this.answerNum = answerNum;
+		this.commentNum = commentNum;
+		this.followNum = followNum;
+		this.date = date;
 	}
 
 	public Question(int bookId, int askerId, String title, String content,

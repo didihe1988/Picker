@@ -60,6 +60,9 @@ public class User implements Serializable {
 	@Column(name = "user_circlenum")
 	private int circleNum;
 
+	@Column(name = "user_booknum")
+	private int bookNum;
+
 	@Column(name = "user_avatarurl")
 	private String avatarUrl;
 
@@ -136,11 +139,80 @@ public class User implements Serializable {
 		this.followNum = followNum;
 	}
 
+	public Date getRegisterTime() {
+		return registerTime;
+	}
+
+	public void setRegisterTime(Date registerTime) {
+		this.registerTime = registerTime;
+	}
+
+	public int getFollowOthersNum() {
+		return followOthersNum;
+	}
+
+	public void setFollowOthersNum(int followOthersNum) {
+		this.followOthersNum = followOthersNum;
+	}
+
+	public int getQuestionNum() {
+		return questionNum;
+	}
+
+	public void setQuestionNum(int questionNum) {
+		this.questionNum = questionNum;
+	}
+
+	public int getAnswerNum() {
+		return answerNum;
+	}
+
+	public void setAnswerNum(int answerNum) {
+		this.answerNum = answerNum;
+	}
+
+	public int getNoteNum() {
+		return noteNum;
+	}
+
+	public void setNoteNum(int noteNum) {
+		this.noteNum = noteNum;
+	}
+
+	public int getCircleNum() {
+		return circleNum;
+	}
+
+	public void setCircleNum(int circleNum) {
+		this.circleNum = circleNum;
+	}
+
+	public int getBookNum() {
+		return bookNum;
+	}
+
+	public void setBookNum(int bookNum) {
+		this.bookNum = bookNum;
+	}
+
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password="
-				+ password + ", lastVisit=" + lastVisit + ", favoriteNum="
-				+ favoriteNum + ", followNum=" + followNum + "]";
+				+ password + ", lastVisit=" + lastVisit + ", registerTime="
+				+ registerTime + ", favoriteNum=" + favoriteNum
+				+ ", followNum=" + followNum + ", followOthersNum="
+				+ followOthersNum + ", questionNum=" + questionNum
+				+ ", answerNum=" + answerNum + ", noteNum=" + noteNum
+				+ ", circleNum=" + circleNum + ", bookNum=" + bookNum
+				+ ", avatarUrl=" + avatarUrl + "]";
 	}
 
 }

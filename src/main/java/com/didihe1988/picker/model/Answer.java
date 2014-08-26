@@ -21,28 +21,40 @@ public class Answer implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "answer_id")
-	private int id;
+	protected int id;
 
 	@Column(name = "answer_questionid")
-	private int questionId;
+	protected int questionId;
 
 	@Column(name = "answer_replierid")
-	private int replierId;
+	protected int replierId;
 
 	@Column(name = "answer_content")
-	private String content;
+	protected String content;
 
 	@Column(name = "answer_favoritenum")
-	private int favoriteNum;
+	protected int favoriteNum;
 
 	@Column(name = "answer_commentnum")
-	private int commentNum;
+	protected int commentNum;
 
 	@Column(name = "answer_date")
-	private Date date;
+	protected Date date;
 
 	public Answer() {
 
+	}
+
+	public Answer(int id, int questionId, int replierId, String content,
+			int favoriteNum, int commentNum, Date date) {
+		super();
+		this.id = id;
+		this.questionId = questionId;
+		this.replierId = replierId;
+		this.content = content;
+		this.favoriteNum = favoriteNum;
+		this.commentNum = commentNum;
+		this.date = date;
 	}
 
 	public Answer(int questionId, int replierId, String content, Date date) {

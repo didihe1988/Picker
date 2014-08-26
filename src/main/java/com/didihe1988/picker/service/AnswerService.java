@@ -3,6 +3,7 @@ package com.didihe1988.picker.service;
 import java.util.List;
 
 import com.didihe1988.picker.model.Answer;
+import com.didihe1988.picker.model.AnswerDp;
 
 public interface AnswerService {
 	public int addAnswer(Answer answer);
@@ -24,5 +25,7 @@ public interface AnswerService {
 	public int getLatestAnswerIdByQuestionId(int id);
 
 	public boolean checkDeleteValidation(int userId, int answerId);
+
+	public AnswerDp getAnswerDpByAnswerId(int id);
 
 }

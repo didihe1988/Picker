@@ -16,6 +16,7 @@ import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Question;
+import com.didihe1988.picker.model.QuestionDp;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -45,6 +46,11 @@ public class QuestionController {
 	public Question getQuestion(@PathVariable int id) {
 		Question question = questionService.getQuestionById(id);
 		return question;
+	}
+
+	@RequestMapping(value = "/questiondp/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public QuestionDp getQuestionDp(@PathVariable int id) {
+		return questionService.getQuestionDpByQuestionId(id);
 	}
 
 	/**

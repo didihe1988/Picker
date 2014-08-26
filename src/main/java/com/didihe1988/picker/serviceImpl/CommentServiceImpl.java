@@ -9,12 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AnswerDao;
-import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.dao.CommentDao;
+import com.didihe1988.picker.dao.NoteDao;
 import com.didihe1988.picker.dao.QuestionDao;
+import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.CommentDp;
 import com.didihe1988.picker.service.CommentService;
-import com.didihe1988.picker.utils.HttpUtils;
 
 @Service
 @Transactional
@@ -31,6 +32,12 @@ public class CommentServiceImpl implements CommentService {
 	@Autowired
 	private AnswerDao answerDao;
 
+	@Autowired
+	private NoteDao noteDao;
+
+	@Autowired
+	private UserDao userDao;
+
 	@Override
 	public int addComment(Comment comment) {
 		// TODO Auto-generated method stub
@@ -45,12 +52,15 @@ public class CommentServiceImpl implements CommentService {
 		// bookDao.incrementComment(comment.getBookId());
 
 		// commentNum++
-		if (comment.getType() == Comment.COMMENT_QUESTION) {
+		int type = comment.getType();
+		if (type == Comment.COMMENT_QUESTION) {
 			questionDao.incrementNum(Constant.COMMENT_NUM,
 					comment.getCommentedId());
-		} else if (comment.getType() == Comment.COMMENT_ANSWER) {
+		} else if (type == Comment.COMMENT_ANSWER) {
 			answerDao.incrementNum(Constant.COMMENT_NUM,
 					comment.getCommentedId());
+		} else if (type == Comment.COMMENT_NOTE) {
+			noteDao.incrementNum(Constant.COMMENT_NUM, comment.getCommentedId());
 		}
 		return Status.SUCCESS;
 	}
@@ -124,4 +134,21 @@ public class CommentServiceImpl implements CommentService {
 		return commentDao.queryCommentListByCommentedId(commentedId, type);
 	}
 
+	@Override
+	public CommentDp getCommentDpByCommentId(int id) {
+		// TODO Auto-generated method stub
+		Comment comment = commentDao.queryCommentById(id);
+		String producerName = userDao.queryUserById(id).getUsername();
+		int commentedId = comment.getCommentedId();
+		String commentedName = "";
+		if (comment.getType() == Comment.COMMENT_ANSWER) {
+			commentedName = answerDao.queryAnswerById(commentedId).getContent();
+		} else if (comment.getType() == Comment.COMMENT_QUESTION) {
+			commentedName = questionDao.queryQuestionById(commentedId)
+					.getTitle();
+		} else if (comment.getType() == Comment.COMMENT_NOTE) {
+			commentedName = noteDao.queryNoteById(commentedId).getTitle();
+		}
+		return new CommentDp(comment, producerName, commentedName);
+	}
 }

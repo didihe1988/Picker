@@ -20,29 +20,29 @@ public class Comment implements Serializable {
 	public static final int COMMENT_QUESTION = 0;
 	public static final int COMMENT_ANSWER = 1;
 	public static final int COMMENT_NOTE = 2;
-
+	
 	@Id
 	@GeneratedValue
 	@Column(name = "comment_id")
-	private int id;
+	protected int id;
 
 	@Column(name = "comment_commentedid")
-	private int commentedId;
+	protected int commentedId;
 
 	@Column(name = "comment_producerid")
-	private int producerId;
+	protected int producerId;
 
 	@Column(name = "comment_content")
-	private String content;
+	protected String content;
 
 	@Column(name = "comment_type")
-	private int type;
+	protected int type;
 
 	@Column(name = "comment_favoritenum")
-	private int favoriteNum;
+	protected int favoriteNum;
 
 	@Column(name = "comment_date")
-	private Date date;
+	protected Date date;
 
 	public Comment() {
 

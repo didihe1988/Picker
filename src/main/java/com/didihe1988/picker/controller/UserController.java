@@ -171,4 +171,16 @@ public class UserController {
 		}
 		return circleList;
 	}
+
+	/**
+	 * @description 关注该用户
+	 */
+	@RequestMapping(value = "/user/{id}/follow", method = RequestMethod.GET)
+	public String follow(@PathVariable int id, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		Follow follow = new Follow(Follow.FOLLOW_USER, userId, id);
+		followService.addFollow(follow);
+		return "";
+	}
+
 }

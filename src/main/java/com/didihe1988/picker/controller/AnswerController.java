@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Answer;
+import com.didihe1988.picker.model.AnswerDp;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.service.AnswerService;
@@ -44,6 +45,11 @@ public class AnswerController {
 	public Answer getAnswer(@PathVariable int id) {
 		Answer answer = answerService.getAnswerById(id);
 		return answer;
+	}
+
+	@RequestMapping(value = "/answerdp/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public AnswerDp getAnswerDp(@PathVariable int id) {
+		return answerService.getAnswerDpByAnswerId(id);
 	}
 
 	/**
