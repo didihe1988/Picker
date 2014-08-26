@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,17 @@ public class BookController {
 	@RequestMapping(value = "/book/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
 	public List<Question> getQuestions(@PathVariable int id) {
 		return questionService.getQuestionListByBookId(id);
+	}
+
+	/*
+	 * ≤‚ ‘return jsonobject
+	 */
+	@RequestMapping(value = "/book/{id}/test", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getQuestionsTest(@PathVariable int id) {
+		List<Question> list = questionService.getQuestionListByBookId(id);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("questionList", list);
+		return jsonObject.toString();
 	}
 
 	/**

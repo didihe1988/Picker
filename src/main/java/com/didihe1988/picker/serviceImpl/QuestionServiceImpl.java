@@ -41,7 +41,7 @@ public class QuestionServiceImpl implements QuestionService {
 		/*
 		 * User questionNum++
 		 */
-		userDao.incrementNum(Constant.QUESTION_NUM, question.getAskerId());
+		//userDao.incrementNum(Constant.QUESTION_NUM, question.getAskerId());
 		return Status.SUCCESS;
 	}
 

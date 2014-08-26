@@ -24,7 +24,7 @@ public class QuestionServiceTest {
 
 	@Test
 	public void test0() {
-		Question question = new Question(1, 1, "lalala", "what's up");
+		Question question = new Question(1, 2, "fefef", "fhefheiufhef");
 		int status = questionService.addQuestion(question);
 		assertSame(Status.SUCCESS, status);
 	}
