@@ -1,5 +1,6 @@
 package com.didihe1988.picker.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +100,7 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public List<Answer> getAnswerByQuestionId(int id) {
+	public List<Answer> getAnswerListByQuestionId(int id) {
 		// TODO Auto-generated method stub
 		return answerDao.queryAnswerByQuestionId(id);
 	}
@@ -117,7 +118,7 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public List<Answer> getAnswerByReplierId(int id) {
+	public List<Answer> getAnswerListByReplierId(int id) {
 		// TODO Auto-generated method stub
 		return answerDao.queryAnswerByReplierId(id);
 	}
@@ -126,11 +127,36 @@ public class AnswerServiceImpl implements AnswerService {
 	public AnswerDp getAnswerDpByAnswerId(int id) {
 		// TODO Auto-generated method stub
 		Answer answer = answerDao.queryAnswerById(id);
+		return getAnswerDpByAnswer(answer);
+	}
+
+	private AnswerDp getAnswerDpByAnswer(Answer answer) {
 		String questionName = questionDao.queryQuestionById(
 				answer.getQuestionId()).getTitle();
 		String replierName = userDao.queryUserById(answer.getReplierId())
 				.getUsername();
 		return new AnswerDp(answer, questionName, replierName);
+	}
+
+	private List<AnswerDp> getAnswerDpListFormAnswerList(List<Answer> answerList) {
+		List<AnswerDp> list = new ArrayList<AnswerDp>();
+		for (Answer answer : answerList) {
+			AnswerDp answerDp = getAnswerDpByAnswer(answer);
+			list.add(answerDp);
+		}
+		return list;
+	}
+
+	@Override
+	public List<AnswerDp> getAnswerDpListByQuestionId(int id) {
+		// TODO Auto-generated method stub
+		return getAnswerDpListFormAnswerList(getAnswerListByQuestionId(id));
+	}
+
+	@Override
+	public List<AnswerDp> getAnswerDpListByReplierId(int id) {
+		// TODO Auto-generated method stub
+		return getAnswerDpListFormAnswerList(getAnswerListByReplierId(id));
 	}
 
 }

@@ -25,18 +25,17 @@ public class BookDaoTest {
 	// testAddBook isbn repeat
 	@Test
 	public void test01() {
-		Book book = new Book();
-		book.setBookName("The silence of lamps");
-		book.setIsbn("123456");
-		book.setPress("press01");
+		Book book = new Book("The Godfather", "0786965606", "Mario Puzo",
+				"Signet", "/resources/image/book/test_book_image.jpg");
 		int status = bookDao.addBook(book);
-		assertSame(-1, status);
+		assertSame(1, status);
 	}
 
 	// testAddBook
 	@Test
 	public void test02() {
-		Book book=new Book("lalala", "9787532734191","dota","press1988");
+		Book book = new Book("lalala", "9787532734191", "dota", "press1988",
+				"/resources/image/book/test_book_image.jpg");
 		int status = bookDao.addBook(book);
 		assertSame(1, status);
 	}

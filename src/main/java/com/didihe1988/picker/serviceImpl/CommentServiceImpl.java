@@ -1,5 +1,6 @@
 package com.didihe1988.picker.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,7 +139,13 @@ public class CommentServiceImpl implements CommentService {
 	public CommentDp getCommentDpByCommentId(int id) {
 		// TODO Auto-generated method stub
 		Comment comment = commentDao.queryCommentById(id);
-		String producerName = userDao.queryUserById(id).getUsername();
+		return getCommentDpByComment(comment);
+	}
+
+	private CommentDp getCommentDpByComment(Comment comment) {
+		// TODO Auto-generated method stub
+		String producerName = userDao.queryUserById(comment.getProducerId())
+				.getUsername();
 		int commentedId = comment.getCommentedId();
 		String commentedName = "";
 		if (comment.getType() == Comment.COMMENT_ANSWER) {
@@ -151,4 +158,23 @@ public class CommentServiceImpl implements CommentService {
 		}
 		return new CommentDp(comment, producerName, commentedName);
 	}
+
+	private List<CommentDp> getCommentDpListFromCommetList(
+			List<Comment> commentList) {
+		List<CommentDp> list = new ArrayList<CommentDp>();
+		for (Comment comment : commentList) {
+			CommentDp commentDp = getCommentDpByComment(comment);
+			list.add(commentDp);
+		}
+		return list;
+	}
+
+	@Override
+	public List<CommentDp> getCommentDpListByCommentedId(int commentedId,
+			int type) {
+		// TODO Auto-generated method stub
+		return getCommentDpListFromCommetList(getCommentListByCommentedId(
+				commentedId, type));
+	}
+
 }

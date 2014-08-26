@@ -28,11 +28,13 @@ public class UserDaoTest {
 	// testAddUser
 	@Test
 	public void test01() {
-		User user = new User();
-		user.setUsername("didihe1834");
-		String passwordAfterMd5 = encryptByMD5(user.getUsername(), "lalala");
-		user.setPassword(passwordAfterMd5);
-		user.setLastVisit(new Date());
+		/*
+		 * User user = new User(); user.setUsername("didihe1834"); String
+		 * passwordAfterMd5 = encryptByMD5(user.getUsername(), "lalala");
+		 * user.setPassword(passwordAfterMd5); user.setLastVisit(new Date());
+		 */
+		User user = new User("nanshu", encryptByMD5("nanshu", "lalala"),
+				"/resources/image/avatar/test_user_avatar.jpg");
 		userDao.addUser(user);
 	}
 
@@ -130,8 +132,8 @@ public class UserDaoTest {
 	}
 
 	private String encryptByMD5(String username, String password) {
-		String passwordAfterMD5 = StringUtils.getMd5String(password).substring(0,
-				6)
+		String passwordAfterMD5 = StringUtils.getMd5String(password).substring(
+				0, 6)
 				+ username.substring(2);
 		return passwordAfterMD5;
 	}

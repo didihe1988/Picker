@@ -1,12 +1,12 @@
 package com.didihe1988.picker.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.dao.QuestionDao;
@@ -41,7 +41,7 @@ public class QuestionServiceImpl implements QuestionService {
 		/*
 		 * User questionNum++
 		 */
-		//userDao.incrementNum(Constant.QUESTION_NUM, question.getAskerId());
+		// userDao.incrementNum(Constant.QUESTION_NUM, question.getAskerId());
 		return Status.SUCCESS;
 	}
 
@@ -115,12 +115,39 @@ public class QuestionServiceImpl implements QuestionService {
 	public QuestionDp getQuestionDpByQuestionId(int id) {
 		// TODO Auto-generated method stub
 		Question question = getQuestionById(id);
+		return getQuestionDpByQuestion(question);
+	}
+
+	private QuestionDp getQuestionDpByQuestion(Question question) {
+		// TODO Auto-generated method stub
 		String bookName = bookDao.queryBookById(question.getBookId())
 				.getBookName();
 		String askerName = userDao.queryUserById(question.getAskerId())
 				.getUsername();
 		QuestionDp questionDp = new QuestionDp(question, bookName, askerName);
 		return questionDp;
+	}
+
+	private List<QuestionDp> getQuestionDpListFromQuestionList(
+			List<Question> questionList) {
+		List<QuestionDp> list = new ArrayList<QuestionDp>();
+		for (Question question : questionList) {
+			QuestionDp questionDp = getQuestionDpByQuestion(question);
+			list.add(questionDp);
+		}
+		return list;
+	}
+
+	@Override
+	public List<QuestionDp> getQuestionDpListByBookId(int id) {
+		// TODO Auto-generated method stub
+		return getQuestionDpListFromQuestionList(getQuestionListByBookId(id));
+	}
+
+	@Override
+	public List<QuestionDp> getQuestionDpListByAskerId(int id) {
+		// TODO Auto-generated method stub
+		return getQuestionDpListFromQuestionList(getQuestionListByAskerId(id));
 	}
 
 }

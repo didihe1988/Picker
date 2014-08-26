@@ -1,5 +1,6 @@
 package com.didihe1988.picker.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,8 +108,46 @@ public class NoteServiceImpl implements NoteService {
 	public NoteDp getNoteDpByNoteId(int id) {
 		// TODO Auto-generated method stub
 		Note note = noteDao.queryNoteById(id);
+		return getNoteDpByNote(note);
+	}
+
+	private NoteDp getNoteDpByNote(Note note) {
 		String userName = userDao.queryUserById(note.getUserId()).getUsername();
 		String bookName = bookDao.queryBookById(note.getBookId()).getBookName();
 		return new NoteDp(note, bookName, userName);
 	}
+
+	private List<NoteDp> getNoteDpListFromNoteList(List<Note> noteList) {
+		List<NoteDp> list = new ArrayList<NoteDp>();
+		for (Note note : noteList) {
+			NoteDp noteDp = getNoteDpByNote(note);
+			list.add(noteDp);
+		}
+		return list;
+	}
+
+	@Override
+	public List<NoteDp> getALlNoteDpListByUserId(int id) {
+		// TODO Auto-generated method stub
+		return getNoteDpListFromNoteList(getALlNoteListByUserId(id));
+	}
+
+	@Override
+	public List<NoteDp> getPublicNoteDpListByUserId(int id) {
+		// TODO Auto-generated method stub
+		return getNoteDpListFromNoteList(getPublicNoteListByUserId(id));
+	}
+
+	@Override
+	public List<NoteDp> getALLNoteDpListByBookId(int id) {
+		// TODO Auto-generated method stub
+		return getNoteDpListFromNoteList(getALLNoteListByBookId(id));
+	}
+
+	@Override
+	public List<NoteDp> getPublicNoteDpListByBookId(int id) {
+		// TODO Auto-generated method stub
+		return getNoteDpListFromNoteList(getPublicNoteListByBookId(id));
+	}
+
 }

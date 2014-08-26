@@ -48,7 +48,7 @@ public class User implements Serializable {
 	@Column(name = "user_followothersnum")
 	private int followOthersNum;
 
-	@Column(name = "user_questionNum")
+	@Column(name = "user_questionnum")
 	private int questionNum;
 
 	@Column(name = "user_answernum")
@@ -70,24 +70,38 @@ public class User implements Serializable {
 
 	}
 
-	public User(int id, String username, String password, Date lastVisit) {
+	public User(int id, String username, String password, Date lastVisit,
+			Date registerTime, int favoriteNum, int followNum,
+			int followOthersNum, int questionNum, int answerNum, int noteNum,
+			int circleNum, int bookNum, String avatarUrl) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.lastVisit = lastVisit;
+		this.registerTime = registerTime;
+		this.favoriteNum = favoriteNum;
+		this.followNum = followNum;
+		this.followOthersNum = followOthersNum;
+		this.questionNum = questionNum;
+		this.answerNum = answerNum;
+		this.noteNum = noteNum;
+		this.circleNum = circleNum;
+		this.bookNum = bookNum;
+		this.avatarUrl = avatarUrl;
 	}
 
-	public User(String username, String password, Date lastVisit) {
+	public User(String username, String password, Date lastVisit,
+			Date registerTime, String avatarUrl) {
 		this.username = username;
 		this.password = password;
 		this.lastVisit = lastVisit;
+		this.registerTime = registerTime;
+		this.avatarUrl = avatarUrl;
 	}
 
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
-		this.lastVisit = new Date();
+	public User(String username, String password, String avatarUrl) {
+		this(username, password, new Date(), new Date(), avatarUrl);
 	}
 
 	public int getId() {

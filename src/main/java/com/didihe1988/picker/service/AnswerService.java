@@ -18,9 +18,13 @@ public interface AnswerService {
 
 	public Answer getAnswerById(int id);
 
-	public List<Answer> getAnswerByQuestionId(int id);
+	public List<Answer> getAnswerListByQuestionId(int id);
 
-	public List<Answer> getAnswerByReplierId(int id);
+	public List<Answer> getAnswerListByReplierId(int id);
+
+	public List<AnswerDp> getAnswerDpListByQuestionId(int id);
+
+	public List<AnswerDp> getAnswerDpListByReplierId(int id);
 
 	public int getLatestAnswerIdByQuestionId(int id);
 
