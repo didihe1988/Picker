@@ -22,49 +22,49 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "user_id")
-	private int id;
+	protected int id;
 
 	@Column(name = "user_name")
-	private String username;
+	protected String username;
 
 	@Column(name = "user_password")
 	private String password;
 
 	@Column(name = "user_lastVisit")
-	private Date lastVisit;
+	protected Date lastVisit;
 
 	@Column(name = "user_registertime")
-	private Date registerTime;
+	protected Date registerTime;
 
 	@Column(name = "user_favoritenum")
-	private int favoriteNum;
+	protected int favoriteNum;
 
 	/*
 	 * 被关注数
 	 */
 	@Column(name = "user_follownum")
-	private int followNum;
+	protected int followNum;
 
 	@Column(name = "user_followothersnum")
-	private int followOthersNum;
+	protected int followOthersNum;
 
 	@Column(name = "user_questionnum")
-	private int questionNum;
+	protected int questionNum;
 
 	@Column(name = "user_answernum")
-	private int answerNum;
+	protected int answerNum;
 
 	@Column(name = "user_notenum")
-	private int noteNum;
+	protected int noteNum;
 
 	@Column(name = "user_circlenum")
-	private int circleNum;
+	protected int circleNum;
 
 	@Column(name = "user_booknum")
-	private int bookNum;
+	protected int bookNum;
 
 	@Column(name = "user_avatarurl")
-	private String avatarUrl;
+	protected String avatarUrl;
 
 	public User() {
 
@@ -78,6 +78,28 @@ public class User implements Serializable {
 		this.id = id;
 		this.username = username;
 		this.password = password;
+		this.lastVisit = lastVisit;
+		this.registerTime = registerTime;
+		this.favoriteNum = favoriteNum;
+		this.followNum = followNum;
+		this.followOthersNum = followOthersNum;
+		this.questionNum = questionNum;
+		this.answerNum = answerNum;
+		this.noteNum = noteNum;
+		this.circleNum = circleNum;
+		this.bookNum = bookNum;
+		this.avatarUrl = avatarUrl;
+	}
+
+	/*
+	 * 没有 password
+	 */
+	public User(int id, String username, Date lastVisit, Date registerTime,
+			int favoriteNum, int followNum, int followOthersNum,
+			int questionNum, int answerNum, int noteNum, int circleNum,
+			int bookNum, String avatarUrl) {
+		this.id = id;
+		this.username = username;
 		this.lastVisit = lastVisit;
 		this.registerTime = registerTime;
 		this.favoriteNum = favoriteNum;

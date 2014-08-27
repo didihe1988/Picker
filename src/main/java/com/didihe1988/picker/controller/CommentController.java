@@ -12,7 +12,6 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
-import com.didihe1988.picker.model.CommentDp;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.service.AnswerService;

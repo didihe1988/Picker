@@ -1,6 +1,7 @@
 package com.didihe1988.picker.service;
 
 import com.didihe1988.picker.model.User;
+import com.didihe1988.picker.model.UserDp;
 
 public interface UserService {
 	public boolean hasMatchUser(String username, String password);
@@ -16,5 +17,7 @@ public interface UserService {
 	public int deleteUser(User user);
 
 	public boolean isUserExists(User user);
+
+	public UserDp getUserDpByUserId(int id);
 
 }

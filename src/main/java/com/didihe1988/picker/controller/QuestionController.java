@@ -1,5 +1,6 @@
 package com.didihe1988.picker.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,13 +15,17 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Question;
+import com.didihe1988.picker.model.UserDp;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
+import com.didihe1988.picker.service.FollowService;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.QuestionService;
+import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
@@ -41,6 +46,12 @@ public class QuestionController {
 
 	@Autowired
 	private CommentService commentService;
+
+	@Autowired
+	private FollowService followService;
+
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "/question/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestion(@PathVariable int id) {
@@ -77,6 +88,32 @@ public class QuestionController {
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = questionService.deleteQuestionById(id, userId);
 		return JsonUtils.getJsonObjectString("status", status);
+	}
+
+	/**
+	 * @description 获得关注该问题的用户列表
+	 */
+	@RequestMapping(value = "/question/{id}/followers", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getFollowers(@PathVariable int id) {
+		List<Follow> followList = followService.getFollowListByQuestionId(id);
+		List<UserDp> list = new ArrayList<UserDp>();
+		for (Follow follow : followList) {
+			UserDp userDp = userService.getUserDpByUserId(follow
+					.getFollowerId());
+			list.add(userDp);
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_USER_LIST, list);
+	}
+
+	/**
+	 * @description 关注该问题
+	 */
+	@RequestMapping(value = "/question/{id}/follow", method = RequestMethod.GET)
+	public String follow(@PathVariable int id, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		Follow follow = new Follow(Follow.FOLLOW_QUESTION, userId, id);
+		int status = followService.addFollow(follow);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
 	@RequestMapping(value = "/question/add.do", method = RequestMethod.POST)

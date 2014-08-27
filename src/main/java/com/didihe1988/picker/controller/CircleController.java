@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
-import com.didihe1988.picker.model.User;
+import com.didihe1988.picker.model.UserDp;
 import com.didihe1988.picker.service.CircleMemberService;
 import com.didihe1988.picker.service.CircleService;
 import com.didihe1988.picker.service.UserService;
@@ -42,12 +42,13 @@ public class CircleController {
 	public String getMembers(@PathVariable int id) {
 		List<CircleMember> circleMembers = circleMemberService
 				.getCircleMemberListByCircleId(id);
-		List<User> userList = new ArrayList<User>();
+		List<UserDp> list = new ArrayList<UserDp>();
 		for (CircleMember circleMember : circleMembers) {
-			User user = userService.getUserById(circleMember.getMemberId());
-			userList.add(user);
+			UserDp userDp = userService.getUserDpByUserId(circleMember
+					.getMemberId());
+			list.add(userDp);
 		}
-		return JsonUtils.getJsonObjectString(Constant.KEY_USER_LIST, userList);
+		return JsonUtils.getJsonObjectString(Constant.KEY_USER_LIST, list);
 	}
 
 }

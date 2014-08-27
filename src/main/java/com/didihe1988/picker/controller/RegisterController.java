@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.UserService;
 
 @RestController

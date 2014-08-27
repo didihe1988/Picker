@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +21,7 @@ import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Note;
 import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.model.User;
+import com.didihe1988.picker.model.UserDp;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
@@ -68,8 +68,8 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getUser(@PathVariable int id) {
-		User user = userService.getUserById(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_USER, user);
+		UserDp userDp = userService.getUserDpByUserId(id);
+		return JsonUtils.getJsonObjectString(Constant.KEY_USER, userDp);
 	}
 
 	/**

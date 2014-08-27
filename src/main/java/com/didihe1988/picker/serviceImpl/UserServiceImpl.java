@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.User;
+import com.didihe1988.picker.model.UserDp;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.StringUtils;
 
@@ -81,6 +82,17 @@ public class UserServiceImpl implements UserService {
 	public boolean isUserExists(User user) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	private UserDp getUserDpByUser(User user) {
+		return new UserDp(user);
+	}
+
+	@Override
+	public UserDp getUserDpByUserId(int id) {
+		// TODO Auto-generated method stub
+		User user = userDao.queryUserById(id);
+		return getUserDpByUser(user);
 	}
 
 	private String encryptByMD5(User user) {
