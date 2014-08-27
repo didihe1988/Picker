@@ -56,13 +56,19 @@ public class AnswerServiceImpl implements AnswerService {
 		if (answer == null) {
 			return Status.NULLPOINTER;
 		}
-		// 删除之间检验是否存在
+		// 删除之前检验是否存在
 		if (!answerDao.checkDeleteValidation(answer.getReplierId(),
 				answer.getId())) {
 			return Status.INVALID;
 		}
 		answerDao.deleteAnswer(answer);
 		return Status.SUCCESS;
+	}
+
+	@Override
+	public int deleteAnswerById(int id) {
+		// TODO Auto-generated method stub
+		return deleteAnswer(answerDao.queryAnswerById(id));
 	}
 
 	@Override

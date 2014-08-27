@@ -10,6 +10,8 @@ public interface CommentService {
 
 	public int deleteComment(Comment comment);
 
+	public int deleteCommentById(int id);
+
 	public int updateComment(Comment comment);
 
 	public Comment getCommentById(int id);

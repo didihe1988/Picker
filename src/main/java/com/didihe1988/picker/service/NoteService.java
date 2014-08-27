@@ -10,6 +10,8 @@ public interface NoteService {
 
 	public int deleteNote(Note note);
 
+	public int deleteNoteById(int id);
+
 	public int updateNote(Note note);
 
 	public Note getNoteById(int id);

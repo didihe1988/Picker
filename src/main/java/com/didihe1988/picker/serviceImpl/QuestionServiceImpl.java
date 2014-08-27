@@ -59,6 +59,12 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
+	public int deleteQuestionById(int id) {
+		// TODO Auto-generated method stub
+		return deleteQuestion(questionDao.queryQuestionById(id));
+	}
+
+	@Override
 	public int updateQuestion(Question question) {
 		// TODO Auto-generated method stub
 		if (question == null) {

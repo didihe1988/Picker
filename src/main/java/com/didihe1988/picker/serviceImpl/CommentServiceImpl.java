@@ -90,6 +90,12 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
+	public int deleteCommentById(int id) {
+		// TODO Auto-generated method stub
+		return deleteComment(commentDao.queryCommentById(id));
+	}
+
+	@Override
 	public int updateComment(Comment comment) {
 		// TODO Auto-generated method stub
 		if (comment == null) {

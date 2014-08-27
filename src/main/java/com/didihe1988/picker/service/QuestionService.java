@@ -10,6 +10,8 @@ public interface QuestionService {
 
 	public int deleteQuestion(Question question);
 
+	public int deleteQuestionById(int id);
+
 	public int updateQuestion(Question question);
 
 	public Question getQuestionById(int id);

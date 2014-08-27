@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,6 +67,12 @@ public class QuestionController {
 		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_QUESTION);
 		return JsonUtils.getJsonObjectString("commentList", list);
+	}
+
+	@RequestMapping(value = "/question/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String deleteQuestion(@PathVariable int id) {
+		int status = questionService.deleteQuestionById(id);
+		return JsonUtils.getJsonObjectString("status", status);
 	}
 
 	@RequestMapping(value = "/question/add.do", method = RequestMethod.POST)

@@ -56,6 +56,12 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
+	public int deleteNoteById(int id) {
+		// TODO Auto-generated method stub
+		return deleteNote(noteDao.queryNoteById(id));
+	}
+
+	@Override
 	public int updateNote(Note note) {
 		// TODO Auto-generated method stub
 		if (note == null) {

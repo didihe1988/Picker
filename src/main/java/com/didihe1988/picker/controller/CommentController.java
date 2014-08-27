@@ -21,6 +21,7 @@ import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
 @RestController
@@ -41,14 +42,15 @@ public class CommentController {
 	private AnswerService answerService;
 
 	@RequestMapping(value = "/comment/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public Comment getComment(@PathVariable int id) {
+	public String getComment(@PathVariable int id) {
 		Comment comment = commentService.getCommentById(id);
-		return comment;
+		return JsonUtils.getJsonObjectString("comment", comment);
 	}
 
-	@RequestMapping(value = "/commentdp/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public CommentDp getCommentDp(@PathVariable int id) {
-		return commentService.getCommentDpByCommentId(id);
+	@RequestMapping(value = "/comment/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String deleteComment(@PathVariable int id) {
+		int status = commentService.deleteCommentById(id);
+		return JsonUtils.getJsonObjectString("status", status);
 	}
 
 	@RequestMapping(value = "/comment/add.do", method = RequestMethod.POST)
@@ -92,14 +94,6 @@ public class CommentController {
 		}
 		// return "book/detail.do?bookId=" + comment.getBookId();
 		return "";
-	}
-
-	@RequestMapping(value = "/comment/delete.do")
-	public String delete(HttpServletRequest request) {
-		int commentId = HttpUtils.getIntegerFromReqeust(request, "commentId");
-		Comment comment = commentService.getCommentById(commentId);
-		commentService.deleteComment(comment);
-		return "/comment/list.do";
 	}
 
 	@RequestMapping(value = "/comment/increment_favorite.do")

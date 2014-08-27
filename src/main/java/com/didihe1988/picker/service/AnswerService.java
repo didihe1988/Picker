@@ -10,6 +10,8 @@ public interface AnswerService {
 
 	public int deleteAnswer(Answer answer);
 
+	public int deleteAnswerById(int id);
+
 	public int updateAnswer(Answer answer);
 
 	public boolean isAnswerExists(Answer answer);

@@ -15,12 +15,12 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Note;
-import com.didihe1988.picker.model.NoteDp;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.NoteService;
 import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
 @RestController
@@ -38,23 +38,25 @@ public class NoteController {
 	private CommentService commentService;
 
 	@RequestMapping(value = "/note/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public Note getNote(@PathVariable int id) {
+	public String getNote(@PathVariable int id) {
 		Note note = noteService.getNoteById(id);
-		return note;
-	}
-
-	@RequestMapping(value = "/notedp/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public NoteDp getNoteDp(@PathVariable int id) {
-		return noteService.getNoteDpByNoteId(id);
+		return JsonUtils.getJsonObjectString("note", note);
 	}
 
 	/**
 	 * @description 该笔记下的评论
 	 */
 	@RequestMapping(value = "/note/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Comment> getCommets(@PathVariable int id) {
-		return commentService.getCommentListByCommentedId(id,
+	public String getCommets(@PathVariable int id) {
+		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_NOTE);
+		return JsonUtils.getJsonObjectString("commentList", list);
+	}
+
+	@RequestMapping(value = "/note/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String deleteNote(@PathVariable int id) {
+		int status = noteService.deleteNoteById(id);
+		return JsonUtils.getJsonObjectString("status", status);
 	}
 
 	@RequestMapping(value = "/note/increment_favorite.do")
