@@ -73,7 +73,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
 	public List<Answer> getAnswers(@PathVariable int id) {
-		return answerService.getAnswerByReplierId(id);
+		return answerService.getAnswerListByReplierId(id);
 	}
 
 	/**

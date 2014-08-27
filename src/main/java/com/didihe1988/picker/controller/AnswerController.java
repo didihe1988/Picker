@@ -22,6 +22,7 @@ import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
 @RestController
@@ -42,23 +43,19 @@ public class AnswerController {
 	private CommentService commentService;
 
 	@RequestMapping(value = "/answer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public Answer getAnswer(@PathVariable int id) {
+	public String getAnswer(@PathVariable int id) {
 		Answer answer = answerService.getAnswerById(id);
-		return answer;
-	}
-
-	@RequestMapping(value = "/answerdp/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public AnswerDp getAnswerDp(@PathVariable int id) {
-		return answerService.getAnswerDpByAnswerId(id);
+		return JsonUtils.getJsonObjectString("answer", answer);
 	}
 
 	/**
 	 * @description 该回答下的评论
 	 */
 	@RequestMapping(value = "/answer/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Comment> getCommets(@PathVariable int id) {
-		return commentService.getCommentListByCommentedId(id,
+	public String getCommets(@PathVariable int id) {
+		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_ANSWER);
+		return JsonUtils.getJsonObjectString("commentList", list);
 	}
 
 	@RequestMapping(value = "/answer/add.do")

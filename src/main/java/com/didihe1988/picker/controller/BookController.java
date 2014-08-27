@@ -24,6 +24,7 @@ import com.didihe1988.picker.service.BoughtService;
 import com.didihe1988.picker.service.NoteService;
 import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.JsonUtils;
 
 @RestController
 public class BookController {
@@ -39,59 +40,31 @@ public class BookController {
 	@Autowired
 	private NoteService noteService;
 
-	private final static Logger logger = LoggerFactory
-			.getLogger(BookController.class);
-
-	@RequestMapping(value = "/book/list.do")
-	public String list(HttpServletRequest request, ModelMap modelMap) {
-		int userId = HttpUtils.getSessionUser(request).getId();
-		logger.debug("userId:" + userId);
-		List<Bought> boughtList = boughtService.getBoughtByUserId(userId);
-		assert boughtList != null;
-		List<Book> bookList = new ArrayList<Book>();
-		for (int i = 0; i < boughtList.size(); i++) {
-			Book book = bookService.getBookById(boughtList.get(i).getBookId());
-			bookList.add(book);
-		}
-		// logger.debug(bookList.toString());
-		for (int i = 0; i < bookList.size(); i++) {
-			System.out.println(bookList.get(i).toString());
-		}
-		modelMap.addAttribute("bookList", bookList);
-		return "/booklist";
-	}
-
+	/**
+	 * @description 本书的详细内容
+	 */
 	@RequestMapping(value = "/book/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public Book getBook(@PathVariable int id) {
+	public String getBook(@PathVariable int id) {
 		Book book = bookService.getBookById(id);
-		return book;
+		return JsonUtils.getJsonObjectString("book", book);
 	}
 
 	/**
 	 * @description 本书下提出的问题
 	 */
 	@RequestMapping(value = "/book/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Question> getQuestions(@PathVariable int id) {
-		return questionService.getQuestionListByBookId(id);
-	}
-
-	/*
-	 * 测试return jsonobject
-	 */
-	@RequestMapping(value = "/book/{id}/test", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getQuestionsTest(@PathVariable int id) {
+	public String getQuestions(@PathVariable int id) {
 		List<Question> list = questionService.getQuestionListByBookId(id);
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("questionList", list);
-		return jsonObject.toString();
+		return JsonUtils.getJsonObjectString("questionList", list);
 	}
 
 	/**
 	 * @description 本书下写的笔记
 	 */
 	@RequestMapping(value = "/book/{id}/notes", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Note> getNotes(@PathVariable int id) {
-		return noteService.getPublicNoteListByBookId(id);
+	public String getNotes(@PathVariable int id) {
+		List<Note> list = noteService.getPublicNoteListByBookId(id);
+		return JsonUtils.getJsonObjectString("noteList", list);
 	}
 
 }

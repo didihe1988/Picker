@@ -23,6 +23,7 @@ import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
 @RestController
@@ -43,31 +44,28 @@ public class QuestionController {
 	private CommentService commentService;
 
 	@RequestMapping(value = "/question/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public Question getQuestion(@PathVariable int id) {
+	public String getQuestion(@PathVariable int id) {
 		Question question = questionService.getQuestionById(id);
-		return question;
-	}
-
-	@RequestMapping(value = "/questiondp/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public QuestionDp getQuestionDp(@PathVariable int id) {
-		return questionService.getQuestionDpByQuestionId(id);
+		return JsonUtils.getJsonObjectString("question", question);
 	}
 
 	/**
 	 * @description 该问题下的回答
 	 */
 	@RequestMapping(value = "/question/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Answer> getAnswers(@PathVariable int id) {
-		return answerService.getAnswerByQuestionId(id);
+	public String getAnswers(@PathVariable int id) {
+		List<Answer> list = answerService.getAnswerListByQuestionId(id);
+		return JsonUtils.getJsonObjectString("answerList", list);
 	}
 
 	/**
 	 * @description 该问题下的评论
 	 */
 	@RequestMapping(value = "/question/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Comment> getCommets(@PathVariable int id) {
-		return commentService.getCommentListByCommentedId(id,
+	public String getCommets(@PathVariable int id) {
+		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_QUESTION);
+		return JsonUtils.getJsonObjectString("commentList", list);
 	}
 
 	@RequestMapping(value = "/question/add.do", method = RequestMethod.POST)
