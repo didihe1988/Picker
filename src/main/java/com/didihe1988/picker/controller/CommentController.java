@@ -57,6 +57,50 @@ public class CommentController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
+	/**
+	 * @description 用户赞了该评论
+	 * @condition session-userId userName
+	 */
+	@RequestMapping(value = "/comment/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String subscribe(@PathVariable int id, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		String userName = HttpUtils.getSessionUserName(request);
+		int status = favoriteService.incrementCommentFavorite(id, userId);
+
+		if (status == Status.SUCCESS) {
+			/*
+			 * XXX赞了您的评论 两个函数都查询了comemnt 有待优化
+			 */
+			Comment comment = commentService.getCommentById(id);
+			String relatedSourceContent = StringUtils.confineStringLength(
+					comment.getContent(), Constant.MESSAGE_LENGTH);
+			messageService.addMessageByRecerver(comment.getProducerId(),
+					Message.MESSAGE_YOUR_COMMENT_FAVORITED, userId, userName,
+					id, relatedSourceContent);
+
+			/*
+			 * 通知关注者 小明 (被关注者)赞了XXX的评论
+			 */
+			messageService.addMessageByFollowedUser(
+					Message.MESSAGE_FOLLOWED_FAVORITE_COMMENT, userId,
+					userName, id, relatedSourceContent);
+		}
+
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+	
+	/**
+	 * @description 用户取消了赞 
+	 * @condition session-userId 
+	 */
+	@RequestMapping(value = "/comment/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String withdrawSubscribe(@PathVariable int id,
+			HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUser(request).getId();
+		int status = favoriteService.decrementCommentFavorite(id, userId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
 	@RequestMapping(value = "/comment/add.do", method = RequestMethod.POST)
 	public String add(HttpServletRequest request) {
 		/*
@@ -100,45 +144,4 @@ public class CommentController {
 		return "";
 	}
 
-	@RequestMapping(value = "/comment/increment_favorite.do")
-	public String incrementFavorite(HttpServletRequest request) {
-		System.out.println("increment_favorite");
-		int commentId = HttpUtils.getIntegerFromReqeust(request, "commentId");
-		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
-		int userId = HttpUtils.getSessionUserId(request);
-		String userName = HttpUtils.getSessionUserName(request);
-		int status = favoriteService
-				.incrementCommentFavorite(commentId, userId);
-
-		if (status == Status.SUCCESS) {
-			/*
-			 * XXX赞了您的评论 两个函数都查询了comemnt 有待优化
-			 */
-			Comment comment = commentService.getCommentById(commentId);
-			String relatedSourceContent = StringUtils.confineStringLength(
-					comment.getContent(), Constant.MESSAGE_LENGTH);
-			messageService.addMessageByRecerver(comment.getProducerId(),
-					Message.MESSAGE_YOUR_COMMENT_FAVORITED, userId, userName,
-					commentId, relatedSourceContent);
-
-			/*
-			 * 通知关注者 小明 (被关注者)赞了XXX的评论
-			 */
-			messageService.addMessageByFollowedUser(
-					Message.MESSAGE_FOLLOWED_FAVORITE_COMMENT, userId,
-					userName, commentId, relatedSourceContent);
-		}
-
-		return "redirect:/book/detail.do?bookId=" + bookId;
-	}
-
-	@RequestMapping(value = "/comment/decrement_favorite.do")
-	public String dcrementFavorite(HttpServletRequest request) {
-		System.out.println("decrement_favorite");
-		int commentId = HttpUtils.getIntegerFromReqeust(request, "commentId");
-		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
-		int userId = HttpUtils.getSessionUser(request).getId();
-		favoriteService.decrementCommentFavorite(commentId, userId);
-		return "redirect:/book/detail.do?bookId=" + bookId;
-	}
 }

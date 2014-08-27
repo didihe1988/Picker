@@ -116,6 +116,65 @@ public class QuestionController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
+	/**
+	 * @description 取消关注该问题
+	 */
+	/*
+	 * 这个不知道行不行
+	 */
+	@RequestMapping(value = "/question/{id}/withdraw_follow", method = RequestMethod.GET)
+	public String withdrawFollow(@PathVariable int id,
+			HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		Follow follow = new Follow(Follow.FOLLOW_QUESTION, userId, id);
+		int status = followService.deleteFollow(follow);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	/**
+	 * @description 用户赞了该问题
+	 * @condition session-userId userName
+	 */
+	@RequestMapping(value = "/question/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String subscribe(@PathVariable int id, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		String userName = HttpUtils.getSessionUserName(request);
+		int status = favoriteService.incrementQuestionFavorite(id, userId);
+
+		if (status == Status.SUCCESS) {
+			/*
+			 * XXX赞了您的问题
+			 */
+			Question question = questionService.getQuestionById(id);
+			String relatedSourceContent = StringUtils.confineStringLength(
+					question.getContent(), Constant.MESSAGE_LENGTH);
+			messageService.addMessageByRecerver(question.getAskerId(),
+					Message.MESSAGE_YOUR_QUESTION_FAVORITED, userId, userName,
+					id, relatedSourceContent);
+
+			/*
+			 * 通知关注者 小明 (被关注者)赞了XXX的问题
+			 */
+			messageService.addMessageByFollowedUser(
+					Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, userId,
+					userName, id, relatedSourceContent);
+		}
+
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	/**
+	 * @description 用户取消了赞
+	 * @condition session-userId
+	 */
+	@RequestMapping(value = "/question/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String withdrawSubscribe(@PathVariable int id,
+			HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUser(request).getId();
+		int status = favoriteService.decrementQuestionFavorite(id, userId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
 	@RequestMapping(value = "/question/add.do", method = RequestMethod.POST)
 	public String add(HttpServletRequest request) {
 		/*
@@ -138,36 +197,6 @@ public class QuestionController {
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ASKQUESTION, userId, userName,
 				questionId, relatedSourceContent);
-		return "";
-	}
-
-	@RequestMapping(value = "/question/increment_favorite.do")
-	public String incrementFavorite(HttpServletRequest request) {
-		int questionId = HttpUtils.getIntegerFromReqeust(request, "questionId");
-		int userId = HttpUtils.getSessionUserId(request);
-		String userName = HttpUtils.getSessionUserName(request);
-		int status = favoriteService.incrementQuestionFavorite(questionId,
-				userId);
-
-		if (status == Status.SUCCESS) {
-			/*
-			 * XXX赞了您的问题
-			 */
-			Question question = questionService.getQuestionById(questionId);
-			String relatedSourceContent = StringUtils.confineStringLength(
-					question.getContent(), Constant.MESSAGE_LENGTH);
-			messageService.addMessageByRecerver(question.getAskerId(),
-					Message.MESSAGE_YOUR_QUESTION_FAVORITED, userId, userName,
-					questionId, relatedSourceContent);
-
-			/*
-			 * 通知关注者 小明 (被关注者)赞了XXX的问题
-			 */
-			messageService.addMessageByFollowedUser(
-					Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, userId,
-					userName, questionId, relatedSourceContent);
-		}
-
 		return "";
 	}
 

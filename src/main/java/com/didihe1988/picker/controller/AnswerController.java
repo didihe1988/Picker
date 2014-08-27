@@ -68,6 +68,45 @@ public class AnswerController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT_LIST, list);
 	}
 
+	/**
+	 * @description 用户赞了该评论
+	 * @condition session-userId
+	 */
+	@RequestMapping(value = "/answer/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String subscribe(@PathVariable int id, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		String userName = HttpUtils.getSessionUserName(request);
+		int status = favoriteService.incrementAnswerFavorite(id, userId);
+
+		if (status == Status.SUCCESS) {
+			/*
+			 * XXX赞了您的回答
+			 */
+			Answer answer = answerService.getAnswerById(id);
+			String relatedSourceContent = StringUtils.confineStringLength(
+					answer.getContent(), Constant.MESSAGE_LENGTH);
+			messageService.addMessageByRecerver(answer.getReplierId(),
+					Message.MESSAGE_YOUR_ANSWER_FAVORITED, userId, userName,
+					id, relatedSourceContent);
+
+			/*
+			 * 通知关注者 小明 (被关注者)赞了XXX的问题
+			 */
+			messageService.addMessageByFollowedUser(
+					Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, userId, userName,
+					id, relatedSourceContent);
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	@RequestMapping(value = "/answer/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String withdrawSubscribe(@PathVariable int id,
+			HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		int status = favoriteService.decrementAnswerFavorite(id, userId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
 	@RequestMapping(value = "/answer/add.do")
 	public String add(HttpServletRequest request) {
 		/*
@@ -101,35 +140,6 @@ public class AnswerController {
 
 		return "";
 
-	}
-
-	@RequestMapping(value = "/answer/increment_favorite.do")
-	public String incrementFavorite(HttpServletRequest request) {
-		int answerId = HttpUtils.getIntegerFromReqeust(request, "answerId");
-		int userId = HttpUtils.getSessionUserId(request);
-		String userName = HttpUtils.getSessionUserName(request);
-		int status = favoriteService.incrementAnswerFavorite(answerId, userId);
-
-		if (status == Status.SUCCESS) {
-			/*
-			 * XXX赞了您的回答
-			 */
-			Answer answer = answerService.getAnswerById(answerId);
-			String relatedSourceContent = StringUtils.confineStringLength(
-					answer.getContent(), Constant.MESSAGE_LENGTH);
-			messageService.addMessageByRecerver(answer.getReplierId(),
-					Message.MESSAGE_YOUR_ANSWER_FAVORITED, userId, userName,
-					answerId, relatedSourceContent);
-
-			/*
-			 * 通知关注者 小明 (被关注者)赞了XXX的问题
-			 */
-			messageService.addMessageByFollowedUser(
-					Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, userId, userName,
-					answerId, relatedSourceContent);
-		}
-
-		return "";
 	}
 
 }

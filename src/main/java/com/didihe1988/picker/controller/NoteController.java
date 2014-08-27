@@ -64,23 +64,26 @@ public class NoteController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	@RequestMapping(value = "/note/increment_favorite.do")
-	public String incrementFavorite(HttpServletRequest request) {
-		int noteId = HttpUtils.getIntegerFromReqeust(request, "noteId");
+	/**
+	 * @description 用户赞了笔记
+	 * @condition session-userId userName
+	 */
+	@RequestMapping(value = "/note/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		String userName = HttpUtils.getSessionUserName(request);
-		int status = favoriteService.incrementNoteFavorite(noteId, userId);
+		int status = favoriteService.incrementNoteFavorite(id, userId);
 
 		if (status == Status.SUCCESS) {
 			/*
 			 * XXX赞了您的笔记
 			 */
-			Note note = noteService.getNoteById(noteId);
+			Note note = noteService.getNoteById(id);
 			String relatedSourceContent = StringUtils.confineStringLength(
 					note.getContent(), Constant.MESSAGE_LENGTH);
 			messageService.addMessageByRecerver(note.getUserId(),
 					Message.MESSAGE_YOUR_ANSWER_FAVORITED, userId, userName,
-					noteId, relatedSourceContent);
+					id, relatedSourceContent);
 
 			/*
 			 * 通知关注者 小明 (被关注者)赞了XXX的笔记
@@ -88,8 +91,20 @@ public class NoteController {
 
 			messageService.addMessageByFollowedUser(
 					Message.MESSAGE_FOLLOWED_FAVORITE_NOTE, userId, userName,
-					noteId, relatedSourceContent);
+					id, relatedSourceContent);
 		}
-		return "";
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	/**
+	 * @description 用户取消的对该笔记的赞
+	 * @condition session-userId
+	 */
+	@RequestMapping(value = "/note/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String withdrawSubscribe(@PathVariable int id,
+			HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		int status = favoriteService.decrementNoteFavorite(id, userId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 }

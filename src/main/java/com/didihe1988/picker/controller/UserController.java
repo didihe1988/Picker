@@ -193,4 +193,16 @@ public class UserController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
+	/**
+	 * @description 取消关注该用户
+	 */
+	@RequestMapping(value = "/user/{id}/withdraw_follow", method = RequestMethod.GET)
+	public String withdrawFollow(@PathVariable int id,
+			HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		Follow follow = new Follow(Follow.FOLLOW_USER, userId, id);
+		int status = followService.deleteFollow(follow);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
 }
