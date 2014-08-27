@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
@@ -36,6 +37,6 @@ public class BoughtController {
 	public String delete(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = boughtService.deleteBought(new Bought(userId, id));
-		return JsonUtils.getJsonObjectString("status", status);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 }

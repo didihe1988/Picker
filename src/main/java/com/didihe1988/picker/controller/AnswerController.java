@@ -44,13 +44,18 @@ public class AnswerController {
 	@RequestMapping(value = "/answer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswer(@PathVariable int id) {
 		Answer answer = answerService.getAnswerById(id);
-		return JsonUtils.getJsonObjectString("answer", answer);
+		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER, answer);
 	}
 
+	/**
+	 * @description É¾³ý¸ÃÌõ»Ø´ð
+	 * @condition session-userId
+	 */
 	@RequestMapping(value = "/answer/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String deleteAnswer(@PathVariable int id) {
-		int status = answerService.deleteAnswerById(id);
-		return JsonUtils.getJsonObjectString("status", status);
+	public String deleteAnswer(@PathVariable int id, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		int status = answerService.deleteAnswerById(id, userId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
 	/**
@@ -60,7 +65,7 @@ public class AnswerController {
 	public String getCommets(@PathVariable int id) {
 		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_ANSWER);
-		return JsonUtils.getJsonObjectString("commentList", list);
+		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT_LIST, list);
 	}
 
 	@RequestMapping(value = "/answer/add.do")

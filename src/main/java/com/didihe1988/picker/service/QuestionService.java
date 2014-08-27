@@ -8,9 +8,9 @@ import com.didihe1988.picker.model.QuestionDp;
 public interface QuestionService {
 	public int addQuestion(Question question);
 
-	public int deleteQuestion(Question question);
+	public int deleteQuestion(Question question, int userId);
 
-	public int deleteQuestionById(int id);
+	public int deleteQuestionById(int id, int userId);
 
 	public int updateQuestion(Question question);
 

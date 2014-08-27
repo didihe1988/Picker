@@ -8,9 +8,9 @@ import com.didihe1988.picker.model.CommentDp;
 public interface CommentService {
 	public int addComment(Comment comment);
 
-	public int deleteComment(Comment comment);
+	public int deleteComment(Comment comment, int userId);
 
-	public int deleteCommentById(int id);
+	public int deleteCommentById(int id, int userId);
 
 	public int updateComment(Comment comment);
 

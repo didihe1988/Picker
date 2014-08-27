@@ -51,14 +51,13 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public int deleteAnswer(Answer answer) {
+	public int deleteAnswer(Answer answer, int userId) {
 		// TODO Auto-generated method stub
 		if (answer == null) {
 			return Status.NULLPOINTER;
 		}
 		// 删除之前检验是否存在
-		if (!answerDao.checkDeleteValidation(answer.getReplierId(),
-				answer.getId())) {
+		if (!answerDao.checkDeleteValidation(userId, answer.getId())) {
 			return Status.INVALID;
 		}
 		answerDao.deleteAnswer(answer);
@@ -66,9 +65,9 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public int deleteAnswerById(int id) {
+	public int deleteAnswerById(int id, int userId) {
 		// TODO Auto-generated method stub
-		return deleteAnswer(answerDao.queryAnswerById(id));
+		return deleteAnswer(answerDao.queryAnswerById(id), userId);
 	}
 
 	@Override

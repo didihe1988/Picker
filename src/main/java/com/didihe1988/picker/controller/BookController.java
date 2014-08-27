@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Note;
@@ -46,7 +47,7 @@ public class BookController {
 	@RequestMapping(value = "/book/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getBook(@PathVariable int id) {
 		Book book = bookService.getBookById(id);
-		return JsonUtils.getJsonObjectString("book", book);
+		return JsonUtils.getJsonObjectString(Constant.KEY_BOOK, book);
 	}
 
 	/**
@@ -55,7 +56,7 @@ public class BookController {
 	@RequestMapping(value = "/book/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestions(@PathVariable int id) {
 		List<Question> list = questionService.getQuestionListByBookId(id);
-		return JsonUtils.getJsonObjectString("questionList", list);
+		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 
 	/**
@@ -64,7 +65,7 @@ public class BookController {
 	@RequestMapping(value = "/book/{id}/notes", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNotes(@PathVariable int id) {
 		List<Note> list = noteService.getPublicNoteListByBookId(id);
-		return JsonUtils.getJsonObjectString("noteList", list);
+		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
 	}
 
 }

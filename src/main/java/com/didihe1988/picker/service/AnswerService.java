@@ -8,9 +8,9 @@ import com.didihe1988.picker.model.AnswerDp;
 public interface AnswerService {
 	public int addAnswer(Answer answer);
 
-	public int deleteAnswer(Answer answer);
+	public int deleteAnswer(Answer answer, int userId);
 
-	public int deleteAnswerById(int id);
+	public int deleteAnswerById(int id, int userId);
 
 	public int updateAnswer(Answer answer);
 

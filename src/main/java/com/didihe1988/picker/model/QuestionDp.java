@@ -13,6 +13,8 @@ public class QuestionDp extends Question {
 
 	private String askerName;
 
+	private String askerAvatarUrl;
+
 	public String getBookName() {
 		return bookName;
 	}
@@ -27,6 +29,14 @@ public class QuestionDp extends Question {
 
 	public void setAskerName(String askerName) {
 		this.askerName = askerName;
+	}
+
+	public String getAskerAvatarUrl() {
+		return askerAvatarUrl;
+	}
+
+	public void setAskerAvatarUrl(String askerAvatarUrl) {
+		this.askerAvatarUrl = askerAvatarUrl;
 	}
 
 	public QuestionDp() {
@@ -50,7 +60,8 @@ public class QuestionDp extends Question {
 		this.date = date;
 	}
 
-	public QuestionDp(Question question, String bookName, String askerName) {
+	public QuestionDp(Question question, String bookName, String askerName,
+			String askerAvatarUrl) {
 		super(question.getId(), question.getBookId(), question.getAskerId(),
 				question.getTitle(), question.getContent(), question
 						.getFavoriteNum(), question.getAnswerNum(), question
@@ -58,5 +69,6 @@ public class QuestionDp extends Question {
 						.getDate());
 		this.bookName = bookName;
 		this.askerName = askerName;
+		this.askerAvatarUrl = askerAvatarUrl;
 	}
 }

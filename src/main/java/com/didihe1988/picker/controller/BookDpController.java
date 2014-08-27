@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.didihe1988.picker.model.Note;
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.NoteDp;
-import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.model.QuestionDp;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
@@ -38,7 +37,7 @@ public class BookDpController {
 	@RequestMapping(value = "/book/{id}/questiondps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestionDps(@PathVariable int id) {
 		List<QuestionDp> list = questionService.getQuestionDpListByBookId(id);
-		return JsonUtils.getJsonObjectString("questionList", list);
+		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 
 	/**
@@ -47,6 +46,6 @@ public class BookDpController {
 	@RequestMapping(value = "/book/{id}/notedps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNoteDps(@PathVariable int id) {
 		List<NoteDp> list = noteService.getPublicNoteDpListByBookId(id);
-		return JsonUtils.getJsonObjectString("noteList", list);
+		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
 	}
 }

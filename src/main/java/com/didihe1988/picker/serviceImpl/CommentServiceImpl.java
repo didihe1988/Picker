@@ -67,13 +67,12 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public int deleteComment(Comment comment) {
+	public int deleteComment(Comment comment, int userId) {
 		// TODO Auto-generated method stub
 		if (comment == null) {
 			return Status.NULLPOINTER;
 		}
-		if (!commentDao.checkDeleteValidation(comment.getProducerId(),
-				comment.getId())) {
+		if (!commentDao.checkDeleteValidation(userId, comment.getId())) {
 			return Status.INVALID;
 		}
 		commentDao.deleteComment(comment);
@@ -90,9 +89,9 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public int deleteCommentById(int id) {
+	public int deleteCommentById(int id, int userId) {
 		// TODO Auto-generated method stub
-		return deleteComment(commentDao.queryCommentById(id));
+		return deleteComment(commentDao.queryCommentById(id), userId);
 	}
 
 	@Override

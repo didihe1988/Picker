@@ -44,13 +44,18 @@ public class CommentController {
 	@RequestMapping(value = "/comment/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getComment(@PathVariable int id) {
 		Comment comment = commentService.getCommentById(id);
-		return JsonUtils.getJsonObjectString("comment", comment);
+		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT, comment);
 	}
 
+	/**
+	 * @description É¾³ý¸ÃÌõÆÀÂÛ
+	 * @condition session-userId
+	 */
 	@RequestMapping(value = "/comment/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String deleteComment(@PathVariable int id) {
-		int status = commentService.deleteCommentById(id);
-		return JsonUtils.getJsonObjectString("status", status);
+	public String deleteComment(@PathVariable int id, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		int status = commentService.deleteCommentById(id, userId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
 	@RequestMapping(value = "/comment/add.do", method = RequestMethod.POST)

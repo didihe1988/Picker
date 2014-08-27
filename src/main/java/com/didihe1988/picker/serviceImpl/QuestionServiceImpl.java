@@ -46,22 +46,22 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public int deleteQuestion(Question question) {
+	public int deleteQuestion(Question question, int userId) {
 		// TODO Auto-generated method stub
 		if (question == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = questionDao.deleteQuestion(question);
-		if (status == -1) {
-			return Status.NOT_EXISTS;
+		if (!questionDao.checkDeleteValidation(userId, question.getId())) {
+			return Status.INVALID;
 		}
+		questionDao.deleteQuestion(question);
 		return Status.SUCCESS;
 	}
 
 	@Override
-	public int deleteQuestionById(int id) {
+	public int deleteQuestionById(int id, int userId) {
 		// TODO Auto-generated method stub
-		return deleteQuestion(questionDao.queryQuestionById(id));
+		return deleteQuestion(questionDao.queryQuestionById(id), userId);
 	}
 
 	@Override
@@ -130,7 +130,10 @@ public class QuestionServiceImpl implements QuestionService {
 				.getBookName();
 		String askerName = userDao.queryUserById(question.getAskerId())
 				.getUsername();
-		QuestionDp questionDp = new QuestionDp(question, bookName, askerName);
+		String askerAvatarUrl = userDao.queryUserById(question.getAskerId())
+				.getAvatarUrl();
+		QuestionDp questionDp = new QuestionDp(question, bookName, askerName,
+				askerAvatarUrl);
 		return questionDp;
 	}
 

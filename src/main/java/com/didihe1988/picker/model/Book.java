@@ -39,6 +39,9 @@ public class Book implements Serializable {
 	@Column(name = "book_questionnum")
 	private int questionNum;
 
+	@Column(name = "book_notenum")
+	private int noteNum;
+
 	@Column(name = "book_imageurl")
 	private String imageUrl;
 
@@ -136,8 +139,8 @@ public class Book implements Serializable {
 	public String toString() {
 		return "Book [id=" + id + ", bookName=" + bookName + ", isbn=" + isbn
 				+ ", writer=" + writer + ", press=" + press + ", followNum="
-				+ followNum + ", questionNum=" + questionNum + ", imageUrl="
-				+ imageUrl + "]";
+				+ followNum + ", questionNum=" + questionNum + ", noteNum="
+				+ noteNum + ", imageUrl=" + imageUrl + "]";
 	}
 
 }

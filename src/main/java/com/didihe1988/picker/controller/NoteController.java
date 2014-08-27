@@ -40,7 +40,7 @@ public class NoteController {
 	@RequestMapping(value = "/note/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNote(@PathVariable int id) {
 		Note note = noteService.getNoteById(id);
-		return JsonUtils.getJsonObjectString("note", note);
+		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE, note);
 	}
 
 	/**
@@ -50,13 +50,18 @@ public class NoteController {
 	public String getCommets(@PathVariable int id) {
 		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_NOTE);
-		return JsonUtils.getJsonObjectString("commentList", list);
+		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT_LIST, list);
 	}
 
+	/**
+	 * @description É¾³ý¸ÃÌõ±Ê¼Ç
+	 * @condition session-userId
+	 */
 	@RequestMapping(value = "/note/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String deleteNote(@PathVariable int id) {
-		int status = noteService.deleteNoteById(id);
-		return JsonUtils.getJsonObjectString("status", status);
+	public String deleteNote(@PathVariable int id, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		int status = noteService.deleteNoteById(id, userId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
 	@RequestMapping(value = "/note/increment_favorite.do")

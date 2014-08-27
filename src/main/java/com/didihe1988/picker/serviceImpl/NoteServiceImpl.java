@@ -43,22 +43,22 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public int deleteNote(Note note) {
+	public int deleteNote(Note note, int userId) {
 		// TODO Auto-generated method stub
 		if (note == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = noteDao.deleteNote(note);
-		if (status == -1) {
-			return Status.NOT_EXISTS;
+		if (!noteDao.checkDeleteValidation(userId, note.getId())) {
+			return Status.INVALID;
 		}
+		noteDao.deleteNote(note);
 		return Status.SUCCESS;
 	}
 
 	@Override
-	public int deleteNoteById(int id) {
+	public int deleteNoteById(int id, int userId) {
 		// TODO Auto-generated method stub
-		return deleteNote(noteDao.queryNoteById(id));
+		return deleteNote(noteDao.queryNoteById(id), userId);
 	}
 
 	@Override
@@ -154,6 +154,10 @@ public class NoteServiceImpl implements NoteService {
 	public List<NoteDp> getPublicNoteDpListByBookId(int id) {
 		// TODO Auto-generated method stub
 		return getNoteDpListFromNoteList(getPublicNoteListByBookId(id));
+	}
+
+	public boolean checkDeleteValidation(int ownerId, int objectId) {
+		return noteDao.checkDeleteValidation(ownerId, objectId);
 	}
 
 }

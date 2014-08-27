@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,6 @@ import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Question;
-import com.didihe1988.picker.model.QuestionDp;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -47,7 +45,7 @@ public class QuestionController {
 	@RequestMapping(value = "/question/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestion(@PathVariable int id) {
 		Question question = questionService.getQuestionById(id);
-		return JsonUtils.getJsonObjectString("question", question);
+		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION, question);
 	}
 
 	/**
@@ -56,7 +54,7 @@ public class QuestionController {
 	@RequestMapping(value = "/question/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswers(@PathVariable int id) {
 		List<Answer> list = answerService.getAnswerListByQuestionId(id);
-		return JsonUtils.getJsonObjectString("answerList", list);
+		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
 	}
 
 	/**
@@ -66,12 +64,18 @@ public class QuestionController {
 	public String getCommets(@PathVariable int id) {
 		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_QUESTION);
-		return JsonUtils.getJsonObjectString("commentList", list);
+		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT_LIST, list);
 	}
 
+	/**
+	 * @description 删除该条问题
+	 * @condition session-userId
+	 */
 	@RequestMapping(value = "/question/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String deleteQuestion(@PathVariable int id) {
-		int status = questionService.deleteQuestionById(id);
+	public String deleteQuestion(@PathVariable int id,
+			HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		int status = questionService.deleteQuestionById(id, userId);
 		return JsonUtils.getJsonObjectString("status", status);
 	}
 

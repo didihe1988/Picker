@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.AnswerDp;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.CommentDp;
@@ -32,7 +33,7 @@ public class QuestionDpController {
 	@RequestMapping(value = "/question/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestionDp(@PathVariable int id) {
 		QuestionDp questionDp = questionService.getQuestionDpByQuestionId(id);
-		return JsonUtils.getJsonObjectString("question", questionDp);
+		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION, questionDp);
 	}
 
 	/**
@@ -41,7 +42,7 @@ public class QuestionDpController {
 	@RequestMapping(value = "/question/{id}/answerdps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswers(@PathVariable int id) {
 		List<AnswerDp> list = answerService.getAnswerDpListByQuestionId(id);
-		return JsonUtils.getJsonObjectString("answerList", list);
+		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
 	}
 
 	/**
@@ -51,6 +52,6 @@ public class QuestionDpController {
 	public String getCommets(@PathVariable int id) {
 		List<CommentDp> list = commentService.getCommentDpListByCommentedId(id,
 				Comment.COMMENT_QUESTION);
-		return JsonUtils.getJsonObjectString("commentList", list);
+		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT_LIST, list);
 	}
 }

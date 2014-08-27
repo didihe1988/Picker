@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
@@ -30,6 +32,7 @@ import com.didihe1988.picker.service.NoteService;
 import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.JsonUtils;
 
 @RestController
 public class UserController {
@@ -64,43 +67,48 @@ public class UserController {
 	 * @description 个人信息
 	 */
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public User getUser(@PathVariable int id) {
-		return userService.getUserById(id);
+	public String getUser(@PathVariable int id) {
+		User user = userService.getUserById(id);
+		return JsonUtils.getJsonObjectString(Constant.KEY_USER, user);
 	}
 
 	/**
 	 * @description 回答过的问题
 	 */
 	@RequestMapping(value = "/user/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Answer> getAnswers(@PathVariable int id) {
-		return answerService.getAnswerListByReplierId(id);
+	public String getAnswers(@PathVariable int id) {
+		List<Answer> list = answerService.getAnswerListByReplierId(id);
+		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
 	}
 
 	/**
 	 * @description 问过的问题
 	 */
 	@RequestMapping(value = "/user/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Question> getQuestions(@PathVariable int id) {
-		return questionService.getQuestionListByAskerId(id);
+	public String getQuestions(@PathVariable int id) {
+		List<Question> list = questionService.getQuestionListByAskerId(id);
+		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 
 	/**
 	 * @description 写过的笔记 自己的笔记显示全部 别人的只显示public部分
 	 */
 	@RequestMapping(value = "/user/{id}/notes", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Note> getNotes(@PathVariable int id, HttpServletRequest request) {
+	public String getNotes(@PathVariable int id, HttpServletRequest request) {
+		List<Note> list = new ArrayList<Note>();
 		int userId = HttpUtils.getSessionUserId(request);
 		if (userId == id) {
-			return noteService.getALlNoteListByUserId(id);
+			list = noteService.getALlNoteListByUserId(id);
 		}
-		return noteService.getPublicNoteListByUserId(id);
+		list = noteService.getPublicNoteListByUserId(id);
+		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
 	}
 
 	/**
 	 * @description 关注了XXX
 	 */
 	@RequestMapping(value = "/user/{id}/followees", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<User> getFollowees(@PathVariable int id) {
+	public String getFollowees(@PathVariable int id) {
 		List<Follow> followList = followService
 				.getFollowListByFollowerIdByUser(id);
 		List<User> userList = new ArrayList<User>();
@@ -108,14 +116,14 @@ public class UserController {
 			User user = userService.getUserById(follow.getSourceId());
 			userList.add(user);
 		}
-		return userList;
+		return JsonUtils.getJsonObjectString(Constant.KEY_USER_LIST, userList);
 	}
 
 	/**
 	 * @description 关注者 被XXX关注
 	 */
 	@RequestMapping(value = "/user/{id}/followers", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<User> getFollowers(@PathVariable int id) {
+	public String getFollowers(@PathVariable int id) {
 		List<Follow> followList = followService
 				.getFollowListByFollowedUserId(id);
 		List<User> userList = new ArrayList<User>();
@@ -123,14 +131,14 @@ public class UserController {
 			User user = userService.getUserById(follow.getFollowerId());
 			userList.add(user);
 		}
-		return userList;
+		return JsonUtils.getJsonObjectString(Constant.KEY_USER_LIST, userList);
 	}
 
 	/**
 	 * @description 关注的问题
 	 */
 	@RequestMapping(value = "/user/{id}/questions_followed", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Question> getQuestionsFollowed(@PathVariable int id) {
+	public String getQuestionsFollowed(@PathVariable int id) {
 		List<Follow> followList = followService
 				.getFollowListByFollowerIdByQuestion(id);
 		List<Question> quesionList = new ArrayList<Question>();
@@ -139,28 +147,29 @@ public class UserController {
 					.getSourceId());
 			quesionList.add(question);
 		}
-		return quesionList;
+		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST,
+				quesionList);
 	}
 
 	/**
 	 * @description 添加的书籍
 	 */
 	@RequestMapping(value = "/user/{id}/books", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Book> getBooks(@PathVariable int id) {
+	public String getBooks(@PathVariable int id) {
 		List<Bought> boughtList = boughtService.getBoughtByUserId(id);
 		List<Book> bookList = new ArrayList<Book>();
 		for (Bought bought : boughtList) {
 			Book book = bookService.getBookById(bought.getBookId());
 			bookList.add(book);
 		}
-		return bookList;
+		return JsonUtils.getJsonObjectString(Constant.KEY_BOOK_LIST, bookList);
 	}
 
 	/**
 	 * @description 加入的圈子
 	 */
 	@RequestMapping(value = "/user/{id}/circles", method = RequestMethod.GET, headers = "Accept=application/json")
-	public List<Circle> getCircles(@PathVariable int id) {
+	public String getCircles(@PathVariable int id) {
 		List<CircleMember> circleMembers = circleMemberService
 				.getCircleMemberListByMemberId(id);
 		List<Circle> circleList = new ArrayList<Circle>();
@@ -169,7 +178,8 @@ public class UserController {
 					.getCircleId());
 			circleList.add(circle);
 		}
-		return circleList;
+		return JsonUtils.getJsonObjectString(Constant.KEY_CIRCLE_LIST,
+				circleList);
 	}
 
 	/**
@@ -179,8 +189,8 @@ public class UserController {
 	public String follow(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		Follow follow = new Follow(Follow.FOLLOW_USER, userId, id);
-		followService.addFollow(follow);
-		return "";
+		int status = followService.addFollow(follow);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
 }

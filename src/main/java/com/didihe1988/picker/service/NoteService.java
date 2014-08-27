@@ -8,9 +8,9 @@ import com.didihe1988.picker.model.NoteDp;
 public interface NoteService {
 	public int addNote(Note note);
 
-	public int deleteNote(Note note);
+	public int deleteNote(Note note, int userId);
 
-	public int deleteNoteById(int id);
+	public int deleteNoteById(int id, int userId);
 
 	public int updateNote(Note note);
 

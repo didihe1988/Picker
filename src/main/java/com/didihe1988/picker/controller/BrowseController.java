@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.Book;
-import com.didihe1988.picker.model.NoteDp;
-import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.model.QuestionDp;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.NoteService;
 import com.didihe1988.picker.service.QuestionService;
+import com.google.gson.Gson;
 
 @RestController
 public class BrowseController {
@@ -31,10 +31,19 @@ public class BrowseController {
 	@RequestMapping(value = "/browse/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getBrowse(@PathVariable int id) {
 		JSONObject jsonObject = new JSONObject();
+		/*
+		 * book
+		 */
 		Book book = bookService.getBookById(id);
-		jsonObject.put("book", book);
+		Gson gson = new Gson();
+		String bookJson = gson.toJson(book);
+		jsonObject.put(Constant.KEY_BOOK, bookJson);
+		/*
+		 * questionList
+		 */
 		List<QuestionDp> list = questionService.getQuestionDpListByBookId(id);
-		jsonObject.put("questionList", list);
+		jsonObject.put(Constant.KEY_QUESTION_LIST, list);
+
 		return jsonObject.toString();
 	}
 }

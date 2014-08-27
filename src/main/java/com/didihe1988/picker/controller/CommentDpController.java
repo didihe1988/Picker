@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.CommentDp;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.utils.JsonUtils;
@@ -18,6 +19,6 @@ public class CommentDpController {
 	@RequestMapping(value = "/comment/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommentDp(@PathVariable int id) {
 		CommentDp commentDp = commentService.getCommentDpByCommentId(id);
-		return JsonUtils.getJsonObjectString("comment", commentDp);
+		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT, commentDp);
 	}
 }

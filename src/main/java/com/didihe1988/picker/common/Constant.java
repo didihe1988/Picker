@@ -19,4 +19,19 @@ public class Constant {
 	public static final String BOOK_NUM = "bookNum";
 	public static final int MESSAGE_LENGTH = 20;
 
+	public static final String KEY_STATUS = "status";
+	public static final String KEY_QUESTION_LIST = "questionList";
+	public static final String KEY_COMMENT_LIST = "commentList";
+	public static final String KEY_ANSWER_LIST = "answerList";
+	public static final String KEY_CIRCLE_LIST = "circleList";
+	public static final String KEY_NOTE_LIST = "noteList";
+	public static final String KEY_BOOK_LIST = "bookList";
+	public static final String KEY_USER_LIST = "userList";
+	public static final String KEY_QUESTION = "question";
+	public static final String KEY_COMMENT = "comment";
+	public static final String KEY_ANSWER = "answer";
+	public static final String KEY_CIRCLE = "circle";
+	public static final String KEY_NOTE = "note";
+	public static final String KEY_BOOK = "book";
+	public static final String KEY_USER = "user";
 }
