@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -88,10 +89,10 @@ public class CommentController {
 
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
-	
+
 	/**
-	 * @description 用户取消了赞 
-	 * @condition session-userId 
+	 * @description 用户取消了赞
+	 * @condition session-userId
 	 */
 	@RequestMapping(value = "/comment/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String withdrawSubscribe(@PathVariable int id,
@@ -101,47 +102,46 @@ public class CommentController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	@RequestMapping(value = "/comment/add.do", method = RequestMethod.POST)
-	public String add(HttpServletRequest request) {
+	@RequestMapping(value = "/comment", method = RequestMethod.POST)
+	public String add(@RequestBody Comment comment, HttpServletRequest request) {
 		/*
 		 * 添加评论
 		 */
+		int status = commentService.addComment(comment);
+		if (status == Status.SUCCESS) {
+			addCommentMessage(comment, request);
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	private void addCommentMessage(Comment comment, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		int commentedId = HttpUtils.getIntegerFromReqeust(request,
-				"commentedId");
-		int producerId = HttpUtils.getIntegerFromReqeust(request, "producerId");
-		String content = HttpUtils.getStringFromReqeust(request, "content");
-		int type = HttpUtils.getIntegerFromReqeust(request, "type");
-		Comment comment = new Comment(commentedId, producerId, content, type);
-		commentService.addComment(comment);
-
 		int commentId = commentService.getLatestCommentIdByUserId(userId);
-
 		String userName = HttpUtils.getSessionUserName(request);
 		// relatedSourceContent-评论内容
-		String relatedSourceContent = StringUtils.confineStringLength(content,
-				Constant.MESSAGE_LENGTH);
+		String relatedSourceContent = StringUtils.confineStringLength(
+				comment.getContent(), Constant.MESSAGE_LENGTH);
 		/*
 		 * 小明 评论了您的问题
 		 */
-		if (type == Comment.COMMENT_QUESTION) {
-			Question question = questionService.getQuestionById(commentedId);
+		if (comment.getType() == Comment.COMMENT_QUESTION) {
+			Question question = questionService.getQuestionById(comment
+					.getCommentedId());
 			messageService.addMessageByRecerver(question.getAskerId(),
-					Message.MESSAGE_YOUR_QUESTION_COMMENTED, producerId,
-					userName, commentId, relatedSourceContent);
+					Message.MESSAGE_YOUR_QUESTION_COMMENTED,
+					comment.getProducerId(), userName, commentId,
+					relatedSourceContent);
 		}
 
 		/*
 		 * 小明 评论了您的回答
 		 */
-		if (type == Comment.COMMENT_ANSWER) {
-			Answer answer = answerService.getAnswerById(commentedId);
+		if (comment.getType() == Comment.COMMENT_ANSWER) {
+			Answer answer = answerService.getAnswerById(comment
+					.getCommentedId());
 			messageService.addMessageByRecerver(answer.getReplierId(),
 					Message.MESSAGE_YOUR_ANSWER_COMMENTED, userId, userName,
 					commentId, relatedSourceContent);
 		}
-		// return "book/detail.do?bookId=" + comment.getBookId();
-		return "";
 	}
-
 }

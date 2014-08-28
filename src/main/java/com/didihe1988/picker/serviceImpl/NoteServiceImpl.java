@@ -160,4 +160,10 @@ public class NoteServiceImpl implements NoteService {
 		return noteDao.checkDeleteValidation(ownerId, objectId);
 	}
 
+	@Override
+	public int getLatestNoteIdByUserId(int id) {
+		// TODO Auto-generated method stub
+		return noteDao.queryLatestNoteIdByUserId(id);
+	}
+
 }

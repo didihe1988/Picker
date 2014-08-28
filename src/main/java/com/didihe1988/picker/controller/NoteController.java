@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -106,5 +107,25 @@ public class NoteController {
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.decrementNoteFavorite(id, userId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	@RequestMapping(value = "/note/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	public String add(@RequestBody Note note, HttpServletRequest request) {
+		int status = noteService.addNote(note);
+		if (status == Status.SUCCESS) {
+
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	private void addNoteMessage(Note note, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		String userName = HttpUtils.getSessionUserName(request);
+		String relatedSourceContent = StringUtils.confineStringLength(
+				note.getTitle(), Message.MESSAGE_ALL);
+		int noteId = noteService.getLatestNoteIdByUserId(note.getUserId());
+		messageService.addMessageByFollowedUser(
+				Message.MESSAGE_FOLLOWED_ADDNOTE, userId, userName, noteId,
+				relatedSourceContent);
 	}
 }

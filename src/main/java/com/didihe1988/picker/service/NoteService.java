@@ -35,4 +35,6 @@ public interface NoteService {
 	public List<NoteDp> getPublicNoteDpListByBookId(int id);
 
 	public NoteDp getNoteDpByNoteId(int id);
+
+	public int getLatestNoteIdByUserId(int id);
 }

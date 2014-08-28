@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -107,24 +108,31 @@ public class AnswerController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	@RequestMapping(value = "/answer/add.do")
-	public String add(HttpServletRequest request) {
+	@RequestMapping(value = "/answer/add", method = RequestMethod.POST)
+	public String add(@RequestBody Answer answer, HttpServletRequest request) {
 		/*
 		 * 添加回答
 		 */
-		int userId = HttpUtils.getSessionUserId(request);
-		int questionId = HttpUtils.getIntegerFromReqeust(request, "questionId");
-		String content = HttpUtils.getStringFromReqeust(request, "content");
-		Answer answer = new Answer(questionId, userId, content);
-		answerService.addAnswer(answer);
+		int status = answerService.addAnswer(answer);
+		if (status == Status.SUCCESS) {
+			addAnswerMessage(answer, request);
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
 
+	private void addAnswerMessage(Answer answer, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
 		int askerId = questionService.getQuestionById(answer.getQuestionId())
 				.getAskerId();
 		String userName = HttpUtils.getSessionUserName(request);
-		int answerId = answerService.getLatestAnswerIdByQuestionId(questionId);
+		/*
+		 * answerId 需要查询获得
+		 */
+		int answerId = answerService.getLatestAnswerIdByQuestionId(answer
+				.getQuestionId());
 
-		String relatedSourceContent = StringUtils.confineStringLength(content,
-				Constant.MESSAGE_LENGTH);
+		String relatedSourceContent = StringUtils.confineStringLength(
+				answer.getContent(), Constant.MESSAGE_LENGTH);
 		/*
 		 * 通知提问者XXX回答了您的问题
 		 */
@@ -137,9 +145,6 @@ public class AnswerController {
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ANSWER_QUESTION, userId, userName,
 				answerId, relatedSourceContent);
-
-		return "";
-
 	}
 
 }

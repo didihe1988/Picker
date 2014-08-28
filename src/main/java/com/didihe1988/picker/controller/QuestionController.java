@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -175,29 +176,32 @@ public class QuestionController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	@RequestMapping(value = "/question/add.do", method = RequestMethod.POST)
-	public String add(HttpServletRequest request) {
+	@RequestMapping(value = "/question/add", method = RequestMethod.POST)
+	public String add(@RequestBody Question question, HttpServletRequest request) {
 		/*
 		 * 添加问题
 		 */
-		int userId = HttpUtils.getSessionUserId(request);
-		int bookId = HttpUtils.getIntegerFromReqeust(request, "bookId");
-		String content = (String) request.getAttribute("content");
-		String title = (String) request.getAttribute("title");
-		Question question = new Question(bookId, userId, title, content);
-		questionService.addQuestion(question);
+		int status = questionService.addQuestion(question);
+		if (status == Status.SUCCESS) {
+			addQuestionMessage(question, request);
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
 
+	private void addQuestionMessage(Question question,
+			HttpServletRequest request) {
 		/*
 		 * 通知关注者 小明 (被关注者)提出了一个问题
 		 */
+		int userId = HttpUtils.getSessionUserId(request);
 		String userName = HttpUtils.getSessionUserName(request);
-		int questionId = questionService.getLatestQuestionIdByBookId(bookId);
-		String relatedSourceContent = StringUtils.confineStringLength(content,
-				Constant.MESSAGE_LENGTH);
+		int questionId = questionService.getLatestQuestionIdByBookId(question
+				.getBookId());
+		String relatedSourceContent = StringUtils.confineStringLength(
+				question.getContent(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ASKQUESTION, userId, userName,
 				questionId, relatedSourceContent);
-		return "";
 	}
 
 }

@@ -33,7 +33,7 @@ public class BoughtController {
 		return "/book/list";
 	}
 
-	@RequestMapping(value = "/bought/{id}delete", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/bought/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String delete(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = boughtService.deleteBought(new Bought(userId, id));

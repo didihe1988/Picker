@@ -150,4 +150,13 @@ public class NoteDaoImpl implements NoteDao {
 		return query.executeUpdate();
 	}
 
+	@Override
+	public int queryLatestNoteIdByUserId(int id) {
+		// TODO Auto-generated method stub
+		String hql = "select max(a.id) from Note as n where n.userId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return (Integer) query.uniqueResult();
+	}
+
 }

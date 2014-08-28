@@ -25,4 +25,6 @@ public interface NoteDao extends DeleteValidation, NumOperation {
 
 	public List<Note> queryAllNoteListByBookId(int id);
 
+	public int queryLatestNoteIdByUserId(int id);
+
 }

@@ -21,4 +21,6 @@ public interface CircleDao extends DeleteValidation, NumOperation {
 
 	public boolean isEstablisherOfCircle(int userId, int circleId);
 
+	public int queryLatestCircleIdByEstablisherId(int id);
+
 }

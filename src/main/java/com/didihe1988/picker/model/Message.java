@@ -29,6 +29,9 @@ public class Message implements Serializable {
 	public static final int MESSAGE_FOLLOWED_FOLLOWQUESTION = 4;
 	public static final int MESSAGE_FOLLOWED_ADDBOUGHT = 5;
 	public static final int MESSAGE_FOLLOWED_ADDCOMMENT = 6;
+	public static final int MESSAGE_FOLLOWED_ADDCIRCLE = 7;
+	public static final int MESSAGE_FOLLOWED_JOINCIRCLE = 7;
+	public static final int MESSAGE_FOLLOWED_ADDNOTE = 7;
 	public static final int MESSAGE_QUESTION_UPDATE = 7;
 
 	public static final int MESSAGE_YOUR_QUESTION_UPDATE = 8;

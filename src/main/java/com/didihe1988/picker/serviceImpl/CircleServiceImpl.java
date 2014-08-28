@@ -17,7 +17,6 @@ public class CircleServiceImpl implements CircleService {
 	@Autowired
 	private CircleDao circleDao;
 
-
 	@Override
 	public int addCircle(Circle circle) {
 		// TODO Auto-generated method stub
@@ -84,6 +83,12 @@ public class CircleServiceImpl implements CircleService {
 	public boolean checkDeleteValidation(int establisherId, int circleId) {
 		// TODO Auto-generated method stub
 		return circleDao.checkDeleteValidation(establisherId, circleId);
+	}
+
+	@Override
+	public int getLatestCircleIdByEstablisherId(int id) {
+		// TODO Auto-generated method stub
+		return circleDao.queryLatestCircleIdByEstablisherId(id);
 	}
 
 }

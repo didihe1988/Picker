@@ -18,4 +18,6 @@ public interface CircleService {
 	public List<Circle> getCircleListByEstablisherId(int id);
 
 	public boolean checkDeleteValidation(int establisherId, int circleId);
+
+	public int getLatestCircleIdByEstablisherId(int id);
 }
