@@ -13,4 +13,9 @@ public class Status {
 	public static final int NULLPOINTER = 5;
 	public static final int UNKOWN = 6;
 	public static final int INVALID = 7;
+
+	public static final String EMAIL_USED_STRING= "邮箱已被使用";
+	public static final String USERNAME_USED_STRING= "名字已被使用";
+	public static final String SUCCESS_STRING = "success";
+
 }

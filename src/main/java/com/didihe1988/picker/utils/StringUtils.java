@@ -47,4 +47,27 @@ public class StringUtils {
 		return rawString.substring(0, length - 1);
 	}
 
+	public static boolean isStringLengthOverLong(String string, int length) {
+		if (string.length() > length) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isStringLengthOverShort(String string, int length) {
+		if (string.length() < length) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isStringSuitable(String string, int maxLength,
+			int minLength) {
+		if (isStringLengthOverLong(string, maxLength)
+				|| isStringLengthOverShort(string, minLength)) {
+			return false;
+		}
+		return true;
+	}
+
 }

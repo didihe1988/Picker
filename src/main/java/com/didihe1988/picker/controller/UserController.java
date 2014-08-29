@@ -1,23 +1,27 @@
 package com.didihe1988.picker.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
+import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.Follow;
+import com.didihe1988.picker.model.LoginForm;
 import com.didihe1988.picker.model.Note;
 import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.model.User;
@@ -62,6 +66,27 @@ public class UserController {
 
 	@Autowired
 	private CircleMemberService circleMemberService;
+
+	/**
+	 * @description 用户登陆
+	 */
+	@RequestMapping(value = "/login", method = RequestMethod.POST, headers = "Accept=application/json")
+	public String login(@RequestBody LoginForm loginForm) {
+		int status = Status.ERROR;
+		if (userService.hasMatchUser(loginForm.getEmail(),
+				loginForm.getPassword())) {
+			status = Status.NOT_EXISTS;
+		} else {
+			status = Status.SUCCESS;
+			User user = userService.getUserByEmail(loginForm.getEmail());
+			/*
+			 * 更新登陆时间
+			 */
+			user.setLastVisit(new Date());
+			userService.updateUser(user);
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
 
 	/**
 	 * @description 个人信息

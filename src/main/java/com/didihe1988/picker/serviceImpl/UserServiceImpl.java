@@ -19,16 +19,16 @@ public class UserServiceImpl implements UserService {
 	private UserDao userDao;
 
 	@Override
-	public boolean hasMatchUser(String username, String password) {
+	public boolean hasMatchUser(String email, String password) {
 		// TODO Auto-generated method stub
-		String passwordAfterMD5 = encryptByMD5(username, password);
-		return userDao.getMatchCount(username, passwordAfterMD5) > 0;
+		String passwordAfterMD5 = encryptByMD5(email, password);
+		return userDao.getMatchCount(email, passwordAfterMD5) > 0;
 	}
 
 	@Override
-	public User getUserByUserName(String username) {
+	public User getUserByEmail(String email) {
 		// TODO Auto-generated method stub
-		return userDao.queryUserByUserName(username);
+		return userDao.queryUserByEmail(email);
 	}
 
 	@Override
@@ -37,6 +37,8 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			return Status.NULLPOINTER;
 		}
+		String passwordAfterMD5 = encryptByMD5(user);
+		user.setPassword(passwordAfterMD5);
 		int status = userDao.updateUser(user);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
@@ -81,7 +83,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isUserExists(User user) {
 		// TODO Auto-generated method stub
-		return false;
+		return userDao.isUserExists(user);
+	}
+
+	@Override
+	public boolean isEmailExists(String email) {
+		// TODO Auto-generated method stub
+		return userDao.isEmailExists(email);
+	}
+
+	@Override
+	public boolean isUsernameExists(String username) {
+		// TODO Auto-generated method stub
+		return userDao.isUsernameExists(username);
 	}
 
 	private UserDp getUserDpByUser(User user) {
@@ -96,8 +110,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private String encryptByMD5(User user) {
-		String passwordAfterMD5 = StringUtils.getMd5String(user.getPassword())
-				.substring(0, 6) + user.getUsername().substring(2);
+		/*
+		 * String passwordAfterMD5 =
+		 * StringUtils.getMd5String(user.getPassword()) .substring(0, 6) +
+		 * user.getUsername().substring(2);
+		 */
+		String passwordAfterMD5 = StringUtils.getMd5String(user.getPassword());
 		return passwordAfterMD5;
 	}
 

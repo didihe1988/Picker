@@ -23,6 +23,7 @@ public class LoginController {
 	 * 
 	 * @ModelAttribute("loginForm") LoginForm loginForm)
 	 */
+	/*
 	@RequestMapping(value = "/login/loginCheck.do", method = RequestMethod.POST)
 	public String loginCheck(HttpServletRequest request) {
 		String username = request.getParameter("username");
@@ -34,7 +35,8 @@ public class LoginController {
 		if (!isValid) {
 			return "login";
 		} else {
-			User user = userService.getUserByUserName(username);
+			
+			 User user = userService.getUserByUserName(username);
 			user.setLastVisit(new Date());
 			userService.updateUser(user);
 			HttpUtils.setSessionUser(request, user);
@@ -42,6 +44,7 @@ public class LoginController {
 			return "redirect:/book/list.do";
 		}
 
-		// return "redirect:/register/addUser.do";
-	}
+		
+	}*/
+	
 }

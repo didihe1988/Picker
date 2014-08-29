@@ -4,9 +4,9 @@ import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.UserDp;
 
 public interface UserService {
-	public boolean hasMatchUser(String username, String password);
+	public boolean hasMatchUser(String email, String password);
 
-	public User getUserByUserName(String username);
+	public User getUserByEmail(String email);
 
 	public User getUserById(int id);
 
@@ -20,4 +20,7 @@ public interface UserService {
 
 	public UserDp getUserDpByUserId(int id);
 
+	public boolean isEmailExists(String email);
+
+	public boolean isUsernameExists(String username);
 }

@@ -1,6 +1,7 @@
 package com.didihe1988.picker.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -181,6 +182,7 @@ public class QuestionController {
 		/*
 		 * ÃÌº”Œ Ã‚
 		 */
+		question.setDate(new Date());
 		int status = questionService.addQuestion(question);
 		if (status == Status.SUCCESS) {
 			addQuestionMessage(question, request);

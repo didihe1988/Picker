@@ -17,7 +17,6 @@ public class Constant {
 	public static final String NOTE_NUM = "noteNum";
 	public static final String QUESTION_NUM = "questionNum";
 	public static final String BOOK_NUM = "bookNum";
-	public static final int MESSAGE_LENGTH = 20;
 
 	public static final String KEY_STATUS = "status";
 	public static final String KEY_QUESTION_LIST = "questionList";
@@ -36,4 +35,10 @@ public class Constant {
 	public static final String KEY_NOTE = "note";
 	public static final String KEY_BOOK = "book";
 	public static final String KEY_USER = "user";
+
+	public static final int MESSAGE_LENGTH = 20;
+	public static final int MAX_PASSWORD_LENGTH = 20;
+	public static final int MIN_PASSWORD_LENGTH = 6;
+	public static final int MAX_EMAIL_LENGTH = 20;
+	public static final int MIN_MIN_LENGTH = 6;
 }

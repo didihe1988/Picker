@@ -27,6 +27,9 @@ public class User implements Serializable {
 	@Column(name = "user_name")
 	protected String username;
 
+	@Column(name = "user_email")
+	protected String email;
+
 	@Column(name = "user_password")
 	private String password;
 
@@ -70,13 +73,14 @@ public class User implements Serializable {
 
 	}
 
-	public User(int id, String username, String password, Date lastVisit,
-			Date registerTime, int favoriteNum, int followNum,
+	public User(int id, String username, String email, String password,
+			Date lastVisit, Date registerTime, int favoriteNum, int followNum,
 			int followOthersNum, int questionNum, int answerNum, int noteNum,
 			int circleNum, int bookNum, String avatarUrl) {
 		super();
 		this.id = id;
 		this.username = username;
+		this.email = email;
 		this.password = password;
 		this.lastVisit = lastVisit;
 		this.registerTime = registerTime;
@@ -94,12 +98,13 @@ public class User implements Serializable {
 	/*
 	 * ц╩сп password
 	 */
-	public User(int id, String username, Date lastVisit, Date registerTime,
-			int favoriteNum, int followNum, int followOthersNum,
-			int questionNum, int answerNum, int noteNum, int circleNum,
-			int bookNum, String avatarUrl) {
+	public User(int id, String username, String email, Date lastVisit,
+			Date registerTime, int favoriteNum, int followNum,
+			int followOthersNum, int questionNum, int answerNum, int noteNum,
+			int circleNum, int bookNum, String avatarUrl) {
 		this.id = id;
 		this.username = username;
+		this.email = email;
 		this.lastVisit = lastVisit;
 		this.registerTime = registerTime;
 		this.favoriteNum = favoriteNum;
@@ -113,17 +118,18 @@ public class User implements Serializable {
 		this.avatarUrl = avatarUrl;
 	}
 
-	public User(String username, String password, Date lastVisit,
+	public User(String username, String password, String email, Date lastVisit,
 			Date registerTime, String avatarUrl) {
 		this.username = username;
 		this.password = password;
+		this.email = email;
 		this.lastVisit = lastVisit;
 		this.registerTime = registerTime;
 		this.avatarUrl = avatarUrl;
 	}
 
-	public User(String username, String password, String avatarUrl) {
-		this(username, password, new Date(), new Date(), avatarUrl);
+	public User(String username, String email, String password, String avatarUrl) {
+		this(username, password, email, new Date(), new Date(), avatarUrl);
 	}
 
 	public int getId() {
@@ -239,15 +245,23 @@ public class User implements Serializable {
 		this.avatarUrl = avatarUrl;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password="
-				+ password + ", lastVisit=" + lastVisit + ", registerTime="
-				+ registerTime + ", favoriteNum=" + favoriteNum
-				+ ", followNum=" + followNum + ", followOthersNum="
-				+ followOthersNum + ", questionNum=" + questionNum
-				+ ", answerNum=" + answerNum + ", noteNum=" + noteNum
-				+ ", circleNum=" + circleNum + ", bookNum=" + bookNum
+		return "User [id=" + id + ", username=" + username + ", email=" + email
+				+ ", password=" + password + ", lastVisit=" + lastVisit
+				+ ", registerTime=" + registerTime + ", favoriteNum="
+				+ favoriteNum + ", followNum=" + followNum
+				+ ", followOthersNum=" + followOthersNum + ", questionNum="
+				+ questionNum + ", answerNum=" + answerNum + ", noteNum="
+				+ noteNum + ", circleNum=" + circleNum + ", bookNum=" + bookNum
 				+ ", avatarUrl=" + avatarUrl + "]";
 	}
 

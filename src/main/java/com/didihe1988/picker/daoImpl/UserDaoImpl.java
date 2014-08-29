@@ -23,13 +23,27 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public Long getMatchCount(String username, String password) {
+	public Long getMatchCount(String email, String password) {
 		// TODO Auto-generated method stub
-		String hql = "select count(*) from User as u where u.username=? and u.password = ?";
+		String hql = "select count(*) from User as u where u.email=? and u.password = ?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setString(0, username);
+		query.setString(0, email);
 		query.setString(1, password);
 		return (Long) query.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public User queryUserByEmail(String email) {
+		// TODO Auto-generated method stub
+		String hql = "from User as u where u.emails=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setString(0, email);
+		List<User> list = query.list();
+		if (list.size() == 0) {
+			return null;
+		}
+		return (User) list.get(0);
 	}
 
 	@Override
@@ -70,27 +84,40 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User queryUserByUserName(String username) {
-		// TODO Auto-generated method stub
-		String hql = "from User as u where u.username=?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setString(0, username);
-		List<User> list = query.list();
-		if (list.size() == 0) {
-			return null;
-		}
-		return (User) list.get(0);
-	}
-
-	@Override
 	public boolean isUserExists(User user) {
 		// TODO Auto-generated method stub
 		if (user == null) {
 			return false;
 		}
-		String hql = "select count(*) from User u where u.id =?";
+		String hql = "select count(*) from User u where u.email =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, user.getId());
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isEmailExists(String email) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from User u where u.email =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setString(0, email);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isUsernameExists(String username) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from User u where u.username =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setString(0, username);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;
