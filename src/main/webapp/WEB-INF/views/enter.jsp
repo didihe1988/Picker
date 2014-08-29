@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head lang="en">
 <meta charset="UTF-8">
@@ -9,28 +9,28 @@
 <link type="text/css" rel="stylesheet" charset="UTF-8"
 	href="static/lib/font-awesome/css/font-awesome.min.css">
 <link type="text/css" rel="stylesheet" charset="UTF-8"
-	href="/static/css/picker.css">
-<script src="/static/js/jquery.js"></script>
+	href="static/css/picker.css">
+<script src="static/js/jquery.js"></script>
 </head>
 <body>
 	<div id="mc">
 		<div id="mt">Picker</div>
 		<div id="mn">
-			<span style="margin-right: 20px" data-tab="login" class="active">ç»é</span>
-			<span data-tab="register" class="negative">æ³¨å</span>
+			<span style="margin-right: 20px" data-tab="login" class="active">登陆</span>
+			<span data-tab="register" class="negative">注册</span>
 		</div>
 		<div id="msg" data-now=""></div>
 		<div id="login_form">
-			<form action="/login" method="post"
+			<form action="/picker/login" method="post"
 				onsubmit="return login_check($(this))">
 				<div>
-					<input name="email" placeholder="é®ç®±">
+					<input name="email" placeholder="邮箱">
 				</div>
 				<div>
-					<input name="password" type="password" placeholder="å¯ç ">
+					<input name="password" type="password" placeholder="密码">
 				</div>
 				<div style="text-align: right">
-					<button type="submit" class="btn btn-success">ç»é</button>
+					<button type="submit" class="btn btn-success">登陆</button>
 				</div>
 			</form>
 		</div>
@@ -38,25 +38,24 @@
 			<form action="/register" method="post"
 				onsubmit="return register_check($(this))">
 				<div>
-					<input name="email" placeholder="é®ç®±"
+					<input name="email" placeholder="邮箱"
 						onblur="email_unique_check($(this).val(), $('#email_unique_check'))">
 				</div>
 				<div id="email_unique_check" data-value=false></div>
 				<div>
-					<input name="name" placeholder="å§å"
+					<input name="name" placeholder="姓名"
 						onblur="name_unique_check($(this).val(), $('#name_unique_check'))">
 				</div>
 				<div id="name_unique_check" data-value=false></div>
 				<div>
 					<input name="password" type="password"
-						placeholder="å¯ç , ç±6-20ä½æ°å­åå­ç¬¦ç»æ">
+						placeholder="密码, 由6-20位数字和字符组成">
 				</div>
 				<div>
-					<input name="password_confirm" type="password"
-						placeholder="ç¡®è®¤å¯ç ">
+					<input name="password_confirm" type="password" placeholder="确认密码">
 				</div>
 				<div style="text-align: right">
-					<button id="do_register" type="submit" class="btn btn-success">ç¡®è®¤æ³¨å</button>
+					<button id="do_register" type="submit" class="btn btn-success">确认注册</button>
 				</div>
 			</form>
 		</div>
@@ -73,16 +72,16 @@
                 return ;
             unique_check({name: name}, status_obj, 'name')
         }
-        //æ£æ¥é®ç®±å°åæå§åæ¯å¦è¢«å ç¨
+        //检查邮箱地址或姓名是否被占用
         function unique_check(data, status_obj, now) {
             status_obj.data('value', 'waiting');
             $.ajax({
-                url: '/register/check',
+                url: '/picker/register/check',
                 data: data,
                 success: function (req){
                     var msg = req['status'];
                     if(msg == '')
-                        msg = 'è¿æ¥éè¯¯';
+                        msg = '连接错误';
                     if(msg == 'success'){
                         status_obj.data('value', true);
                         if($('#msg').data('now') == now)
@@ -106,12 +105,12 @@
 
         function login_check(form) {
             if(!validateEmail(form.find('input[name=email]').val())){
-                show_msg('é®ç®±æ ¼å¼ä¸æ­£ç¡®');
+                show_msg('邮箱格式不正确');
                 return false;
             }
             if(form.find('input[name=password]').val().length < 6 ||
                     form.find('input[name=password]').val().length > 20){
-                show_msg('å¯ç é¿åº¦ä¸æ­£ç¡®');
+                show_msg('密码长度不正确');
                 return false;
             }
             return true;
@@ -129,41 +128,41 @@
             var name = form.find('input[name=name]').val();
             var password = form.find('input[name=password]').val();
             if(!validateEmail(email)){
-                show_msg('é®ç®±æ ¼å¼ä¸æ­£ç¡®');
+                show_msg('邮箱格式不正确');
                 return false;
             }
             if(!(name.length >= 2)){
-                show_msg('å§ååºä¸º2ä½ä»¥ä¸çå­ç¬¦');
+                show_msg('姓名应为2位以上的字符');
                 return false;
             }
             if(password.length < 6 || password.length > 20){
-                show_msg('å¯ç åºè¯¥æ6-20ä½æ°å­æèå­ç¬¦ç»æ');
+                show_msg('密码应该有6-20位数字或者字符组成');
                 return false;
             }
             if(form.find('input[name=password]').val() !=
                     form.find('input[name=password_confirm]').val()){
-                show_msg('ä¸¤æ¬¡è¾å¥å¯ç ä¸ç¸å');
+                show_msg('两次输入密码不相同');
                 return false;
             }
             if($('#email_unique_check').data('value') == false){
-                show_msg('è¯·éæ°è¾å¥é®ç®±å°å');
+                show_msg('请重新输入邮箱地址');
                 return false;
             }
             if($('#name_unique_check').data('value') == false){
-                show_msg('è¯·éæ°è¾å¥å§å');
+                show_msg('请重新输入姓名');
                 return false;
             }
             if($('#email_unique_check').data('value') == 'waiting' ||
                     $('#name_unique_check').data('value') == 'waiting'){
-                //æ­£å¨æ¥è¯¢
-                $('#do_register').html('æäº¤ä¸­...');
+                //正在查询
+                $('#do_register').html('提交中...');
                 var times = 10;
                 var check = function () {
                     console.log('check');
                     times -= 1;
 
                     if(times == 0){
-                        show_msg('å¯¹ä¸èµ·, è¿æ¥éè¯¯ãè¯·å·æ°éæ¥ã');
+                        show_msg('对不起, 连接错误。请刷新重来。');
                         return ;
                     }
                     if($('#email_unique_check').data('value') == 'waiting' ||

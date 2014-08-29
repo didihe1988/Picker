@@ -33,8 +33,11 @@ public class UserDaoTest {
 		 * passwordAfterMd5 = encryptByMD5(user.getUsername(), "lalala");
 		 * user.setPassword(passwordAfterMd5); user.setLastVisit(new Date());
 		 */
-		User user = new User("nanshu", encryptByMD5("nanshu", "lalala"),
-				"/resources/image/avatar/test_user_avatar.jpg");
+		/*
+		User user = new User("didihe1988", "1075619206@qq.com", encryptByMD5(
+				"nanshu", "lalala"),
+				"/resources/image/avatar/test_user_avatar.jpg");*/
+		User user=new User("didihe1988", "fefef", "fefef", "fef");
 		userDao.addUser(user);
 	}
 

@@ -40,5 +40,7 @@ public class Constant {
 	public static final int MAX_PASSWORD_LENGTH = 20;
 	public static final int MIN_PASSWORD_LENGTH = 6;
 	public static final int MAX_EMAIL_LENGTH = 20;
-	public static final int MIN_MIN_LENGTH = 6;
+	public static final int MIN_EMAIL_LENGTH = 6;
+	public static final int MAX_USERNAME_LENGTH = 20;
+	public static final int MIN_USERNAME_LENGTH = 6;
 }

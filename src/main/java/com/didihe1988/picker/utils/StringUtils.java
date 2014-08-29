@@ -70,4 +70,8 @@ public class StringUtils {
 		return true;
 	}
 
+	public static boolean isEmailFormatValid(String email) {
+		return true;
+	}
+
 }

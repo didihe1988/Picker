@@ -11,11 +11,14 @@ public class Status {
 	public static final int NOT_EXISTS = 3;
 	public static final int UNCHANGED = 4;
 	public static final int NULLPOINTER = 5;
-	public static final int UNKOWN = 6;
+	public static final int UNKNOWN = 6;
 	public static final int INVALID = 7;
 
-	public static final String EMAIL_USED_STRING= "邮箱已被使用";
-	public static final String USERNAME_USED_STRING= "名字已被使用";
+	public static final String EMAIL_USED_STRING = "email used";
+	public static final String USERNAME_USED_STRING = "name used";
 	public static final String SUCCESS_STRING = "success";
+	public static final String OVERLONG_STRING = "overlong";
+	public static final String OVERSHORT_STRING = "overshort";
+	public static final String INVALID_EMAIL_STRING = "invalid email format";
 
 }

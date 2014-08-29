@@ -109,21 +109,19 @@ public class UserServiceImpl implements UserService {
 		return getUserDpByUser(user);
 	}
 
-	private String encryptByMD5(User user) {
-		/*
-		 * String passwordAfterMD5 =
-		 * StringUtils.getMd5String(user.getPassword()) .substring(0, 6) +
-		 * user.getUsername().substring(2);
-		 */
-		String passwordAfterMD5 = StringUtils.getMd5String(user.getPassword());
-		return passwordAfterMD5;
-	}
-
+	/*
+	 * private String encryptByMD5(User user) {
+	 * 
+	 * String passwordAfterMD5 = StringUtils.getMd5String(user.getPassword());
+	 * return passwordAfterMD5; }
+	 * 
+	 * private String encryptByMD5(String username, String password) { String
+	 * passwordAfterMD5 = StringUtils.getMd5String(password).substring( 0, 6) +
+	 * username.substring(2); return passwordAfterMD5; }
+	 */
 	private String encryptByMD5(String username, String password) {
-		String passwordAfterMD5 = StringUtils.getMd5String(password).substring(
-				0, 6)
-				+ username.substring(2);
-		return passwordAfterMD5;
+		String passwordAfterMD5 = StringUtils.getMd5String(password);
+		String usernameAfterMD5 = StringUtils.getMd5String(username)
+				.subSequence(0, 2);
 	}
-
 }
