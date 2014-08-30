@@ -91,7 +91,7 @@
 			<div class="col-21">
 				<div id="user_photo">
 					<!--<img src="/picker/static/images/big_photo/0.png">-->
-					<img src="<c:url value="${user.avatarUrl}"/>"/>
+					<img src="<c:url value="${user.avatarUrl}"/>" />
 				</div>
 				<div id="user_action">
 					<div class="row">
@@ -158,17 +158,23 @@
 				<div id="count" class="row">
 					<div class="col-33 box split" data-tab="questions"
 						onclick="panel_action($(this))">
-						<div class="count_num"><c:out value='${user.questionNum}' /></div>
+						<div class="count_num">
+							<c:out value='${user.questionNum}' />
+						</div>
 						<div class="count_word">提问</div>
 					</div>
 					<div class="col-33 box split" data-tab="answers"
 						onclick="panel_action($(this))">
-						<div class="count_num"><c:out value='${user.answerNum}' /></div>
+						<div class="count_num">
+							<c:out value='${user.answerNum}' />
+						</div>
 						<div class="count_word">回答</div>
 					</div>
 					<div class="col-33 box" data-tab="notes"
 						onclick="panel_action($(this))">
-						<div class="count_num"><c:out value='${user.noteNum}' /></div>
+						<div class="count_num">
+							<c:out value='${user.noteNum}' />
+						</div>
 						<div class="count_word">笔记</div>
 					</div>
 				</div>
@@ -189,6 +195,7 @@
 				<div id="home_panel" class="content_panel">
 					<div id="my_books">
 						<ul>
+							<!--  
 							<li><a data-pjax href="/browse/123/0"><img
 									src="/picker/static/images/books/6.jpg"></a></li>
 							<li><a data-pjax href="/browse/124/0"><img
@@ -202,11 +209,17 @@
 							<li><a data-pjax href="/browse/128/0"><img
 									src="/picker/static/images/books/5.jpg"></a></li>
 							<li><a data-pjax href="/browse/129/0"><img
-									src="/picker/static/images/books/7.jpg"></a></li>
+									src="/picker/static/images/books/7.jpg"></a></li>-->
+							<c:forEach var="book" items="${bookList}">
+								<li><a data-pjax href="/browse/123/0"><img
+										src=<c:url value="${book.imageUrl}"/>></a></li>
+							</c:forEach>
 						</ul>
 						<div style="height: 2rem">
 							<div id="detail">
-								<i class="icon-hand-right" style="margin-right: 5px"></i>共标记16本
+								<i class="icon-hand-right" style="margin-right: 5px"></i>共标记
+								<c:out value='${user.bookNum}' />
+								本
 							</div>
 						</div>
 					</div>

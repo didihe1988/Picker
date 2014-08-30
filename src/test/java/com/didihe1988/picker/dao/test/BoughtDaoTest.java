@@ -27,7 +27,7 @@ public class BoughtDaoTest {
 	// TestAddBought
 	@Test
 	public void test01() {
-		Bought bought = new Bought(1, 5);
+		Bought bought = new Bought(1, 3);
 		int status = boughtDao.addBought(bought);
 		assertSame(1, status);
 	}

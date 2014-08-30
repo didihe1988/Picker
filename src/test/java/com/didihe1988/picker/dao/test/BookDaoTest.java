@@ -25,8 +25,8 @@ public class BookDaoTest {
 	// testAddBook isbn repeat
 	@Test
 	public void test01() {
-		Book book = new Book("The Godfather", "0786965606", "Mario Puzo",
-				"Signet", "/resources/image/book/test_book_image.jpg");
+		Book book = new Book("The Godfatherdota", "0445844965606", "Mario Puzo",
+				"Signet", "/resources/image/book/book_image4.jpg");
 		int status = bookDao.addBook(book);
 		assertSame(1, status);
 	}

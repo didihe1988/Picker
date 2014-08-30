@@ -75,8 +75,8 @@ public class UserController {
 		/*
 		model.addAttribute("circleList", circleList);
 		model.addAttribute("followerList", getFollowers(id));
-		model.addAttribute("followeeList", getFollowees(id));
-		model.addAttribute("bookList", getBooks(id));*/
+		model.addAttribute("followeeList", getFollowees(id));*/
+		model.addAttribute("bookList", getBooks(id));
 		return "user";
 	}
 

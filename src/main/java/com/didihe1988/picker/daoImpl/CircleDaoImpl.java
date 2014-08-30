@@ -140,7 +140,7 @@ public class CircleDaoImpl implements CircleDao {
 	@Override
 	public int queryLatestCircleIdByEstablisherId(int id) {
 		// TODO Auto-generated method stub
-		String hql = "select max(a.id) from Circle as c where c.establisherId=?";
+		String hql = "select max(c.id) from Circle as c where c.establisherId=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return (Integer) query.uniqueResult();
