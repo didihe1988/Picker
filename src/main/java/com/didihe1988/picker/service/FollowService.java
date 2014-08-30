@@ -3,6 +3,7 @@ package com.didihe1988.picker.service;
 import java.util.List;
 
 import com.didihe1988.picker.model.Follow;
+import com.didihe1988.picker.model.UserDp;
 
 public interface FollowService {
 	public Follow getFollowById(int id);

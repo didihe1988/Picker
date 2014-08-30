@@ -17,7 +17,7 @@ public class UserDp extends User {
 				user.getFollowNum(), user.getFollowOthersNum(), user
 						.getQuestionNum(), user.getAnswerNum(), user
 						.getNoteNum(), user.getCircleNum(), user.getBookNum(),
-				user.getAvatarUrl());
+				user.getAvatarUrl(), user.getSignature());
 	}
 
 }

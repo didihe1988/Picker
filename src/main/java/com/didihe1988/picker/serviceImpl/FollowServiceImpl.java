@@ -1,5 +1,6 @@
 package com.didihe1988.picker.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Follow;
+import com.didihe1988.picker.model.User;
+import com.didihe1988.picker.model.UserDp;
 import com.didihe1988.picker.service.FollowService;
 
 @Service

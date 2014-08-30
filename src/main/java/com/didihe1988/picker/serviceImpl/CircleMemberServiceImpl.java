@@ -1,5 +1,6 @@
 package com.didihe1988.picker.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,6 +143,19 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 	public List<CircleMember> getCircleMemberListByMemberId(int id) {
 		// TODO Auto-generated method stub
 		return circleMemberDao.queryCircleMemberListByMemberId(id);
+	}
+
+	@Override
+	public List<Circle> getCircleListByMemberId(int id) {
+		// TODO Auto-generated method stub
+		List<CircleMember> cirMembers = getCircleMemberListByMemberId(id);
+		List<Circle> list = new ArrayList<Circle>();
+		for (CircleMember circleMember : cirMembers) {
+			Circle circle = circleDao.queryCircleById(circleMember
+					.getCircleId());
+			list.add(circle);
+		}
+		return list;
 	}
 
 }

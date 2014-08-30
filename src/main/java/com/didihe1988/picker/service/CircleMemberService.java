@@ -2,6 +2,7 @@ package com.didihe1988.picker.service;
 
 import java.util.List;
 
+import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
 
 public interface CircleMemberService {
@@ -24,5 +25,7 @@ public interface CircleMemberService {
 	public List<CircleMember> getCircleMemberListByCircleId(int id);
 
 	public List<CircleMember> getCircleMemberListByMemberId(int id);
+
+	public List<Circle> getCircleListByMemberId(int id);
 
 }

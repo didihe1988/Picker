@@ -69,6 +69,9 @@ public class User implements Serializable {
 	@Column(name = "user_avatarurl")
 	protected String avatarUrl;
 
+	@Column(name = "user_signature")
+	protected String signature;
+
 	public User() {
 
 	}
@@ -76,7 +79,7 @@ public class User implements Serializable {
 	public User(int id, String username, String email, String password,
 			Date lastVisit, Date registerTime, int favoriteNum, int followNum,
 			int followOthersNum, int questionNum, int answerNum, int noteNum,
-			int circleNum, int bookNum, String avatarUrl) {
+			int circleNum, int bookNum, String avatarUrl, String signature) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -93,6 +96,7 @@ public class User implements Serializable {
 		this.circleNum = circleNum;
 		this.bookNum = bookNum;
 		this.avatarUrl = avatarUrl;
+		this.signature = signature;
 	}
 
 	/*
@@ -101,7 +105,7 @@ public class User implements Serializable {
 	public User(int id, String username, String email, Date lastVisit,
 			Date registerTime, int favoriteNum, int followNum,
 			int followOthersNum, int questionNum, int answerNum, int noteNum,
-			int circleNum, int bookNum, String avatarUrl) {
+			int circleNum, int bookNum, String avatarUrl, String signature) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
@@ -116,20 +120,24 @@ public class User implements Serializable {
 		this.circleNum = circleNum;
 		this.bookNum = bookNum;
 		this.avatarUrl = avatarUrl;
+		this.signature = signature;
 	}
 
 	public User(String username, String password, String email, Date lastVisit,
-			Date registerTime, String avatarUrl) {
+			Date registerTime, String avatarUrl, String signature) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.lastVisit = lastVisit;
 		this.registerTime = registerTime;
 		this.avatarUrl = avatarUrl;
+		this.signature = signature;
 	}
 
-	public User(String username, String email, String password, String avatarUrl) {
-		this(username, password, email, new Date(), new Date(), avatarUrl);
+	public User(String username, String email, String password,
+			String avatarUrl, String signature) {
+		this(username, password, email, new Date(), new Date(), avatarUrl,
+				signature);
 	}
 
 	public int getId() {
@@ -253,6 +261,14 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", email=" + email
@@ -262,7 +278,7 @@ public class User implements Serializable {
 				+ ", followOthersNum=" + followOthersNum + ", questionNum="
 				+ questionNum + ", answerNum=" + answerNum + ", noteNum="
 				+ noteNum + ", circleNum=" + circleNum + ", bookNum=" + bookNum
-				+ ", avatarUrl=" + avatarUrl + "]";
+				+ ", avatarUrl=" + avatarUrl + ", signature=" + signature + "]";
 	}
 
 }

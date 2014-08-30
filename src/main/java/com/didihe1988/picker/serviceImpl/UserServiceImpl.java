@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean hasMatchUser(String email, String password) {
 		// TODO Auto-generated method stub
-		String passwordAfterMD5 = encryptByMD5(email, password);
-		return userDao.getMatchCount(email, passwordAfterMD5) > 0;
+		String passwordAfterEncrypt = encryptByMD5(email, password);
+		return userDao.getMatchCount(email, passwordAfterEncrypt) > 0;
 	}
 
 	@Override
@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			return Status.NULLPOINTER;
 		}
-		String passwordAfterMD5 = encryptByMD5(user);
-		user.setPassword(passwordAfterMD5);
+		String passwordAfterEncrypt = encryptByMD5(user);
+		user.setPassword(passwordAfterEncrypt);
 		int status = userDao.updateUser(user);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
@@ -52,8 +52,8 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			return Status.NULLPOINTER;
 		}
-		String passwordAfterMD5 = encryptByMD5(user);
-		user.setPassword(passwordAfterMD5);
+		String passwordAfterEncrypt = encryptByMD5(user);
+		user.setPassword(passwordAfterEncrypt);
 		int status = userDao.addUser(user);
 		if (status == -1) {
 			return Status.EXISTS;
@@ -109,19 +109,13 @@ public class UserServiceImpl implements UserService {
 		return getUserDpByUser(user);
 	}
 
-	/*
-	 * private String encryptByMD5(User user) {
-	 * 
-	 * String passwordAfterMD5 = StringUtils.getMd5String(user.getPassword());
-	 * return passwordAfterMD5; }
-	 * 
-	 * private String encryptByMD5(String username, String password) { String
-	 * passwordAfterMD5 = StringUtils.getMd5String(password).substring( 0, 6) +
-	 * username.substring(2); return passwordAfterMD5; }
-	 */
-	private String encryptByMD5(String username, String password) {
+	private String encryptByMD5(User user) {
+		return encryptByMD5(user.getEmail(), user.getPassword());
+	}
+
+	private String encryptByMD5(String email, String password) {
 		String passwordAfterMD5 = StringUtils.getMd5String(password);
-		String usernameAfterMD5 = StringUtils.getMd5String(username)
-				.subSequence(0, 2);
+		String emailAfterMD5 = StringUtils.getMd5String(email);
+		return passwordAfterMD5 + emailAfterMD5.substring(0, 2);
 	}
 }
