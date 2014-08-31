@@ -60,7 +60,7 @@ public class FollowDaoImpl implements FollowDao {
 	}
 
 	@Override
-	public boolean isFollowExists(int id) {
+	public boolean isFollowExistsById(int id) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Follow f where f.id =?";
 		Query query = getCurrentSession().createQuery(hql);
@@ -78,9 +78,11 @@ public class FollowDaoImpl implements FollowDao {
 		if (follow == null) {
 			return false;
 		}
-		String hql = "select count(*) from Follow f where f.id =?";
+		String hql = "select count(*) from Follow f where f.sourceType =? and f.followerId=? and f.sourceId=?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, follow.getId());
+		query.setInteger(0, follow.getSourceType());
+		query.setInteger(1, follow.getFollowerId());
+		query.setInteger(2, follow.getSourceId());
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;
@@ -148,7 +150,7 @@ public class FollowDaoImpl implements FollowDao {
 	public List<Follow> queryFollowListByFollowerIdByType(int followerId,
 			int type) {
 		// TODO Auto-generated method stub
-		String hql = "from Follow as follow where follow.followerId = ? and type=?";
+		String hql = "from Follow as follow where follow.followerId = ? and follow.sourceType=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, followerId);
 		query.setInteger(1, type);

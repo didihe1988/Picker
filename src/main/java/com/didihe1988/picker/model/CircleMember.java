@@ -1,6 +1,7 @@
 package com.didihe1988.picker.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,6 +28,9 @@ public class CircleMember implements Serializable {
 	@Column(name = "circlemember_memberid")
 	private int memberId;
 
+	@Column(name = "circlemember_jointime")
+	private Date joinTime;
+
 	public int getId() {
 		return id;
 	}
@@ -51,17 +55,30 @@ public class CircleMember implements Serializable {
 		this.memberId = memberId;
 	}
 
-	public CircleMember(int id, int circleId, int memberId) {
+	public Date getJoinTime() {
+		return joinTime;
+	}
+
+	public void setJoinTime(Date joinTime) {
+		this.joinTime = joinTime;
+	}
+
+	public CircleMember(int id, int circleId, int memberId, Date joinTime) {
 		super();
 		this.id = id;
 		this.circleId = circleId;
 		this.memberId = memberId;
+		this.joinTime = joinTime;
 	}
 
 	public CircleMember(int circleId, int memberId) {
-		super();
+		this(circleId, memberId, new Date());
+	}
+
+	public CircleMember(int circleId, int memberId, Date joinTime) {
 		this.circleId = circleId;
 		this.memberId = memberId;
+		this.joinTime = joinTime;
 	}
 
 	public CircleMember() {

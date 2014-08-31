@@ -21,22 +21,22 @@ public class Circle implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "circle_id")
-	private int id;
+	protected int id;
 
 	@Column(name = "circle_name")
-	private String name;
+	protected String name;
 
 	@Column(name = "circle_establishtime")
-	private Date establishTime;
+	protected Date establishTime;
 
 	@Column(name = "circle_establisherid")
-	private int establisherId;
+	protected int establisherId;
 
 	@Column(name = "circle_describe")
-	private String describe;
+	protected String describe;
 
 	@Column(name = "circle_membernum")
-	private int memberNum;
+	protected int memberNum;
 
 	public int getId() {
 		return id;
@@ -78,6 +78,14 @@ public class Circle implements Serializable {
 		this.describe = describe;
 	}
 
+	public int getMemberNum() {
+		return memberNum;
+	}
+
+	public void setMemberNum(int memberNum) {
+		this.memberNum = memberNum;
+	}
+
 	@Override
 	public String toString() {
 		return "Circle [id=" + id + ", name=" + name + ", establishTime="
@@ -86,13 +94,14 @@ public class Circle implements Serializable {
 	}
 
 	public Circle(int id, String name, Date establishTime, int establisherId,
-			String describe) {
+			String describe, int memberNum) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.establishTime = establishTime;
 		this.establisherId = establisherId;
 		this.describe = describe;
+		this.memberNum = memberNum;
 	}
 
 	public Circle() {

@@ -13,6 +13,7 @@ import com.didihe1988.picker.dao.CircleDao;
 import com.didihe1988.picker.dao.CircleMemberDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Circle;
+import com.didihe1988.picker.model.CircleDp;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.service.CircleMemberService;
 
@@ -154,6 +155,20 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 			Circle circle = circleDao.queryCircleById(circleMember
 					.getCircleId());
 			list.add(circle);
+		}
+		return list;
+	}
+
+	@Override
+	public List<CircleDp> getCircleDpListByMemberId(int id) {
+		// TODO Auto-generated method stub
+		List<CircleMember> cirMembers = getCircleMemberListByMemberId(id);
+		List<CircleDp> list = new ArrayList<CircleDp>();
+		for (CircleMember circleMember : cirMembers) {
+			Circle circle = circleDao.queryCircleById(circleMember
+					.getCircleId());
+			CircleDp circleDp = new CircleDp(circle, circleMember.getJoinTime());
+			list.add(circleDp);
 		}
 		return list;
 	}

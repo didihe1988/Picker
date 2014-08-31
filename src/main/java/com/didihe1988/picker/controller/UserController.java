@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Circle;
+import com.didihe1988.picker.model.CircleDp;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.User;
@@ -67,17 +68,33 @@ public class UserController {
 	 * @description user.jsp test rest
 	 */
 	@RequestMapping(value = "/user/{id}")
-	public String test(@PathVariable int id, Model model) {
+	public String getUserProfile(@PathVariable int id, Model model) {
 		UserDp user = userService.getUserDpByUserId(id);
-		List<Circle> circleList = circleMemberService
-				.getCircleListByMemberId(id);
 		model.addAttribute("user", user);
-		/*
-		model.addAttribute("circleList", circleList);
+		model.addAttribute("circleList",
+				circleMemberService.getCircleListByMemberId(id));
 		model.addAttribute("followerList", getFollowers(id));
-		model.addAttribute("followeeList", getFollowees(id));*/
+		model.addAttribute("followeeList", getFollowees(id));
 		model.addAttribute("bookList", getBooks(id));
 		return "user";
+	}
+
+	/**
+	 * @description 显示我的消息
+	 */
+	@RequestMapping(value = "/user/{id}/message")
+	public String getUserMessage(@PathVariable int id) {
+		return "message";
+	}
+
+	/**
+	 * @description 显示我的圈子
+	 */
+	@RequestMapping(value = "/user/{id}/group")
+	public String getUserGroup(@PathVariable int id, Model model) {
+		model.addAttribute("circleList",
+				circleMemberService.getCircleDpListByMemberId(id));
+		return "group_index";
 	}
 
 	private List<UserDp> getFollowers(int userId) {

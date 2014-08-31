@@ -32,11 +32,12 @@ public class CircleServiceImpl implements CircleService {
 		if (status == -1) {
 			return Status.EXISTS;
 		}
-		int circleId = getLatestCircleIdByEstablisherId(circle
-				.getEstablisherId());
-		CircleMember circleMember = new CircleMember(circleId,
-				circle.getEstablisherId());
-		circleMemberDao.addCircleMember(circleMember);
+		/*
+		 * int circleId = getLatestCircleIdByEstablisherId(circle
+		 * .getEstablisherId()); CircleMember circleMember = new
+		 * CircleMember(circleId, circle.getEstablisherId());
+		 * circleMemberDao.addCircleMember(circleMember);
+		 */
 		return Status.SUCCESS;
 	}
 

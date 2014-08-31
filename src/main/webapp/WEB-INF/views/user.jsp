@@ -50,11 +50,12 @@
 						<span class="nav_link"><a href="#">发现</a></span>
 					</div>
 					<div class="col-33">
-						<span class="nav_link"><a data-pjax href="/group">圈子</a></span>
+						<span class="nav_link"><a data-pjax href=<c:url value="/user/${user.id}/group"/>>圈子</a></span>
 					</div>
 					<div class="col-33">
 						<span id="nav_msg" class="nav_link"><a data-pjax
-							href="/message">消息</a></span> <span id="nav_msg_cnt">0</span>
+							href=<c:url value="/user/${user.id}/message"/>>消息</a></span> <span
+							id="nav_msg_cnt">0</span>
 					</div>
 				</div>
 			</div>
@@ -118,11 +119,16 @@
 						</span> <span class="show_all" data-tab="search_label"
 							onclick="panel_action($(this))"><i class="icon-search"></i></span>
 					</div>
+					<!-- 
 					<span class="label"><a data-pjax href="/group/1234">一个</a></span> <span
 						class="label"><a data-pjax href="/group/1234">电子科技大学</a></span> <span
 						class="label"><a data-pjax href="/group/1234">实验班</a></span> <span
 						class="label"><a data-pjax href="/group/1234">作家协会</a></span> <span
-						class="label"><a data-pjax href="/group/1234">x年x班</a></span>
+						class="label"><a data-pjax href="/group/1234">x年x班</a></span> -->
+					<c:forEach var="circle" items="${circleList}">
+						<span class="label"><a data-pjax href="/group/1234"><c:out
+									value='${circle.name}' /></a></span>
+					</c:forEach>
 				</div>
 				<div class="follow">
 					<div class="info">
@@ -131,12 +137,16 @@
 							onclick="panel_action($(this))"><i class="icon-list-ul"></i></span>
 					</div>
 					<div style="height: 35px; overflow: hidden">
+						<!-- 
 						<span><img src="/picker/static/images/photo/6.jpg" /></span> <span><img
 							src="/picker/static/images/photo/1.jpg" /></span> <span><img
 							src="/picker/static/images/photo/2.jpg" /></span> <span><img
 							src="/picker/static/images/photo/3.jpg" /></span> <span><img
 							src="/picker/static/images/photo/4.jpg" /></span> <span><img
-							src="/picker/static/images/photo/5.jpg" /></span>
+							src="/picker/static/images/photo/5.jpg" /></span> -->
+						<c:forEach var="user" items="${followerList}">
+							<span><img src=<c:url value="${user.avatarUrl}"/> /></span>
+						</c:forEach>
 					</div>
 				</div>
 				<div class="follow">
@@ -147,12 +157,16 @@
 						<!--<span class="show_all"><a href="#">All»</a></span>-->
 					</div>
 					<div style="height: 35px; overflow: hidden;">
+						<!--  
 						<span><img src="/picker/static/images/photo/9.jpg" /></span> <span><img
 							src="/picker/static/images/photo/8.jpg" /></span> <span><img
 							src="/picker/static/images/photo/7.jpg" /></span> <span><img
 							src="/picker/static/images/photo/6.jpg" /></span> <span><img
 							src="/picker/static/images/photo/5.jpg" /></span> <span><img
-							src="/picker/static/images/photo/4.jpg" /></span>
+							src="/picker/static/images/photo/4.jpg" /></span>-->
+						<c:forEach var="user" items="${followeeList}">
+							<span><img src=<c:url value="${user.avatarUrl}"/> /></span>
+						</c:forEach>
 					</div>
 				</div>
 				<div id="count" class="row">
