@@ -90,12 +90,9 @@ public class BoughtServiceImpl implements BoughtService {
 	}
 
 	@Override
-	public boolean isBoughtExists(Bought bought) {
+	public boolean isBoughtExistsByKey(int userId, int bookId) {
 		// TODO Auto-generated method stub
-		if (bought == null) {
-			return false;
-		}
-		return boughtDao.isBoughtExists(bought);
+		return boughtDao.isBoughtExistsByKey(userId, bookId);
 	}
 
 	@Override

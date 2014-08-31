@@ -26,7 +26,7 @@ public class BoughtDaoImpl implements BoughtDao {
 	@Override
 	public int addBought(Bought bought) {
 		// TODO Auto-generated method stub
-		if (isBoughtExists(bought)) {
+		if (isBoughtExistsByKey(bought.getUserId(), bought.getBookId())) {
 			return -1;
 		}
 		getCurrentSession().save(bought);
@@ -36,7 +36,7 @@ public class BoughtDaoImpl implements BoughtDao {
 	@Override
 	public int deleteBought(Bought bought) {
 		// TODO Auto-generated method stub
-		if (!isBoughtExists(bought)) {
+		if (!isBoughtExistsByKey(bought.getUserId(), bought.getBookId())) {
 			return -1;
 		}
 		getCurrentSession().delete(bought);
@@ -46,7 +46,7 @@ public class BoughtDaoImpl implements BoughtDao {
 	@Override
 	public int updateBought(Bought bought) {
 		// TODO Auto-generated method stub
-		if (!isBoughtExists(bought)) {
+		if (!isBoughtExistsByKey(bought.getUserId(), bought.getBookId())) {
 			return -1;
 		}
 		getCurrentSession().update(bought);
@@ -62,7 +62,7 @@ public class BoughtDaoImpl implements BoughtDao {
 		query.setInteger(0, bookId);
 		return query.list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Bought> queryBoughtByUserId(int userId) {
@@ -74,16 +74,12 @@ public class BoughtDaoImpl implements BoughtDao {
 	}
 
 	@Override
-	public Boolean isBoughtExists(Bought bought) {
+	public boolean isBoughtExistsByKey(int userId, int bookId) {
 		// TODO Auto-generated method stub
-		if(bought==null)
-		{
-			return false;
-		}
 		String hql = "select count(*) from Bought as b where b.userId = ? and b.bookId = ? ";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, bought.getUserId());
-		query.setInteger(1, bought.getBookId());
+		query.setInteger(0, userId);
+		query.setInteger(1, bookId);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;
@@ -102,7 +98,7 @@ public class BoughtDaoImpl implements BoughtDao {
 		if (query.list().size() == 0) {
 			return null;
 		} else {
-			return (Bought)query.list().get(0);
+			return (Bought) query.list().get(0);
 		}
 	}
 

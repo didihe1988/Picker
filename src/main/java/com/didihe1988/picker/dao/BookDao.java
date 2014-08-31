@@ -13,7 +13,9 @@ public interface BookDao {
 
 	public int updateBook(Book book);
 
-	public boolean isBookExists(Book book);
+	public boolean isBookExistsById(int id);
+
+	public boolean isBookExistsByKey(String isbn);
 
 	public int incrementFollowNum(int bookId);
 

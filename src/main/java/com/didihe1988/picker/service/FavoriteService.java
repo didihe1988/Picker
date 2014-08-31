@@ -25,4 +25,6 @@ public interface FavoriteService {
 	 * @description 用于功能:获得用户点过的赞 感觉是用户足迹的一种体现
 	 */
 	public List<Favorite> getFavoriteListByUserId(int userId);
+
+	public boolean isFavoriteExistsByKey(int userId, int objectId, int type);
 }

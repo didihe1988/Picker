@@ -26,7 +26,8 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	@Override
 	public int addFavorite(Favorite favorite) {
 		// TODO Auto-generated method stub
-		if (isFavoriteExists(favorite)) {
+		if (isFavoriteExistsByKey(favorite.getUserId(), favorite.getObjectId(),
+				favorite.getType())) {
 			return -1;
 		}
 		getCurrentSession().save(favorite);
@@ -36,7 +37,8 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	@Override
 	public int deleteFavorite(Favorite favorite) {
 		// TODO Auto-generated method stub
-		if (!isFavoriteExists(favorite)) {
+		if (!isFavoriteExistsByKey(favorite.getUserId(),
+				favorite.getObjectId(), favorite.getType())) {
 			return -1;
 		}
 		getCurrentSession().delete(favorite);
@@ -44,16 +46,13 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	}
 
 	@Override
-	public boolean isFavoriteExists(Favorite favorite) {
+	public boolean isFavoriteExistsByKey(int userId, int objectId, int type) {
 		// TODO Auto-generated method stub
-		if (favorite == null) {
-			return false;
-		}
 		String hql = "select count(*) from Favorite f where f.userId =? and f.objectId=? and f.type=?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, favorite.getUserId());
-		query.setInteger(1, favorite.getObjectId());
-		query.setInteger(2, favorite.getType());
+		query.setInteger(0, userId);
+		query.setInteger(1, objectId);
+		query.setInteger(2, type);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;
@@ -62,17 +61,10 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	}
 
 	@Override
-	public boolean isFavoriteExists(int userId, int commentId) {
+	public boolean isFavoriteExists(Favorite favorite) {
 		// TODO Auto-generated method stub
-		String hql = "select count(*) from Favorite f where f.userId =? and f.commentId=?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, userId);
-		query.setInteger(1, commentId);
-		Long count = (Long) query.uniqueResult();
-		if (count > 0) {
-			return true;
-		}
-		return false;
+		return isFavoriteExistsByKey(favorite.getUserId(),
+				favorite.getObjectId(), favorite.getType());
 	}
 
 	@Override

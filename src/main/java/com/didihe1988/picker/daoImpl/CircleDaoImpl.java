@@ -68,7 +68,7 @@ public class CircleDaoImpl implements CircleDao {
 	@Override
 	public int addCircle(Circle circle) {
 		// TODO Auto-generated method stub
-		if (isCircleExists(circle)) {
+		if (isCircleExistsByName(circle.getName())) {
 			return -1;
 		}
 		getCurrentSession().save(circle);
@@ -78,7 +78,7 @@ public class CircleDaoImpl implements CircleDao {
 	@Override
 	public int deleteCircle(Circle circle) {
 		// TODO Auto-generated method stub
-		if (!isCircleExists(circle)) {
+		if (!isCircleExistsById(circle.getId())) {
 			return -1;
 		}
 		getCurrentSession().delete(circle);
@@ -88,24 +88,32 @@ public class CircleDaoImpl implements CircleDao {
 	@Override
 	public int updateCircle(Circle circle) {
 		// TODO Auto-generated method stub
-		if (!isCircleExists(circle)) {
+		if (!isCircleExistsById(circle.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(circle);
 		return 1;
 	}
 
-	// 根据标签名不能重复判断 可能需要改
 	@Override
-	public boolean isCircleExists(Circle circle) {
+	public boolean isCircleExistsById(int id) {
 		// TODO Auto-generated method stub
-		if (circle == null) {
-			return false;
+		String hql = "select count(*) from Circle as c where c.id = ?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
 		}
+		return false;
+	}
 
+	@Override
+	public boolean isCircleExistsByName(String name) {
+		// TODO Auto-generated method stub
 		String hql = "select count(*) from Circle as c where c.name = ?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setString(0, circle.getName());
+		query.setString(0, name);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;

@@ -5,6 +5,7 @@ import java.util.List;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleDp;
 import com.didihe1988.picker.model.CircleMember;
+import com.didihe1988.picker.model.UserDp;
 
 public interface CircleMemberService {
 	public int addCircleMember(CircleMember circleMember);

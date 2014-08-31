@@ -14,7 +14,10 @@ public interface FollowService {
 
 	public int updateFollow(Follow follow);
 
-	public boolean isFollowExists(Follow follow);
+	public boolean isFollowExistsById(int id);
+
+	public boolean isFollowExistsByKey(int sourceType, int followerId,
+			int sourceId);
 
 	/**
 	 * @description 用户可以查看自己关注的所有内容

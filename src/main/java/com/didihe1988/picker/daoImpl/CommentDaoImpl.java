@@ -32,7 +32,8 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public int addComment(Comment comment) {
 		// TODO Auto-generated method stub
-		if (isCommentExists(comment)) {
+		if (isCommentExistsByKey(comment.getProducerId(),
+				comment.getCommentedId(), comment.getType())) {
 			return -1;
 		}
 		getCurrentSession().save(comment);
@@ -42,7 +43,7 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public int deleteComment(Comment comment) {
 		// TODO Auto-generated method stub
-		if (!isCommentExists(comment)) {
+		if (!isCommentExistsById(comment.getId())) {
 			return -1;
 		}
 		getCurrentSession().delete(comment);
@@ -52,7 +53,7 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public int updateComment(Comment comment) {
 		// TODO Auto-generated method stub
-		if (!isCommentExists(comment)) {
+		if (!isCommentExistsById(comment.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(comment);
@@ -60,14 +61,27 @@ public class CommentDaoImpl implements CommentDao {
 	}
 
 	@Override
-	public boolean isCommentExists(Comment comment) {
+	public boolean isCommentExistsById(int id) {
 		// TODO Auto-generated method stub
-		if (comment == null) {
-			return false;
-		}
 		String hql = "select count(*) from Comment c where c.id = ?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, comment.getId());
+		query.setInteger(0, id);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isCommentExistsByKey(int producerId, int commentedId,
+			int type) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Comment c where c.producerId = ? and c.commentedId=? and c.type =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, producerId);
+		query.setInteger(1, commentedId);
+		query.setInteger(2, type);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;

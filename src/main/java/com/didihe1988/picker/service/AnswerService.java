@@ -14,7 +14,9 @@ public interface AnswerService {
 
 	public int updateAnswer(Answer answer);
 
-	public boolean isAnswerExists(Answer answer);
+	public boolean isAnswerExistsById(int id);
+
+	public boolean isAnswerExistsByKey(int questionId, int replierId);
 
 	public boolean isAnswerOfUserExists(int userId);
 

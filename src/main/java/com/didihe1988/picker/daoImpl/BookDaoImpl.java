@@ -48,7 +48,7 @@ public class BookDaoImpl implements BookDao {
 	public int addBook(Book book) {
 		// TODO Auto-generated method stub
 		// book exists
-		if (queryBookIdByISBN(book.getIsbn()) > 0) {
+		if (isBookExistsByKey(book.getIsbn())) {
 			return -1;
 		}
 		getCurrentSession().save(book);
@@ -59,7 +59,7 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public int deleteBook(Book book) {
 		// TODO Auto-generated method stub
-		if (!isBookExists(book)) {
+		if (!isBookExistsById(book.getId())) {
 			return -1;
 		}
 		getCurrentSession().delete(book);
@@ -69,7 +69,7 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public int updateBook(Book book) {
 		// TODO Auto-generated method stub
-		if (!isBookExists(book)) {
+		if (!isBookExistsById(book.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(book);
@@ -77,14 +77,24 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public boolean isBookExists(Book book) {
-		// TODO Auto-generated method s
-		if (book == null) {
-			return false;
-		}
+	public boolean isBookExistsById(int id) {
+		// TODO Auto-generated method stub
 		String hql = "select count(*) from Book b where b.id = ?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, book.getId());
+		query.setInteger(0, id);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isBookExistsByKey(String isbn) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Book b where b.isbn = ?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setString(0, isbn);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;

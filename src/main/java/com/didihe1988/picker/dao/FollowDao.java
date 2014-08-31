@@ -14,9 +14,10 @@ public interface FollowDao extends DeleteValidation {
 
 	public int updateFollow(Follow follow);
 
-	public boolean isFollowExists(Follow follow);
-
 	public boolean isFollowExistsById(int id);
+
+	public boolean isFollowExistsByKey(int sourceType, int followerId,
+			int sourceId);
 
 	public List<Follow> queryFollowListByFollowerId(int followerId);
 

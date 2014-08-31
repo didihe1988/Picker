@@ -31,9 +31,6 @@ public class QuestionDaoImpl implements QuestionDao {
 	@Override
 	public int addQuestion(Question question) {
 		// TODO Auto-generated method stub
-		if (isQuestionExists(question)) {
-			return -1;
-		}
 		getCurrentSession().save(question);
 		return 1;
 	}
@@ -41,7 +38,7 @@ public class QuestionDaoImpl implements QuestionDao {
 	@Override
 	public int deleteQuestion(Question question) {
 		// TODO Auto-generated method stub
-		if (!isQuestionExists(question)) {
+		if (!isQuestionExistsById(question.getId())) {
 			return -1;
 		}
 		getCurrentSession().delete(question);
@@ -51,7 +48,7 @@ public class QuestionDaoImpl implements QuestionDao {
 	@Override
 	public int updateQuestion(Question question) {
 		// TODO Auto-generated method stub
-		if (!isQuestionExists(question)) {
+		if (!isQuestionExistsById(question.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(question);
@@ -59,15 +56,11 @@ public class QuestionDaoImpl implements QuestionDao {
 	}
 
 	@Override
-	public boolean isQuestionExists(Question question) {
+	public boolean isQuestionExistsById(int id) {
 		// TODO Auto-generated method stub
-		if (question == null) {
-			return false;
-		}
-		String hql = "select count(*) from Question as q where q.bookId = ? and q.askerId=?";
+		String hql = "select count(*) from Question as q where q.id =?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, question.getBookId());
-		query.setInteger(1, question.getAskerId());
+		query.setInteger(0, id);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;

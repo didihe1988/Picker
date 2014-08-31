@@ -24,7 +24,7 @@ public class AnswerDaoTest {
 
 	@Test
 	public void test01() {
-		Answer answer = new Answer(2, 3, "lalala");
+		Answer answer = new Answer(1, 2, "This is a small shell script that does what you requested:");
 		int status = answerDao.addAnswer(answer);
 		assertSame(1, status);
 	}

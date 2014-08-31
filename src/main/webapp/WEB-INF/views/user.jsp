@@ -50,7 +50,8 @@
 						<span class="nav_link"><a href="#">发现</a></span>
 					</div>
 					<div class="col-33">
-						<span class="nav_link"><a data-pjax href=<c:url value="/user/${user.id}/group"/>>圈子</a></span>
+						<span class="nav_link"><a data-pjax
+							href=<c:url value="/user/${user.id}/group"/>>圈子</a></span>
 					</div>
 					<div class="col-33">
 						<span id="nav_msg" class="nav_link"><a data-pjax
@@ -126,13 +127,14 @@
 						class="label"><a data-pjax href="/group/1234">作家协会</a></span> <span
 						class="label"><a data-pjax href="/group/1234">x年x班</a></span> -->
 					<c:forEach var="circle" items="${circleList}">
-						<span class="label"><a data-pjax href="/group/1234"><c:out
+						<span class="label"><a data-pjax
+							href="<c:url value="/group/${circle.id}"/>"><c:out
 									value='${circle.name}' /></a></span>
 					</c:forEach>
 				</div>
 				<div class="follow">
 					<div class="info">
-						<span>关注<c:out value='${user.followNum}' /> 人
+						<span>关注<c:out value='${user.followOthersNum}' /> 人
 						</span> <span class="show_all" data-tab="follow"
 							onclick="panel_action($(this))"><i class="icon-list-ul"></i></span>
 					</div>
@@ -144,14 +146,14 @@
 							src="/picker/static/images/photo/3.jpg" /></span> <span><img
 							src="/picker/static/images/photo/4.jpg" /></span> <span><img
 							src="/picker/static/images/photo/5.jpg" /></span> -->
-						<c:forEach var="user" items="${followerList}">
+						<c:forEach var="user" items="${followeeList}">
 							<span><img src=<c:url value="${user.avatarUrl}"/> /></span>
 						</c:forEach>
 					</div>
 				</div>
 				<div class="follow">
 					<div class="info">
-						<span>被 <c:out value='${user.followOthersNum}' />人关注
+						<span>被 <c:out value='${user.followNum}' />人关注
 						</span> <span class="show_all" data-tab="followed"
 							onclick="panel_action($(this))"><i class="icon-list-ul"></i></span>
 						<!--<span class="show_all"><a href="#">All»</a></span>-->
@@ -164,7 +166,7 @@
 							src="/picker/static/images/photo/6.jpg" /></span> <span><img
 							src="/picker/static/images/photo/5.jpg" /></span> <span><img
 							src="/picker/static/images/photo/4.jpg" /></span>-->
-						<c:forEach var="user" items="${followeeList}">
+						<c:forEach var="user" items="${followerList}">
 							<span><img src=<c:url value="${user.avatarUrl}"/> /></span>
 						</c:forEach>
 					</div>
@@ -297,68 +299,41 @@
 						</div>
 					</div>
 					<div class="peoples">
-						<!-- people 1 -->
-						<div class="people">
-							<div class="row">
-								<div class="col-8">
-									<img src="/picker/static/images/photo/1.jpg">
-								</div>
-								<div class="col-74">
-									<div class="people_name">
-										<span><a href="#">门卫</a></span> <span>, 裁判主宰了比赛</span>
+						<c:forEach var="user" items="${followeeList}">
+							<div class="people">
+								<div class="row">
+									<div class="col-8">
+										<img src="<c:url value="${user.avatarUrl}"/>">
 									</div>
-									<div class="people_labels">
-										<i class="icon-tags"></i> <span>电子科技大学</span> <span>实验班</span>
-										<span>作家协会</span>
-									</div>
-								</div>
-								<div class="col-18">
-									<div class="people_follow">
-										<div class="follow_action" style="float: right"
-											onclick="do_follow($(this))">
-											<i class="icon-plus"></i> 加关注
+									<div class="col-74">
+										<div class="people_name">
+											<span><a href="<c:url value="/user/${user.id}"/>"><c:out value="${user.username}" /></a></span>
+											<span>,<c:out value="${user.signature}" /></span>
 										</div>
-										<div class="cancel_follow" style="float: right; display: none"
-											onclick="cancel_follow($(this))">
-											<i class="icon-ok"></i> 取消关注
+										<div class="people_labels">
+											<i class="icon-tags"></i> <span>考试团</span> <span>斧头帮</span> <span>FFF</span>
 										</div>
 									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- people 2 -->
-						<div class="people">
-							<div class="row">
-								<div class="col-8">
-									<img src="/picker/static/images/photo/2.jpg">
-								</div>
-								<div class="col-74">
-									<div class="people_name">
-										<span><a href="#">逍客路上</a></span> <span>, , 不带走一片云彩</span>
-									</div>
-									<div class="people_labels">
-										<i class="icon-tags"></i> <span>考试团</span> <span>斧头帮</span> <span>FFF</span>
-									</div>
-								</div>
-								<div class="col-18">
-									<div class="people_follow">
-										<div class="follow_action" style="float: right"
-											onclick="do_follow($(this))">
-											<i class="icon-plus"></i> 加关注
-										</div>
-										<div class="cancel_follow" style="float: right; display: none"
-											onclick="cancel_follow($(this))">
-											<i class="icon-ok"></i> 取消关注
+									<div class="col-18">
+										<div class="people_follow">
+											<div class="follow_action" style="float: right"
+												onclick="do_follow($(this))">
+												<i class="icon-plus"></i> 加关注
+											</div>
+											<div class="cancel_follow"
+												style="float: right; display: none"
+												onclick="cancel_follow($(this))">
+												<i class="icon-ok"></i> 取消关注
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						</c:forEach>
 					</div>
 				</div>
 
-				<!-- 我关注的人 -->
+				<!-- 关注我的人 -->
 				<div id="followed_panel" class="content_panel" style="display: none">
 					<div class="back_nav clear_fix">
 						<div class="go_back" onclick="panel_action($(this))">
@@ -366,64 +341,37 @@
 						</div>
 					</div>
 					<div class="peoples">
-						<!-- people 3 -->
-						<div class="people">
-							<div class="row">
-								<div class="col-8">
-									<img src="/picker/static/images/photo/2.jpg">
-								</div>
-								<div class="col-74">
-									<div class="people_name">
-										<span><a href="#">逍客路上</a></span> <span> , 不带走一片云彩</span>
+						<c:forEach var="user" items="${followerList}">
+							<div class="people">
+								<div class="row">
+									<div class="col-8">
+										<img src="<c:url value="${user.avatarUrl}"/>">
 									</div>
-									<div class="people_labels">
-										<i class="icon-tags"></i> <span>考试团</span> <span>斧头帮</span> <span>FFF</span>
-									</div>
-								</div>
-								<div class="col-18">
-									<div class="people_follow">
-										<div class="follow_action" style="float: right"
-											onclick="do_follow($(this))">
-											<i class="icon-plus"></i> 加关注
+									<div class="col-74">
+										<div class="people_name">
+											<span><a href="<c:url value="/user/${user.id}"/>"><c:out value="${user.username}" /></a></span>
+											<span>,<c:out value="${user.signature}" /></span>
 										</div>
-										<div class="cancel_follow" style="float: right; display: none"
-											onclick="cancel_follow($(this))">
-											<i class="icon-ok"></i> 取消关注
+										<div class="people_labels">
+											<i class="icon-tags"></i> <span>考试团</span> <span>斧头帮</span> <span>FFF</span>
 										</div>
 									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- people 4 -->
-						<div class="people">
-							<div class="row">
-								<div class="col-8">
-									<img src="/picker/static/images/photo/1.jpg">
-								</div>
-								<div class="col-74">
-									<div class="people_name">
-										<span><a href="#">门卫</a></span> <span> , 裁判主宰了比赛</span>
-									</div>
-									<div class="people_labels">
-										<i class="icon-tags"></i> <span>电子科技大学</span> <span>实验班</span>
-										<span>作家协会</span>
-									</div>
-								</div>
-								<div class="col-18">
-									<div class="people_follow">
-										<div class="follow_action" style="float: right"
-											onclick="do_follow($(this))">
-											<i class="icon-plus"></i>加关注
-										</div>
-										<div class="cancel_follow" style="float: right; display: none"
-											onclick="cancel_follow($(this))">
-											<i class="icon-ok"></i> 取消关注
+									<div class="col-18">
+										<div class="people_follow">
+											<div class="follow_action" style="float: right"
+												onclick="do_follow($(this))">
+												<i class="icon-plus"></i> 加关注
+											</div>
+											<div class="cancel_follow"
+												style="float: right; display: none"
+												onclick="cancel_follow($(this))">
+												<i class="icon-ok"></i> 取消关注
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						</c:forEach>
 					</div>
 				</div>
 

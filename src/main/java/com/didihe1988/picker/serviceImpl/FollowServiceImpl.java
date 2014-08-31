@@ -95,12 +95,16 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	@Override
-	public boolean isFollowExists(Follow follow) {
+	public boolean isFollowExistsById(int id) {
 		// TODO Auto-generated method stub
-		if (follow == null) {
-			return false;
-		}
-		return followDao.isFollowExists(follow);
+		return followDao.isFollowExistsById(id);
+	}
+
+	@Override
+	public boolean isFollowExistsByKey(int sourceType, int followerId,
+			int sourceId) {
+		// TODO Auto-generated method stub
+		return followDao.isFollowExistsByKey(sourceType, followerId, sourceId);
 	}
 
 	/**

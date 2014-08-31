@@ -70,12 +70,15 @@ public class CircleServiceImpl implements CircleService {
 	}
 
 	@Override
-	public boolean isCircleExists(Circle circle) {
+	public boolean isCircleExistsById(int id) {
 		// TODO Auto-generated method stub
-		if (circle == null) {
-			return false;
-		}
-		return circleDao.isCircleExists(circle);
+		return circleDao.isCircleExistsById(id);
+	}
+
+	@Override
+	public boolean isCircleExistsByName(String name) {
+		// TODO Auto-generated method stub
+		return circleDao.isCircleExistsByName(name);
 	}
 
 	@Override

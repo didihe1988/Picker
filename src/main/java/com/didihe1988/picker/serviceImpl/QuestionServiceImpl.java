@@ -84,12 +84,9 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public boolean isQuestionExists(Question question) {
+	public boolean isQuestionExistsById(int id) {
 		// TODO Auto-generated method stub
-		if (question == null) {
-			return false;
-		}
-		return questionDao.isQuestionExists(question);
+		return questionDao.isQuestionExistsById(id);
 	}
 
 	@Override

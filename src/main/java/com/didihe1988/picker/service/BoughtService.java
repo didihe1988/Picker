@@ -15,7 +15,7 @@ public interface BoughtService {
 
 	public List<Bought> getBoughtByUserId(int userId);
 
-	public boolean isBoughtExists(Bought bought);
+	public boolean isBoughtExistsByKey(int userId, int bookId);
 
 	public Bought getBoughtByUserIdAndBookId(int userId, int bookId);
 }

@@ -209,4 +209,10 @@ public class FavoriteServiceImpl implements FavoriteService {
 		return favoriteDao.queryFavoriteListByUserId(userId);
 	}
 
+	@Override
+	public boolean isFavoriteExistsByKey(int userId, int objectId, int type) {
+		// TODO Auto-generated method stub
+		return favoriteDao.isFavoriteExistsByKey(userId, objectId, type);
+	}
+
 }

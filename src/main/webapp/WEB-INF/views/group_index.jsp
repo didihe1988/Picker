@@ -133,7 +133,7 @@
 				<c:forEach var="circle" items="${circleList}">
 					<div class="group_info">
 						<div class="group_name">
-							<a data-pjax href="/group/1234"><c:out value='${circle.name}' /></a>
+							<a data-pjax href=<c:url value="/group/${circle.id}"/>><c:out value='${circle.name}' /></a>
 						</div>
 						<div class="group_intro">
 							<c:out value='${circle.describe}' />

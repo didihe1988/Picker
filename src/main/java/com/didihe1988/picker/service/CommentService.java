@@ -16,7 +16,10 @@ public interface CommentService {
 
 	public Comment getCommentById(int id);
 
-	public boolean isCommentExists(Comment comment);
+	public boolean isCommentExistsById(int id);
+
+	public boolean isCommentExistsByKey(int producerId, int commentedId,
+			int type);
 
 	public int getLatestCommentIdByUserId(int id);
 

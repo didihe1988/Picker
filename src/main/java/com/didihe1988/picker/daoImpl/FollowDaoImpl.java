@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.FollowDao;
-import com.didihe1988.picker.dao.daoInterface.DeleteValidation;
 import com.didihe1988.picker.model.Follow;
 
 @Repository
@@ -32,7 +31,8 @@ public class FollowDaoImpl implements FollowDao {
 	@Override
 	public int addFollow(Follow follow) {
 		// TODO Auto-generated method stub
-		if (isFollowExists(follow)) {
+		if (isFollowExistsByKey(follow.getSourceType(), follow.getFollowerId(),
+				follow.getSourceId())) {
 			return -1;
 		}
 		getCurrentSession().save(follow);
@@ -42,7 +42,7 @@ public class FollowDaoImpl implements FollowDao {
 	@Override
 	public int deleteFollow(Follow follow) {
 		// TODO Auto-generated method stub
-		if (!isFollowExists(follow)) {
+		if (!isFollowExistsById(follow.getId())) {
 			return -1;
 		}
 		getCurrentSession().delete(follow);
@@ -52,7 +52,7 @@ public class FollowDaoImpl implements FollowDao {
 	@Override
 	public int updateFollow(Follow follow) {
 		// TODO Auto-generated method stub
-		if (!isFollowExists(follow)) {
+		if (!isFollowExistsById(follow.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(follow);
@@ -73,16 +73,14 @@ public class FollowDaoImpl implements FollowDao {
 	}
 
 	@Override
-	public boolean isFollowExists(Follow follow) {
+	public boolean isFollowExistsByKey(int sourceType, int followerId,
+			int sourceId) {
 		// TODO Auto-generated method stub
-		if (follow == null) {
-			return false;
-		}
 		String hql = "select count(*) from Follow f where f.sourceType =? and f.followerId=? and f.sourceId=?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, follow.getSourceType());
-		query.setInteger(1, follow.getFollowerId());
-		query.setInteger(2, follow.getSourceId());
+		query.setInteger(0, sourceType);
+		query.setInteger(1, followerId);
+		query.setInteger(2, sourceId);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;

@@ -15,7 +15,9 @@ public interface CircleDao extends DeleteValidation, NumOperation {
 
 	public int updateCircle(Circle circle);
 
-	public boolean isCircleExists(Circle circle);
+	public boolean isCircleExistsById(int id);
+
+	public boolean isCircleExistsByName(String name);
 
 	public List<Circle> queryCircleListByEstablisherId(int id);
 

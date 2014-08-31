@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.Book;
@@ -17,7 +18,7 @@ import com.didihe1988.picker.service.NoteService;
 import com.didihe1988.picker.service.QuestionService;
 import com.google.gson.Gson;
 
-@RestController
+@Controller
 public class BrowseController {
 	@Autowired
 	private BookService bookService;
@@ -28,7 +29,7 @@ public class BrowseController {
 	@Autowired
 	private NoteService noteService;
 
-	@RequestMapping(value = "/browse/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/jbrowse/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getBrowse(@PathVariable int id) {
 		JSONObject jsonObject = new JSONObject();
 		/*
@@ -45,5 +46,10 @@ public class BrowseController {
 		jsonObject.put(Constant.KEY_QUESTION_LIST, list);
 
 		return jsonObject.toString();
+	}
+
+	@RequestMapping(value = "/browse/{id}")
+	public String browse(@PathVariable int id, Model model) {
+		return "browse";
 	}
 }

@@ -72,12 +72,15 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public boolean isBookExists(Book book) {
+	public boolean isBookExistsById(int id) {
 		// TODO Auto-generated method stub
-		if (book == null) {
-			return false;
-		}
-		return bookDao.isBookExists(book);
+		return bookDao.isBookExistsById(id);
+	}
+
+	@Override
+	public boolean isBookExistsByKey(String isbn) {
+		// TODO Auto-generated method stub
+		return bookDao.isBookExistsByKey(isbn);
 	}
 
 	@Override

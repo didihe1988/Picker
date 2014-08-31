@@ -114,12 +114,16 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public boolean isCommentExists(Comment comment) {
+	public boolean isCommentExistsById(int id) {
 		// TODO Auto-generated method stub
-		if (comment == null) {
-			return false;
-		}
-		return commentDao.isCommentExists(comment);
+		return commentDao.isCommentExistsById(id);
+	}
+
+	@Override
+	public boolean isCommentExistsByKey(int producerId, int commentedId,
+			int type) {
+		// TODO Auto-generated method stub
+		return commentDao.isCommentExistsByKey(producerId, commentedId, type);
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.AnswerDp;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.AnswerService;
 
 @Service
@@ -84,12 +85,15 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public boolean isAnswerExists(Answer answer) {
+	public boolean isAnswerExistsById(int id) {
 		// TODO Auto-generated method stub
-		if (answer == null) {
-			return false;
-		}
-		return answerDao.isAnswerExists(answer);
+		return answerDao.isAnswerExistsById(id);
+	}
+
+	@Override
+	public boolean isAnswerExistsByKey(int questionId, int replierId) {
+		// TODO Auto-generated method stub
+		return answerDao.isAnswerExsitsByKey(questionId, replierId);
 	}
 
 	@Override
@@ -138,9 +142,9 @@ public class AnswerServiceImpl implements AnswerService {
 	private AnswerDp getAnswerDpByAnswer(Answer answer) {
 		String questionName = questionDao.queryQuestionById(
 				answer.getQuestionId()).getTitle();
-		String replierName = userDao.queryUserById(answer.getReplierId())
-				.getUsername();
-		return new AnswerDp(answer, questionName, replierName);
+		User user = userDao.queryUserById(answer.getReplierId());
+		return new AnswerDp(answer, questionName, user.getUsername(),
+				user.getAvatarUrl());
 	}
 
 	private List<AnswerDp> getAnswerDpListFormAnswerList(List<Answer> answerList) {

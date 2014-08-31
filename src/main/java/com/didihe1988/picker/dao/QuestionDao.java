@@ -15,7 +15,7 @@ public interface QuestionDao extends DeleteValidation, NumOperation {
 
 	public int updateQuestion(Question question);
 
-	public boolean isQuestionExists(Question question);
+	public boolean isQuestionExistsById(int id);
 
 	public List<Question> queryQuestionByAskerId(int id);
 

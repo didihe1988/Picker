@@ -18,7 +18,7 @@ public interface QuestionService {
 
 	public QuestionDp getQuestionDpByQuestionId(int id);
 
-	public boolean isQuestionExists(Question question);
+	public boolean isQuestionExistsById(int id);
 
 	public List<Question> getQuestionListByAskerId(int id);
 

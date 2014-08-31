@@ -13,7 +13,9 @@ public interface CircleService {
 
 	public int updateCircle(Circle circle);
 
-	public boolean isCircleExists(Circle circle);
+	public boolean isCircleExistsById(int id);
+
+	public boolean isCircleExistsByName(String name);
 
 	public Circle getCircleById(int id);
 
@@ -22,5 +24,5 @@ public interface CircleService {
 	public boolean checkDeleteValidation(int establisherId, int circleId);
 
 	public int getLatestCircleIdByEstablisherId(int id);
-	
+
 }

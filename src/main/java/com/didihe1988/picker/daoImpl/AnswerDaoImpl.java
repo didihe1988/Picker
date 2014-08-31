@@ -31,7 +31,7 @@ public class AnswerDaoImpl implements AnswerDao {
 	@Override
 	public int addAnswer(Answer answer) {
 		// TODO Auto-generated method stub
-		if (isAnswerExists(answer)) {
+		if (isAnswerExsitsByKey(answer.getQuestionId(), answer.getReplierId())) {
 			return -1;
 		}
 		getCurrentSession().save(answer);
@@ -41,7 +41,7 @@ public class AnswerDaoImpl implements AnswerDao {
 	@Override
 	public int deleteAnswer(Answer answer) {
 		// TODO Auto-generated method stub
-		if (!isAnswerExists(answer)) {
+		if (!isAnswerExistsById(answer.getId())) {
 			return -1;
 		}
 		getCurrentSession().delete(answer);
@@ -51,7 +51,7 @@ public class AnswerDaoImpl implements AnswerDao {
 	@Override
 	public int updateAnswer(Answer answer) {
 		// TODO Auto-generated method stub
-		if (!isAnswerExists(answer)) {
+		if (!isAnswerExistsById(answer.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(answer);
@@ -59,14 +59,25 @@ public class AnswerDaoImpl implements AnswerDao {
 	}
 
 	@Override
-	public boolean isAnswerExists(Answer answer) {
+	public boolean isAnswerExistsById(int id) {
 		// TODO Auto-generated method stub
-		if (answer == null) {
-			return false;
-		}
 		String hql = "select count(*) from Answer as a where a.id = ?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, answer.getId());
+		query.setInteger(0, id);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isAnswerExsitsByKey(int questionId, int replierId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Answer as a where a.questionId = ? and a.replierId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, questionId);
+		query.setInteger(1, replierId);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;
