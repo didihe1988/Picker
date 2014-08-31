@@ -26,7 +26,7 @@ public class CircleDaoImpl implements CircleDao {
 	 * @description:ownerId为establisherId objectId为id
 	 */
 	@Override
-	public boolean checkDeleteValidation(int ownerId, int objectId) {
+	public boolean checkOperateValidation(int ownerId, int objectId) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Circle as c where c.establisherId =? and c.id=?";
 		Query query = getCurrentSession().createQuery(hql);

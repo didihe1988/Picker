@@ -48,7 +48,7 @@ public class CircleServiceImpl implements CircleService {
 			return Status.NULLPOINTER;
 		}
 		// 删除之前确认是否可以删除
-		if (!circleDao.checkDeleteValidation(circle.getEstablisherId(),
+		if (!circleDao.checkOperateValidation(circle.getEstablisherId(),
 				circle.getId())) {
 			return Status.INVALID;
 		}
@@ -96,7 +96,7 @@ public class CircleServiceImpl implements CircleService {
 	@Override
 	public boolean checkDeleteValidation(int establisherId, int circleId) {
 		// TODO Auto-generated method stub
-		return circleDao.checkDeleteValidation(establisherId, circleId);
+		return circleDao.checkOperateValidation(establisherId, circleId);
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import java.util.Date;
 public class Message implements Serializable {
 
 	/**
-	 * 
+	 * 由关注产生的消息 用户的动态中显示
 	 */
 	// 小明 提出了问题 家用路由器会遭受攻击吗？
 	public static final int MESSAGE_FOLLOWED_ASKQUESTION = 1;
@@ -33,24 +33,41 @@ public class Message implements Serializable {
 	public static final int MESSAGE_FOLLOWED_JOINCIRCLE = 7;
 	public static final int MESSAGE_FOLLOWED_ADDNOTE = 7;
 	public static final int MESSAGE_QUESTION_UPDATE = 7;
+	public static final int MESSAGE_USER_FOLLOWED = 9;
 
+	/*
+	 * 用户相关的消息 用户在消息通知中接受
+	 */
 	public static final int MESSAGE_YOUR_QUESTION_UPDATE = 8;
 	public static final int MESSAGE_YOUR_QUESTION_FAVORITED = 10;
 	public static final int MESSAGE_YOUR_ANSWER_FAVORITED = 11;
 	public static final int MESSAGE_YOUR_COMMENT_FAVORITED = 12;
 	public static final int MESSAGE_YOUR_NOTE_FAVORITED = 13;
-
 	public static final int MESSAGE_YOUR_ANSWER_COMMENTED = 14;
 	public static final int MESSAGE_YOUR_QUESTION_COMMENTED = 15;
 
-	public static final int MESSAGE_USER_FOLLOWED = 9;
+	/*
+	 * 用户动作产生的消息 在用户的最新动态里显示
+	 */
+	public static final int MESSAGE_USER_ADDQUESTION = 8;
+	public static final int MESSAGE_USER_ADDANSWER = 8;
+	public static final int MESSAGE_USER_ADDCOMMENT = 8;
+	public static final int MESSAGE_USER_ADDNOTE = 8;
+	public static final int MESSAGE_USER_FOLLOW_OTHER = 8;
+	public static final int MESSAGE_USER_FAVORITE_QUESTION = 8;
+	public static final int MESSAGE_USER_FAVORITE_NOTE = 8;
+	public static final int MESSAGE_USER_FAVORITE_ANSWER = 8;
+	public static final int MESSAGE_USER_FAVORITE_COMMENT = 8;
 
-	// to display
+	// filter
 	public static final int MESSAGE_UNCHECKED = 8;
 	public static final int MESSAGE_CHECKED = 9;
-	public static final int MESSAGE_QUESTION = 10;
-	public static final int MESSAGE_FOLLOWED = 11;
-	public static final int MESSAGE_ALL = 12;
+	// 好友动态
+	public static final int MESSAGE_DYNAMIC = 20;
+	// 用户足迹 在用户profile上显示
+	public static final int MESSAGE_FOOTPRINT = 20;
+	// 与我相关
+	public static final int MESSAGE_RELATED = 21;
 
 	public static final int NULL_RelatedSourceId = 0;
 	public static final String NULL_RelatedSourceContent = "";

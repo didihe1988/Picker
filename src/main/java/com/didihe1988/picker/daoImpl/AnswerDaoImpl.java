@@ -133,7 +133,7 @@ public class AnswerDaoImpl implements AnswerDao {
 	}
 
 	@Override
-	public boolean checkDeleteValidation(int ownerId, int objectId) {
+	public boolean checkOperateValidation(int ownerId, int objectId) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Answer as a where a.replierId =? and a.id=?";
 		Query query = getCurrentSession().createQuery(hql);

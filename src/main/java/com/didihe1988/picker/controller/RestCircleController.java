@@ -92,17 +92,26 @@ public class RestCircleController {
 	/*
 	 * 加入一个圈子
 	 */
-	@RequestMapping(value = "/circle/{id}/join", method = RequestMethod.POST, headers = "Accept=application/json")
+	@RequestMapping(value = "/circle/{id}/join", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String join(@PathVariable int id, HttpServletRequest request) {
-		/*
-		 * 添加问题
-		 */
+
 		int userId = HttpUtils.getSessionUserId(request);
 		CircleMember circleMember = new CircleMember(id, userId);
 		int status = circleMemberService.addCircleMember(circleMember);
 		if (status == Status.SUCCESS) {
 			joinCircleMessage(id, request);
 		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	/*
+	 * 离开一个圈子
+	 */
+	@RequestMapping(value = "/circle/{id}/withdraw_join", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String withdrawJoin(@PathVariable int id, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		CircleMember circleMember = new CircleMember(id, userId);
+		int status = circleMemberService.deleteCircleMember(circleMember);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 

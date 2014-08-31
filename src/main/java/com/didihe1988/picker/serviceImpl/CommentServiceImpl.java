@@ -72,7 +72,7 @@ public class CommentServiceImpl implements CommentService {
 		if (comment == null) {
 			return Status.NULLPOINTER;
 		}
-		if (!commentDao.checkDeleteValidation(userId, comment.getId())) {
+		if (!commentDao.checkOperateValidation(userId, comment.getId())) {
 			return Status.INVALID;
 		}
 		commentDao.deleteComment(comment);
@@ -135,7 +135,7 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public boolean checkDeleteValidation(int userId, int commenetId) {
 		// TODO Auto-generated method stub
-		return commentDao.checkDeleteValidation(userId, commenetId);
+		return commentDao.checkOperateValidation(userId, commenetId);
 	}
 
 	@Override

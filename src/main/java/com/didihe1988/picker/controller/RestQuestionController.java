@@ -190,6 +190,14 @@ public class RestQuestionController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
+	@RequestMapping(value = "/question/update", method = RequestMethod.POST)
+	public String update(@RequestBody Question question,
+			HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		int status = questionService.updateQuestion(question, userId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
 	private void addQuestionMessage(Question question,
 			HttpServletRequest request) {
 		/*

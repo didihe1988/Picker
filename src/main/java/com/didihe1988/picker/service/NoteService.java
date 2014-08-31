@@ -12,7 +12,7 @@ public interface NoteService {
 
 	public int deleteNoteById(int id, int userId);
 
-	public int updateNote(Note note);
+	public int updateNote(Note note,int userId);
 
 	public Note getNoteById(int id);
 
@@ -37,4 +37,6 @@ public interface NoteService {
 	public NoteDp getNoteDpByNoteId(int id);
 
 	public int getLatestNoteIdByUserId(int id);
+	
+	public boolean checkOperateValidation(int userId, int noteId);
 }

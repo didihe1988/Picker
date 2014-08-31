@@ -123,7 +123,7 @@ public class QuestionDaoImpl implements QuestionDao {
 	}
 
 	@Override
-	public boolean checkDeleteValidation(int ownerId, int objectId) {
+	public boolean checkOperateValidation(int ownerId, int objectId) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Question as q where q.askerId =? and q.id=?";
 		Query query = getCurrentSession().createQuery(hql);

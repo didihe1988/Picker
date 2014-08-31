@@ -75,7 +75,7 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 		if (circleMember == null) {
 			return Status.NULLPOINTER;
 		}
-		if (!circleMemberDao.checkDeleteValidation(circleMember.getMemberId(),
+		if (!circleMemberDao.checkOperateValidation(circleMember.getMemberId(),
 				circleMember.getId())) {
 			return Status.INVALID;
 		}

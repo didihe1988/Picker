@@ -58,7 +58,7 @@ public class AnswerServiceImpl implements AnswerService {
 			return Status.NULLPOINTER;
 		}
 		// 删除之前检验是否存在
-		if (!answerDao.checkDeleteValidation(userId, answer.getId())) {
+		if (!answerDao.checkOperateValidation(userId, answer.getId())) {
 			return Status.INVALID;
 		}
 		answerDao.deleteAnswer(answer);
@@ -72,10 +72,13 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public int updateAnswer(Answer answer) {
+	public int updateAnswer(Answer answer, int userId) {
 		// TODO Auto-generated method stub
 		if (answer == null) {
 			return Status.NULLPOINTER;
+		}
+		if (!answerDao.checkOperateValidation(userId, answer.getId())) {
+			return Status.INVALID;
 		}
 		int status = answerDao.updateAnswer(answer);
 		if (status == -1) {
@@ -121,9 +124,9 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public boolean checkDeleteValidation(int userId, int answerId) {
+	public boolean checkOperateValidation(int userId, int answerId) {
 		// TODO Auto-generated method stub
-		return answerDao.checkDeleteValidation(userId, answerId);
+		return answerDao.checkOperateValidation(userId, answerId);
 	}
 
 	@Override

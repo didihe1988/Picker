@@ -51,7 +51,7 @@ public class QuestionServiceImpl implements QuestionService {
 		if (question == null) {
 			return Status.NULLPOINTER;
 		}
-		if (!questionDao.checkDeleteValidation(userId, question.getId())) {
+		if (!questionDao.checkOperateValidation(userId, question.getId())) {
 			return Status.INVALID;
 		}
 		questionDao.deleteQuestion(question);
@@ -65,10 +65,13 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public int updateQuestion(Question question) {
+	public int updateQuestion(Question question, int userId) {
 		// TODO Auto-generated method stub
 		if (question == null) {
 			return Status.NULLPOINTER;
+		}
+		if (!questionDao.checkOperateValidation(userId, question.getId())) {
+			return Status.INVALID;
 		}
 		int status = questionDao.updateQuestion(question);
 		if (status == -1) {
@@ -103,9 +106,9 @@ public class QuestionServiceImpl implements QuestionService {
 
 	// ºÏ≤‚ «∑Òœ‘ æ…æ≥˝∞¥≈•
 	@Override
-	public boolean checkDeleteValidation(int userId, int questionId) {
+	public boolean checkOperateValidation(int userId, int questionId) {
 		// TODO Auto-generated method stub
-		return questionDao.checkDeleteValidation(userId, questionId);
+		return questionDao.checkOperateValidation(userId, questionId);
 	}
 
 	@Override

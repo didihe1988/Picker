@@ -2,10 +2,10 @@ package com.didihe1988.picker.dao;
 
 import java.util.List;
 
-import com.didihe1988.picker.dao.daoInterface.DeleteValidation;
+import com.didihe1988.picker.dao.daoInterface.OperateValidation;
 import com.didihe1988.picker.model.CircleMember;
 
-public interface CircleMemberDao extends DeleteValidation{
+public interface CircleMemberDao extends OperateValidation{
 	public CircleMember queryCircleMemberById(int id);
 
 	public int addCircleMember(CircleMember circleMember);

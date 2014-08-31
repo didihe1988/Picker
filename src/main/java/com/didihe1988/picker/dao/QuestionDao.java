@@ -2,11 +2,11 @@ package com.didihe1988.picker.dao;
 
 import java.util.List;
 
-import com.didihe1988.picker.dao.daoInterface.DeleteValidation;
+import com.didihe1988.picker.dao.daoInterface.OperateValidation;
 import com.didihe1988.picker.dao.daoInterface.NumOperation;
 import com.didihe1988.picker.model.Question;
 
-public interface QuestionDao extends DeleteValidation, NumOperation {
+public interface QuestionDao extends OperateValidation, NumOperation {
 	public Question queryQuestionById(int id);
 
 	public int addQuestion(Question question);

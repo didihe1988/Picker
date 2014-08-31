@@ -113,8 +113,15 @@ public class NoteController {
 	public String add(@RequestBody Note note, HttpServletRequest request) {
 		int status = noteService.addNote(note);
 		if (status == Status.SUCCESS) {
-
+			addNoteMessage(note, request);
 		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	@RequestMapping(value = "/note/update", method = RequestMethod.POST, headers = "Accept=application/json")
+	public String update(@RequestBody Note note, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		int status = noteService.updateNote(note, userId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
@@ -122,7 +129,7 @@ public class NoteController {
 		int userId = HttpUtils.getSessionUserId(request);
 		String userName = HttpUtils.getSessionUserName(request);
 		String relatedSourceContent = StringUtils.confineStringLength(
-				note.getTitle(), Message.MESSAGE_ALL);
+				note.getTitle(), Constant.MESSAGE_LENGTH);
 		int noteId = noteService.getLatestNoteIdByUserId(note.getUserId());
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ADDNOTE, userId, userName, noteId,

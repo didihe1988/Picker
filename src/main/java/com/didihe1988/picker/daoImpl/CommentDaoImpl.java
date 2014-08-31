@@ -130,7 +130,7 @@ public class CommentDaoImpl implements CommentDao {
 	}
 
 	@Override
-	public boolean checkDeleteValidation(int ownerId, int objectId) {
+	public boolean checkOperateValidation(int ownerId, int objectId) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Comment as c where c.producerId =? and f.id=?";
 		Query query = getCurrentSession().createQuery(hql);

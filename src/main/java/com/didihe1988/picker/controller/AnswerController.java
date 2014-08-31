@@ -120,6 +120,16 @@ public class AnswerController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
+	@RequestMapping(value = "/answer/update", method = RequestMethod.POST)
+	public String update(@RequestBody Answer answer, HttpServletRequest request) {
+		/*
+		 * ±à¼­»Ø´ð
+		 */
+		int userId = HttpUtils.getSessionUserId(request);
+		int status = answerService.updateAnswer(answer, userId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
 	private void addAnswerMessage(Answer answer, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		int askerId = questionService.getQuestionById(answer.getQuestionId())

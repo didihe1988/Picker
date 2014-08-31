@@ -111,7 +111,7 @@ public class CircleMemberDaoImpl implements CircleMemberDao {
 	 * @description 本人可以删除自己已加入的圈子
 	 */
 	@Override
-	public boolean checkDeleteValidation(int ownerId, int objectId) {
+	public boolean checkOperateValidation(int ownerId, int objectId) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from CircleMember as c where c.memberId =? and c.id=?";
 		Query query = getCurrentSession().createQuery(hql);

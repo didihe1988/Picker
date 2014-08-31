@@ -26,7 +26,7 @@ public class NoteDaoImpl implements NoteDao {
 	 * @description ºÏ≤‚user «∑Ò”µ”–∏√note
 	 */
 	@Override
-	public boolean checkDeleteValidation(int ownerId, int objectId) {
+	public boolean checkOperateValidation(int ownerId, int objectId) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Note as n where n.userId = ? and n.id=?";
 		Query query = getCurrentSession().createQuery(hql);
@@ -58,7 +58,7 @@ public class NoteDaoImpl implements NoteDao {
 	@Override
 	public int deleteNote(Note note) {
 		// TODO Auto-generated method stub
-		if (!checkDeleteValidation(note.getUserId(), note.getId())) {
+		if (!checkOperateValidation(note.getUserId(), note.getId())) {
 			return -1;
 		}
 		getCurrentSession().delete(note);

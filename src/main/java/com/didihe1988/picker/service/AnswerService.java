@@ -12,7 +12,7 @@ public interface AnswerService {
 
 	public int deleteAnswerById(int id, int userId);
 
-	public int updateAnswer(Answer answer);
+	public int updateAnswer(Answer answer, int userId);
 
 	public boolean isAnswerExistsById(int id);
 
@@ -32,7 +32,7 @@ public interface AnswerService {
 
 	public int getLatestAnswerIdByQuestionId(int id);
 
-	public boolean checkDeleteValidation(int userId, int answerId);
+	public boolean checkOperateValidation(int userId, int answerId);
 
 	public AnswerDp getAnswerDpByAnswerId(int id);
 

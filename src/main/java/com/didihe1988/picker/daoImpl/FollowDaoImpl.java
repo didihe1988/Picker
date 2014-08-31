@@ -109,7 +109,7 @@ public class FollowDaoImpl implements FollowDao {
 
 	// 关注人 可以取消他已经关注的人/问题
 	@Override
-	public boolean checkDeleteValidation(int ownerId, int objectId) {
+	public boolean checkOperateValidation(int ownerId, int objectId) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Follow as f where f.followerId =? and f.id=?";
 		Query query = getCurrentSession().createQuery(hql);

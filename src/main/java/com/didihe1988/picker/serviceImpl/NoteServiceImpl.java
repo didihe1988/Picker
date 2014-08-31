@@ -48,7 +48,7 @@ public class NoteServiceImpl implements NoteService {
 		if (note == null) {
 			return Status.NULLPOINTER;
 		}
-		if (!noteDao.checkDeleteValidation(userId, note.getId())) {
+		if (!noteDao.checkOperateValidation(userId, note.getId())) {
 			return Status.INVALID;
 		}
 		noteDao.deleteNote(note);
@@ -62,10 +62,13 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public int updateNote(Note note) {
+	public int updateNote(Note note, int userId) {
 		// TODO Auto-generated method stub
 		if (note == null) {
 			return Status.NULLPOINTER;
+		}
+		if (!noteDao.checkOperateValidation(userId, note.getId())) {
+			return Status.INVALID;
 		}
 		int status = noteDao.updateNote(note);
 		if (status == -1) {
@@ -156,14 +159,16 @@ public class NoteServiceImpl implements NoteService {
 		return getNoteDpListFromNoteList(getPublicNoteListByBookId(id));
 	}
 
-	public boolean checkDeleteValidation(int ownerId, int objectId) {
-		return noteDao.checkDeleteValidation(ownerId, objectId);
-	}
-
 	@Override
 	public int getLatestNoteIdByUserId(int id) {
 		// TODO Auto-generated method stub
 		return noteDao.queryLatestNoteIdByUserId(id);
+	}
+
+	@Override
+	public boolean checkOperateValidation(int userId, int noteId) {
+		// TODO Auto-generated method stub
+		return noteDao.checkOperateValidation(userId, noteId);
 	}
 
 }

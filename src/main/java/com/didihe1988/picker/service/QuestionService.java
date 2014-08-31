@@ -12,7 +12,7 @@ public interface QuestionService {
 
 	public int deleteQuestionById(int id, int userId);
 
-	public int updateQuestion(Question question);
+	public int updateQuestion(Question question,int userId);
 
 	public Question getQuestionById(int id);
 
@@ -30,6 +30,6 @@ public interface QuestionService {
 
 	public int getLatestQuestionIdByBookId(int id);
 
-	public boolean checkDeleteValidation(int userId, int questionId);
+	public boolean checkOperateValidation(int userId, int questionId);
 
 }

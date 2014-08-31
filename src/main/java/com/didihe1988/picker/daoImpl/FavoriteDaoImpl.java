@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.FavoriteDao;
-import com.didihe1988.picker.dao.daoInterface.DeleteValidation;
+import com.didihe1988.picker.dao.daoInterface.OperateValidation;
 import com.didihe1988.picker.model.Favorite;
 
 @Repository
@@ -68,7 +68,7 @@ public class FavoriteDaoImpl implements FavoriteDao {
 	}
 
 	@Override
-	public boolean checkDeleteValidation(int ownerId, int objectId) {
+	public boolean checkOperateValidation(int ownerId, int objectId) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Favorite as f where f.userId =? and f.id=?";
 		Query query = getCurrentSession().createQuery(hql);

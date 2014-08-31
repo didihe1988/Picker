@@ -2,10 +2,10 @@ package com.didihe1988.picker.dao;
 
 import java.util.List;
 
-import com.didihe1988.picker.dao.daoInterface.DeleteValidation;
+import com.didihe1988.picker.dao.daoInterface.OperateValidation;
 import com.didihe1988.picker.model.Follow;
 
-public interface FollowDao extends DeleteValidation {
+public interface FollowDao extends OperateValidation {
 	public Follow queryFollowById(int id);
 
 	public int addFollow(Follow follow);
