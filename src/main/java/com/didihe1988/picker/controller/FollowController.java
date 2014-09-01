@@ -113,15 +113,5 @@ public class FollowController {
 		return "/follow/listall_fortest.do";
 	}
 
-	@RequestMapping(value = "/follow/delete.do")
-	public String deleteFollow(HttpServletRequest request) {
-		int id = HttpUtils.getIntegerFromReqeust(request, "id");
-		Follow follow = followService.getFollowById(id);
-		if (follow == null) {
-			return "followlist";
-		}
-		followService.deleteFollow(follow);
-		return "followlist";
-	}
 
 }

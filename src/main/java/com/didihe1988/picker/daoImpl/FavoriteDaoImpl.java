@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.FavoriteDao;
-import com.didihe1988.picker.dao.daoInterface.OperateValidation;
 import com.didihe1988.picker.model.Favorite;
 
 @Repository
@@ -58,6 +57,20 @@ public class FavoriteDaoImpl implements FavoriteDao {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int deleteFavorite(int objectId, int userId, int type) {
+		// TODO Auto-generated method stub
+		if (!isFavoriteExistsByKey(userId, objectId, type)) {
+			return -1;
+		}
+		String hql = "delete Favorite where objectId=? and userId=? and type=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, objectId);
+		query.setInteger(1, userId);
+		query.setInteger(2, type);
+		return query.executeUpdate();
 	}
 
 	@Override

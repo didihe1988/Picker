@@ -10,7 +10,7 @@ public interface FollowDao extends OperateValidation {
 
 	public int addFollow(Follow follow);
 
-	public int deleteFollow(Follow follow);
+	public int deleteFollow(int sourceType, int followerId, int sourceId);
 
 	public int updateFollow(Follow follow);
 

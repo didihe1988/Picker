@@ -109,9 +109,11 @@ public class RestCircleController {
 	 */
 	@RequestMapping(value = "/circle/{id}/withdraw_join", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String withdrawJoin(@PathVariable int id, HttpServletRequest request) {
+		/*
+		 * 由于CricleMember对外是透明的，所以不可能获得它的id
+		 */
 		int userId = HttpUtils.getSessionUserId(request);
-		CircleMember circleMember = new CircleMember(id, userId);
-		int status = circleMemberService.deleteCircleMember(circleMember);
+		int status = circleMemberService.deleteCircleMember(userId, id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 

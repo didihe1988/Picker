@@ -19,7 +19,6 @@ import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Circle;
-import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.LoginForm;
 import com.didihe1988.picker.model.Note;
@@ -94,6 +93,13 @@ public class RestUserController {
 	@RequestMapping(value = "/juser/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getUser(@PathVariable int id) {
 		UserDp userDp = userService.getUserDpByUserId(id);
+		return JsonUtils.getJsonObjectString(Constant.KEY_USER, userDp);
+	}
+
+	@RequestMapping(value = "/json/user", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getUser(HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		UserDp userDp = userService.getUserDpByUserId(userId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_USER, userDp);
 	}
 
@@ -219,8 +225,7 @@ public class RestUserController {
 	public String withdrawFollow(@PathVariable int id,
 			HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		Follow follow = new Follow(Follow.FOLLOW_USER, userId, id);
-		int status = followService.deleteFollow(follow);
+		int status = followService.deleteFollow(Follow.FOLLOW_USER, userId, id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 

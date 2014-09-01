@@ -59,12 +59,12 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	@Override
-	public int deleteFollow(Follow follow) {
+	public int deleteFollow(int sourceType, int followerId, int sourceId) {
 		// TODO Auto-generated method stub
-		if (follow == null) {
-			return Status.NULLPOINTER;
-		}
-		int status = followDao.deleteFollow(follow);
+		/*
+		 * check validation
+		 */
+		int status = followDao.deleteFollow(sourceType, followerId, sourceId);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}
@@ -72,11 +72,11 @@ public class FollowServiceImpl implements FollowService {
 		/*
 		 * followNum-- 感觉应该多些检测以防减到负值
 		 */
-		if (follow.getSourceType() == Follow.FOLLOW_USER) {
-			userDao.decrementNum(Constant.FOLLOW_NUM, follow.getSourceId());
+		if (sourceType == Follow.FOLLOW_USER) {
+			userDao.decrementNum(Constant.FOLLOW_NUM, sourceId);
 		} else {
 			// Follow.FOLLOW_QUESTION
-			questionDao.decrementNum(Constant.FOLLOW_NUM, follow.getSourceId());
+			questionDao.decrementNum(Constant.FOLLOW_NUM, sourceId);
 		}
 		return Status.SUCCESS;
 	}

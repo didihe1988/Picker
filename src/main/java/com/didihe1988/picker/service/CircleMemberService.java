@@ -12,7 +12,7 @@ public interface CircleMemberService {
 
 	public int updateCircleMember(CircleMember circleMember);
 
-	public int deleteCircleMember(CircleMember circleMember);
+	public int deleteCircleMember(int userId, int circleId);
 
 	public int deleteCircleMemberByEstablisher(int establisherId,
 			CircleMember circleMember);

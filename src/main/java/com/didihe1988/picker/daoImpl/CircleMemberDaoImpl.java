@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.CircleMemberDao;
 import com.didihe1988.picker.model.CircleMember;
+import com.didihe1988.picker.model.User;
 
 @Repository
 @Transactional
@@ -28,6 +29,15 @@ public class CircleMemberDaoImpl implements CircleMemberDao {
 		return (CircleMember) getCurrentSession().get(CircleMember.class, id);
 	}
 
+	/*
+	 * @Override public CircleMember queryCircleMemberByKey(int userId, int
+	 * circleId) { // TODO Auto-generated method stub String hql =
+	 * "from CircleMember as c where c.memberId =? and c.circleId=?"; Query
+	 * query = getCurrentSession().createQuery(hql); query.setInteger(0,
+	 * userId); query.setInteger(1, circleId); return (CircleMember)
+	 * query.uniqueResult(); }
+	 */
+
 	@Override
 	public int addCircleMember(CircleMember circleMember) {
 		// TODO Auto-generated method stub
@@ -39,13 +49,13 @@ public class CircleMemberDaoImpl implements CircleMemberDao {
 	}
 
 	@Override
-	public int deleteCircleMember(CircleMember circleMember) {
+	public int deleteCircleMember(int userId, int circleId) {
 		// TODO Auto-generated method stub
-		if (!isCircleMemberExistsById(circleMember.getId())) {
-			return -1;
-		}
-		getCurrentSession().delete(circleMember);
-		return 1;
+		String hql = "delete CircleMember where memberId=? and circleId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, userId);
+		query.setInteger(1, circleId);
+		return query.executeUpdate();
 
 	}
 

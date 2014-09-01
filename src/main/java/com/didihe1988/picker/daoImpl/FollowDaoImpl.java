@@ -40,13 +40,14 @@ public class FollowDaoImpl implements FollowDao {
 	}
 
 	@Override
-	public int deleteFollow(Follow follow) {
+	public int deleteFollow(int sourceType, int followerId, int sourceId) {
 		// TODO Auto-generated method stub
-		if (!isFollowExistsById(follow.getId())) {
-			return -1;
-		}
-		getCurrentSession().delete(follow);
-		return 1;
+		String hql = "delete Follow  where sourceType=? and  followerId=? and sourceId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, sourceType);
+		query.setInteger(1, followerId);
+		query.setInteger(2, sourceId);
+		return query.executeUpdate();
 	}
 
 	@Override

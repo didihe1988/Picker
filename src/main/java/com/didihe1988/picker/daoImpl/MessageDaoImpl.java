@@ -116,16 +116,16 @@ public class MessageDaoImpl implements MessageDao {
 			hql = "from Message as message where message.receiverId = ? and message.isChecked =false";
 
 		}
-		// 有关问题的消息
-		else if (type == Message.MESSAGE_QUESTION) {
-			hql = "from Message as message where message.receiverId = ? and message.type =4";
-		}
-		// 有关被关注人的消息
-		else if (type == Message.MESSAGE_FOLLOWED) {
-			// hql =
-			// "from Message as message where message.receiverId = ? and message.type between 1 and 3";
-			hql = "from Message as message where message.receiverId = ? and message.type=1,2,3,4";
-		}
+		/*
+		 * // 有关问题的消息 else if (type == Message.MESSAGE_QUESTION) { hql =
+		 * "from Message as message where message.receiverId = ? and message.type =4"
+		 * ; } // 有关被关注人的消息 else if (type == Message.MESSAGE_FOLLOWED) { // hql
+		 * = //
+		 * "from Message as message where message.receiverId = ? and message.type between 1 and 3"
+		 * ; hql =
+		 * "from Message as message where message.receiverId = ? and message.type=1,2,3,4"
+		 * ; }
+		 */
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, receiverId);
 		return query.list();

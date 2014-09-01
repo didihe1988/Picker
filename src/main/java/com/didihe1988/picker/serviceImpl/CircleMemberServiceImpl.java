@@ -70,22 +70,20 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 	 * @description 本人自己退出圈子
 	 */
 	@Override
-	public int deleteCircleMember(CircleMember circleMember) {
+	public int deleteCircleMember(int userId, int circleId) {
 		// TODO Auto-generated method stub
-		if (circleMember == null) {
-			return Status.NULLPOINTER;
-		}
+		/*check validation
 		if (!circleMemberDao.checkOperateValidation(circleMember.getMemberId(),
 				circleMember.getId())) {
 			return Status.INVALID;
-		}
-
-		circleMemberDao.deleteCircleMember(circleMember);
+		}*/
+		
+		circleMemberDao.deleteCircleMember(userId, circleId);
 		/*
 		 * Circle的memberNum--
 		 */
 		circleDao.decrementNum(Circle.CIRCLE_MEMBER_NUM,
-				circleMember.getCircleId());
+				circleId);
 		return Status.SUCCESS;
 	}
 
@@ -103,7 +101,7 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 		if (!circleDao.isEstablisherOfCircle(establisherId, circleId)) {
 			return Status.INVALID;
 		}
-		circleMemberDao.deleteCircleMember(circleMember);
+	//	circleMemberDao.deleteCircleMember(circleMember);
 		/*
 		 * Circle的memberNum--
 		 */

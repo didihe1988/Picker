@@ -5,12 +5,14 @@ import java.util.List;
 import com.didihe1988.picker.dao.daoInterface.OperateValidation;
 import com.didihe1988.picker.model.CircleMember;
 
-public interface CircleMemberDao extends OperateValidation{
+public interface CircleMemberDao extends OperateValidation {
 	public CircleMember queryCircleMemberById(int id);
+
+	// public CircleMember queryCircleMemberByKey(int userId, int circleId);
 
 	public int addCircleMember(CircleMember circleMember);
 
-	public int deleteCircleMember(CircleMember circleMember);
+	public int deleteCircleMember(int userId, int circleId);
 
 	public int updateCircleMember(CircleMember circleMember);
 
@@ -22,6 +24,5 @@ public interface CircleMemberDao extends OperateValidation{
 	public List<CircleMember> queryCircleMemberListByCircleId(int id);
 
 	public List<CircleMember> queryCircleMemberListByMemberId(int id);
-	
 
 }

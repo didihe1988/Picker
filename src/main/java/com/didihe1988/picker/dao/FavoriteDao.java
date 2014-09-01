@@ -10,6 +10,8 @@ public interface FavoriteDao extends OperateValidation {
 
 	public int deleteFavorite(Favorite favorite);
 
+	public int deleteFavorite(int objectId, int userId, int type);
+
 	public boolean isFavoriteExistsByKey(int userId, int objectId, int type);
 
 	public boolean isFavoriteExists(Favorite favorite);

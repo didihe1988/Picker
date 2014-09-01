@@ -128,8 +128,8 @@ public class RestQuestionController {
 	public String withdrawFollow(@PathVariable int id,
 			HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		Follow follow = new Follow(Follow.FOLLOW_QUESTION, userId, id);
-		int status = followService.deleteFollow(follow);
+		int status = followService.deleteFollow(Follow.FOLLOW_QUESTION, userId,
+				id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
