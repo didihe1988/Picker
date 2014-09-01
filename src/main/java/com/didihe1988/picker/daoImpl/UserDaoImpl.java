@@ -36,7 +36,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public User queryUserByEmail(String email) {
 		// TODO Auto-generated method stub
-		String hql = "from User as u where u.emails=?";
+		String hql = "from User as u where u.email=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setString(0, email);
 		List<User> list = query.list();

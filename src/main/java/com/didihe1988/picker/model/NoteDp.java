@@ -10,6 +10,8 @@ public class NoteDp extends Note {
 
 	private String userName;
 
+	private String userAvatarUrl;
+
 	public String getBookName() {
 		return bookName;
 	}
@@ -26,16 +28,26 @@ public class NoteDp extends Note {
 		this.userName = userName;
 	}
 
+	public String getUserAvatarUrl() {
+		return userAvatarUrl;
+	}
+
+	public void setUserAvatarUrl(String userAvatarUrl) {
+		this.userAvatarUrl = userAvatarUrl;
+	}
+
 	public NoteDp() {
 
 	}
 
-	public NoteDp(Note note, String bookName, String userName) {
+	public NoteDp(Note note, String bookName, String userName,
+			String userAvatarUrl) {
 		super(note.getId(), note.getBookId(), note.getUserId(),
 				note.getTitle(), note.getContent(), note.getPublishTime(), note
 						.isPublic());
 		this.bookName = bookName;
 		this.userName = userName;
+		this.userAvatarUrl = userAvatarUrl;
 	}
 
 }

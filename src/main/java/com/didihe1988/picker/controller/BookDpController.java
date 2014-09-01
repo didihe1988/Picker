@@ -34,7 +34,7 @@ public class BookDpController {
 	/**
 	 * @description 本书下提出的问题
 	 */
-	@RequestMapping(value = "/book/{id}/questiondps", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/book/{id}/questiondps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestionDps(@PathVariable int id) {
 		List<QuestionDp> list = questionService.getQuestionDpListByBookId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
@@ -43,7 +43,7 @@ public class BookDpController {
 	/**
 	 * @description 本书下写的笔记
 	 */
-	@RequestMapping(value = "/book/{id}/notedps", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/book/{id}/notedps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNoteDps(@PathVariable int id) {
 		List<NoteDp> list = noteService.getPublicNoteDpListByBookId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);

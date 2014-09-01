@@ -20,13 +20,13 @@ public class RestMessageController {
 	@Autowired
 	private MessageService messageService;
 
-	@RequestMapping(value = "/message/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/message/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public Message getMessage(@PathVariable int id) {
 		Message message = messageService.getMessageById(id);
 		return message;
 	}
 
-	@RequestMapping(value = "/message/list.do")
+	@RequestMapping(value = "/json/message/list.do")
 	public String list(HttpServletRequest request, ModelMap modelMap) {
 		int receiverId = HttpUtils.getIntegerFromReqeust(request, "receiverId");
 		List<Message> messageList = messageService
@@ -36,7 +36,7 @@ public class RestMessageController {
 		return "messagelist";
 	}
 
-	@RequestMapping(value = "/message/list_type.do")
+	@RequestMapping(value = "/json/message/list_type.do")
 	public String listByType(HttpServletRequest request, ModelMap modelMap) {
 		int receiverId = HttpUtils.getIntegerFromReqeust(request, "receiverId");
 		int type = HttpUtils.getIntegerFromReqeust(request, "type");
@@ -47,7 +47,7 @@ public class RestMessageController {
 		return "messagelist";
 	}
 
-	@RequestMapping(value = "/message/setchecked.do")
+	@RequestMapping(value = "/json/message/setchecked.do")
 	public String setChecked(HttpServletRequest request) {
 		int id = HttpUtils.getIntegerFromReqeust(request, "id");
 		messageService.setMessageChecked(id);

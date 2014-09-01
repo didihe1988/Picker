@@ -27,7 +27,7 @@ public class NoteServiceTest {
 
 	@Test
 	public void test01() {
-		Note note = new Note(1, 1, "lalala", "dota");
+		Note note = new Note(1, 3, "what is the matter", "lalala");
 		int status = noteService.addNote(note);
 		assertSame(Status.SUCCESS, status);
 	}

@@ -14,6 +14,7 @@ import com.didihe1988.picker.dao.NoteDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Note;
 import com.didihe1988.picker.model.NoteDp;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.NoteService;
 
 @Service
@@ -121,9 +122,10 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	private NoteDp getNoteDpByNote(Note note) {
-		String userName = userDao.queryUserById(note.getUserId()).getUsername();
+		User user = userDao.queryUserById(note.getUserId());
 		String bookName = bookDao.queryBookById(note.getBookId()).getBookName();
-		return new NoteDp(note, bookName, userName);
+		return new NoteDp(note, bookName, user.getUsername(),
+				user.getAvatarUrl());
 	}
 
 	private List<NoteDp> getNoteDpListFromNoteList(List<Note> noteList) {

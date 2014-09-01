@@ -15,6 +15,10 @@ public class HttpUtils {
 	}
 
 	public static int getSessionUserId(HttpServletRequest request) {
+		// System.out.println(request);
+		// System.out.println(request.getSession());
+		// System.out.println(request.toString());
+		// request.getSession().
 		return (Integer) request.getSession().getAttribute(Constant.USERID);
 	}
 

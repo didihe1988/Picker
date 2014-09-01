@@ -35,14 +35,14 @@ public class FollowController {
 	@Autowired
 	private QuestionService questionService;
 
-	@RequestMapping(value = "/follow/list/follower/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/follow/list/follower/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getFollowListByFollowerId(@PathVariable int id) {
 		List<Follow> followList = followService.getFollowListByFollowerId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_FOLLOW_LIST,
 				followList);
 	}
 
-	@RequestMapping(value = "/follow/list/followeduser/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/follow/list/followeduser/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getFollowListByFollowedUserId(@PathVariable int id) {
 		List<Follow> followList = followService
 				.getFollowListByFollowedUserId(id);
@@ -50,7 +50,7 @@ public class FollowController {
 				followList);
 	}
 
-	@RequestMapping(value = "/follow/list_byfolloweduserid.do")
+	@RequestMapping(value = "/json/follow/list_byfolloweduserid.do")
 	public String listByFollowedUserId(HttpServletRequest request,
 			ModelMap modelMap) {
 		int followedUserId = HttpUtils.getIntegerFromReqeust(request,

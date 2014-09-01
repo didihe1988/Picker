@@ -10,7 +10,7 @@ public class AnswerDp extends Answer {
 
 	private String replierName;
 
-	private String replierAvartarUrl;
+	private String replierAvatarUrl;
 
 	public String getQuestionName() {
 		return questionName;
@@ -28,12 +28,12 @@ public class AnswerDp extends Answer {
 		this.replierName = replierName;
 	}
 
-	public String getReplierAvartarUrl() {
-		return replierAvartarUrl;
+	public String getReplierAvatarUrl() {
+		return replierAvatarUrl;
 	}
 
-	public void setReplierAvartarUrl(String replierAvartarUrl) {
-		this.replierAvartarUrl = replierAvartarUrl;
+	public void setReplierAvatarUrl(String replierAvatarUrl) {
+		this.replierAvatarUrl = replierAvatarUrl;
 	}
 
 	public AnswerDp() {
@@ -41,13 +41,13 @@ public class AnswerDp extends Answer {
 	}
 
 	public AnswerDp(Answer answer, String questionName, String replierName,
-			String replierAvartarUrl) {
+			String replierAvatarUrl) {
 		super(answer.getId(), answer.getQuestionId(), answer.getReplierId(),
 				answer.getContent(), answer.getFavoriteNum(), answer
 						.getCommentNum(), answer.getDate());
 		this.questionName = questionName;
 		this.replierName = replierName;
-		this.replierAvartarUrl = replierAvartarUrl;
+		this.replierAvatarUrl = replierAvatarUrl;
 	}
 
 }

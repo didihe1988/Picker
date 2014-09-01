@@ -38,7 +38,7 @@ public class NoteController {
 	@Autowired
 	private CommentService commentService;
 
-	@RequestMapping(value = "/note/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/note/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNote(@PathVariable int id) {
 		Note note = noteService.getNoteById(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE, note);
@@ -47,7 +47,7 @@ public class NoteController {
 	/**
 	 * @description 该笔记下的评论
 	 */
-	@RequestMapping(value = "/note/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/note/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommets(@PathVariable int id) {
 		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_NOTE);
@@ -58,7 +58,7 @@ public class NoteController {
 	 * @description 删除该条笔记
 	 * @condition session-userId
 	 */
-	@RequestMapping(value = "/note/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/note/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String deleteNote(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = noteService.deleteNoteById(id, userId);
@@ -69,7 +69,7 @@ public class NoteController {
 	 * @description 用户赞了笔记
 	 * @condition session-userId userName
 	 */
-	@RequestMapping(value = "/note/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/note/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		String userName = HttpUtils.getSessionUserName(request);
@@ -101,7 +101,7 @@ public class NoteController {
 	 * @description 用户取消的对该笔记的赞
 	 * @condition session-userId
 	 */
-	@RequestMapping(value = "/note/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/note/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
@@ -109,7 +109,7 @@ public class NoteController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	@RequestMapping(value = "/note/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/note/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	public String add(@RequestBody Note note, HttpServletRequest request) {
 		int status = noteService.addNote(note);
 		if (status == Status.SUCCESS) {
@@ -118,7 +118,7 @@ public class NoteController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	@RequestMapping(value = "/note/update", method = RequestMethod.POST, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/note/update", method = RequestMethod.POST, headers = "Accept=application/json")
 	public String update(@RequestBody Note note, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = noteService.updateNote(note, userId);

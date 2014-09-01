@@ -35,7 +35,7 @@ public class BookController {
 	/**
 	 * @description 本书的详细内容
 	 */
-	@RequestMapping(value = "/book/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/book/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getBook(@PathVariable int id) {
 		Book book = bookService.getBookById(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_BOOK, book);
@@ -44,7 +44,7 @@ public class BookController {
 	/**
 	 * @description 本书下提出的问题
 	 */
-	@RequestMapping(value = "/book/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/book/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestions(@PathVariable int id) {
 		List<Question> list = questionService.getQuestionListByBookId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
@@ -53,7 +53,7 @@ public class BookController {
 	/**
 	 * @description 本书下写的笔记
 	 */
-	@RequestMapping(value = "/book/{id}/notes", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/book/{id}/notes", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNotes(@PathVariable int id) {
 		List<Note> list = noteService.getPublicNoteListByBookId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);

@@ -30,7 +30,7 @@ public class QuestionDpController {
 	@Autowired
 	private CommentService commentService;
 
-	@RequestMapping(value = "/question/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/question/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestionDp(@PathVariable int id) {
 		QuestionDp questionDp = questionService.getQuestionDpByQuestionId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION, questionDp);
@@ -39,7 +39,7 @@ public class QuestionDpController {
 	/**
 	 * @description 该问题下的回答
 	 */
-	@RequestMapping(value = "/question/{id}/answerdps", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/question/{id}/answerdps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswers(@PathVariable int id) {
 		List<AnswerDp> list = answerService.getAnswerDpListByQuestionId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
@@ -48,7 +48,7 @@ public class QuestionDpController {
 	/**
 	 * @description 该问题下的评论
 	 */
-	@RequestMapping(value = "/question/{id}/commentdps", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/question/{id}/commentdps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommets(@PathVariable int id) {
 		List<CommentDp> list = commentService.getCommentDpListByCommentedId(id,
 				Comment.COMMENT_QUESTION);

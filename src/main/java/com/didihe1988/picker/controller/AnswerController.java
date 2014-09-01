@@ -42,7 +42,7 @@ public class AnswerController {
 	@Autowired
 	private CommentService commentService;
 
-	@RequestMapping(value = "/answer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/answer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswer(@PathVariable int id) {
 		Answer answer = answerService.getAnswerById(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER, answer);
@@ -52,7 +52,7 @@ public class AnswerController {
 	 * @description 删除该条回答
 	 * @condition session-userId
 	 */
-	@RequestMapping(value = "/answer/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/answer/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String deleteAnswer(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = answerService.deleteAnswerById(id, userId);
@@ -62,7 +62,7 @@ public class AnswerController {
 	/**
 	 * @description 该回答下的评论
 	 */
-	@RequestMapping(value = "/answer/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/answer/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommets(@PathVariable int id) {
 		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_ANSWER);
@@ -73,7 +73,7 @@ public class AnswerController {
 	 * @description 用户赞了该评论
 	 * @condition session-userId
 	 */
-	@RequestMapping(value = "/answer/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/answer/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		String userName = HttpUtils.getSessionUserName(request);
@@ -100,7 +100,7 @@ public class AnswerController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	@RequestMapping(value = "/answer/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/answer/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
@@ -108,7 +108,7 @@ public class AnswerController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	@RequestMapping(value = "/answer/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/json/answer/add", method = RequestMethod.POST)
 	public String add(@RequestBody Answer answer, HttpServletRequest request) {
 		/*
 		 * 添加回答
@@ -120,7 +120,7 @@ public class AnswerController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	@RequestMapping(value = "/answer/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/json/answer/update", method = RequestMethod.POST)
 	public String update(@RequestBody Answer answer, HttpServletRequest request) {
 		/*
 		 * 编辑回答

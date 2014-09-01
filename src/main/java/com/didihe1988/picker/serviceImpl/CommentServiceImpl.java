@@ -16,6 +16,7 @@ import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.CommentDp;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.CommentService;
 
 @Service
@@ -153,8 +154,7 @@ public class CommentServiceImpl implements CommentService {
 
 	private CommentDp getCommentDpByComment(Comment comment) {
 		// TODO Auto-generated method stub
-		String producerName = userDao.queryUserById(comment.getProducerId())
-				.getUsername();
+		User user = userDao.queryUserById(comment.getProducerId());
 		int commentedId = comment.getCommentedId();
 		String commentedName = "";
 		if (comment.getType() == Comment.COMMENT_ANSWER) {
@@ -165,7 +165,8 @@ public class CommentServiceImpl implements CommentService {
 		} else if (comment.getType() == Comment.COMMENT_NOTE) {
 			commentedName = noteDao.queryNoteById(commentedId).getTitle();
 		}
-		return new CommentDp(comment, producerName, commentedName);
+		return new CommentDp(comment, user.getUsername(), commentedName,
+				user.getAvatarUrl());
 	}
 
 	private List<CommentDp> getCommentDpListFromCommetList(

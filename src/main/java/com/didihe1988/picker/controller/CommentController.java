@@ -41,7 +41,7 @@ public class CommentController {
 	@Autowired
 	private AnswerService answerService;
 
-	@RequestMapping(value = "/comment/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/comment/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getComment(@PathVariable int id) {
 		Comment comment = commentService.getCommentById(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT, comment);
@@ -51,7 +51,7 @@ public class CommentController {
 	 * @description 删除该条评论
 	 * @condition session-userId
 	 */
-	@RequestMapping(value = "/comment/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/comment/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String deleteComment(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = commentService.deleteCommentById(id, userId);
@@ -62,7 +62,7 @@ public class CommentController {
 	 * @description 用户赞了该评论
 	 * @condition session-userId userName
 	 */
-	@RequestMapping(value = "/comment/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/comment/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		String userName = HttpUtils.getSessionUserName(request);
@@ -94,7 +94,7 @@ public class CommentController {
 	 * @description 用户取消了赞
 	 * @condition session-userId
 	 */
-	@RequestMapping(value = "/comment/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/comment/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUser(request).getId();
@@ -102,7 +102,7 @@ public class CommentController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	@RequestMapping(value = "/comment", method = RequestMethod.POST)
+	@RequestMapping(value = "/json/comment", method = RequestMethod.POST)
 	public String add(@RequestBody Comment comment, HttpServletRequest request) {
 		/*
 		 * 添加评论

@@ -70,7 +70,8 @@ public class RestUserController {
 	 * @description 用户登陆
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST, headers = "Accept=application/json")
-	public String login(@RequestBody LoginForm loginForm) {
+	public String login(@RequestBody LoginForm loginForm,
+			HttpServletRequest request) {
 		int status = Status.ERROR;
 		if (userService.hasMatchUser(loginForm.getEmail(),
 				loginForm.getPassword())) {
@@ -83,6 +84,7 @@ public class RestUserController {
 			 */
 			user.setLastVisit(new Date());
 			userService.updateUser(user);
+			HttpUtils.setSessionUserId(request, user.getId());
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
@@ -90,7 +92,7 @@ public class RestUserController {
 	/**
 	 * @description 个人信息
 	 */
-	@RequestMapping(value = "/juser/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/user/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getUser(@PathVariable int id) {
 		UserDp userDp = userService.getUserDpByUserId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_USER, userDp);
@@ -106,7 +108,7 @@ public class RestUserController {
 	/**
 	 * @description 回答过的问题
 	 */
-	@RequestMapping(value = "/user/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/user/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswers(@PathVariable int id) {
 		List<Answer> list = answerService.getAnswerListByReplierId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
@@ -115,7 +117,7 @@ public class RestUserController {
 	/**
 	 * @description 问过的问题
 	 */
-	@RequestMapping(value = "/user/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/user/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestions(@PathVariable int id) {
 		List<Question> list = questionService.getQuestionListByAskerId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
@@ -124,7 +126,7 @@ public class RestUserController {
 	/**
 	 * @description 写过的笔记 自己的笔记显示全部 别人的只显示public部分
 	 */
-	@RequestMapping(value = "/user/{id}/notes", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/user/{id}/notes", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNotes(@PathVariable int id, HttpServletRequest request) {
 		List<Note> list = new ArrayList<Note>();
 		int userId = HttpUtils.getSessionUserId(request);
@@ -138,7 +140,7 @@ public class RestUserController {
 	/**
 	 * @description 关注了XXX
 	 */
-	@RequestMapping(value = "/user/{id}/followees", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/user/{id}/followees", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getFollowees(@PathVariable int id) {
 		List<Follow> followList = followService
 				.getFollowListByFollowerIdByUser(id);
@@ -153,7 +155,7 @@ public class RestUserController {
 	/**
 	 * @description 关注者 被XXX关注
 	 */
-	@RequestMapping(value = "/user/{id}/followers", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/user/{id}/followers", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getFollowers(@PathVariable int id) {
 		List<Follow> followList = followService
 				.getFollowListByFollowedUserId(id);
@@ -168,7 +170,7 @@ public class RestUserController {
 	/**
 	 * @description 关注的问题
 	 */
-	@RequestMapping(value = "/user/{id}/questions_followed", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/user/{id}/questions_followed", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestionsFollowed(@PathVariable int id) {
 		List<Follow> followList = followService
 				.getFollowListByFollowerIdByQuestion(id);
@@ -185,7 +187,7 @@ public class RestUserController {
 	/**
 	 * @description 添加的书籍
 	 */
-	@RequestMapping(value = "/user/{id}/books", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/user/{id}/books", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getBooks(@PathVariable int id) {
 		List<Bought> boughtList = boughtService.getBoughtByUserId(id);
 		List<Book> bookList = new ArrayList<Book>();
@@ -199,7 +201,7 @@ public class RestUserController {
 	/**
 	 * @description 加入的圈子
 	 */
-	@RequestMapping(value = "/user/{id}/circles", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/user/{id}/circles", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCircles(@PathVariable int id) {
 		List<Circle> circleList = circleMemberService
 				.getCircleListByMemberId(id);
@@ -210,7 +212,7 @@ public class RestUserController {
 	/**
 	 * @description 关注该用户
 	 */
-	@RequestMapping(value = "/user/{id}/follow", method = RequestMethod.GET)
+	@RequestMapping(value = "/json/user/{id}/follow", method = RequestMethod.GET)
 	public String follow(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		Follow follow = new Follow(Follow.FOLLOW_USER, userId, id);
@@ -221,7 +223,7 @@ public class RestUserController {
 	/**
 	 * @description 取消关注该用户
 	 */
-	@RequestMapping(value = "/user/{id}/withdraw_follow", method = RequestMethod.GET)
+	@RequestMapping(value = "/json/user/{id}/withdraw_follow", method = RequestMethod.GET)
 	public String withdrawFollow(@PathVariable int id,
 			HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);

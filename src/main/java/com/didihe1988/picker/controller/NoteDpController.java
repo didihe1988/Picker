@@ -24,7 +24,7 @@ public class NoteDpController {
 	@Autowired
 	private CommentService commentService;
 
-	@RequestMapping(value = "/note/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/note/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNoteDp(@PathVariable int id) {
 		NoteDp noteDp = noteService.getNoteDpByNoteId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE, noteDp);
@@ -33,7 +33,7 @@ public class NoteDpController {
 	/**
 	 * @description 该笔记下的评论
 	 */
-	@RequestMapping(value = "/note/{id}/commentdps", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/note/{id}/commentdps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommetDps(@PathVariable int id) {
 		List<CommentDp> list = commentService.getCommentDpListByCommentedId(id,
 				Comment.COMMENT_NOTE);

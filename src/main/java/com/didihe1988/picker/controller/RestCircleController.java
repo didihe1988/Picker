@@ -40,7 +40,7 @@ public class RestCircleController {
 	@Autowired
 	private MessageService messageService;
 
-	@RequestMapping(value = "/circle/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/circle/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCircle(@PathVariable int id) {
 		Circle circle = circleService.getCircleById(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_CIRCLE, circle);
@@ -49,7 +49,7 @@ public class RestCircleController {
 	/**
 	 * @description 圈子里的用户
 	 */
-	@RequestMapping(value = "/circle/{id}/members", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/circle/{id}/members", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getMembers(@PathVariable int id) {
 		List<CircleMember> circleMembers = circleMemberService
 				.getCircleMemberListByCircleId(id);
@@ -65,7 +65,7 @@ public class RestCircleController {
 	/**
 	 * 添加一个圈子
 	 */
-	@RequestMapping(value = "/circle/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/circle/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	public String add(@RequestBody Circle circle, HttpServletRequest request) {
 		/*
 		 * 添加问题
@@ -92,7 +92,7 @@ public class RestCircleController {
 	/*
 	 * 加入一个圈子
 	 */
-	@RequestMapping(value = "/circle/{id}/join", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/circle/{id}/join", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String join(@PathVariable int id, HttpServletRequest request) {
 
 		int userId = HttpUtils.getSessionUserId(request);
@@ -107,7 +107,7 @@ public class RestCircleController {
 	/*
 	 * 离开一个圈子
 	 */
-	@RequestMapping(value = "/circle/{id}/withdraw_join", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/circle/{id}/withdraw_join", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String withdrawJoin(@PathVariable int id, HttpServletRequest request) {
 		/*
 		 * 由于CricleMember对外是透明的，所以不可能获得它的id

@@ -55,7 +55,7 @@ public class RestQuestionController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/jquestion/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/question/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestion(@PathVariable int id) {
 		Question question = questionService.getQuestionById(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION, question);
@@ -64,7 +64,7 @@ public class RestQuestionController {
 	/**
 	 * @description 该问题下的回答
 	 */
-	@RequestMapping(value = "/question/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/question/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswers(@PathVariable int id) {
 		List<Answer> list = answerService.getAnswerListByQuestionId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
@@ -73,7 +73,7 @@ public class RestQuestionController {
 	/**
 	 * @description 该问题下的评论
 	 */
-	@RequestMapping(value = "/question/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/question/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommets(@PathVariable int id) {
 		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_QUESTION);
@@ -84,7 +84,7 @@ public class RestQuestionController {
 	 * @description 删除该条问题
 	 * @condition session-userId
 	 */
-	@RequestMapping(value = "/question/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/question/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String deleteQuestion(@PathVariable int id,
 			HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
@@ -95,7 +95,7 @@ public class RestQuestionController {
 	/**
 	 * @description 获得关注该问题的用户列表
 	 */
-	@RequestMapping(value = "/question/{id}/followers", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/question/{id}/followers", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getFollowers(@PathVariable int id) {
 		List<Follow> followList = followService.getFollowListByQuestionId(id);
 		List<UserDp> list = new ArrayList<UserDp>();
@@ -110,7 +110,7 @@ public class RestQuestionController {
 	/**
 	 * @description 关注该问题
 	 */
-	@RequestMapping(value = "/question/{id}/follow", method = RequestMethod.GET)
+	@RequestMapping(value = "/json/question/{id}/follow", method = RequestMethod.GET)
 	public String follow(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		Follow follow = new Follow(Follow.FOLLOW_QUESTION, userId, id);
@@ -124,7 +124,7 @@ public class RestQuestionController {
 	/*
 	 * 这个不知道行不行
 	 */
-	@RequestMapping(value = "/question/{id}/withdraw_follow", method = RequestMethod.GET)
+	@RequestMapping(value = "/json/question/{id}/withdraw_follow", method = RequestMethod.GET)
 	public String withdrawFollow(@PathVariable int id,
 			HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
@@ -137,7 +137,7 @@ public class RestQuestionController {
 	 * @description 用户赞了该问题
 	 * @condition session-userId userName
 	 */
-	@RequestMapping(value = "/question/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/question/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		String userName = HttpUtils.getSessionUserName(request);
@@ -169,7 +169,7 @@ public class RestQuestionController {
 	 * @description 用户取消了赞
 	 * @condition session-userId
 	 */
-	@RequestMapping(value = "/question/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/question/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUser(request).getId();
@@ -177,7 +177,7 @@ public class RestQuestionController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	@RequestMapping(value = "/question/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/json/question/add", method = RequestMethod.POST)
 	public String add(@RequestBody Question question, HttpServletRequest request) {
 		/*
 		 * 添加问题
@@ -190,7 +190,7 @@ public class RestQuestionController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	@RequestMapping(value = "/question/update", method = RequestMethod.POST)
+	@RequestMapping(value = "/json/question/update", method = RequestMethod.POST)
 	public String update(@RequestBody Question question,
 			HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
