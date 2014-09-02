@@ -107,4 +107,13 @@ public class PrivateMessage implements Serializable {
 		this.content = content;
 		this.time = time;
 	}
+
+	public PrivateMessage(int senderId, int receiverId, int dialogId,
+			String content) {
+		this.senderId = senderId;
+		this.receiverId = receiverId;
+		this.dialogId = dialogId;
+		this.content = content;
+		this.time = new Date();
+	}
 }
