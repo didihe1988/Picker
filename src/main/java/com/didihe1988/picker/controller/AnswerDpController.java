@@ -31,7 +31,8 @@ public class AnswerDpController {
 	@RequestMapping(value = "/json/answer/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswerDp(@PathVariable int id) {
 		AnswerDp answerDp = answerService.getAnswerDpByAnswerId(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER, answerDp);
+		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_ANSWER,
+				answerDp);
 	}
 
 	/**

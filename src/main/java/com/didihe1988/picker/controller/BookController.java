@@ -38,7 +38,7 @@ public class BookController {
 	@RequestMapping(value = "/json/book/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getBook(@PathVariable int id) {
 		Book book = bookService.getBookById(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_BOOK, book);
+		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_BOOK, book);
 	}
 
 	/**

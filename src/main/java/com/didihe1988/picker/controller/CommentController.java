@@ -44,7 +44,8 @@ public class CommentController {
 	@RequestMapping(value = "/json/comment/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getComment(@PathVariable int id) {
 		Comment comment = commentService.getCommentById(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT, comment);
+		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_COMMENT,
+				comment);
 	}
 
 	/**
@@ -85,6 +86,13 @@ public class CommentController {
 			messageService.addMessageByFollowedUser(
 					Message.MESSAGE_FOLLOWED_FAVORITE_COMMENT, userId,
 					userName, id, relatedSourceContent);
+
+			/*
+			 * 用户动态
+			 */
+			messageService.addMessageByRecerver(Message.NULL_receiverId,
+					Message.MESSAGE_USER_FAVORITE_COMMENT, userId, userName,
+					id, relatedSourceContent);
 		}
 
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -143,5 +151,12 @@ public class CommentController {
 					Message.MESSAGE_YOUR_ANSWER_COMMENTED, userId, userName,
 					commentId, relatedSourceContent);
 		}
+
+		/*
+		 * 用户动态
+		 */
+		messageService.addMessageByRecerver(Message.NULL_receiverId,
+				Message.MESSAGE_USER_ADDCOMMENT, userId, userName, commentId,
+				relatedSourceContent);
 	}
 }

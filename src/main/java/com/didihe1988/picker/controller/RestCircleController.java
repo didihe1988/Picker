@@ -43,7 +43,8 @@ public class RestCircleController {
 	@RequestMapping(value = "/json/circle/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCircle(@PathVariable int id) {
 		Circle circle = circleService.getCircleById(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_CIRCLE, circle);
+		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_CIRCLE,
+				circle);
 	}
 
 	/**

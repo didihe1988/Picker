@@ -36,6 +36,8 @@ import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @RestController
 public class RestUserController {
@@ -95,14 +97,16 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getUser(@PathVariable int id) {
 		UserDp userDp = userService.getUserDpByUserId(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_USER, userDp);
+		return JsonUtils
+				.getJsonObjectStringFromModel(Constant.KEY_USER, userDp);
 	}
 
 	@RequestMapping(value = "/json/user", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getUser(HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		UserDp userDp = userService.getUserDpByUserId(userId);
-		return JsonUtils.getJsonObjectString(Constant.KEY_USER, userDp);
+		return JsonUtils
+				.getJsonObjectStringFromModel(Constant.KEY_USER, userDp);
 	}
 
 	/**

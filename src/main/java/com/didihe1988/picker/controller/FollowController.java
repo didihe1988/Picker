@@ -109,9 +109,14 @@ public class FollowController {
 					Message.MESSAGE_FOLLOWED_FOLLOWQUESTION, userId, userName,
 					sourceId, relatedSourceContent);
 		}
+		/*
+		 * ÓÃ»§¶¯Ì¬
+		 */
+		// messageService.addMessageByRecerver(Message.NULL_receiverId,
+		// Message.MESSAGE_USER_FOLLOW_OTHER,userId, userName, relatedSourceId,
+		// relatedSourceContent);
 
 		return "/follow/listall_fortest.do";
 	}
-
 
 }

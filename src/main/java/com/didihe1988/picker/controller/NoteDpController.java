@@ -27,7 +27,8 @@ public class NoteDpController {
 	@RequestMapping(value = "/json/note/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNoteDp(@PathVariable int id) {
 		NoteDp noteDp = noteService.getNoteDpByNoteId(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE, noteDp);
+		return JsonUtils
+				.getJsonObjectStringFromModel(Constant.KEY_NOTE, noteDp);
 	}
 
 	/**

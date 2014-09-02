@@ -58,7 +58,8 @@ public class RestQuestionController {
 	@RequestMapping(value = "/json/question/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestion(@PathVariable int id) {
 		Question question = questionService.getQuestionById(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION, question);
+		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_QUESTION,
+				question);
 	}
 
 	/**
@@ -160,6 +161,12 @@ public class RestQuestionController {
 			messageService.addMessageByFollowedUser(
 					Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, userId,
 					userName, id, relatedSourceContent);
+			/*
+			 * 用户动态
+			 */
+			messageService.addMessageByRecerver(Message.NULL_receiverId,
+					Message.MESSAGE_USER_FAVORITE_QUESTION, userId, userName,
+					id, relatedSourceContent);
 		}
 
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -212,6 +219,12 @@ public class RestQuestionController {
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ASKQUESTION, userId, userName,
 				questionId, relatedSourceContent);
+		/*
+		 * 用户动态
+		 */
+		messageService.addMessageByRecerver(Message.NULL_receiverId,
+				Message.MESSAGE_USER_ADDQUESTION, userId, userName, questionId,
+				relatedSourceContent);
 	}
 
 }

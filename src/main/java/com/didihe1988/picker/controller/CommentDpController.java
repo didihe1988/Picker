@@ -19,6 +19,7 @@ public class CommentDpController {
 	@RequestMapping(value = "/json/comment/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommentDp(@PathVariable int id) {
 		CommentDp commentDp = commentService.getCommentDpByCommentId(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT, commentDp);
+		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_COMMENT,
+				commentDp);
 	}
 }

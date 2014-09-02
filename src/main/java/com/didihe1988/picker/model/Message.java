@@ -71,6 +71,7 @@ public class Message implements Serializable {
 
 	public static final int NULL_RelatedSourceId = 0;
 	public static final String NULL_RelatedSourceContent = "";
+	public static final int NULL_receiverId = 0;
 
 	private static final long serialVersionUID = 1L;
 

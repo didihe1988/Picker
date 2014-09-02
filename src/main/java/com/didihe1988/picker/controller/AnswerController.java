@@ -45,7 +45,8 @@ public class AnswerController {
 	@RequestMapping(value = "/json/answer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswer(@PathVariable int id) {
 		Answer answer = answerService.getAnswerById(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER, answer);
+		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_ANSWER,
+				answer);
 	}
 
 	/**
@@ -96,6 +97,12 @@ public class AnswerController {
 			messageService.addMessageByFollowedUser(
 					Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, userId, userName,
 					id, relatedSourceContent);
+			/*
+			 * 用户动态
+			 */
+			messageService.addMessageByRecerver(Message.NULL_receiverId,
+					Message.MESSAGE_USER_FAVORITE_ANSWER, userId, userName, id,
+					relatedSourceContent);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
@@ -155,6 +162,12 @@ public class AnswerController {
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ANSWER_QUESTION, userId, userName,
 				answerId, relatedSourceContent);
+		/*
+		 * 用户动态
+		 */
+		messageService.addMessageByRecerver(Message.NULL_receiverId,
+				Message.MESSAGE_USER_ADDANSWER, userId, userName, answerId,
+				relatedSourceContent);
 	}
 
 }

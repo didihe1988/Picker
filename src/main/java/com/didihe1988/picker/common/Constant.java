@@ -32,6 +32,7 @@ public class Constant {
 	public static final String KEY_ANSWER = "answer";
 	public static final String KEY_CIRCLE = "circle";
 	public static final String KEY_FOLLOW = "follow";
+	public static final String KEY_MESSAGE = "message";
 	public static final String KEY_NOTE = "note";
 	public static final String KEY_BOOK = "book";
 	public static final String KEY_USER = "user";

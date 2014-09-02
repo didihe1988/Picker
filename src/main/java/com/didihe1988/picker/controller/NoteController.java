@@ -41,7 +41,7 @@ public class NoteController {
 	@RequestMapping(value = "/json/note/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNote(@PathVariable int id) {
 		Note note = noteService.getNoteById(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE, note);
+		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_NOTE, note);
 	}
 
 	/**
@@ -93,6 +93,13 @@ public class NoteController {
 			messageService.addMessageByFollowedUser(
 					Message.MESSAGE_FOLLOWED_FAVORITE_NOTE, userId, userName,
 					id, relatedSourceContent);
+			/*
+			 * 用户动态
+			 */
+
+			messageService.addMessageByRecerver(Message.NULL_receiverId,
+					Message.MESSAGE_USER_FAVORITE_NOTE, userId, userName, id,
+					relatedSourceContent);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
@@ -133,6 +140,13 @@ public class NoteController {
 		int noteId = noteService.getLatestNoteIdByUserId(note.getUserId());
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ADDNOTE, userId, userName, noteId,
+				relatedSourceContent);
+
+		/*
+		 * 用户动态
+		 */
+		messageService.addMessageByRecerver(Message.NULL_receiverId,
+				Message.MESSAGE_USER_ADDNOTE, userId, userName, noteId,
 				relatedSourceContent);
 	}
 }
