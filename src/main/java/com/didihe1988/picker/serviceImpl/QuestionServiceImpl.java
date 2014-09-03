@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.BookDao;
+import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.dao.UserDao;
+import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.model.QuestionDp;
@@ -31,6 +33,9 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	private FollowDao followDao;
+
+	@Autowired
+	private FavoriteDao favoriteDao;
 
 	@Override
 	public int addQuestion(Question question) {
@@ -126,22 +131,10 @@ public class QuestionServiceImpl implements QuestionService {
 	public QuestionDp getQuestionDpByQuestionId(int id, int userId) {
 		// TODO Auto-generated method stub
 		Question question = getQuestionById(id);
-		return getQuestionDpByQuestion(question, followDao.isFollowExistsByKey(
-				Follow.FOLLOW_QUESTION, userId, id));
+		return getQuestionDpByQuestion(question, userId);
 	}
 
-	/*
-	 * 前期用于测试
-	 */
-	@Override
-	public QuestionDp getQuestionDpByQuestionId(int id, boolean isFollow) {
-		// TODO Auto-generated method stub
-		Question question = getQuestionById(id);
-		return getQuestionDpByQuestion(question, isFollow);
-	}
-
-	private QuestionDp getQuestionDpByQuestion(Question question,
-			boolean isFollow) {
+	private QuestionDp getQuestionDpByQuestion(Question question, int userId) {
 		// TODO Auto-generated method stub
 		String bookName = bookDao.queryBookById(question.getBookId())
 				.getBookName();
@@ -150,7 +143,10 @@ public class QuestionServiceImpl implements QuestionService {
 		String askerAvatarUrl = userDao.queryUserById(question.getAskerId())
 				.getAvatarUrl();
 		QuestionDp questionDp = new QuestionDp(question, bookName, askerName,
-				askerAvatarUrl, isFollow);
+				askerAvatarUrl, followDao.isFollowExistsByKey(
+						Follow.FOLLOW_QUESTION, userId, question.getId()),
+				favoriteDao.isFavoriteExistsByKey(userId, question.getId(),
+						Favorite.FAVORITE_QUESTION));
 		return questionDp;
 	}
 
@@ -158,9 +154,7 @@ public class QuestionServiceImpl implements QuestionService {
 			List<Question> questionList, int userId) {
 		List<QuestionDp> list = new ArrayList<QuestionDp>();
 		for (Question question : questionList) {
-			QuestionDp questionDp = getQuestionDpByQuestion(question,
-					followDao.isFollowExistsByKey(Follow.FOLLOW_QUESTION,
-							userId, question.getId()));
+			QuestionDp questionDp = getQuestionDpByQuestion(question, userId);
 			list.add(questionDp);
 		}
 		return list;

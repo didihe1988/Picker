@@ -35,7 +35,8 @@ public class QuestionController {
 				HttpUtils.getSessionUserId(request));
 		model.addAttribute("question", questionDp);
 		model.addAttribute("answerList",
-				answerService.getAnswerDpListByQuestionId(id));
+				answerService.getAnswerDpListByQuestionId(id,
+						HttpUtils.getSessionUserId(request)));
 		return "question";
 	}
 }

@@ -26,14 +26,14 @@ public interface AnswerService {
 
 	public List<Answer> getAnswerListByReplierId(int id);
 
-	public List<AnswerDp> getAnswerDpListByQuestionId(int id);
+	public List<AnswerDp> getAnswerDpListByQuestionId(int id, int userId);
 
-	public List<AnswerDp> getAnswerDpListByReplierId(int id);
+	public List<AnswerDp> getAnswerDpListByReplierId(int id, int userId);
 
 	public int getLatestAnswerIdByQuestionId(int id);
 
 	public boolean checkOperateValidation(int userId, int answerId);
 
-	public AnswerDp getAnswerDpByAnswerId(int id);
+	public AnswerDp getAnswerDpByAnswerId(int id, int userId);
 
 }

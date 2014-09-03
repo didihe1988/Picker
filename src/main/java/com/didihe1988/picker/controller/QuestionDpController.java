@@ -44,8 +44,9 @@ public class QuestionDpController {
 	 * @description 该问题下的回答
 	 */
 	@RequestMapping(value = "/json/question/{id}/answerdps", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getAnswers(@PathVariable int id) {
-		List<AnswerDp> list = answerService.getAnswerDpListByQuestionId(id);
+	public String getAnswers(@PathVariable int id, HttpServletRequest request) {
+		List<AnswerDp> list = answerService.getAnswerDpListByQuestionId(id,
+				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
 	}
 
@@ -53,9 +54,9 @@ public class QuestionDpController {
 	 * @description 该问题下的评论
 	 */
 	@RequestMapping(value = "/json/question/{id}/commentdps", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getCommets(@PathVariable int id) {
+	public String getCommets(@PathVariable int id, HttpServletRequest request) {
 		List<CommentDp> list = commentService.getCommentDpListByCommentedId(id,
-				Comment.COMMENT_QUESTION);
+				Comment.COMMENT_QUESTION, HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT_LIST, list);
 	}
 }

@@ -124,8 +124,9 @@ public class RestUserController {
 	 * @description 回答过的问题
 	 */
 	@RequestMapping(value = "/json/user/{id}/answerdps", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getAnswerDps(@PathVariable int id) {
-		List<AnswerDp> list = answerService.getAnswerDpListByReplierId(id);
+	public String getAnswerDps(@PathVariable int id,HttpServletRequest request) {
+		List<AnswerDp> list = answerService.getAnswerDpListByReplierId(id,
+				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
 	}
 
@@ -171,9 +172,11 @@ public class RestUserController {
 		List<NoteDp> list = new ArrayList<NoteDp>();
 		int userId = HttpUtils.getSessionUserId(request);
 		if (userId == id) {
-			list = noteService.getALlNoteDpListByUserId(id);
+			list = noteService.getALlNoteDpListByUserId(id,
+					HttpUtils.getSessionUserId(request));
 		}
-		list = noteService.getPublicNoteDpListByUserId(id);
+		list = noteService.getPublicNoteDpListByUserId(id,
+				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
 	}
 

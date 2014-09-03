@@ -1,6 +1,8 @@
 package com.didihe1988.picker.model;
 
-public class CommentDp extends Comment {
+import com.didihe1988.picker.model.dpInterface.IsFavorite;
+
+public class CommentDp extends Comment implements IsFavorite {
 
 	/**
 	 * 
@@ -12,6 +14,20 @@ public class CommentDp extends Comment {
 	private String commentedName;
 
 	private String userAvatarUrl;
+
+	private boolean isFavorite;
+
+	@Override
+	public boolean isFavorite() {
+		// TODO Auto-generated method stub
+		return this.isFavorite;
+	}
+
+	@Override
+	public void setFavorite(boolean value) {
+		// TODO Auto-generated method stub
+		this.isFavorite = value;
+	}
 
 	public String getProducerName() {
 		return producerName;
@@ -42,13 +58,14 @@ public class CommentDp extends Comment {
 	}
 
 	public CommentDp(Comment comment, String producerName,
-			String commentedName, String userAvatarUrl) {
+			String commentedName, String userAvatarUrl, boolean isFavorite) {
 		super(comment.getId(), comment.getCommentedId(), comment
 				.getProducerId(), comment.getContent(), comment.getType(),
 				comment.getFavoriteNum(), comment.getDate());
 		this.producerName = producerName;
 		this.commentedName = commentedName;
 		this.userAvatarUrl = userAvatarUrl;
+		this.isFavorite = isFavorite;
 	}
 
 }

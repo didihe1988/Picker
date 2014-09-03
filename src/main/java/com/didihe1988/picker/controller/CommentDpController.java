@@ -1,5 +1,7 @@
 package com.didihe1988.picker.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.CommentDp;
 import com.didihe1988.picker.service.CommentService;
+import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 
 @RestController
@@ -17,8 +20,9 @@ public class CommentDpController {
 	private CommentService commentService;
 
 	@RequestMapping(value = "/json/comment/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getCommentDp(@PathVariable int id) {
-		CommentDp commentDp = commentService.getCommentDpByCommentId(id);
+	public String getCommentDp(@PathVariable int id,HttpServletRequest request) {
+		CommentDp commentDp = commentService.getCommentDpByCommentId(id,
+				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_COMMENT,
 				commentDp);
 	}

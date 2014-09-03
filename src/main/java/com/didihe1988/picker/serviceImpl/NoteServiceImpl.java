@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.BookDao;
+import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.dao.NoteDao;
 import com.didihe1988.picker.dao.UserDao;
+import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Note;
 import com.didihe1988.picker.model.NoteDp;
 import com.didihe1988.picker.model.User;
@@ -28,6 +30,9 @@ public class NoteServiceImpl implements NoteService {
 
 	@Autowired
 	private BookDao bookDao;
+
+	@Autowired
+	private FavoriteDao favoriteDao;
 
 	@Override
 	public int addNote(Note note) {
@@ -115,50 +120,52 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public NoteDp getNoteDpByNoteId(int id) {
+	public NoteDp getNoteDpByNoteId(int id, int userId) {
 		// TODO Auto-generated method stub
 		Note note = noteDao.queryNoteById(id);
-		return getNoteDpByNote(note);
+		return getNoteDpByNote(note, userId);
 	}
 
-	private NoteDp getNoteDpByNote(Note note) {
+	private NoteDp getNoteDpByNote(Note note, int userId) {
 		User user = userDao.queryUserById(note.getUserId());
 		String bookName = bookDao.queryBookById(note.getBookId()).getBookName();
 		return new NoteDp(note, bookName, user.getUsername(),
-				user.getAvatarUrl());
+				user.getAvatarUrl(), favoriteDao.isFavoriteExistsByKey(userId,
+						note.getId(), Favorite.FAVORITE_NOTE));
 	}
 
-	private List<NoteDp> getNoteDpListFromNoteList(List<Note> noteList) {
+	private List<NoteDp> getNoteDpListFromNoteList(List<Note> noteList,
+			int userId) {
 		List<NoteDp> list = new ArrayList<NoteDp>();
 		for (Note note : noteList) {
-			NoteDp noteDp = getNoteDpByNote(note);
+			NoteDp noteDp = getNoteDpByNote(note, userId);
 			list.add(noteDp);
 		}
 		return list;
 	}
 
 	@Override
-	public List<NoteDp> getALlNoteDpListByUserId(int id) {
+	public List<NoteDp> getALlNoteDpListByUserId(int id, int userId) {
 		// TODO Auto-generated method stub
-		return getNoteDpListFromNoteList(getALlNoteListByUserId(id));
+		return getNoteDpListFromNoteList(getALlNoteListByUserId(id), userId);
 	}
 
 	@Override
-	public List<NoteDp> getPublicNoteDpListByUserId(int id) {
+	public List<NoteDp> getPublicNoteDpListByUserId(int id, int userId) {
 		// TODO Auto-generated method stub
-		return getNoteDpListFromNoteList(getPublicNoteListByUserId(id));
+		return getNoteDpListFromNoteList(getPublicNoteListByUserId(id), userId);
 	}
 
 	@Override
-	public List<NoteDp> getALLNoteDpListByBookId(int id) {
+	public List<NoteDp> getALLNoteDpListByBookId(int id, int userId) {
 		// TODO Auto-generated method stub
-		return getNoteDpListFromNoteList(getALLNoteListByBookId(id));
+		return getNoteDpListFromNoteList(getALLNoteListByBookId(id), userId);
 	}
 
 	@Override
-	public List<NoteDp> getPublicNoteDpListByBookId(int id) {
+	public List<NoteDp> getPublicNoteDpListByBookId(int id, int userId) {
 		// TODO Auto-generated method stub
-		return getNoteDpListFromNoteList(getPublicNoteListByBookId(id));
+		return getNoteDpListFromNoteList(getPublicNoteListByBookId(id), userId);
 	}
 
 	@Override

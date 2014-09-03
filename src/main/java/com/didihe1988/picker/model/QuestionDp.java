@@ -1,8 +1,9 @@
 package com.didihe1988.picker.model;
 
+import com.didihe1988.picker.model.dpInterface.IsFavorite;
 import com.didihe1988.picker.model.dpInterface.IsFollow;
 
-public class QuestionDp extends Question implements IsFollow {
+public class QuestionDp extends Question implements IsFollow, IsFavorite {
 
 	/**
 	 * 
@@ -16,6 +17,20 @@ public class QuestionDp extends Question implements IsFollow {
 	private String askerAvatarUrl;
 
 	private boolean isFollow;
+
+	private boolean isFavorite;
+
+	@Override
+	public boolean isFavorite() {
+		// TODO Auto-generated method stub
+		return this.isFavorite;
+	}
+
+	@Override
+	public void setFavorite(boolean value) {
+		// TODO Auto-generated method stub
+		this.isFavorite = value;
+	}
 
 	@Override
 	public boolean isFollow() {
@@ -57,7 +72,7 @@ public class QuestionDp extends Question implements IsFollow {
 	}
 
 	public QuestionDp(Question question, String bookName, String askerName,
-			String askerAvatarUrl, boolean isFollow) {
+			String askerAvatarUrl, boolean isFollow, boolean isFavorite) {
 		super(question.getId(), question.getBookId(), question.getAskerId(),
 				question.getTitle(), question.getContent(), question
 						.getFavoriteNum(), question.getAnswerNum(), question
@@ -67,5 +82,6 @@ public class QuestionDp extends Question implements IsFollow {
 		this.askerName = askerName;
 		this.askerAvatarUrl = askerAvatarUrl;
 		this.isFollow = isFollow;
+		this.isFavorite = isFavorite;
 	}
 }

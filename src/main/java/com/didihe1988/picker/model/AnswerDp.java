@@ -57,13 +57,14 @@ public class AnswerDp extends Answer implements IsFavorite {
 	}
 
 	public AnswerDp(Answer answer, String questionName, String replierName,
-			String replierAvatarUrl) {
+			String replierAvatarUrl, boolean isFavorite) {
 		super(answer.getId(), answer.getQuestionId(), answer.getReplierId(),
 				answer.getContent(), answer.getFavoriteNum(), answer
 						.getCommentNum(), answer.getDate());
 		this.questionName = questionName;
 		this.replierName = replierName;
 		this.replierAvatarUrl = replierAvatarUrl;
+		this.isFavorite = isFavorite;
 	}
 
 }

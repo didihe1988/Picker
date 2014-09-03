@@ -1,6 +1,8 @@
 package com.didihe1988.picker.model;
 
-public class NoteDp extends Note {
+import com.didihe1988.picker.model.dpInterface.IsFavorite;
+
+public class NoteDp extends Note implements IsFavorite {
 	/**
 	 * 
 	 */
@@ -11,6 +13,20 @@ public class NoteDp extends Note {
 	private String userName;
 
 	private String userAvatarUrl;
+
+	private boolean isFavorite;
+
+	@Override
+	public boolean isFavorite() {
+		// TODO Auto-generated method stub
+		return this.isFavorite;
+	}
+
+	@Override
+	public void setFavorite(boolean value) {
+		// TODO Auto-generated method stub
+		this.isFavorite = value;
+	}
 
 	public String getBookName() {
 		return bookName;
@@ -41,13 +57,14 @@ public class NoteDp extends Note {
 	}
 
 	public NoteDp(Note note, String bookName, String userName,
-			String userAvatarUrl) {
+			String userAvatarUrl, boolean isFavorite) {
 		super(note.getId(), note.getBookId(), note.getUserId(),
 				note.getTitle(), note.getContent(), note.getPublishTime(), note
 						.isPublic());
 		this.bookName = bookName;
 		this.userName = userName;
 		this.userAvatarUrl = userAvatarUrl;
+		this.isFavorite = isFavorite;
 	}
 
 }

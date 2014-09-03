@@ -10,10 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AnswerDao;
+import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.AnswerDp;
+import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.AnswerService;
 
@@ -28,6 +30,9 @@ public class AnswerServiceImpl implements AnswerService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private FavoriteDao favoriteDao;
 
 	@Override
 	public int addAnswer(Answer answer) {
@@ -136,39 +141,42 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public AnswerDp getAnswerDpByAnswerId(int id) {
+	public AnswerDp getAnswerDpByAnswerId(int id, int userId) {
 		// TODO Auto-generated method stub
 		Answer answer = answerDao.queryAnswerById(id);
-		return getAnswerDpByAnswer(answer);
+		return getAnswerDpByAnswer(answer, userId);
 	}
 
-	private AnswerDp getAnswerDpByAnswer(Answer answer) {
+	@Override
+	public List<AnswerDp> getAnswerDpListByQuestionId(int id, int userId) {
+		// TODO Auto-generated method stub
+		return getAnswerDpListFormAnswerList(getAnswerListByQuestionId(id),
+				userId);
+	}
+
+	@Override
+	public List<AnswerDp> getAnswerDpListByReplierId(int id, int userId) {
+		// TODO Auto-generated method stub
+		return getAnswerDpListFormAnswerList(getAnswerListByReplierId(id),
+				userId);
+	}
+
+	private AnswerDp getAnswerDpByAnswer(Answer answer, int userId) {
 		String questionName = questionDao.queryQuestionById(
 				answer.getQuestionId()).getTitle();
 		User user = userDao.queryUserById(answer.getReplierId());
 		return new AnswerDp(answer, questionName, user.getUsername(),
-				user.getAvatarUrl());
+				user.getAvatarUrl(), favoriteDao.isFavoriteExistsByKey(userId,
+						answer.getId(), Favorite.FAVORITE_ANSWER));
 	}
 
-	private List<AnswerDp> getAnswerDpListFormAnswerList(List<Answer> answerList) {
+	private List<AnswerDp> getAnswerDpListFormAnswerList(
+			List<Answer> answerList, int userId) {
 		List<AnswerDp> list = new ArrayList<AnswerDp>();
 		for (Answer answer : answerList) {
-			AnswerDp answerDp = getAnswerDpByAnswer(answer);
+			AnswerDp answerDp = getAnswerDpByAnswer(answer, userId);
 			list.add(answerDp);
 		}
 		return list;
 	}
-
-	@Override
-	public List<AnswerDp> getAnswerDpListByQuestionId(int id) {
-		// TODO Auto-generated method stub
-		return getAnswerDpListFormAnswerList(getAnswerListByQuestionId(id));
-	}
-
-	@Override
-	public List<AnswerDp> getAnswerDpListByReplierId(int id) {
-		// TODO Auto-generated method stub
-		return getAnswerDpListFormAnswerList(getAnswerListByReplierId(id));
-	}
-
 }

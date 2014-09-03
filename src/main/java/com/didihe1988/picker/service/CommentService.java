@@ -28,7 +28,7 @@ public interface CommentService {
 	public List<Comment> getCommentListByCommentedId(int commentedId, int type);
 
 	public List<CommentDp> getCommentDpListByCommentedId(int commentedId,
-			int type);
+			int type, int userId);
 
-	public CommentDp getCommentDpByCommentId(int id);
+	public CommentDp getCommentDpByCommentId(int id, int userId);
 }

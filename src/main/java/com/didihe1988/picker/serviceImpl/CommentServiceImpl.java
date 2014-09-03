@@ -11,11 +11,13 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.dao.CommentDao;
+import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.dao.NoteDao;
 import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.CommentDp;
+import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.CommentService;
 
@@ -39,6 +41,9 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private FavoriteDao favoriteDao;
 
 	@Override
 	public int addComment(Comment comment) {
@@ -146,13 +151,13 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public CommentDp getCommentDpByCommentId(int id) {
+	public CommentDp getCommentDpByCommentId(int id, int userId) {
 		// TODO Auto-generated method stub
 		Comment comment = commentDao.queryCommentById(id);
-		return getCommentDpByComment(comment);
+		return getCommentDpByComment(comment, userId);
 	}
 
-	private CommentDp getCommentDpByComment(Comment comment) {
+	private CommentDp getCommentDpByComment(Comment comment, int userId) {
 		// TODO Auto-generated method stub
 		User user = userDao.queryUserById(comment.getProducerId());
 		int commentedId = comment.getCommentedId();
@@ -166,14 +171,15 @@ public class CommentServiceImpl implements CommentService {
 			commentedName = noteDao.queryNoteById(commentedId).getTitle();
 		}
 		return new CommentDp(comment, user.getUsername(), commentedName,
-				user.getAvatarUrl());
+				user.getAvatarUrl(), favoriteDao.isFavoriteExistsByKey(userId,
+						comment.getId(), Favorite.FAVORITE_COMMENT));
 	}
 
 	private List<CommentDp> getCommentDpListFromCommetList(
-			List<Comment> commentList) {
+			List<Comment> commentList, int userId) {
 		List<CommentDp> list = new ArrayList<CommentDp>();
 		for (Comment comment : commentList) {
-			CommentDp commentDp = getCommentDpByComment(comment);
+			CommentDp commentDp = getCommentDpByComment(comment, userId);
 			list.add(commentDp);
 		}
 		return list;
@@ -181,10 +187,10 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public List<CommentDp> getCommentDpListByCommentedId(int commentedId,
-			int type) {
+			int type, int userId) {
 		// TODO Auto-generated method stub
-		return getCommentDpListFromCommetList(getCommentListByCommentedId(
-				commentedId, type));
+		return getCommentDpListFromCommetList(
+				getCommentListByCommentedId(commentedId, type), userId);
 	}
 
 }
