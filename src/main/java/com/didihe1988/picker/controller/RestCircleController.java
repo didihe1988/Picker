@@ -51,13 +51,14 @@ public class RestCircleController {
 	 * @description 圈子里的用户
 	 */
 	@RequestMapping(value = "/json/circle/{id}/members", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getMembers(@PathVariable int id) {
+	public String getMembers(@PathVariable int id, HttpServletRequest request) {
 		List<CircleMember> circleMembers = circleMemberService
 				.getCircleMemberListByCircleId(id);
 		List<UserDp> list = new ArrayList<UserDp>();
 		for (CircleMember circleMember : circleMembers) {
-			UserDp userDp = userService.getUserDpByUserId(circleMember
-					.getMemberId());
+			UserDp userDp = userService.getUserDpByUserId(
+					circleMember.getMemberId(),
+					HttpUtils.getSessionUserId(request));
 			list.add(userDp);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_USER_LIST, list);

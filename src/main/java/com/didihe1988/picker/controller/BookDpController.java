@@ -2,6 +2,8 @@ package com.didihe1988.picker.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
 import com.didihe1988.picker.service.NoteService;
 import com.didihe1988.picker.service.QuestionService;
+import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 
 @RestController
@@ -33,10 +36,12 @@ public class BookDpController {
 
 	/**
 	 * @description 本书下提出的问题
+	 * @condition request userId
 	 */
 	@RequestMapping(value = "/json/book/{id}/questiondps", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getQuestionDps(@PathVariable int id) {
-		List<QuestionDp> list = questionService.getQuestionDpListByBookId(id);
+	public String getQuestionDps(@PathVariable int id,HttpServletRequest request) {
+		List<QuestionDp> list = questionService.getQuestionDpListByBookId(id,
+				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 

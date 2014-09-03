@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.UserDao;
+import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.UserDp;
 import com.didihe1988.picker.service.UserService;
@@ -17,6 +19,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private FollowDao followDao;
 
 	@Override
 	public boolean hasMatchUser(String email, String password) {
@@ -98,15 +103,29 @@ public class UserServiceImpl implements UserService {
 		return userDao.isUsernameExists(username);
 	}
 
-	private UserDp getUserDpByUser(User user) {
-		return new UserDp(user);
+	private UserDp getUserDpByUser(User user, boolean isFollow) {
+		return new UserDp(user, isFollow);
+	}
+
+	/*
+	 * @Override public UserDp getUserDpByUserId(int id) { // TODO
+	 * Auto-generated method stub User user = userDao.queryUserById(id); return
+	 * getUserDpByUser(user, isFollow); }
+	 */
+
+	@Override
+	public UserDp getUserDpByUserId(int userId, int curUserId) {
+		// TODO Auto-generated method stub
+		User user = userDao.queryUserById(userId);
+		return getUserDpByUser(user, followDao.isFollowExistsByKey(
+				Follow.FOLLOW_USER, curUserId, userId));
 	}
 
 	@Override
-	public UserDp getUserDpByUserId(int id) {
+	public UserDp getUserDpByUserId(int userId, boolean isFollow) {
 		// TODO Auto-generated method stub
-		User user = userDao.queryUserById(id);
-		return getUserDpByUser(user);
+		User user = userDao.queryUserById(userId);
+		return getUserDpByUser(user, isFollow);
 	}
 
 	private String encryptByMD5(User user) {

@@ -5,12 +5,14 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.mockito.internal.stubbing.answers.ReturnsElementsOf;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.PrivateMessageDao;
 import com.didihe1988.picker.model.PrivateMessage;
-
+@Repository
+@Transactional
 public class PrivateMessageDaoImpl implements PrivateMessageDao {
 	@Autowired
 	private SessionFactory sessionFactory;

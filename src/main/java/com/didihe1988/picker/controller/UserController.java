@@ -69,11 +69,15 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/{id}")
 	public String getUserProfile(@PathVariable int id, Model model) {
-		UserDp user = userService.getUserDpByUserId(id);
+		UserDp user = userService.getUserDpByUserId(id, false);
 		model.addAttribute("user", user);
 		model.addAttribute("circleList",
 				circleMemberService.getCircleListByMemberId(id));
 		model.addAttribute("followerList", getFollowers(id));
+		System.out.println(getFollowers(id));
+		/*
+		 * isFollowÔÝÊ±ÉèÎªfalse
+		 */
 		model.addAttribute("followeeList", getFollowees(id));
 		model.addAttribute("bookList", getBooks(id));
 		return "user";
@@ -102,7 +106,8 @@ public class UserController {
 				.getFollowListByFollowedUserId(userId);
 		List<UserDp> userList = new ArrayList<UserDp>();
 		for (Follow follow : followList) {
-			UserDp user = userService.getUserDpByUserId(follow.getFollowerId());
+			UserDp user = userService.getUserDpByUserId(follow.getFollowerId(),
+					false);
 			userList.add(user);
 		}
 		return userList;
@@ -113,7 +118,8 @@ public class UserController {
 				.getFollowListByFollowerIdByUser(userId);
 		List<UserDp> userList = new ArrayList<UserDp>();
 		for (Follow follow : followList) {
-			UserDp user = userService.getUserDpByUserId(follow.getSourceId());
+			UserDp user = userService.getUserDpByUserId(follow.getSourceId(),
+					false);
 			userList.add(user);
 		}
 		return userList;

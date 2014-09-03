@@ -2,6 +2,8 @@ package com.didihe1988.picker.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import com.didihe1988.picker.model.QuestionDp;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.QuestionService;
+import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 
 @RestController
@@ -31,8 +34,9 @@ public class QuestionDpController {
 	private CommentService commentService;
 
 	@RequestMapping(value = "/json/question/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getQuestionDp(@PathVariable int id) {
-		QuestionDp questionDp = questionService.getQuestionDpByQuestionId(id);
+	public String getQuestionDp(@PathVariable int id, HttpServletRequest request) {
+		QuestionDp questionDp = questionService.getQuestionDpByQuestionId(id,
+				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION, questionDp);
 	}
 

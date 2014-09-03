@@ -147,7 +147,7 @@
 							src="/picker/static/images/photo/4.jpg" /></span> <span><img
 							src="/picker/static/images/photo/5.jpg" /></span> -->
 						<c:forEach var="user" items="${followeeList}">
-							<span><img src=<c:url value="${user.avatarUrl}"/> /></span>
+							<span><img src="<c:url value="${user.avatarUrl}"/>" /></span>
 						</c:forEach>
 					</div>
 				</div>
@@ -167,7 +167,7 @@
 							src="/picker/static/images/photo/5.jpg" /></span> <span><img
 							src="/picker/static/images/photo/4.jpg" /></span>-->
 						<c:forEach var="user" items="${followerList}">
-							<span><img src=<c:url value="${user.avatarUrl}"/> /></span>
+							<span><img src="<c:url value="${user.avatarUrl}"/>"/> /></span>
 						</c:forEach>
 					</div>
 				</div>

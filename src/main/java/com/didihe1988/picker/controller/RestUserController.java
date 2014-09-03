@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Answer;
+import com.didihe1988.picker.model.AnswerDp;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.LoginForm;
 import com.didihe1988.picker.model.Note;
+import com.didihe1988.picker.model.NoteDp;
 import com.didihe1988.picker.model.Question;
+import com.didihe1988.picker.model.QuestionDp;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.UserDp;
 import com.didihe1988.picker.service.AnswerService;
@@ -36,8 +39,6 @@ import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 @RestController
 public class RestUserController {
@@ -95,8 +96,9 @@ public class RestUserController {
 	 * @description 个人信息
 	 */
 	@RequestMapping(value = "/json/user/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getUser(@PathVariable int id) {
-		UserDp userDp = userService.getUserDpByUserId(id);
+	public String getUser(@PathVariable int id, HttpServletRequest request) {
+		UserDp userDp = userService.getUserDpByUserId(id,
+				HttpUtils.getSessionUserId(request));
 		return JsonUtils
 				.getJsonObjectStringFromModel(Constant.KEY_USER, userDp);
 	}
@@ -104,7 +106,7 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getUser(HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		UserDp userDp = userService.getUserDpByUserId(userId);
+		UserDp userDp = userService.getUserDpByUserId(userId, userId);
 		return JsonUtils
 				.getJsonObjectStringFromModel(Constant.KEY_USER, userDp);
 	}
@@ -119,11 +121,31 @@ public class RestUserController {
 	}
 
 	/**
+	 * @description 回答过的问题
+	 */
+	@RequestMapping(value = "/json/user/{id}/answerdps", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getAnswerDps(@PathVariable int id) {
+		List<AnswerDp> list = answerService.getAnswerDpListByReplierId(id);
+		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
+	}
+
+	/**
 	 * @description 问过的问题
 	 */
 	@RequestMapping(value = "/json/user/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestions(@PathVariable int id) {
 		List<Question> list = questionService.getQuestionListByAskerId(id);
+		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
+	}
+
+	/**
+	 * @description 问过的问题
+	 */
+	@RequestMapping(value = "/json/user/{id}/questiondps", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getQuestionDps(@PathVariable int id,
+			HttpServletRequest request) {
+		List<QuestionDp> list = questionService.getQuestionDpListByAskerId(id,
+				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 
@@ -138,6 +160,20 @@ public class RestUserController {
 			list = noteService.getALlNoteListByUserId(id);
 		}
 		list = noteService.getPublicNoteListByUserId(id);
+		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
+	}
+
+	/**
+	 * @description 写过的笔记 自己的笔记显示全部 别人的只显示public部分
+	 */
+	@RequestMapping(value = "/json/user/{id}/notedps", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getNoteDps(@PathVariable int id, HttpServletRequest request) {
+		List<NoteDp> list = new ArrayList<NoteDp>();
+		int userId = HttpUtils.getSessionUserId(request);
+		if (userId == id) {
+			list = noteService.getALlNoteDpListByUserId(id);
+		}
+		list = noteService.getPublicNoteDpListByUserId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
 	}
 

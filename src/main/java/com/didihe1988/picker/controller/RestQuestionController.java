@@ -97,12 +97,13 @@ public class RestQuestionController {
 	 * @description 获得关注该问题的用户列表
 	 */
 	@RequestMapping(value = "/json/question/{id}/followers", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getFollowers(@PathVariable int id) {
+	public String getFollowers(@PathVariable int id, HttpServletRequest request) {
 		List<Follow> followList = followService.getFollowListByQuestionId(id);
 		List<UserDp> list = new ArrayList<UserDp>();
 		for (Follow follow : followList) {
-			UserDp userDp = userService.getUserDpByUserId(follow
-					.getFollowerId());
+			UserDp userDp = userService
+					.getUserDpByUserId(follow.getFollowerId(),
+							HttpUtils.getSessionUserId(request));
 			list.add(userDp);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_USER_LIST, list);

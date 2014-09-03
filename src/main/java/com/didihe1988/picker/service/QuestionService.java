@@ -12,11 +12,13 @@ public interface QuestionService {
 
 	public int deleteQuestionById(int id, int userId);
 
-	public int updateQuestion(Question question,int userId);
+	public int updateQuestion(Question question, int userId);
 
 	public Question getQuestionById(int id);
 
-	public QuestionDp getQuestionDpByQuestionId(int id);
+	public QuestionDp getQuestionDpByQuestionId(int id, int userId);
+
+	public QuestionDp getQuestionDpByQuestionId(int id, boolean isFollow);
 
 	public boolean isQuestionExistsById(int id);
 
@@ -24,9 +26,9 @@ public interface QuestionService {
 
 	public List<Question> getQuestionListByBookId(int id);
 
-	public List<QuestionDp> getQuestionDpListByAskerId(int id);
+	public List<QuestionDp> getQuestionDpListByAskerId(int id, int userId);
 
-	public List<QuestionDp> getQuestionDpListByBookId(int id);
+	public List<QuestionDp> getQuestionDpListByBookId(int id, int userId);
 
 	public int getLatestQuestionIdByBookId(int id);
 

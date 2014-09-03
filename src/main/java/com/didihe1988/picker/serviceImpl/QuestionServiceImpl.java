@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.BookDao;
+import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.dao.UserDao;
+import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.model.QuestionDp;
 import com.didihe1988.picker.service.QuestionService;
@@ -26,6 +28,9 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	private BookDao bookDao;
+
+	@Autowired
+	private FollowDao followDao;
 
 	@Override
 	public int addQuestion(Question question) {
@@ -118,13 +123,25 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
-	public QuestionDp getQuestionDpByQuestionId(int id) {
+	public QuestionDp getQuestionDpByQuestionId(int id, int userId) {
 		// TODO Auto-generated method stub
 		Question question = getQuestionById(id);
-		return getQuestionDpByQuestion(question);
+		return getQuestionDpByQuestion(question, followDao.isFollowExistsByKey(
+				Follow.FOLLOW_QUESTION, userId, id));
 	}
 
-	private QuestionDp getQuestionDpByQuestion(Question question) {
+	/*
+	 * 前期用于测试
+	 */
+	@Override
+	public QuestionDp getQuestionDpByQuestionId(int id, boolean isFollow) {
+		// TODO Auto-generated method stub
+		Question question = getQuestionById(id);
+		return getQuestionDpByQuestion(question, isFollow);
+	}
+
+	private QuestionDp getQuestionDpByQuestion(Question question,
+			boolean isFollow) {
 		// TODO Auto-generated method stub
 		String bookName = bookDao.queryBookById(question.getBookId())
 				.getBookName();
@@ -133,30 +150,34 @@ public class QuestionServiceImpl implements QuestionService {
 		String askerAvatarUrl = userDao.queryUserById(question.getAskerId())
 				.getAvatarUrl();
 		QuestionDp questionDp = new QuestionDp(question, bookName, askerName,
-				askerAvatarUrl);
+				askerAvatarUrl, isFollow);
 		return questionDp;
 	}
 
 	private List<QuestionDp> getQuestionDpListFromQuestionList(
-			List<Question> questionList) {
+			List<Question> questionList, int userId) {
 		List<QuestionDp> list = new ArrayList<QuestionDp>();
 		for (Question question : questionList) {
-			QuestionDp questionDp = getQuestionDpByQuestion(question);
+			QuestionDp questionDp = getQuestionDpByQuestion(question,
+					followDao.isFollowExistsByKey(Follow.FOLLOW_QUESTION,
+							userId, question.getId()));
 			list.add(questionDp);
 		}
 		return list;
 	}
 
 	@Override
-	public List<QuestionDp> getQuestionDpListByBookId(int id) {
+	public List<QuestionDp> getQuestionDpListByBookId(int id, int userId) {
 		// TODO Auto-generated method stub
-		return getQuestionDpListFromQuestionList(getQuestionListByBookId(id));
+		return getQuestionDpListFromQuestionList(getQuestionListByBookId(id),
+				userId);
 	}
 
 	@Override
-	public List<QuestionDp> getQuestionDpListByAskerId(int id) {
+	public List<QuestionDp> getQuestionDpListByAskerId(int id, int userId) {
 		// TODO Auto-generated method stub
-		return getQuestionDpListFromQuestionList(getQuestionListByAskerId(id));
+		return getQuestionDpListFromQuestionList(getQuestionListByAskerId(id),
+				userId);
 	}
 
 }

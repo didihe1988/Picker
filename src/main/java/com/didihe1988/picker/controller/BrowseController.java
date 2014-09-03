@@ -2,6 +2,8 @@ package com.didihe1988.picker.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import com.didihe1988.picker.model.QuestionDp;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.NoteService;
 import com.didihe1988.picker.service.QuestionService;
+import com.didihe1988.picker.utils.HttpUtils;
 import com.google.gson.Gson;
 
 @Controller
@@ -29,8 +32,11 @@ public class BrowseController {
 	@Autowired
 	private NoteService noteService;
 
+	/**
+	 * @condition request userId
+	 */
 	@RequestMapping(value = "/jbrowse/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getBrowse(@PathVariable int id) {
+	public String getBrowse(@PathVariable int id, HttpServletRequest request) {
 		JSONObject jsonObject = new JSONObject();
 		/*
 		 * book
@@ -42,7 +48,8 @@ public class BrowseController {
 		/*
 		 * questionList
 		 */
-		List<QuestionDp> list = questionService.getQuestionDpListByBookId(id);
+		List<QuestionDp> list = questionService.getQuestionDpListByBookId(id,
+				HttpUtils.getSessionUserId(request));
 		jsonObject.put(Constant.KEY_QUESTION_LIST, list);
 
 		return jsonObject.toString();

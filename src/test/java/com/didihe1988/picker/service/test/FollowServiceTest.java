@@ -34,7 +34,7 @@ public class FollowServiceTest {
 
 	@Test
 	public void test1() {
-		Follow follow = new Follow(Follow.FOLLOW_USER, 1, 5);
+		Follow follow = new Follow(Follow.FOLLOW_USER, 3, 1);
 		int status = followService.addFollow(follow);
 		assertSame(Status.SUCCESS, status);
 	}

@@ -1,8 +1,8 @@
 package com.didihe1988.picker.model;
 
-import java.util.Date;
+import com.didihe1988.picker.model.dpInterface.IsFollow;
 
-public class QuestionDp extends Question {
+public class QuestionDp extends Question implements IsFollow {
 
 	/**
 	 * 
@@ -14,6 +14,20 @@ public class QuestionDp extends Question {
 	private String askerName;
 
 	private String askerAvatarUrl;
+
+	private boolean isFollow;
+
+	@Override
+	public boolean isFollow() {
+		// TODO Auto-generated method stub
+		return this.isFollow;
+	}
+
+	@Override
+	public void setFollow(boolean value) {
+		// TODO Auto-generated method stub
+		this.isFollow = value;
+	}
 
 	public String getBookName() {
 		return bookName;
@@ -42,26 +56,8 @@ public class QuestionDp extends Question {
 	public QuestionDp() {
 	}
 
-	public QuestionDp(int id, int bookId, String bookName, int askerId,
-			String askerName, String title, String content, int favoriteNum,
-			int answerNum, int commentNum, int followNum, Date date) {
-		super();
-		this.id = id;
-		this.bookId = bookId;
-		this.bookName = bookName;
-		this.askerId = askerId;
-		this.askerName = askerName;
-		this.title = title;
-		this.content = content;
-		this.favoriteNum = favoriteNum;
-		this.answerNum = answerNum;
-		this.commentNum = commentNum;
-		this.followNum = followNum;
-		this.date = date;
-	}
-
 	public QuestionDp(Question question, String bookName, String askerName,
-			String askerAvatarUrl) {
+			String askerAvatarUrl, boolean isFollow) {
 		super(question.getId(), question.getBookId(), question.getAskerId(),
 				question.getTitle(), question.getContent(), question
 						.getFavoriteNum(), question.getAnswerNum(), question
@@ -70,5 +66,6 @@ public class QuestionDp extends Question {
 		this.bookName = bookName;
 		this.askerName = askerName;
 		this.askerAvatarUrl = askerAvatarUrl;
+		this.isFollow = isFollow;
 	}
 }

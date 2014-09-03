@@ -32,10 +32,10 @@ public class CircleController {
 	@RequestMapping(value = "/group/{id}")
 	public String getGroupDetail(@PathVariable int id, Model model) {
 		model.addAttribute("circle", circleService.getCircleById(id));
-		model.addAttribute("userList", getUserList(id));
+		//model.addAttribute("userList", getUserList(id));
 		return "group";
 	}
-
+	/*
 	private List<UserDp> getUserList(int circleId) {
 		List<CircleMember> circleMembers = circleMemberService
 				.getCircleMemberListByCircleId(circleId);
@@ -46,5 +46,6 @@ public class CircleController {
 			list.add(userDp);
 		}
 		return list;
-	}
+	}*/
+	
 }

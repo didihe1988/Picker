@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -14,7 +16,9 @@ public class PrivateMessage implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	@Id
+	@GeneratedValue
 	@Column(name = "pm_id")
 	private int id;
 
@@ -23,9 +27,6 @@ public class PrivateMessage implements Serializable {
 
 	@Column(name = "pm_receiverid")
 	private int receiverId;
-
-	@Column(name = "pm_dialogid")
-	private int dialogId;
 
 	@Column(name = "pm_content")
 	private String content;
@@ -57,14 +58,6 @@ public class PrivateMessage implements Serializable {
 		this.receiverId = receiverId;
 	}
 
-	public int getDialogId() {
-		return dialogId;
-	}
-
-	public void setDialogId(int dialogId) {
-		this.dialogId = dialogId;
-	}
-
 	public String getContent() {
 		return content;
 	}
@@ -84,35 +77,31 @@ public class PrivateMessage implements Serializable {
 	@Override
 	public String toString() {
 		return "PrivateMessage [id=" + id + ", senderId=" + senderId
-				+ ", receiverId=" + receiverId + ", dialogId=" + dialogId
-				+ ", content=" + content + ", time=" + time + "]";
+				+ ", receiverId=" + receiverId + ", content=" + content
+				+ ", time=" + time + "]";
 	}
 
-	public PrivateMessage(int id, int senderId, int receiverId, int dialogId,
-			String content, Date time) {
+	public PrivateMessage(int id, int senderId, int receiverId, String content,
+			Date time) {
 		super();
 		this.id = id;
 		this.senderId = senderId;
 		this.receiverId = receiverId;
-		this.dialogId = dialogId;
 		this.content = content;
 		this.time = time;
 	}
 
-	public PrivateMessage(int senderId, int receiverId, int dialogId,
-			String content, Date time) {
+	public PrivateMessage(int senderId, int receiverId, String content,
+			Date time) {
 		this.senderId = senderId;
 		this.receiverId = receiverId;
-		this.dialogId = dialogId;
 		this.content = content;
 		this.time = time;
 	}
 
-	public PrivateMessage(int senderId, int receiverId, int dialogId,
-			String content) {
+	public PrivateMessage(int senderId, int receiverId, String content) {
 		this.senderId = senderId;
 		this.receiverId = receiverId;
-		this.dialogId = dialogId;
 		this.content = content;
 		this.time = new Date();
 	}

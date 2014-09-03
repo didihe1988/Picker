@@ -1,6 +1,8 @@
 package com.didihe1988.picker.model;
 
-public class AnswerDp extends Answer {
+import com.didihe1988.picker.model.dpInterface.IsFavorite;
+
+public class AnswerDp extends Answer implements IsFavorite {
 	/**
 	 * 
 	 */
@@ -11,6 +13,20 @@ public class AnswerDp extends Answer {
 	private String replierName;
 
 	private String replierAvatarUrl;
+
+	private boolean isFavorite;
+
+	@Override
+	public boolean isFavorite() {
+		// TODO Auto-generated method stub
+		return this.isFavorite;
+	}
+
+	@Override
+	public void setFavorite(boolean value) {
+		// TODO Auto-generated method stub
+		this.isFavorite = value;
+	}
 
 	public String getQuestionName() {
 		return questionName;

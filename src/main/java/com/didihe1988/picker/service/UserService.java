@@ -18,7 +18,11 @@ public interface UserService {
 
 	public boolean isUserExists(User user);
 
-	public UserDp getUserDpByUserId(int id);
+	// public UserDp getUserDpByUserId(int id);
+
+	public UserDp getUserDpByUserId(int userId, int curUserId);
+
+	public UserDp getUserDpByUserId(int userId, boolean isFollow);
 
 	public boolean isEmailExists(String email);
 
