@@ -60,7 +60,8 @@ public class NoteDp extends Note implements IsFavorite {
 			String userAvatarUrl, boolean isFavorite) {
 		super(note.getId(), note.getBookId(), note.getUserId(),
 				note.getTitle(), note.getContent(), note.getPublishTime(), note
-						.isPublic());
+						.isPublic(), note.getFavoriteNum(), note
+						.getCommentNum(), note.getPage());
 		this.bookName = bookName;
 		this.userName = userName;
 		this.userAvatarUrl = userAvatarUrl;

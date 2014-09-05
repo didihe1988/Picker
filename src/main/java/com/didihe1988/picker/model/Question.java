@@ -50,6 +50,9 @@ public class Question implements Serializable {
 	@Column(name = "question_date")
 	protected Date date;
 
+	@Column(name = "question_page")
+	protected int page;
+
 	public Question() {
 
 	}
@@ -134,9 +137,17 @@ public class Question implements Serializable {
 		this.answerNum = answerNum;
 	}
 
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
 	public Question(int id, int bookId, int askerId, String title,
 			String content, int favoriteNum, int answerNum, int commentNum,
-			int followNum, Date date) {
+			int followNum, Date date, int page) {
 		super();
 		this.id = id;
 		this.bookId = bookId;
@@ -148,20 +159,23 @@ public class Question implements Serializable {
 		this.commentNum = commentNum;
 		this.followNum = followNum;
 		this.date = date;
+		this.page = page;
 	}
 
 	public Question(int bookId, int askerId, String title, String content,
-			Date date) {
+			Date date, int page) {
 		super();
 		this.bookId = bookId;
 		this.askerId = askerId;
 		this.title = title;
 		this.content = content;
 		this.date = date;
+		this.page = page;
 	}
 
-	public Question(int bookId, int askerId, String title, String content) {
-		this(bookId, askerId, title, content, new Date());
+	public Question(int bookId, int askerId, String title, String content,
+			int page) {
+		this(bookId, askerId, title, content, new Date(), page);
 	}
 
 	@Override
@@ -170,7 +184,7 @@ public class Question implements Serializable {
 				+ askerId + ", title=" + title + ", content=" + content
 				+ ", favoriteNum=" + favoriteNum + ", answerNum=" + answerNum
 				+ ", commentNum=" + commentNum + ", followNum=" + followNum
-				+ ", date=" + date + "]";
+				+ ", date=" + date + ", page=" + page + "]";
 	}
 
 }

@@ -24,7 +24,7 @@ public class AnswerDaoTest {
 
 	@Test
 	public void test01() {
-		Answer answer = new Answer(1, 2, "This is a small shell script that does what you requested:");
+		Answer answer = new Answer(1, 5, "View -> Active Editor -> Use Soft Wraps");
 		int status = answerDao.addAnswer(answer);
 		assertSame(1, status);
 	}

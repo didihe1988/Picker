@@ -24,4 +24,5 @@ public class CircleMemberServiceTest {
 		CircleMember circleMember = new CircleMember(1, 4);
 		circleMemberService.addCircleMember(circleMember);
 	}
+	
 }

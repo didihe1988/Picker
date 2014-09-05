@@ -77,7 +77,7 @@ public class QuestionDp extends Question implements IsFollow, IsFavorite {
 				question.getTitle(), question.getContent(), question
 						.getFavoriteNum(), question.getAnswerNum(), question
 						.getCommentNum(), question.getFollowNum(), question
-						.getDate());
+						.getDate(), question.getPage());
 		this.bookName = bookName;
 		this.askerName = askerName;
 		this.askerAvatarUrl = askerAvatarUrl;

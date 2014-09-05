@@ -17,7 +17,7 @@ public class Note implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "note_id")
@@ -46,6 +46,9 @@ public class Note implements Serializable {
 
 	@Column(name = "note_commentnum")
 	protected int commentNum;
+
+	@Column(name = "note_page")
+	protected int page;
 
 	public int getId() {
 		return id;
@@ -119,13 +122,21 @@ public class Note implements Serializable {
 		this.commentNum = commentNum;
 	}
 
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
 	@Override
 	public String toString() {
 		return "Note [id=" + id + ", bookId=" + bookId + ", userId=" + userId
 				+ ", title=" + title + ", content=" + content
 				+ ", publishTime=" + publishTime + ", isPublic=" + isPublic
 				+ ", favoriteNum=" + favoriteNum + ", commentNum=" + commentNum
-				+ "]";
+				+ ", page=" + page + "]";
 	}
 
 	public Note() {
@@ -134,7 +145,8 @@ public class Note implements Serializable {
 	}
 
 	public Note(int id, int bookId, int userId, String title, String content,
-			Date publishTime, boolean isPublic) {
+			Date publishTime, boolean isPublic, int favoriteNum,
+			int commentNum, int page) {
 		super();
 		this.id = id;
 		this.bookId = bookId;
@@ -143,10 +155,13 @@ public class Note implements Serializable {
 		this.content = content;
 		this.publishTime = publishTime;
 		this.isPublic = isPublic;
+		this.favoriteNum = favoriteNum;
+		this.commentNum = commentNum;
+		this.page = page;
 	}
 
 	public Note(int bookId, int userId, String title, String content,
-			Date publishTime, boolean isPublic) {
+			Date publishTime, boolean isPublic, int page) {
 		super();
 		this.bookId = bookId;
 		this.userId = userId;
@@ -154,15 +169,16 @@ public class Note implements Serializable {
 		this.content = content;
 		this.publishTime = publishTime;
 		this.isPublic = isPublic;
+		this.page = page;
 	}
 
 	public Note(int bookId, int userId, String title, String content,
-			boolean isPublic) {
-		this(bookId, userId, title, content, new Date(), isPublic);
+			boolean isPublic, int page) {
+		this(bookId, userId, title, content, new Date(), isPublic, page);
 	}
 
-	public Note(int bookId, int userId, String title, String content) {
-		this(bookId, userId, title, content, true);
+	public Note(int bookId, int userId, String title, String content, int page) {
+		this(bookId, userId, title, content, true, page);
 	}
 
 }
