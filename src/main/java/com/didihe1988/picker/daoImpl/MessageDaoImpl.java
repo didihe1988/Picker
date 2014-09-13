@@ -65,7 +65,7 @@ public class MessageDaoImpl implements MessageDao {
 		if (message == null) {
 			return false;
 		}
-		String hql = "select count(*) from Message message where message.id =?";
+		String hql = "select count(*) from Message as message where message.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, message.getId());
 		Long count = (Long) query.uniqueResult();

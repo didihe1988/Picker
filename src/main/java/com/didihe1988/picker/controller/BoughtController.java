@@ -35,18 +35,17 @@ public class BoughtController {
 	}
 
 	@RequestMapping(value = "/json/book/{id}/add", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String delete(@PathVariable int id, HttpServletRequest request) {
+	public String add(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		Bought bought = new Bought(userId, id);
 		int status = boughtService.addBought(bought);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
-	/*
-	 * @RequestMapping(value = "/json/bought/{id}/delete", method =
-	 * RequestMethod.GET, headers = "Accept=application/json") public String
-	 * delete(@PathVariable int id, HttpServletRequest request) { int userId =
-	 * HttpUtils.getSessionUserId(request); int status =
-	 * boughtService.deleteBought(new Bought(userId, id)); return
-	 * JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status); }
-	 */
+
+	@RequestMapping(value = "/json/book/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String delete(@PathVariable int id, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		int status = boughtService.deleteBought(new Bought(userId, id));
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
 }

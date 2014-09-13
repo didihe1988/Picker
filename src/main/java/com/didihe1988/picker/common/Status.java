@@ -13,6 +13,7 @@ public class Status {
 	public static final int NULLPOINTER = 5;
 	public static final int UNKNOWN = 6;
 	public static final int INVALID = 7;
+	public static final int EMPTY = 8;
 
 	public static final String EMAIL_USED_STRING = "email used";
 	public static final String USERNAME_USED_STRING = "name used";

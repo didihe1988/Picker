@@ -37,7 +37,8 @@ public class QuestionDpController {
 	public String getQuestionDp(@PathVariable int id, HttpServletRequest request) {
 		QuestionDp questionDp = questionService.getQuestionDpByQuestionId(id,
 				HttpUtils.getSessionUserId(request));
-		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION, questionDp);
+		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_QUESTION,
+				questionDp);
 	}
 
 	/**

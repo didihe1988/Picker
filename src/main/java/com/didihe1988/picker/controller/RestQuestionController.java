@@ -1,5 +1,9 @@
 package com.didihe1988.picker.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +24,7 @@ import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Question;
+import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.UserDp;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
@@ -27,6 +32,7 @@ import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.FollowService;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.QuestionService;
+import com.didihe1988.picker.service.RelatedImageService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
@@ -54,6 +60,9 @@ public class RestQuestionController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private RelatedImageService relatedImageService;
 
 	@RequestMapping(value = "/json/question/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestion(@PathVariable int id) {
@@ -152,22 +161,28 @@ public class RestQuestionController {
 			Question question = questionService.getQuestionById(id);
 			String relatedSourceContent = StringUtils.confineStringLength(
 					question.getContent(), Constant.MESSAGE_LENGTH);
-			messageService.addMessageByRecerver(question.getAskerId(),
-					Message.MESSAGE_YOUR_QUESTION_FAVORITED, userId, userName,
-					id, relatedSourceContent);
+			/*
+			 * messageService.addMessageByRecerver(question.getAskerId(),
+			 * Message.MESSAGE_YOUR_QUESTION_FAVORITED, userId, userName, id,
+			 * relatedSourceContent);
+			 */
 
 			/*
 			 * 通知关注者 小明 (被关注者)赞了XXX的问题
 			 */
-			messageService.addMessageByFollowedUser(
-					Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, userId,
-					userName, id, relatedSourceContent);
+			/*
+			 * messageService.addMessageByFollowedUser(
+			 * Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, userId, userName, id,
+			 * relatedSourceContent);
+			 */
 			/*
 			 * 用户动态
 			 */
-			messageService.addMessageByRecerver(Message.NULL_receiverId,
-					Message.MESSAGE_USER_FAVORITE_QUESTION, userId, userName,
-					id, relatedSourceContent);
+			/*
+			 * messageService.addMessageByRecerver(Message.NULL_receiverId,
+			 * Message.MESSAGE_USER_FAVORITE_QUESTION, userId, userName, id,
+			 * relatedSourceContent);
+			 */
 		}
 
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -180,20 +195,24 @@ public class RestQuestionController {
 	@RequestMapping(value = "/json/question/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
-		int userId = HttpUtils.getSessionUser(request).getId();
+		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.decrementQuestionFavorite(id, userId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
 	@RequestMapping(value = "/json/question/add", method = RequestMethod.POST)
-	public String add(@RequestBody Question question, HttpServletRequest request) {
+	public String add(@RequestBody Question question,
+			@RequestBody List<Integer> list, HttpServletRequest request) {
 		/*
 		 * 添加问题
 		 */
 		question.setDate(new Date());
 		int status = questionService.addQuestion(question);
 		if (status == Status.SUCCESS) {
-			addQuestionMessage(question, request);
+			// addQuestionMessage(question, request);
+			int questionId = questionService
+					.getLatestQuestionIdByBookId(question.getBookId());
+			addQuestionImage(questionId, list);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
@@ -228,4 +247,36 @@ public class RestQuestionController {
 				relatedSourceContent);
 	}
 
+	private boolean addQuestionImage(int questionId, List<Integer> list) {
+		if (list == null) {
+			return false;
+		}
+		for (int index : list) {
+			String tmpDirString = Constant.TMPDIR + index;
+			// /question/1/0.png
+			String dstDirString = Constant.ROOTDIR + "question/" + questionId;
+			File tmpDir = new File(tmpDirString);
+			if (!tmpDir.exists()) {
+				return false;
+			} else {
+				try {
+					Files.copy(Paths.get(tmpDirString),
+							Paths.get(dstDirString),
+							StandardCopyOption.REPLACE_EXISTING);
+					RelatedImage relatedImage = new RelatedImage(questionId,
+							RelatedImage.QUESTION_IMAGE, getQuestionImageUrl(
+									questionId, index));
+					relatedImageService.addRelatedImage(relatedImage);
+				} catch (Exception e) {
+					// TODO: handle exception
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	private String getQuestionImageUrl(int questionId, int index) {
+		return "/resources/image/question/" + questionId + "/" + index + ".png";
+	}
 }

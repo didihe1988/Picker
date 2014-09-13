@@ -5,6 +5,9 @@ public class Constant {
 
 	}
 
+	public static final String ROOTDIR = "F:/sts_workspace/Picker/src/main/webapp/resources/image/";
+	public static final String TMPDIR = "F:/sts_workspace/Picker/src/main/webapp/resources/tmp/image/";
+
 	public static final String USER = "picker_user";
 	public static final String USERID = "picker_userId";
 	public static final String USERNAME = "picker_userName";
@@ -36,6 +39,7 @@ public class Constant {
 	public static final String KEY_NOTE = "note";
 	public static final String KEY_BOOK = "book";
 	public static final String KEY_USER = "user";
+	public static final String KEY_IMAGEID = "imageId";
 
 	public static final int MESSAGE_LENGTH = 20;
 	public static final int MAX_PASSWORD_LENGTH = 20;

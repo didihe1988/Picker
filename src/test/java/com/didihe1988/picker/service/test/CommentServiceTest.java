@@ -27,8 +27,8 @@ public class CommentServiceTest {
 	 */
 	@Test
 	public void test0() {
-		Comment comment = new Comment(1, 2, "Comment Question",
-				Comment.COMMENT_QUESTION);
+		Comment comment = new Comment(2, 2, "Comment Note",
+				Comment.COMMENT_NOTE);
 		int status = commentService.addComment(comment);
 		assertSame(Status.SUCCESS, status);
 	}
