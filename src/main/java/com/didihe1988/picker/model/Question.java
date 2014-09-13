@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.didihe1988.picker.model.form.QuestionForm;
+
 @Entity
 @Table(name = "question")
 public class Question implements Serializable {

@@ -17,7 +17,7 @@ public class RelatedImageServiceImpl implements RelatedImageService {
 	@Override
 	public int addRelatedImage(RelatedImage relatedImage) {
 		// TODO Auto-generated method stub
-		return 0;
+		return relatedImageDao.addRelatedImage(relatedImage);
 	}
 
 }

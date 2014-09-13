@@ -28,4 +28,11 @@ public class QuestionServiceTest {
 		int status = questionService.addQuestion(question);
 		assertSame(Status.SUCCESS, status);
 	}
+
+	// test new Date
+	@Test
+	public void test1() {
+		Question question = new Question(1, 5, "lalala", "dota", 2);
+		System.out.println(question.toString());
+	}
 }

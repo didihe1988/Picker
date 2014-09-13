@@ -26,6 +26,7 @@ import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.UserDp;
+import com.didihe1988.picker.model.form.QuestionForm;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -201,19 +202,23 @@ public class RestQuestionController {
 	}
 
 	@RequestMapping(value = "/json/question/add", method = RequestMethod.POST)
-	public String add(@RequestBody Question question,
-			@RequestBody List<Integer> list, HttpServletRequest request) {
+	public String add(@RequestBody QuestionForm questionForm,
+			HttpServletRequest request) {
 		/*
 		 * ÃÌº”Œ Ã‚
 		 */
-		question.setDate(new Date());
-		int status = questionService.addQuestion(question);
+		List<Integer> list = JsonUtils.getIntegerList(questionForm
+				.getImageIds());
+		// System.out.println(list);
+
+		int status = questionService.addQuestion(questionForm.getQuestion());
 		if (status == Status.SUCCESS) {
 			// addQuestionMessage(question, request);
 			int questionId = questionService
-					.getLatestQuestionIdByBookId(question.getBookId());
+					.getLatestQuestionIdByBookId(questionForm.getBookId());
 			addQuestionImage(questionId, list);
 		}
+
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
@@ -247,28 +252,42 @@ public class RestQuestionController {
 				relatedSourceContent);
 	}
 
-	private boolean addQuestionImage(int questionId, List<Integer> list) {
-		if (list == null) {
+	private boolean addQuestionImage(int questionId, List<Integer> imageIds) {
+		if (imageIds == null) {
 			return false;
 		}
-		for (int index : list) {
-			String tmpDirString = Constant.TMPDIR + index;
+		String dstDirString = Constant.ROOTDIR + "question/" + questionId;
+		File dstDir = new File(dstDirString);
+		if (!dstDir.exists()) {
+			dstDir.mkdirs();
+		}
+		for (int index : imageIds) {
+			String tmpDirString = Constant.TMPDIR + index + ".png";
+			System.out.println(tmpDirString);
+			System.out.println(dstDirString);
 			// /question/1/0.png
-			String dstDirString = Constant.ROOTDIR + "question/" + questionId;
 			File tmpDir = new File(tmpDirString);
 			if (!tmpDir.exists()) {
+				System.out.println("tmpDir not exists");
 				return false;
 			} else {
 				try {
-					Files.copy(Paths.get(tmpDirString),
-							Paths.get(dstDirString),
-							StandardCopyOption.REPLACE_EXISTING);
+					System.out.println("in copy");
+					String dstFileString = dstDirString + "/" + index + ".png";
+					System.out.println(dstFileString);
+					/*
+					 * Files.copy(Paths.get(tmpDirString),
+					 * Paths.get(dstDirString),
+					 * StandardCopyOption.REPLACE_EXISTING);
+					 */
+					tmpDir.renameTo(new File(dstFileString));
 					RelatedImage relatedImage = new RelatedImage(questionId,
 							RelatedImage.QUESTION_IMAGE, getQuestionImageUrl(
 									questionId, index));
 					relatedImageService.addRelatedImage(relatedImage);
 				} catch (Exception e) {
 					// TODO: handle exception
+					e.printStackTrace();
 					return false;
 				}
 			}
