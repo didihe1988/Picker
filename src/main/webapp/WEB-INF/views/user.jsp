@@ -413,7 +413,7 @@
 									</a>
 								</div>
 							</div>
-							<div class="time">${note.publishTime}</div>
+							<div class="time">${note.date}</div>
 							<div style="clear: both"></div>
 						</div>
 					</c:forEach>

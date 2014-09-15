@@ -119,9 +119,10 @@ public class RestNoteController {
 
 	@RequestMapping(value = "/json/note/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	public String add(@RequestBody FeedForm feedForm, HttpServletRequest request) {
-		int status = feedService.addFeed(feedForm.getFeed());
+		Feed feed = feedForm.getFeed(Feed.TYPE_NOTE);
+		int status = feedService.addFeed(feed);
 		if (status == Status.SUCCESS) {
-			addNoteMessage(feedForm.getFeed(), request);
+			addNoteMessage(feed, request);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}

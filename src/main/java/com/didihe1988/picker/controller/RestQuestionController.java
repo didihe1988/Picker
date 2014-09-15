@@ -205,9 +205,7 @@ public class RestQuestionController {
 		 * ÃÌº”Œ Ã‚
 		 */
 		List<String> list = JsonUtils.getStringList(feedForm.getImageUrls());
-		// System.out.println(list);
-
-		int status = feedService.addFeed(feedForm.getFeed());
+		int status = feedService.addFeed(feedForm.getFeed(Feed.TYPE_QUESTION));
 		if (status == Status.SUCCESS) {
 			// addQuestionMessage(question, request);
 			int questionId = feedService.getLatestFeedByBookId(

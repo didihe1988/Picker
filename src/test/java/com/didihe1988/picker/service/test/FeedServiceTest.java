@@ -11,28 +11,33 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.didihe1988.picker.common.Status;
-import com.didihe1988.picker.model.Question;
-import com.didihe1988.picker.service.QuestionService;
+import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.service.FeedService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:servlet-context.xml",
 		"classpath:root-context.xml" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class QuestionServiceTest {
+public class FeedServiceTest {
 	@Autowired
-	private QuestionService questionService;
+	private FeedService feedService;
 
 	@Test
 	public void test0() {
-		Question question = new Question(1, 3, "test", "lol");
-		int status = questionService.addQuestion(question);
+		Feed feed = new Feed(1, 3, "testing...",
+				"Provide simple toJson() and fromJson() methods to convert Java objects to JSON and vice-versa", 66,
+				Feed.TYPE_QUESTION);
+		int status = feedService.addFeed(feed);
+		assertSame(Status.SUCCESS, status);
+	}
+	
+	@Test
+	public void test1() {
+		Feed feed = new Feed(1, 3, "Javadocs for the current Gson release",
+				"Support arbitrarily complex objects (with deep inheritance hierarchies and extensive use of generic types",79,
+				Feed.TYPE_NOTE);
+		int status = feedService.addFeed(feed);
 		assertSame(Status.SUCCESS, status);
 	}
 
-	// test new Date
-	@Test
-	public void test1() {
-		Question question = new Question(1, 5, "lalala", "dota", 2);
-		System.out.println(question.toString());
-	}
 }

@@ -27,8 +27,8 @@ public class FeedForm extends Feed {
 	/*
 	 * 在前端/安卓端设置type
 	 */
-	public Feed getFeed() {
+	public Feed getFeed(int type) {
 		return new Feed(getBookId(), getUserId(), getTitle(), getContent(),
-				new Date(), getPage(), getType(), true);
+				new Date(), getPage(), type, true);
 	}
 }
