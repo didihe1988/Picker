@@ -171,9 +171,28 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public List<FeedDp> getFeedDpListByBookId(int bookId, int type, int curUserId) {
+	public List<FeedDp> getFeedDpListByBookId(int bookId, int type,
+			int curUserId) {
 		// TODO Auto-generated method stub
 		List<Feed> feedList = getFeedListByBookId(bookId, type);
+		List<FeedDp> list = new ArrayList<FeedDp>();
+		for (Feed feed : feedList) {
+			FeedDp feedDp = getFeedDpByFeed(feed, curUserId);
+			list.add(feedDp);
+		}
+		return list;
+	}
+
+	@Override
+	public List<Feed> getFeedListForBrowse(int bookId) {
+		// TODO Auto-generated method stub
+		return feedDao.queryFeedListForBrowse(bookId);
+	}
+
+	@Override
+	public List<FeedDp> getFeedDpListForBrowse(int bookId, int curUserId) {
+		// TODO Auto-generated method stub
+		List<Feed> feedList = getFeedListForBrowse(bookId);
 		List<FeedDp> list = new ArrayList<FeedDp>();
 		for (Feed feed : feedList) {
 			FeedDp feedDp = getFeedDpByFeed(feed, curUserId);

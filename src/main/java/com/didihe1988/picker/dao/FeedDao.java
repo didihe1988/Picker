@@ -24,4 +24,6 @@ public interface FeedDao extends OperateValidation, NumOperation {
 	public int getLatestFeedByBookId(int bookId, int type);
 
 	public boolean isFeedExistsById(int id);
+
+	public List<Feed> queryFeedListForBrowse(int bookId);
 }

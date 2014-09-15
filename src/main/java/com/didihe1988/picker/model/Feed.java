@@ -18,9 +18,10 @@ public class Feed implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public static final int TYPE_ALL = 0;
 	public static final int TYPE_QUESTION = 1;
 	public static final int TYPE_NOTE = 2;
-	public static final int TYPE_ALL = 0;
+
 
 	@Id
 	@GeneratedValue

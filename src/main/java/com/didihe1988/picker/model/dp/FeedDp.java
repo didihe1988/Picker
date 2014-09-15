@@ -37,6 +37,22 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 		this.isFavorite = value;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserAvatarUrl() {
+		return userAvatarUrl;
+	}
+
+	public void setUserAvatarUrl(String userAvatarUrl) {
+		this.userAvatarUrl = userAvatarUrl;
+	}
+
 	public FeedDp() {
 
 	}

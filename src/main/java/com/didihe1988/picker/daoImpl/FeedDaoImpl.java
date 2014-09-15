@@ -150,4 +150,14 @@ public class FeedDaoImpl implements FeedDao {
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Feed> queryFeedListForBrowse(int bookId) {
+		// TODO Auto-generated method stub
+		String hql = "from Feed as f where f.bookId=? order by f.page ,f.date asc";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		return query.list();
+	}
+
 }

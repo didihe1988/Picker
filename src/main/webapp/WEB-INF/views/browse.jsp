@@ -94,197 +94,145 @@
 					<i class="icon-spinner icon-spin"></i>
 				</div>
 
+
 				<div id="pages_container">
-					<div class="page" data-page="17">
-						<div class="page_split">
-							<div>
-								<div>Page.17</div>
-							</div>
-						</div>
-						<div class="feeds">
-							<div class="browse_list_meta clear_fix">
-								<div class="title">
-									<a data-pjax href="/detail/777">历史上，有没有哪两个人真的算得上是一辈子的敌人？</a>
-								</div>
-								<div class="photo">
-									<img src="/picker/static/images/photo/1.jpg">
-								</div>
-								<!--<div class="feed_time">31分钟前</div>-->
-							</div>
-							<div class="browse_brief clear_fix">
-								<div class="feed_text_wrap">
-									<a data-pjax href="/detail/777">
-										<div class="feed_text">爆个冷门：京剧界的梅程。
-											梅兰芳是程砚秋正式磕过头的师父，程砚秋借助梅兰芳的提携，也在梅兰芳演出的天河配中出演过小宫女。但是这并不能说他们不会成为宿敌。程砚秋在罗瘿公辅助下，逐渐形成易于别派的程腔。
-											梅派有太真外传，程派就有梅妃。梅派有凤还巢，程派就有锁麟囊。</div>
-									</a>
-								</div>
-								<div style="width: 2%; height: 1px; float: left"></div>
-								<div class="feed_picture">
-									<img src="/static/images/content/1.png">
-								</div>
-							</div>
-							<div class="feed_tool_bar">
-								<div class="line watch" data-action="watch"
-									data-passage-id="123" onclick="tool_bar_action($(this))">
-									<i class="icon-plus"></i>关注问题
-								</div>
-								<div style="display: none" class="line cancel_watch"
-									data-action="cancel_watch" data-passage-id="123"
-									onclick="tool_bar_action($(this))">
-									<i class="icon-ok"></i>取消关注
-								</div>
-								<div class="line show_comment" data-action="get_comment"
-									data-passage-id="123" onclick="tool_bar_action($(this))">
-									<i class="icon-comments-alt"></i>32条评论
-								</div>
-								<div style="display: none" class="line hide_comment"
-									data-action="hide_comment" data-passage-id="123"
-									onclick="tool_bar_action($(this))">
-									<i class="icon-double-angle-up"></i>收起评论
-								</div>
-								<div class="line" data-action="show_all_answer"
-									data-passage-id="123">
-									<i class="icon-lightbulb" onclick="tool_bar_action($(this))"></i>2个回答
-								</div>
-								<span class="time">4天前</span>
-							</div>
-							<div style="clear: both"></div>
-							<div class="comments clear_fix">
-								<div class="waiting">
-									<i class="icon-spinner icon-spin"></i>
-								</div>
-								<div class="comments_list"></div>
+					<c:forEach var="feed" items="${feedList}">
 
-								<div class="do_comment">
-									<div class="comment clear_fix">
-										<input type="text">
-										<button class="btn btn-success">提交</button>
+						<div class="page" data-page="${feed.page}">
+							<c:if test="${feed.page !=curPage}">
+								<div class="page_split">
+									<div>
+										<div>Page.${feed.page}</div>
 									</div>
 								</div>
-							</div>
-						</div>
+							</c:if>
+							<c:set var="curPage" value="${feed.page}" />
+							<c:if test="${feed.type ==1}">
+								<div class="feeds">
+									<div class="browse_list_meta clear_fix">
+										<div class="title">
+											<a data-pjax href="/detail/777">${feed.title}</a>
+										</div>
+										<div class="photo">
+											<img src=<c:url value="${feed.userAvatarUrl}"/>>
+										</div>
 
-						<div class="feeds">
-							<div class="browse_list_meta clear_fix">
-								<div class="title note">
-									<i class="icon-edit"></i>笔记
-								</div>
-								<div class="photo">
-									<img src="/static/images/photo/7.jpg">
-								</div>
-								<!--<div class="feed_time">31分钟前</div>-->
-							</div>
-							<div class="browse_brief clear_fix">
-								<div class="feed_text_wrap">
-									<a href="/">
-										<div class="feed_text">章鱼小丸子豆腐花上校鸡块允指原味鸡香辣鸡翅麻辣鸭脖酸辣粉鳕鱼盖浇饭手抓饼瘦肉丸布丁巧克力寿司芒果冰沙炒肝麦乐鸡烤鸡翅泡菜软心布丁乳酪烤肉火锅红烧排骨鸭脖土豆烧牛肉鱼丸炒拉条子大白兔奶糖火烧鸡米花酸菜鱼皮蛋瘦肉粥冰糖葫芦糖炒栗子豌豆黄烤红薯炸鸡</div>
-									</a>
-								</div>
-								<div style="width: 2%; height: 1px; float: left"></div>
-								<div class="feed_picture">
-									<img src="/static/images/content/1.png">
-								</div>
-							</div>
-							<div class="feed_tool_bar">
-								<div class="line watch" data-action="watch"
-									data-passage-id="123" onclick="tool_bar_action($(this))">
-									<i class="icon-plus"></i>关注问题
-								</div>
-								<div style="display: none" class="line cancel_watch"
-									data-action="cancel_watch" data-passage-id="123"
-									onclick="tool_bar_action($(this))">
-									<i class="icon-ok"></i>取消关注
-								</div>
-								<div class="line show_comment" data-action="get_comment"
-									data-passage-id="123" onclick="tool_bar_action($(this))">
-									<i class="icon-comments-alt"></i>32条评论
-								</div>
-								<div style="display: none" class="line hide_comment"
-									data-action="hide_comment" data-passage-id="123"
-									onclick="tool_bar_action($(this))">
-									<i class="icon-double-angle-up"></i>收起评论
-								</div>
-								<span class="time">4天前</span>
-							</div>
-							<div style="clear: both"></div>
-							<div class="comments clear_fix">
-								<div class="waiting">
-									<i class="icon-spinner icon-spin"></i>
-								</div>
-								<div class="comments_list"></div>
+									</div>
+									<div class="browse_brief clear_fix">
+										<div class="feed_text_wrap">
+											<a data-pjax href="/detail/777">
+												<div class="feed_text">${feed.content}</div>
+											</a>
+										</div>
+										<div style="width: 2%; height: 1px; float: left"></div>
+										<div class="feed_picture">
+											<img src="/picker/static/images/content/1.png">
+										</div>
+									</div>
+									<div class="feed_tool_bar">
+										<div class="line watch" data-action="watch"
+											data-passage-id="123" onclick="tool_bar_action($(this))">
+											<i class="icon-plus"></i>关注问题
+										</div>
+										<div style="display: none" class="line cancel_watch"
+											data-action="cancel_watch" data-passage-id="123"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-ok"></i>取消关注
+										</div>
+										<div class="line show_comment" data-action="get_comment"
+											data-passage-id="123" onclick="tool_bar_action($(this))">
+											<i class="icon-comments-alt"></i>${feed.commentNum}条评论
+										</div>
+										<div style="display: none" class="line hide_comment"
+											data-action="hide_comment" data-passage-id="123"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-double-angle-up"></i>收起评论
+										</div>
+										<div class="line" data-action="show_all_answer"
+											data-passage-id="123">
+											<i class="icon-lightbulb" onclick="tool_bar_action($(this))"></i>${feed.answerNum}个回答
+										</div>
+										<span class="time">${feed.date}</span>
+									</div>
+									<div style="clear: both"></div>
+									<div class="comments clear_fix">
+										<div class="waiting">
+											<i class="icon-spinner icon-spin"></i>
+										</div>
+										<div class="comments_list"></div>
 
-								<div class="do_comment">
-									<div class="comment clear_fix">
-										<input type="text">
-										<button class="btn btn-success">提交</button>
+										<div class="do_comment">
+											<div class="comment clear_fix">
+												<input type="text">
+												<button class="btn btn-success">提交</button>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
+							</c:if>
+							<c:if test="${feed.type ==2}">
+								<div class="feeds">
+									<div class="browse_list_meta clear_fix">
+										<div class="title note">
+											<i class="icon-edit"></i>笔记
+										</div>
+										<div class="photo">
+											<img src=<c:url value="${feed.userAvatarUrl}"/>>
+										</div>
 
-						<div class="feeds">
-							<div class="browse_list_meta clear_fix">
-								<div class="title">
-									<a href="#">我是谁，从哪里来，到哪里去？</a>
-								</div>
-								<div class="photo">
-									<img src="/static/images/photo/7.jpg">
-								</div>
-								<!--<div class="feed_time">31分钟前</div>-->
-							</div>
-							<div class="browse_brief clear_fix">
-								<div>
-									<a href="/">
-										<div class="feed_text">
-											我前段时间不远万里去塞舌尔参加了叉烧的婚礼（如果你们还记得他），酒过三巡，不，准确的说是酒过好多好多巡，在我的循循善诱下，丫终于透露了心声，最爱的还是朔姑娘。我这次有了经验，没有搂住他，刻意保持了一米的距离，语重心长的套用了一段话：
+									</div>
+									<div class="browse_brief clear_fix">
+										<div class="feed_text_wrap">
+											<a href="/">
+												<div class="feed_text">${feed.content}</div>
+											</a>
+										</div>
+										<div style="width: 2%; height: 1px; float: left"></div>
+										<div class="feed_picture">
+											<img src="/picker/static/images/content/1.png">
+										</div>
+									</div>
+									<div class="feed_tool_bar">
+										<div class="line watch" data-action="watch"
+											data-passage-id="123" onclick="tool_bar_action($(this))">
+											<i class="icon-plus"></i>关注问题
+										</div>
+										<div style="display: none" class="line cancel_watch"
+											data-action="cancel_watch" data-passage-id="123"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-ok"></i>取消关注
+										</div>
+										<div class="line show_comment" data-action="get_comment"
+											data-passage-id="123" onclick="tool_bar_action($(this))">
+											<i class="icon-comments-alt"></i>${feed.commentNum}条评论
+										</div>
+										<div style="display: none" class="line hide_comment"
+											data-action="hide_comment" data-passage-id="123"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-double-angle-up"></i>收起评论
+										</div>
+										<span class="time">${feed.date}</span>
+									</div>
+									<div style="clear: both"></div>
+									<div class="comments clear_fix">
+										<div class="waiting">
+											<i class="icon-spinner icon-spin"></i>
+										</div>
+										<div class="comments_list"></div>
 
-											那个人永远活在时间里了，你把她拉不出来，自己也回不去，就这样吧，让她安静的留在那里吧。...</div>
-									</a>
-								</div>
-							</div>
-							<div class="feed_tool_bar">
-								<div class="line watch" data-action="watch"
-									data-passage-id="123" onclick="tool_bar_action($(this))">
-									<i class="icon-plus"></i>关注问题
-								</div>
-								<div style="display: none" class="line cancel_watch"
-									data-action="cancel_watch" data-passage-id="123"
-									onclick="tool_bar_action($(this))">
-									<i class="icon-ok"></i>取消关注
-								</div>
-								<div class="line show_comment" data-action="get_comment"
-									data-passage-id="123" onclick="tool_bar_action($(this))">
-									<i class="icon-comments-alt"></i>32条评论
-								</div>
-								<div style="display: none" class="line hide_comment"
-									data-action="hide_comment" data-passage-id="123"
-									onclick="tool_bar_action($(this))">
-									<i class="icon-double-angle-up"></i>收起评论
-								</div>
-								<div class="line" data-action="show_all_answer"
-									data-passage-id="123">
-									<i class="icon-lightbulb" onclick="tool_bar_action($(this))"></i>2个回答
-								</div>
-								<span class="time">4天前</span>
-							</div>
-							<div style="clear: both"></div>
-							<div class="comments clear_fix">
-								<div class="waiting">
-									<i class="icon-spinner icon-spin"></i>
-								</div>
-								<div class="comments_list"></div>
-
-								<div class="do_comment">
-									<div class="comment clear_fix">
-										<input type="text">
-										<button class="btn btn-success">提交</button>
+										<div class="do_comment">
+											<div class="comment clear_fix">
+												<input type="text">
+												<button class="btn btn-success">提交</button>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
+							</c:if>
 
+						</div>
+					</c:forEach>
+					<!--  
 					<div class="page" data-page="89">
 						<div class="page_split">
 							<div>
@@ -300,7 +248,7 @@
 								<div class="photo">
 									<img src="/static/images/photo/7.jpg">
 								</div>
-								<!--<div class="feed_time">31分钟前</div>-->
+							
 							</div>
 							<div class="browse_brief clear_fix">
 								<div class="feed_text_wrap">
@@ -353,6 +301,7 @@
 							</div>
 						</div>
 					</div>
+					-->
 				</div>
 
 				<div id="load_next_flag" data-start-page="110" data-end="false"
@@ -366,7 +315,7 @@
 				<div class="browse_side_bar">
 					<div class="row">
 						<div class="col-20">
-							<img src="/static/images/books/7.jpg" style="width: 100%">
+							<img src=<c:url value="${book.imageUrl}"/> style="width: 100%">
 						</div>
 						<div class="col-4"></div>
 						<div class="col-25">
@@ -380,7 +329,7 @@
 						</div>
 						<div class="col-50">
 							<div class="current_page">
-								<span class="word">17</span>
+								<span class="word">${page}</span>
 							</div>
 						</div>
 					</div>

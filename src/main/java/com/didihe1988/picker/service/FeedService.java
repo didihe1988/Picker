@@ -27,9 +27,14 @@ public interface FeedService {
 	public List<FeedDp> getFeedDpListByUserId(int userId, int type,
 			int curUserId);
 
-	public List<FeedDp> getFeedDpListByBookId(int bookId, int type, int curUserId);
+	public List<FeedDp> getFeedDpListByBookId(int bookId, int type,
+			int curUserId);
 
 	public int getLatestFeedByBookId(int bookId, int type);
 
 	public boolean isFeedExistsById(int id);
+
+	public List<Feed> getFeedListForBrowse(int bookId);
+
+	public List<FeedDp> getFeedDpListForBrowse(int bookId, int curUserId);
 }
