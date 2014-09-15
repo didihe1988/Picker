@@ -124,7 +124,7 @@ public class RestUserController {
 	 * @description 回答过的问题
 	 */
 	@RequestMapping(value = "/json/user/{id}/answerdps", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getAnswerDps(@PathVariable int id,HttpServletRequest request) {
+	public String getAnswerDps(@PathVariable int id, HttpServletRequest request) {
 		List<AnswerDp> list = answerService.getAnswerDpListByReplierId(id,
 				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);

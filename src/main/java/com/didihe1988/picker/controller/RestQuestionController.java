@@ -207,8 +207,8 @@ public class RestQuestionController {
 		/*
 		 * ÃÌº”Œ Ã‚
 		 */
-		List<Integer> list = JsonUtils.getIntegerList(questionForm
-				.getImageIds());
+		List<String> list = JsonUtils
+				.getStringList(questionForm.getImageUrls());
 		// System.out.println(list);
 
 		int status = questionService.addQuestion(questionForm.getQuestion());
@@ -252,8 +252,8 @@ public class RestQuestionController {
 				relatedSourceContent);
 	}
 
-	private boolean addQuestionImage(int questionId, List<Integer> imageIds) {
-		if (imageIds == null) {
+	private boolean addQuestionImage(int questionId, List<String> imageUrls) {
+		if (imageUrls == null) {
 			return false;
 		}
 		String dstDirString = Constant.ROOTDIR + "question/" + questionId;
@@ -261,8 +261,9 @@ public class RestQuestionController {
 		if (!dstDir.exists()) {
 			dstDir.mkdirs();
 		}
-		for (int index : imageIds) {
-			String tmpDirString = Constant.TMPDIR + index + ".png";
+		for (int index = 0; index < imageUrls.size(); index++) {
+			String filename = getFileNameFromTmpUrl(imageUrls.get(index));
+			String tmpDirString = Constant.TMPDIR + filename;
 			System.out.println(tmpDirString);
 			System.out.println(dstDirString);
 			// /question/1/0.png
@@ -273,17 +274,13 @@ public class RestQuestionController {
 			} else {
 				try {
 					System.out.println("in copy");
-					String dstFileString = dstDirString + "/" + index + ".png";
+					String newFileName = getNewFileName(index, filename);
+					String dstFileString = dstDirString + "/" + newFileName;
 					System.out.println(dstFileString);
-					/*
-					 * Files.copy(Paths.get(tmpDirString),
-					 * Paths.get(dstDirString),
-					 * StandardCopyOption.REPLACE_EXISTING);
-					 */
 					tmpDir.renameTo(new File(dstFileString));
 					RelatedImage relatedImage = new RelatedImage(questionId,
 							RelatedImage.QUESTION_IMAGE, getQuestionImageUrl(
-									questionId, index));
+									questionId, newFileName));
 					relatedImageService.addRelatedImage(relatedImage);
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -295,7 +292,17 @@ public class RestQuestionController {
 		return true;
 	}
 
-	private String getQuestionImageUrl(int questionId, int index) {
-		return "/resources/image/question/" + questionId + "/" + index + ".png";
+	private String getQuestionImageUrl(int questionId, String filename) {
+		return "/resources/image/question/" + questionId + "/" + filename;
+	}
+
+	private String getNewFileName(int index, String filename) {
+		int i = filename.lastIndexOf('.');
+		return index + "." + filename.substring(i + 1);
+	}
+
+	private String getFileNameFromTmpUrl(String imageUrl) {
+		int i = imageUrl.lastIndexOf('/');
+		return imageUrl.substring(i + 1);
 	}
 }

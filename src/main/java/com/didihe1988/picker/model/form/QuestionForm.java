@@ -11,31 +11,18 @@ public class QuestionForm extends Question {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	// private Integer[] imageIds;
-	private String imageIds;
-
-	/*
-	 * public Integer[] getImageIds() { return imageIds; }
-	 * 
-	 * public void setImageIds(Integer[] imageIds) { this.imageIds = imageIds; }
-	 * 
-	 * public QuestionForm(int id, int bookId, int askerId, String title, String
-	 * content, int favoriteNum, int answerNum, int commentNum, int followNum,
-	 * Date date, int page, Integer[] imageIds) { super(id, bookId, askerId,
-	 * title, content, favoriteNum, answerNum, commentNum, followNum, date,
-	 * page); this.imageIds = imageIds; }
-	 */
+	private String imageUrls;
 
 	public QuestionForm() {
 
 	}
 
-	public String getImageIds() {
-		return imageIds;
+	public String getImageUrls() {
+		return imageUrls;
 	}
 
-	public void setImageIds(String imageIds) {
-		this.imageIds = imageIds;
+	public void setImageUrls(String imageUrls) {
+		this.imageUrls = imageUrls;
 	}
 
 	public Question getQuestion() {

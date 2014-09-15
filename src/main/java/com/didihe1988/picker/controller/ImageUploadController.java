@@ -5,7 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.springframework.web.bind.annotation.PathVariable;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,16 +15,17 @@ import org.springframework.web.multipart.MultipartFile;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.utils.JsonUtils;
-import com.didihe1988.picker.utils.StringUtils;
 
+@Controller
 public class ImageUploadController {
-	@RequestMapping(value = "/json/question/{id}/imageup", method = RequestMethod.POST, headers = "Accept=application/json")
-	public String imageUpload(@PathVariable int id,
-			@RequestParam("iamge") MultipartFile file) {
+	@RequestMapping(value = "/json/image_upload", method = RequestMethod.POST, headers = "Accept=application/json")
+	public String imageUpload(@RequestParam("image") MultipartFile file,
+			@RequestParam("name") String name) {
 		if (!file.isEmpty()) {
-			if (!checkExtension(file.getName())) {
+			String extension = FilenameUtils.getExtension(name);
+			if (!checkExtension(extension)) {
 				return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-						Status.INVALID);
+						Status.INVALID_FORMAT);
 			} else {
 				String dir = Constant.TMPDIR;
 				int imageCount = 0;
@@ -36,7 +38,8 @@ public class ImageUploadController {
 				byte[] bytes;
 				try {
 					bytes = file.getBytes();
-					File serverFile = new File(dir + imageCount);
+					File serverFile = new File(dir + imageCount + "."
+							+ extension);
 					BufferedOutputStream stream = new BufferedOutputStream(
 							new FileOutputStream(serverFile));
 					stream.write(bytes);
@@ -47,8 +50,10 @@ public class ImageUploadController {
 					return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 							Status.ERROR);
 				}
-				return JsonUtils.getJsonObjectString(Constant.KEY_IMAGEID,
-						String.valueOf(imageCount));
+				String url = "/resources/tmp/image/" + imageCount + "."
+						+ extension;
+				return JsonUtils
+						.getJsonObjectString(Constant.KEY_IMAGEURL, url);
 			}
 		} else {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
@@ -56,8 +61,10 @@ public class ImageUploadController {
 		}
 	}
 
-	private boolean checkExtension(String name) {
-		return (name.endsWith("jpg") || name.endsWith("png"));
+	private boolean checkExtension(String extension) {
+		return ((extension != null) && (extension.equals("jpg"))
+				|| (extension.equals("png")) || (extension.equals("bmp")) || (extension
+					.equals("gif")));
 	}
 
 	private int getImageId(String dir) {

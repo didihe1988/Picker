@@ -299,7 +299,7 @@
 						</div>
 						<div class="col-4">
 							<img style="max-width: 100%"
-								src="<c:url value='${answer.replierAvartarUrl}' />">
+								src="<c:url value='${answer.replierAvatarUrl}' />">
 						</div>
 						<div style="clear: both"></div>
 						<div class="detail_info">

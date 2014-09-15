@@ -89,6 +89,19 @@
 
 	<div id="main">
 		<!--**xx-->
+
+		<!--为 提问/回答/笔记 提供url定位-->
+		<div id="user_home_url" data-value="/picker/user/${user.id}"
+			style="display: none"></div>
+		<div id="notes_url" data-value="/picker/user/${user.id}/notes/1"
+			style="display: none"></div>
+		<div id="answers_url" data-value="/picker/user/${user.id}/answers/1"
+			style="display: none"></div>
+		<div id="questions_url"
+			data-value="/picker/user/${user.id}/questions/1"
+			style="display: none"></div>
+		<!--end-->
+
 		<div class="row" style="margin-top: 10px">
 			<div class="col-21">
 				<div id="user_photo">
@@ -139,13 +152,6 @@
 							onclick="panel_action($(this))"><i class="icon-list-ul"></i></span>
 					</div>
 					<div style="height: 35px; overflow: hidden">
-						<!-- 
-						<span><img src="/picker/static/images/photo/6.jpg" /></span> <span><img
-							src="/picker/static/images/photo/1.jpg" /></span> <span><img
-							src="/picker/static/images/photo/2.jpg" /></span> <span><img
-							src="/picker/static/images/photo/3.jpg" /></span> <span><img
-							src="/picker/static/images/photo/4.jpg" /></span> <span><img
-							src="/picker/static/images/photo/5.jpg" /></span> -->
 						<c:forEach var="user" items="${followeeList}">
 							<span><img src="<c:url value="${user.avatarUrl}"/>" /></span>
 						</c:forEach>
@@ -159,15 +165,8 @@
 						<!--<span class="show_all"><a href="#">All»</a></span>-->
 					</div>
 					<div style="height: 35px; overflow: hidden;">
-						<!--  
-						<span><img src="/picker/static/images/photo/9.jpg" /></span> <span><img
-							src="/picker/static/images/photo/8.jpg" /></span> <span><img
-							src="/picker/static/images/photo/7.jpg" /></span> <span><img
-							src="/picker/static/images/photo/6.jpg" /></span> <span><img
-							src="/picker/static/images/photo/5.jpg" /></span> <span><img
-							src="/picker/static/images/photo/4.jpg" /></span>-->
 						<c:forEach var="user" items="${followerList}">
-							<span><img src="<c:url value="${user.avatarUrl}"/>"/> /></span>
+							<span><img src="<c:url value="${user.avatarUrl}"/>" /> /></span>
 						</c:forEach>
 					</div>
 				</div>
@@ -211,21 +210,6 @@
 				<div id="home_panel" class="content_panel">
 					<div id="my_books">
 						<ul>
-							<!--  
-							<li><a data-pjax href="/browse/123/0"><img
-									src="/picker/static/images/books/6.jpg"></a></li>
-							<li><a data-pjax href="/browse/124/0"><img
-									src="/picker/static/images/books/1.jpg"></a></li>
-							<li><a data-pjax href="/browse/125/0"><img
-									src="/picker/static/images/books/2.jpg"></a></li>
-							<li><a data-pjax href="/browse/126/0"><img
-									src="/picker/static/images/books/3.jpg"></a></li>
-							<li><a data-pjax href="/browse/127/0"><img
-									src="/picker/static/images/books/4.jpg"></a></li>
-							<li><a data-pjax href="/browse/128/0"><img
-									src="/picker/static/images/books/5.jpg"></a></li>
-							<li><a data-pjax href="/browse/129/0"><img
-									src="/picker/static/images/books/7.jpg"></a></li>-->
 							<c:forEach var="book" items="${bookList}">
 								<li><a data-pjax href="/browse/123/0"><img
 										src=<c:url value="${book.imageUrl}"/>></a></li>
@@ -307,8 +291,9 @@
 									</div>
 									<div class="col-74">
 										<div class="people_name">
-											<span><a href="<c:url value="/user/${user.id}"/>"><c:out value="${user.username}" /></a></span>
-											<span>,<c:out value="${user.signature}" /></span>
+											<span><a href="<c:url value="/user/${user.id}"/>"><c:out
+														value="${user.username}" /></a></span> <span>,<c:out
+													value="${user.signature}" /></span>
 										</div>
 										<div class="people_labels">
 											<i class="icon-tags"></i> <span>考试团</span> <span>斧头帮</span> <span>FFF</span>
@@ -349,8 +334,9 @@
 									</div>
 									<div class="col-74">
 										<div class="people_name">
-											<span><a href="<c:url value="/user/${user.id}"/>"><c:out value="${user.username}" /></a></span>
-											<span>,<c:out value="${user.signature}" /></span>
+											<span><a href="<c:url value="/user/${user.id}"/>"><c:out
+														value="${user.username}" /></a></span> <span>,<c:out
+													value="${user.signature}" /></span>
 										</div>
 										<div class="people_labels">
 											<i class="icon-tags"></i> <span>考试团</span> <span>斧头帮</span> <span>FFF</span>
@@ -386,7 +372,7 @@
 					</div>
 					<div id="group_search_content"></div>
 				</div>
-
+				<!-- 
 				<div id="notes_panel" class="content_panel" style="display: none">
 					<div class="back_nav clear_fix">
 						<div class="go_back" onclick="panel_action($(this))">
@@ -394,15 +380,44 @@
 						</div>
 					</div>
 
-					<!--动态加载-->
+				
 					<div class="content" data-current_page="0">
-						<!-- 加载圈 -->
+				
 						<div class="wait">
 							<i class="icon-spinner icon-spin"></i>
 						</div>
 					</div>
 				</div>
+				 -->
+				<div id="notes_panel" class="content_panel" style="display: none">
+					<div class="back_nav clear_fix">
+						<div class="go_back" onclick="panel_action($(this))">
+							<i class="icon-circle-arrow-left"></i> 返回
+						</div>
+					</div>
 
+					<c:forEach var="note" items="${noteList}">
+						<div class="feeds">
+
+							<div class="browse_list_meta clear_fix">
+								<div class="title note">
+									<i class="icon-edit"></i>笔记：<a data-pjax href="/detail/11"><span
+										class="text">${note.title}</span></a>
+								</div>
+							</div>
+
+							<div class="browse_brief clear_fix">
+								<div>
+									<a href="{q.link}">
+										<div class="feed_text">${note.content}</div>
+									</a>
+								</div>
+							</div>
+							<div class="time">${note.publishTime}</div>
+							<div style="clear: both"></div>
+						</div>
+					</c:forEach>
+				</div>
 				<div id="questions_panel" class="content_panel"
 					style="display: none">
 					<div class="back_nav clear_fix">
@@ -411,29 +426,29 @@
 						</div>
 					</div>
 
-					<div class="feeds">
-						<div class="browse_list_meta clear_fix">
-							<div class="title">
-								<a href="#">我是谁，从哪里来，到哪里去？</a>
+					<c:forEach var="question" items="${questionList}">
+						<div class="feeds">
+
+							<div class="browse_list_meta clear_fix">
+								<div class="title">
+									<a data-pjax href=<c:url value="/question/${question.id}"/>>${question.title}</a>
+								</div>
 							</div>
+							<div class="feed_tool_bar" style="margin-left: -15px">
+								<div class="line show_comment" data-action="get_comment">
+									<i class="icon-comments-alt"></i>${question.commentNum}条评论
+								</div>
+								<div class="line link" data-action="show_all_answer">
+									<a data-pjax href="/detail/11"><i class="icon-lightbulb"></i>${question.answerNum}个回答</a>
+								</div>
+							</div>
+							<div class="time">${question.date}</div>
+							<div style="clear: both"></div>
 
 						</div>
-						<div class="browse_brief clear_fix">
-							<div>
-								<a href="/">
-									<div class="feed_text">
-										我前段时间不远万里去塞舌尔参加了叉烧的婚礼（如果你们还记得他），酒过三巡，不，准确的说是酒过好多好多巡，在我的循循善诱下，丫终于透露了心声，最爱的还是朔姑娘。我这次有了经验，没有搂住他，刻意保持了一米的距离，语重心长的套用了一段话：
-
-										那个人永远活在时间里了，你把她拉不出来，自己也回不去，就这样吧，让她安静的留在那里吧。...</div>
-								</a>
-							</div>
-						</div>
-						<div class="time">21天前</div>
-						<div style="clear: both"></div>
-					</div>
-
-
+					</c:forEach>
 				</div>
+
 
 				<div id="answers_panel" class="content_panel" style="display: none">
 					<div class="back_nav clear_fix">
@@ -442,27 +457,23 @@
 						</div>
 					</div>
 
-					<div class="feeds">
-						<div class="browse_list_meta clear_fix">
-							<div class="title">
-								<a href="#">我是谁，从哪里来，到哪里去</a>
+					<c:forEach var="answer" items="${answerList}">
+						<div class="feeds">
+
+							<div class="browse_list_meta clear_fix">
+								<div class="title">
+									<a data-pjax href="{q.link}">${answer.questionName}</a>
+								</div>
+								<span class="time">${answer.date}</span>
 							</div>
-
-						</div>
-						<div class="browse_brief clear_fix">
-							<div>
-								<a href="/">
-									<div class="feed_text">
-										我前段时间不远万里去塞舌尔参加了叉烧的婚礼（如果你们还记得他），酒过三巡，不，准确的说是酒过好多好多巡，在我的循循善诱下，丫终于透露了心声，最爱的还是朔姑娘。我这次有了经验，没有搂住他，刻意保持了一米的距离，语重心长的套用了一段话：
-
-										那个人永远活在时间里了，你把她拉不出来，自己也回不去，就这样吧，让她安静的留在那里吧。...</div>
+							<div style="clear: both"></div>
+							<div class="browse_brief clear_fix">
+								<a data-pjax href="{q.link}">
+									<div class="feed_text">${answer.content}</div>
 								</a>
 							</div>
 						</div>
-						<div class="time">>21天前</div>
-						<div style="clear: both"></div>
-					</div>
-
+					</c:forEach>
 				</div>
 			</div>
 		</div>

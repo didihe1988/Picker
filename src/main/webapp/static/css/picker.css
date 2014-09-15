@@ -32,6 +32,14 @@ input[type=text]{
     border:1px solid #dddddd;
 }
 
+input[type=button]{
+    background-color: #009EDA;
+    color: #ffffff;
+    padding: 5px;
+    border-radius: 5px;
+    border:1px solid #dddddd;
+}
+
 #nav{
     /* Rectangle 1: */
     background-image: -o-linear-gradient(-89deg, #FAFAFA 0%, #F0F0F0 100%);
@@ -48,6 +56,10 @@ input[type=text]{
     top: 0;
     z-index: 900;
     display: block;
+}
+
+.point_cursor:hover{
+    cursor: pointer;
 }
 
 #nav_content{
@@ -1262,6 +1274,7 @@ form.group_search .btn{
 }
 
 .browse_brief{
+    min-height: 22px;
     max-height: 88px;
     position: relative;
 }
@@ -1390,11 +1403,15 @@ form.group_search .btn{
 }
 
 .browse_list_meta > .note{
-    color: #5BBD72;
+    color: #8aabca;
 }
 
 .browse_list_meta > .note i{
     margin-right: 5px;
+}
+
+.browse_list_meta > .note .text{
+    color: #8aabca;
 }
 
 .page > .page_split > div{
@@ -2102,6 +2119,10 @@ img.user{
     margin-right: 0.3rem;
 }
 
+#p_new_page{
+    position: relative;
+}
+
 #p_new_page > .page:hover{
     cursor: pointer;
 }
@@ -2111,12 +2132,11 @@ img.user{
 }
 
 /*------------------------------------other-------------------------------------*/
-#image_insert_panel{
+.shadow{
     z-index: 901;
     position: fixed;
     width: 500px;
     background-color: #ffffff;
-    min-height: 200px;
     margin:0 auto;
     left:0;
     right:0;
@@ -2125,9 +2145,55 @@ img.user{
     border: 1px solid #dddddd;
     box-shadow: 5px 5px 5px #888888;
     display: none;
+    padding: 10px;
 }
 
-#cancel_panel{
+.shadow .title{
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-bottom: 2px dashed #5082AA;
+    padding-bottom: 10px;
+    color: #5082AA;
+}
+
+.shadow .content{
+    margin: 10px 1.2rem;
+    font-size: 1rem;
+}
+
+#image_insert_panel a{
+    font-weight: bold;
+}
+
+#upload_local_image{
+    margin-top: 10px;
+}
+
+#link_image{
+    margin-top: 10px;
+    display: none;
+}
+
+#link_image input[type=text]{
+    width: 70%;
+}
+
+#image_insert_panel #result{
+    margin-top: 10px;
+    display: none;
+}
+
+#image_insert_panel #result > span{
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #eeeeee;
+    border-radius: 5px;
+    color: #FF2733;
+}
+
+.cancel_panel{
     z-index: 900;
     position: fixed;
     top: 0;

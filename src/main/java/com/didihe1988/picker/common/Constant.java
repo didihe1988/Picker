@@ -40,6 +40,7 @@ public class Constant {
 	public static final String KEY_BOOK = "book";
 	public static final String KEY_USER = "user";
 	public static final String KEY_IMAGEID = "imageId";
+	public static final String KEY_IMAGEURL = "imageUrl";
 
 	public static final int MESSAGE_LENGTH = 20;
 	public static final int MAX_PASSWORD_LENGTH = 20;

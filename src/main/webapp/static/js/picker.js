@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Created by youzh_000 on 2014/7/24.
  */
 
@@ -234,6 +234,14 @@ function read_flag(button) {
  * Created by youzh_000 on 2014/7/15.
  */
 
+function merge_url(a, b){
+    //a+b
+    a = a.replace(/\/\//g, '/');
+    b = b.replace(/\/\//g, '/');
+    a = a + '/';
+    return (a+b).replace(/\/\//g, '/')
+}
+
 function do_follow(t) {
     t.hide();
     t.parent().find('.cancel_follow').show();
@@ -252,6 +260,57 @@ function set_init_panel(obj) {
         return true;
     }
     return false;
+}
+
+function gen_paging(current_page, total_page, base_url) {
+    //生成分页
+    if(total_page > 1){
+        var pagination_template = $('#pagination_template').html();
+        var handle = {
+            gen_link: function (page) {
+                return merge_url(base_url, page.toString())
+            },
+            pre: function () {
+                if(current_page == 1){
+                    return '';
+                }else{
+                    return '<li><a href="' +
+                        this.gen_link(current_page-1) +
+                        '">&laquo;</a></li>';
+                }
+            },
+            paging: function () {
+                var p = [];
+                for(var i = 1; i <= total_page; ++i){
+                    if(i == current_page){
+                        p.push(nano_template(
+                            '<li class="active"><a href="{t.link}">{t.page}</a></li>', {t:{
+                                link: this.gen_link(i), page:i
+                            }}));
+                    }
+                    else{
+                        p.push(nano_template(
+                            '<li><a href="{t.link}">{t.page}</a></li>', {t:{
+                                link: this.gen_link(i), page:i
+                            }}));
+                    }
+                }
+                return p.join('');
+            },
+            next: function () {
+                if(current_page == total_page){
+                    return '';
+                }else{
+                    return '<li><a href="' +
+                        this.gen_link(current_page+1) +
+                        '">&raquo;</a></li>';
+                }
+            }
+        };
+        return nano_template(pagination_template, {pagination: handle})
+    }else{
+        return null;
+    }
 }
 
 function panel_action(t) {
@@ -275,93 +334,50 @@ function panel_action(t) {
             this.showPanel($('#followed_panel'));
         },
         'questions': function () {
-            this.showPanel($('#questions_panel'));
+            this.q_a_n_action('questions', $('#questions_url').data('value'), $('#questions_panel'), '全部提问',
+                $('#questions_feed_template').html(), $('#questions_feed_template').html());
         },
         'answers': function () {
-            this.showPanel($('#answers_panel'));
+            this.q_a_n_action('answers', $('#answers_url').data('value'), $('#answers_panel'), '全部回答',
+                $('#answers_feed_with_picture_template').html(), $('#answers_feed_with_no_picture_template').html());
         },
         'notes': function () {
             //修改url
-            window.history.pushState(null, '全部笔记', '/user/1234/notes/1');
-            var notes_dom = $('#notes_panel');
+            this.q_a_n_action('notes', $('#notes_url').data('value'), $('#notes_panel'), '全部笔记',
+                $('#notes_feed_with_picture_template').html(), $('#notes_feed_with_no_picture_template').html());
+        },
+        //questions, answers, notes action.basic the same
+        'q_a_n_action': function (type, show_url, dom, title, with_picture_template, no_picture_template) {
+            //修改url
+            window.history.pushState(null, title, show_url);
             //check
-            if(notes_dom.find('.content').data('current_page') == 0){
+            if(dom.find('.content').data('current_page') == 0){
                 //第一次更新
                 $.ajax({
-                    url: '/user/1234/notes/1/get',
+                    //url: /user/1234/notes/1/get
+                    url: merge_url('/picker/json', show_url),
                     type: 'get',
                     success: function (req) {
-                        notes_dom.find('.wait').hide();
-                        var notes = [];
-                        var with_picture_template =
-                            $('#notes_feed_with_picture_template').html();
-                        var no_picture_template =
-                            $('#notes_feed_with_no_picture_template').html();
-                        $.each(req['notes'], function (i, note) {
-                            if(note['picture']){
-                                notes.push(nano_template(with_picture_template, {note: note}))
+                        dom.find('.wait').hide();
+                        var part = [];
+                        $.each(req[type], function (i, q) {
+                            if(q['picture']){
+                                part.push(nano_template(with_picture_template, {q: q}))
                             }else{
-                                notes.push(nano_template(no_picture_template, {note: note}))
+                                part.push(nano_template(no_picture_template, {q: q}))
                             }
                         });
 
-                        //生成分页
-                        var current_page = parseInt(req['current_page']);
-                        var total_page = parseInt(req['total_page']);
-                        if(total_page > 1){
-                            var pagination_template = $('#pagination_template').html();
-                            var handle = {
-                                gen_link: function (page) {
-                                    return '/'
-                                },
-                                pre: function () {
-                                    if(current_page == 1){
-                                        return '';
-                                    }else{
-                                        return '<li><a href="' +
-                                            this.gen_link(current_page-1) +
-                                            '">&laquo;</a></li>';
-                                    }
-                                },
-                                paging: function () {
-                                    var p = [];
-                                    for(var i = 1; i <= total_page; ++i){
-                                        if(i == current_page){
-                                            p.push(nano_template(
-                                                '<li class="active"><a href="{t.link}">{t.page}</a></li>', {t:{
-                                                    link: this.gen_link(i), page:i
-                                                }}));
-                                        }
-                                        else{
-                                            p.push(nano_template(
-                                                '<li><a href="{t.link}">{t.page}</a></li>', {t:{
-                                                    link: this.gen_link(i), page:i
-                                                }}));
-                                        }
-                                    }
-                                    return p.join('');
-                                },
-                                next: function () {
-                                    if(current_page == total_page){
-                                        return '';
-                                    }else{
-                                        return '<li><a href="' +
-                                            this.gen_link(current_page+1) +
-                                            '#">&raquo;</a></li>';
-                                    }
-                                }
-                            };
-                            notes.push(nano_template(pagination_template, {pagination: handle}))
-                        }
-
-                        notes_dom.find('.content').html(notes.join(''));
+                        part.push(gen_paging(parseInt(req['current_page']), parseInt(req['total_page']),
+                           merge_url($('#user_home_url').data('value'), type)));
+                        dom.find('.content').html(part.join(''));
                     },
                     error: function (req) {
                         console.log('error')
                     }
                 })
             }
-            this.showPanel(notes_dom);
+            this.showPanel(dom);
         },
         'showPanel': function (e) {
             var cp = handles.current_panel();
@@ -378,6 +394,11 @@ function panel_action(t) {
         },
         'slideBack': function (e) {
             var cp = handles.current_panel();
+            var panel_id_to_change_url = ['notes_panel', 'questions_panel', 'answers_panel'];
+            for(var i in panel_id_to_change_url){
+                if(cp.attr('id') == panel_id_to_change_url[i])
+                    window.history.pushState(null, '用户主页', $('#user_home_url').data('value'));
+            }
             if(e.attr('id') === cp.attr('id'))
                 return;
 
@@ -634,7 +655,15 @@ function create_editor(){
     return new EpicEditor(opts);
 }
 
-function autosave() {
+function change_title(key, new_title) {
+    var dir = JSON.parse(localStorage.getItem('dir'));
+    if(dir == null || typeof(dir[key]) == 'undefined')
+        return ;
+    dir[key]['title'] = new_title;
+    localStorage.setItem('dir', JSON.stringify(dir))
+}
+
+function autosave(no_repeat) {
     if($('#epiceditor').length){
         editor.save();
         var content = editor.exportFile();
@@ -644,6 +673,9 @@ function autosave() {
         var key = clean_url(current_url);
         if(content == ''){
             delete dir[key];
+            localStorage.setItem('dir', JSON.stringify(dir));
+            localStorage['count'] = Object.keys(dir).length;
+            delete localStorage[key];
         }
         else{
             var date = new Date();
@@ -663,7 +695,9 @@ function autosave() {
             localStorage.setItem(key, content);
         }
 
-        setTimeout(autosave, 500);
+        if(typeof(no_repeat) == "undefined")
+            setTimeout(autosave, 500);
+
     }
 }
 
@@ -678,4 +712,90 @@ function editor_listened() {
             editor.importFile('epiceditor', localStorage[key])
         }
     });
+}
+
+//----------------------------insert image part------------------------------
+
+function show_image_insert_panel() {
+    $('#cancel_image_insert').show();
+    $('#image_insert_panel').fadeIn();
+}
+
+function hide_panel(panel, cancel_panel) {
+    if(panel)
+        panel.hide();
+    if(cancel_panel)
+        cancel_panel.hide();
+}
+
+function image_upload() {
+    if(!$('#image_file').val()){
+        console.log('choose file first');
+        return ;
+    }
+    $('#upload_local_image').find('input[type=button]').attr('value', '提交中...');
+    try{
+        $.ajaxFileUpload({
+            url: '/image_upload',
+            secureuri: false,
+            fileElementId: 'image_file',
+            dataType: 'json',
+            success: function (data) {
+                if(data['status'] == 'success'){
+                    $('#result').find('span').html(gen_mark(data['url']));
+                    $('#result').slideDown();
+                }else{
+                    alert('请选择图片文件');
+                }
+
+                $('#upload_local_image').find('input[type=button]').attr('value', '提交');
+            },
+            error: function (data) {
+                alert('error');
+                $('#upload_local_image').find('input[type=button]').attr('value', '提交');
+            }
+        });
+    }catch(e){
+        $('#upload_local_image').find('input[type=button]').attr('value', '提交');
+    }
+}
+
+function image_link() {
+    var url = $('#outside_image_link').val();
+    if(url == ''){
+        alert('请先输入图片地址');
+        return ;
+    }
+    $('#result').find('span').html(gen_mark(url));
+    $('#result').slideDown();
+}
+
+function show_upload_local_image() {
+    $('#link_image').hide();
+    $('#result').hide();
+    $('#upload_local_image').show();
+}
+
+function show_link_outside_image() {
+    $('#upload_local_image').hide();
+    $('#result').hide();
+    $('#link_image').show();
+}
+
+function gen_mark(url) {
+    return '![]('+url+')';
+}
+
+function show_go_to_page_panel() {
+    $('#go_to_page_panel').find('#current_page').html($('.word').html());
+    $('#go_to_page_panel').show();
+    $('#cancel_page_jump').show();
+}
+
+function go_to_page(page) {
+    var p = location.href;
+    while(p.lastIndexOf('/') == p.length-1){
+        p = p.substr(0, p.length-1)
+    }
+    $.pjax({url: p.substr(0, p.lastIndexOf('/')+1)+page, container: '#main'})
 }

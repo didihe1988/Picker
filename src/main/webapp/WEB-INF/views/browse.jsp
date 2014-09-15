@@ -372,9 +372,9 @@
 						<div class="col-25">
 							<div id="book_meta" data-book-id="123">
 								<div class="book_info">
-									<a href="#">人生的枷锁</a>
+									<a href="#">${book.bookName}</a>
 								</div>
-								<div class="book_info">[英] 毛姆</div>
+								<div class="book_info">[英] ${book.writer}</div>
 								<div class="book_info">2007-3</div>
 							</div>
 						</div>

@@ -33,4 +33,12 @@ public class JsonUtils {
 				}.getType());
 		return list;
 	}
+
+	public static List<String> getStringList(String listString) {
+		Gson gson = new Gson();
+		List<String> list = gson.fromJson(listString,
+				new TypeToken<List<String>>() {
+				}.getType());
+		return list;
+	}
 }
