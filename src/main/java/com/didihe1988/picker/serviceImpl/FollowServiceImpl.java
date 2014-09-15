@@ -1,6 +1,5 @@
 package com.didihe1988.picker.serviceImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.FollowDao;
-import com.didihe1988.picker.dao.QuestionDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Follow;
-import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.UserDp;
 import com.didihe1988.picker.service.FollowService;
 
 @Service
@@ -27,7 +24,7 @@ public class FollowServiceImpl implements FollowService {
 	private UserDao userDao;
 
 	@Autowired
-	private QuestionDao questionDao;
+	private FeedDao feedDao;
 
 	@Override
 	public Follow getFollowById(int id) {
@@ -53,7 +50,7 @@ public class FollowServiceImpl implements FollowService {
 					follow.getFollowerId());
 		} else {
 			// Follow.FOLLOW_QUESTION
-			questionDao.incrementNum(Constant.FOLLOW_NUM, follow.getSourceId());
+			feedDao.incrementNum(Constant.FOLLOW_NUM, follow.getSourceId());
 		}
 		return Status.SUCCESS;
 	}
@@ -76,7 +73,7 @@ public class FollowServiceImpl implements FollowService {
 			userDao.decrementNum(Constant.FOLLOW_NUM, sourceId);
 		} else {
 			// Follow.FOLLOW_QUESTION
-			questionDao.decrementNum(Constant.FOLLOW_NUM, sourceId);
+			feedDao.decrementNum(Constant.FOLLOW_NUM, sourceId);
 		}
 		return Status.SUCCESS;
 	}

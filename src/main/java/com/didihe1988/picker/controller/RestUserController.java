@@ -20,22 +20,19 @@ import com.didihe1988.picker.model.AnswerDp;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Circle;
+import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.LoginForm;
-import com.didihe1988.picker.model.Note;
-import com.didihe1988.picker.model.NoteDp;
-import com.didihe1988.picker.model.Question;
-import com.didihe1988.picker.model.QuestionDp;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.UserDp;
+import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
 import com.didihe1988.picker.service.CircleMemberService;
 import com.didihe1988.picker.service.CircleService;
+import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.FollowService;
-import com.didihe1988.picker.service.NoteService;
-import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
@@ -49,13 +46,10 @@ public class RestUserController {
 	private AnswerService answerService;
 
 	@Autowired
-	private QuestionService questionService;
+	private FeedService feedService;
 
 	@Autowired
 	private FollowService followService;
-
-	@Autowired
-	private NoteService noteService;
 
 	@Autowired
 	private BoughtService boughtService;
@@ -135,7 +129,9 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestions(@PathVariable int id) {
-		List<Question> list = questionService.getQuestionListByAskerId(id);
+		// List<Question> list = questionService.getQuestionListByAskerId(id);
+		List<Feed> list = feedService.getFeedListByUserId(id,
+				Feed.TYPE_QUESTION);
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 
@@ -145,8 +141,8 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/{id}/questiondps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestionDps(@PathVariable int id,
 			HttpServletRequest request) {
-		List<QuestionDp> list = questionService.getQuestionDpListByAskerId(id,
-				HttpUtils.getSessionUserId(request));
+		List<FeedDp> list = feedService.getFeedDpListByUserId(id,
+				Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 
@@ -155,12 +151,13 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/notes", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNotes(@PathVariable int id, HttpServletRequest request) {
-		List<Note> list = new ArrayList<Note>();
-		int userId = HttpUtils.getSessionUserId(request);
-		if (userId == id) {
-			list = noteService.getALlNoteListByUserId(id);
-		}
-		list = noteService.getPublicNoteListByUserId(id);
+		List<Feed> list = new ArrayList<Feed>();
+		/*
+		 * int curUserId = HttpUtils.getSessionUserId(request); if (curUserId ==
+		 * id) { list = noteService.getALlNoteListByUserId(id); } list =
+		 * noteService.getPublicNoteListByUserId(id);
+		 */
+		list = feedService.getFeedListByUserId(id, Feed.TYPE_NOTE);
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
 	}
 
@@ -169,14 +166,14 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/notedps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNoteDps(@PathVariable int id, HttpServletRequest request) {
-		List<NoteDp> list = new ArrayList<NoteDp>();
-		int userId = HttpUtils.getSessionUserId(request);
-		if (userId == id) {
-			list = noteService.getALlNoteDpListByUserId(id,
-					HttpUtils.getSessionUserId(request));
-		}
-		list = noteService.getPublicNoteDpListByUserId(id,
-				HttpUtils.getSessionUserId(request));
+		List<FeedDp> list = new ArrayList<FeedDp>();
+		/*
+		 * int userId = HttpUtils.getSessionUserId(request); if (userId == id) {
+		 * list = noteService.getALlNoteDpListByUserId(id,
+		 * HttpUtils.getSessionUserId(request)); }
+		 */
+		int curUserId = HttpUtils.getSessionUserId(request);
+		list = feedService.getFeedDpListByUserId(id, Feed.TYPE_NOTE, curUserId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
 	}
 
@@ -217,14 +214,13 @@ public class RestUserController {
 	public String getQuestionsFollowed(@PathVariable int id) {
 		List<Follow> followList = followService
 				.getFollowListByFollowerIdByQuestion(id);
-		List<Question> quesionList = new ArrayList<Question>();
+		List<Feed> feedList = new ArrayList<Feed>();
 		for (Follow follow : followList) {
-			Question question = questionService.getQuestionById(follow
-					.getSourceId());
-			quesionList.add(question);
+			Feed feed = feedService.getFeedById(follow.getSourceId());
+			feedList.add(feed);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST,
-				quesionList);
+				feedList);
 	}
 
 	/**

@@ -12,8 +12,7 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.dao.CommentDao;
 import com.didihe1988.picker.dao.FavoriteDao;
-import com.didihe1988.picker.dao.NoteDao;
-import com.didihe1988.picker.dao.QuestionDao;
+import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.CommentDp;
@@ -31,13 +30,10 @@ public class CommentServiceImpl implements CommentService {
 	 * @Autowired private BookDao bookDao;
 	 */
 	@Autowired
-	private QuestionDao questionDao;
+	private FeedDao feedDao;
 
 	@Autowired
 	private AnswerDao answerDao;
-
-	@Autowired
-	private NoteDao noteDao;
 
 	@Autowired
 	private UserDao userDao;
@@ -60,14 +56,12 @@ public class CommentServiceImpl implements CommentService {
 
 		// commentNum++
 		int type = comment.getType();
-		if (type == Comment.COMMENT_QUESTION) {
-			questionDao.incrementNum(Constant.COMMENT_NUM,
-					comment.getCommentedId());
+		if ((type == Comment.COMMENT_QUESTION)
+				|| (type == Comment.COMMENT_NOTE)) {
+			feedDao.incrementNum(Constant.COMMENT_NUM, comment.getCommentedId());
 		} else if (type == Comment.COMMENT_ANSWER) {
 			answerDao.incrementNum(Constant.COMMENT_NUM,
 					comment.getCommentedId());
-		} else if (type == Comment.COMMENT_NOTE) {
-			noteDao.incrementNum(Constant.COMMENT_NUM, comment.getCommentedId());
 		}
 		return Status.SUCCESS;
 	}
@@ -84,9 +78,9 @@ public class CommentServiceImpl implements CommentService {
 		commentDao.deleteComment(comment);
 
 		// commentNum--
-		if (comment.getType() == Comment.COMMENT_QUESTION) {
-			questionDao.decrementNum(Constant.COMMENT_NUM,
-					comment.getCommentedId());
+		if ((comment.getType() == Comment.COMMENT_QUESTION)
+				|| (comment.getType() == Comment.COMMENT_NOTE)) {
+			feedDao.decrementNum(Constant.COMMENT_NUM, comment.getCommentedId());
 		} else if (comment.getType() == Comment.COMMENT_ANSWER) {
 			answerDao.decrementNum(Constant.COMMENT_NUM,
 					comment.getCommentedId());
@@ -164,11 +158,9 @@ public class CommentServiceImpl implements CommentService {
 		String commentedName = "";
 		if (comment.getType() == Comment.COMMENT_ANSWER) {
 			commentedName = answerDao.queryAnswerById(commentedId).getContent();
-		} else if (comment.getType() == Comment.COMMENT_QUESTION) {
-			commentedName = questionDao.queryQuestionById(commentedId)
-					.getTitle();
-		} else if (comment.getType() == Comment.COMMENT_NOTE) {
-			commentedName = noteDao.queryNoteById(commentedId).getTitle();
+		} else if ((comment.getType() == Comment.COMMENT_QUESTION)
+				|| (comment.getType() == Comment.COMMENT_NOTE)) {
+			commentedName = feedDao.queryFeedById(commentedId).getTitle();
 		}
 		return new CommentDp(comment, user.getUsername(), commentedName,
 				user.getAvatarUrl(), favoriteDao.isFavoriteExistsByKey(userId,

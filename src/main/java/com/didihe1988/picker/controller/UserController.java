@@ -10,32 +10,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.didihe1988.picker.common.Constant;
-import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.AnswerDp;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
-import com.didihe1988.picker.model.Circle;
-import com.didihe1988.picker.model.CircleDp;
-import com.didihe1988.picker.model.CircleMember;
+import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
-import com.didihe1988.picker.model.NoteDp;
-import com.didihe1988.picker.model.QuestionDp;
-import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.UserDp;
+import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
 import com.didihe1988.picker.service.CircleMemberService;
 import com.didihe1988.picker.service.CircleService;
+import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.FollowService;
-import com.didihe1988.picker.service.NoteService;
-import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
-import com.didihe1988.picker.utils.JsonUtils;
 
 @Controller
 public class UserController {
@@ -46,13 +37,10 @@ public class UserController {
 	private AnswerService answerService;
 
 	@Autowired
-	private QuestionService questionService;
+	private FeedService feedService;
 
 	@Autowired
 	private FollowService followService;
-
-	@Autowired
-	private NoteService noteService;
 
 	@Autowired
 	private BoughtService boughtService;
@@ -118,8 +106,8 @@ public class UserController {
 	public String getQuestions(@PathVariable int id, Model model,
 			HttpServletRequest request) {
 		addBaseAttribute(id, model);
-		List<QuestionDp> list = questionService.getQuestionDpListByAskerId(id,
-				HttpUtils.getSessionUserId(request));
+		List<FeedDp> list = feedService.getFeedDpListByUserId(id,
+				Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request));
 		model.addAttribute("questionList", list);
 		return "user";
 	}
@@ -132,8 +120,8 @@ public class UserController {
 	public String getNotes(@PathVariable int id, Model model,
 			HttpServletRequest request) {
 		addBaseAttribute(id, model);
-		List<NoteDp> list = noteService.getALlNoteDpListByUserId(id,
-				HttpUtils.getSessionUserId(request));
+		List<FeedDp> list = feedService.getFeedDpListByUserId(id,
+				Feed.TYPE_NOTE, HttpUtils.getSessionUserId(request));
 		System.out.println(list);
 		model.addAttribute("noteList", list);
 		return "user";

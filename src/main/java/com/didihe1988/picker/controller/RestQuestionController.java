@@ -1,11 +1,7 @@
 package com.didihe1988.picker.controller;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,18 +17,18 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
-import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.UserDp;
-import com.didihe1988.picker.model.form.QuestionForm;
+import com.didihe1988.picker.model.form.FeedForm;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
+import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.FollowService;
 import com.didihe1988.picker.service.MessageService;
-import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.service.RelatedImageService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
@@ -41,8 +37,9 @@ import com.didihe1988.picker.utils.StringUtils;
 
 @RestController
 public class RestQuestionController {
+
 	@Autowired
-	private QuestionService questionService;
+	private FeedService feedService;
 
 	@Autowired
 	private MessageService messageService;
@@ -67,9 +64,9 @@ public class RestQuestionController {
 
 	@RequestMapping(value = "/json/question/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestion(@PathVariable int id) {
-		Question question = questionService.getQuestionById(id);
+		Feed feed = feedService.getFeedById(id);
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_QUESTION,
-				question);
+				feed);
 	}
 
 	/**
@@ -99,7 +96,7 @@ public class RestQuestionController {
 	public String deleteQuestion(@PathVariable int id,
 			HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		int status = questionService.deleteQuestionById(id, userId);
+		int status = feedService.deleteFeedById(id, userId);
 		return JsonUtils.getJsonObjectString("status", status);
 	}
 
@@ -159,9 +156,10 @@ public class RestQuestionController {
 			/*
 			 * XXX赞了您的问题
 			 */
-			Question question = questionService.getQuestionById(id);
+			// Question question = questionService.getQuestionById(id);
+			Feed feed = feedService.getFeedById(id);
 			String relatedSourceContent = StringUtils.confineStringLength(
-					question.getContent(), Constant.MESSAGE_LENGTH);
+					feed.getContent(), Constant.MESSAGE_LENGTH);
 			/*
 			 * messageService.addMessageByRecerver(question.getAskerId(),
 			 * Message.MESSAGE_YOUR_QUESTION_FAVORITED, userId, userName, id,
@@ -202,20 +200,18 @@ public class RestQuestionController {
 	}
 
 	@RequestMapping(value = "/json/question/add", method = RequestMethod.POST)
-	public String add(@RequestBody QuestionForm questionForm,
-			HttpServletRequest request) {
+	public String add(@RequestBody FeedForm feedForm, HttpServletRequest request) {
 		/*
 		 * 添加问题
 		 */
-		List<String> list = JsonUtils
-				.getStringList(questionForm.getImageUrls());
+		List<String> list = JsonUtils.getStringList(feedForm.getImageUrls());
 		// System.out.println(list);
 
-		int status = questionService.addQuestion(questionForm.getQuestion());
+		int status = feedService.addFeed(feedForm.getFeed());
 		if (status == Status.SUCCESS) {
 			// addQuestionMessage(question, request);
-			int questionId = questionService
-					.getLatestQuestionIdByBookId(questionForm.getBookId());
+			int questionId = feedService.getLatestFeedByBookId(
+					feedForm.getBookId(), Feed.TYPE_QUESTION);
 			addQuestionImage(questionId, list);
 		}
 
@@ -223,32 +219,35 @@ public class RestQuestionController {
 	}
 
 	@RequestMapping(value = "/json/question/update", method = RequestMethod.POST)
-	public String update(@RequestBody Question question,
-			HttpServletRequest request) {
+	public String update(@RequestBody Feed feed, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		int status = questionService.updateQuestion(question, userId);
+		// int status = questionService.updateQuestion(question, userId);
+		int status = feedService.updateFeed(feed, userId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	private void addQuestionMessage(Question question,
-			HttpServletRequest request) {
+	private void addQuestionMessage(Feed feed, HttpServletRequest request) {
 		/*
 		 * 通知关注者 小明 (被关注者)提出了一个问题
 		 */
 		int userId = HttpUtils.getSessionUserId(request);
 		String userName = HttpUtils.getSessionUserName(request);
-		int questionId = questionService.getLatestQuestionIdByBookId(question
-				.getBookId());
+		/*
+		 * int questionId = questionService.getLatestQuestionIdByBookId(question
+		 * .getBookId());
+		 */
+		int feedId = feedService.getLatestFeedByBookId(feed.getBookId(),
+				Feed.TYPE_QUESTION);
 		String relatedSourceContent = StringUtils.confineStringLength(
-				question.getContent(), Constant.MESSAGE_LENGTH);
+				feed.getContent(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(
-				Message.MESSAGE_FOLLOWED_ASKQUESTION, userId, userName,
-				questionId, relatedSourceContent);
+				Message.MESSAGE_FOLLOWED_ASKQUESTION, userId, userName, feedId,
+				relatedSourceContent);
 		/*
 		 * 用户动态
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
-				Message.MESSAGE_USER_ADDQUESTION, userId, userName, questionId,
+				Message.MESSAGE_USER_ADDQUESTION, userId, userName, feedId,
 				relatedSourceContent);
 	}
 

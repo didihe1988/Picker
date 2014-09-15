@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
-import com.didihe1988.picker.model.Answer;
+import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
-import com.didihe1988.picker.model.Question;
+import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.FollowService;
 import com.didihe1988.picker.service.MessageService;
-import com.didihe1988.picker.service.QuestionService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
@@ -33,7 +32,7 @@ public class FollowController {
 	private MessageService messageService;
 
 	@Autowired
-	private QuestionService questionService;
+	private FeedService feedService;
 
 	@RequestMapping(value = "/json/follow/list/follower/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getFollowListByFollowerId(@PathVariable int id) {
@@ -102,9 +101,9 @@ public class FollowController {
 		 * 通知关注者 小明 (被关注者)关注了一个XXX问题
 		 */
 		if (sourceType == Follow.FOLLOW_QUESTION) {
-			Question question = questionService.getQuestionById(sourceId);
+			Feed feed = feedService.getFeedById(sourceId);
 			String relatedSourceContent = StringUtils.confineStringLength(
-					question.getContent(), Constant.MESSAGE_LENGTH);
+					feed.getContent(), Constant.MESSAGE_LENGTH);
 			messageService.addMessageByFollowedUser(
 					Message.MESSAGE_FOLLOWED_FOLLOWQUESTION, userId, userName,
 					sourceId, relatedSourceContent);

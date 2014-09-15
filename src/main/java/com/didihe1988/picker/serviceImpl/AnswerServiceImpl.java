@@ -11,7 +11,7 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.dao.FavoriteDao;
-import com.didihe1988.picker.dao.QuestionDao;
+import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.AnswerDp;
@@ -26,7 +26,7 @@ public class AnswerServiceImpl implements AnswerService {
 	private AnswerDao answerDao;
 
 	@Autowired
-	private QuestionDao questionDao;
+	private FeedDao feedDao;
 
 	@Autowired
 	private UserDao userDao;
@@ -48,7 +48,7 @@ public class AnswerServiceImpl implements AnswerService {
 		/*
 		 * Question answerNum++
 		 */
-		questionDao.incrementNum(Constant.ANSWER_NUM, answer.getQuestionId());
+		feedDao.incrementNum(Constant.ANSWER_NUM, answer.getQuestionId());
 		/*
 		 * User answerNum++
 		 */
@@ -162,8 +162,8 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	private AnswerDp getAnswerDpByAnswer(Answer answer, int userId) {
-		String questionName = questionDao.queryQuestionById(
-				answer.getQuestionId()).getTitle();
+		String questionName = feedDao.queryFeedById(answer.getQuestionId())
+				.getTitle();
 		User user = userDao.queryUserById(answer.getReplierId());
 		return new AnswerDp(answer, questionName, user.getUsername(),
 				user.getAvatarUrl(), favoriteDao.isFavoriteExistsByKey(userId,

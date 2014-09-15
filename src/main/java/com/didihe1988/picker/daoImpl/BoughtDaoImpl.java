@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.BoughtDao;
-import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 
 @Repository

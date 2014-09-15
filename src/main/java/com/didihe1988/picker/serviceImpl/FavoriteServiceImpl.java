@@ -11,14 +11,11 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.dao.CommentDao;
 import com.didihe1988.picker.dao.FavoriteDao;
-import com.didihe1988.picker.dao.NoteDao;
-import com.didihe1988.picker.dao.QuestionDao;
+import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Favorite;
-import com.didihe1988.picker.model.Note;
-import com.didihe1988.picker.model.Question;
 import com.didihe1988.picker.service.FavoriteService;
 
 @Service
@@ -28,16 +25,13 @@ public class FavoriteServiceImpl implements FavoriteService {
 	private CommentDao commentDao;
 
 	@Autowired
-	private QuestionDao questionDao;
+	private FeedDao feedDao;
 
 	@Autowired
 	private AnswerDao answerDao;
 
 	@Autowired
 	private UserDao userDao;
-
-	@Autowired
-	private NoteDao noteDao;
 
 	@Autowired
 	private FavoriteDao favoriteDao;
@@ -90,15 +84,14 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Override
 	public int incrementQuestionFavorite(int questionId, int userId) {
 		// TODO Auto-generated method stub
-		Question question = questionDao.queryQuestionById(questionId);
-		if (question == null) {
+		if (!feedDao.isFeedExistsById(questionId)) {
 			return Status.NOT_EXISTS;
 		}
 		Favorite favorite = new Favorite(questionId, userId,
 				Favorite.FAVORITE_QUESTION);
 		if (!favoriteDao.isFavoriteExists(favorite)) {
 			userDao.incrementNum(Constant.FAVORITE_NUM, userId);
-			questionDao.incrementNum(Constant.FAVORITE_NUM, questionId);
+			feedDao.incrementNum(Constant.FAVORITE_NUM, questionId);
 			favoriteDao.addFavorite(favorite);
 			return Status.SUCCESS;
 		} else {
@@ -110,15 +103,14 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Override
 	public int decrementQuestionFavorite(int questionId, int userId) {
 		// TODO Auto-generated method stub
-		Question question = questionDao.queryQuestionById(questionId);
-		if (question == null) {
+		if (!feedDao.isFeedExistsById(questionId)) {
 			return Status.NOT_EXISTS;
 		}
 		Favorite favorite = new Favorite(questionId, userId,
 				Favorite.FAVORITE_QUESTION);
 		if (favoriteDao.isFavoriteExists(favorite)) {
 			userDao.decrementNum(Constant.FAVORITE_NUM, userId);
-			questionDao.decrementNum(Constant.FAVORITE_NUM, questionId);
+			feedDao.decrementNum(Constant.FAVORITE_NUM, questionId);
 			favoriteDao.deleteFavorite(favorite);
 			return Status.SUCCESS;
 		} else {
@@ -170,14 +162,13 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Override
 	public int incrementNoteFavorite(int noteId, int userId) {
 		// TODO Auto-generated method stub
-		Note note = noteDao.queryNoteById(noteId);
-		if (note == null) {
+		if (!feedDao.isFeedExistsById(noteId)) {
 			return Status.NOT_EXISTS;
 		}
 		Favorite favorite = new Favorite(noteId, userId, Favorite.FAVORITE_NOTE);
 		if (!favoriteDao.isFavoriteExists(favorite)) {
 			userDao.incrementNum(Constant.FAVORITE_NUM, userId);
-			noteDao.incrementNum(Constant.FAVORITE_NUM, noteId);
+			feedDao.incrementNum(Constant.FAVORITE_NUM, noteId);
 			favoriteDao.addFavorite(favorite);
 			return Status.SUCCESS;
 		} else {
@@ -188,14 +179,13 @@ public class FavoriteServiceImpl implements FavoriteService {
 	@Override
 	public int decrementNoteFavorite(int noteId, int userId) {
 		// TODO Auto-generated method stub
-		Note note = noteDao.queryNoteById(noteId);
-		if (note == null) {
+		if (!feedDao.isFeedExistsById(noteId)) {
 			return Status.NOT_EXISTS;
 		}
 		Favorite favorite = new Favorite(noteId, userId, Favorite.FAVORITE_NOTE);
 		if (favoriteDao.isFavoriteExists(favorite)) {
 			userDao.decrementNum(Constant.FAVORITE_NUM, userId);
-			noteDao.decrementNum(Constant.FAVORITE_NUM, noteId);
+			feedDao.decrementNum(Constant.FAVORITE_NUM, noteId);
 			favoriteDao.deleteFavorite(favorite);
 			return Status.SUCCESS;
 		} else {

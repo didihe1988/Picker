@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.CircleMemberDao;
 import com.didihe1988.picker.model.CircleMember;
-import com.didihe1988.picker.model.User;
 
 @Repository
 @Transactional
