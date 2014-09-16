@@ -5,6 +5,11 @@ import com.didihe1988.picker.model.dpInterface.IsFavorite;
 import com.didihe1988.picker.model.dpInterface.IsFollow;
 
 public class FeedDp extends Feed implements IsFavorite, IsFollow {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String userName;
 
 	private String userAvatarUrl;
@@ -12,6 +17,8 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 	private boolean isFollow;
 
 	private boolean isFavorite;
+
+	private String imageUrl;
 
 	@Override
 	public boolean isFollow() {
@@ -53,22 +60,26 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 		this.userAvatarUrl = userAvatarUrl;
 	}
 
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
 	public FeedDp() {
 
 	}
 
 	public FeedDp(Feed feed, String userName, String userAvatarUrl,
-			boolean isFollow, boolean isFavorite) {
-		super(feed.getId(), feed.getBookId(), feed.getUserId(),
-				feed.getTitle(), feed.getContent(), feed.getDate(), feed
-						.getPage(), feed.getType(), feed.isPublic(), feed
-						.getFavoriteNum(), feed.getAnswerNum(), feed
-						.getCommentNum(), feed.getFollowNum());
-
+			boolean isFollow, boolean isFavorite, String imageUrl) {
+		super(feed);
 		this.userName = userName;
 		this.userAvatarUrl = userAvatarUrl;
 		this.isFollow = isFollow;
 		this.isFavorite = isFavorite;
+		this.imageUrl = imageUrl;
 	}
 
 }

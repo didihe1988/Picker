@@ -1,5 +1,8 @@
 package com.didihe1988.picker.daoImpl;
 
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +28,15 @@ public class RelatedImageDaoImpl implements RelatedImageDao {
 		return (Integer) getCurrentSession().save(relatedImage);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public int deleteRelatedImage(RelatedImage relatedImage) {
+	public List<RelatedImage> queryRelatedImagesByKey(int relatedId, int type) {
 		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int updateRelatedImage(RelatedImage relatedImage) {
-		// TODO Auto-generated method stub
-		return 0;
+		String hql = "from RelatedImage as r where r.relatedId=? and r.type=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, relatedId);
+		query.setInteger(1, type);
+		return query.list();
 	}
 
 }

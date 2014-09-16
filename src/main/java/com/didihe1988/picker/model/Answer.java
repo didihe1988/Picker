@@ -69,6 +69,12 @@ public class Answer implements Serializable {
 		this(questionId, replierId, content, new Date());
 	}
 
+	public Answer(Answer answer) {
+		this(answer.getId(), answer.getQuestionId(), answer.getReplierId(),
+				answer.getContent(), answer.getFavoriteNum(), answer
+						.getCommentNum(), answer.getDate());
+	}
+
 	public int getId() {
 		return id;
 	}

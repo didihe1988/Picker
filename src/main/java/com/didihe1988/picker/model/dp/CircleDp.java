@@ -1,6 +1,8 @@
-package com.didihe1988.picker.model;
+package com.didihe1988.picker.model.dp;
 
 import java.util.Date;
+
+import com.didihe1988.picker.model.Circle;
 
 public class CircleDp extends Circle {
 	/**
@@ -23,9 +25,7 @@ public class CircleDp extends Circle {
 	}
 
 	public CircleDp(Circle circle, Date memberJoinTime) {
-		super(circle.getId(), circle.getName(), circle.getEstablishTime(),
-				circle.getEstablisherId(), circle.getDescribe(), circle
-						.getMemberNum());
+		super(circle);
 		this.memberJoinTime = memberJoinTime;
 	}
 

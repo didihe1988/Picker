@@ -211,7 +211,7 @@
 					<div id="my_books">
 						<ul>
 							<c:forEach var="book" items="${bookList}">
-								<li><a data-pjax href="/browse/123/0"><img
+								<li><a data-pjax href=<c:url value="/browse/${book.id}/0"/>><img
 										src=<c:url value="${book.imageUrl}"/>></a></li>
 							</c:forEach>
 						</ul>

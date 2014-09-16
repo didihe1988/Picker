@@ -91,7 +91,20 @@ public class UserDaoImpl implements UserDao {
 		}
 		String hql = "select count(*) from User u where u.email =?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, user.getId());
+		query.setString(0, user.getEmail());
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isUserExistsById(int userId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from User u where u.id =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, userId);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;

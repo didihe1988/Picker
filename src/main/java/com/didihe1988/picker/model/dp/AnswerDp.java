@@ -1,5 +1,6 @@
-package com.didihe1988.picker.model;
+package com.didihe1988.picker.model.dp;
 
+import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.dpInterface.IsFavorite;
 
 public class AnswerDp extends Answer implements IsFavorite {
@@ -58,9 +59,7 @@ public class AnswerDp extends Answer implements IsFavorite {
 
 	public AnswerDp(Answer answer, String questionName, String replierName,
 			String replierAvatarUrl, boolean isFavorite) {
-		super(answer.getId(), answer.getQuestionId(), answer.getReplierId(),
-				answer.getContent(), answer.getFavoriteNum(), answer
-						.getCommentNum(), answer.getDate());
+		super(answer);
 		this.questionName = questionName;
 		this.replierName = replierName;
 		this.replierAvatarUrl = replierAvatarUrl;

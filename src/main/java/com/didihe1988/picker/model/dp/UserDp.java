@@ -1,5 +1,6 @@
-package com.didihe1988.picker.model;
+package com.didihe1988.picker.model.dp;
 
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dpInterface.IsFollow;
 
 public class UserDp extends User implements IsFollow {
@@ -28,6 +29,9 @@ public class UserDp extends User implements IsFollow {
 	}
 
 	public UserDp(User user, boolean isFollow) {
+		/*
+		 * È¥µô password
+		 */
 		super(user.getId(), user.getUsername(), user.getEmail(), user
 				.getLastVisit(), user.getRegisterTime(), user.getFavoriteNum(),
 				user.getFollowNum(), user.getFollowOthersNum(), user

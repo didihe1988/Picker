@@ -109,6 +109,12 @@ public class Circle implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Circle(Circle circle) {
+		this(circle.getId(), circle.getName(), circle.getEstablishTime(),
+				circle.getEstablisherId(), circle.getDescribe(), circle
+						.getMemberNum());
+	}
+
 	public Circle(String name, Date establishTime, int establisherId,
 			String describe) {
 		super();

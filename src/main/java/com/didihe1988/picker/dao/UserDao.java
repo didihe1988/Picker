@@ -18,6 +18,8 @@ public interface UserDao extends NumOperation {
 
 	public boolean isUserExists(User user);
 
+	public boolean isUserExistsById(int userId);
+
 	public boolean isEmailExists(String email);
 
 	public boolean isUsernameExists(String username);

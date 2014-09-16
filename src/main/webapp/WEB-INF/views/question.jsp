@@ -142,7 +142,7 @@
 					<div class="row">
 						<div class="col-96">
 							<div class="user_id">
-								<c:out value='${question.askerName}' />
+								<c:out value='${user.username}' />
 								, Yo
 							</div>
 							<div class="detail_approve">
@@ -161,7 +161,7 @@
 						</div>
 						<div class="col-4">
 							<img style="max-width: 100%"
-								src="<c:url value='${question.askerAvatarUrl}' />">
+								src="<c:url value='${user.avatarUrl}' />">
 						</div>
 					</div>
 					<div style="clear: both"></div>

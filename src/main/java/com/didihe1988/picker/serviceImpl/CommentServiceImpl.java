@@ -15,9 +15,9 @@ import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Comment;
-import com.didihe1988.picker.model.CommentDp;
 import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.User;
+import com.didihe1988.picker.model.dp.CommentDp;
 import com.didihe1988.picker.service.CommentService;
 
 @Service

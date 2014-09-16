@@ -13,9 +13,9 @@ import com.didihe1988.picker.dao.CircleDao;
 import com.didihe1988.picker.dao.CircleMemberDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Circle;
-import com.didihe1988.picker.model.CircleDp;
 import com.didihe1988.picker.model.CircleMember;
-import com.didihe1988.picker.model.UserDp;
+import com.didihe1988.picker.model.dp.CircleDp;
+import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.service.CircleMemberService;
 
 @Service
@@ -148,7 +148,7 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 	@Override
 	public List<Circle> getCircleListByMemberId(int id) {
 		// TODO Auto-generated method stub
-		List<CircleMember> cirMembers = getCircleMemberListByMemberId(id);
+		final List<CircleMember> cirMembers = getCircleMemberListByMemberId(id);
 		List<Circle> list = new ArrayList<Circle>();
 		for (CircleMember circleMember : cirMembers) {
 			Circle circle = circleDao.queryCircleById(circleMember
@@ -161,7 +161,7 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 	@Override
 	public List<CircleDp> getCircleDpListByMemberId(int id) {
 		// TODO Auto-generated method stub
-		List<CircleMember> cirMembers = getCircleMemberListByMemberId(id);
+		final List<CircleMember> cirMembers = getCircleMemberListByMemberId(id);
 		List<CircleDp> list = new ArrayList<CircleDp>();
 		for (CircleMember circleMember : cirMembers) {
 			Circle circle = circleDao.queryCircleById(circleMember

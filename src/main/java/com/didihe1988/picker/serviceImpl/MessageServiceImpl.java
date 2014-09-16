@@ -29,7 +29,7 @@ public class MessageServiceImpl implements MessageService {
 	public void addMessageByFollowedUser(int type, int producerId,
 			String producerName, int relatedSourceId,
 			String relatedSourceContent) {
-		List<Follow> followList = followDao
+		final List<Follow> followList = followDao
 				.queryFollowListByFollowedUserId(producerId);
 		for (Follow follow : followList) {
 			Message message = new Message(follow.getFollowerId(), type,
@@ -46,7 +46,7 @@ public class MessageServiceImpl implements MessageService {
 	public void addMessageByFollowedQuestion(int type, int producerId,
 			String producerName, int relatedSourceId,
 			String relatedSourceContent) {
-		List<Follow> followList = followDao
+		final List<Follow> followList = followDao
 				.queryFollowListByQuestionId(producerId);
 		for (Follow follow : followList) {
 			Message message = new Message(follow.getFollowerId(), type,

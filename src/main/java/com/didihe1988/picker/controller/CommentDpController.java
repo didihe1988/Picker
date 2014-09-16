@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
-import com.didihe1988.picker.model.CommentDp;
+import com.didihe1988.picker.model.dp.CommentDp;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;

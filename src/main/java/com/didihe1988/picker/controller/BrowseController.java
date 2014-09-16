@@ -32,14 +32,19 @@ public class BrowseController {
 	 * id -bookId
 	 */
 	@RequestMapping(value = "/browse/{id}/{page}")
-	public String getUserProfile(@PathVariable int id, @PathVariable int page,
+	public String browse(@PathVariable int id, @PathVariable int page,
 			Model model, HttpServletRequest request) {
-		Book book = bookService.getBookById(id);
-		List<FeedDp> feedList = feedService.getFeedDpListForBrowse(id,
-				HttpUtils.getSessionUserId(request));
-		model.addAttribute("book", book);
-		model.addAttribute("page", page);
-		model.addAttribute("feedList", feedList);
-		return "browse";
+		if (bookService.isBookExistsById(id)) {
+			Book book = bookService.getBookById(id);
+			List<FeedDp> feedList = feedService.getFeedDpListForBrowse(id,
+					HttpUtils.getSessionUserId(request));
+			model.addAttribute("book", book);
+			model.addAttribute("page", page);
+			model.addAttribute("feedList", feedList);
+			return "browse";
+		} else {
+			return "error";
+		}
+
 	}
 }

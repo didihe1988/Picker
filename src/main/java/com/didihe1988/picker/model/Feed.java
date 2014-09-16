@@ -22,7 +22,6 @@ public class Feed implements Serializable {
 	public static final int TYPE_QUESTION = 1;
 	public static final int TYPE_NOTE = 2;
 
-
 	@Id
 	@GeneratedValue
 	@Column(name = "feed_id")
@@ -225,6 +224,16 @@ public class Feed implements Serializable {
 		this.page = page;
 		this.type = type;
 		this.isPublic = true;
+	}
+
+	/*
+	 * ¿½±´¹¹Ôìº¯Êý
+	 */
+	public Feed(Feed feed) {
+		this(feed.getId(), feed.getBookId(), feed.getUserId(), feed.getTitle(),
+				feed.getContent(), feed.getDate(), feed.getPage(), feed
+						.getType(), feed.isPublic(), feed.getFavoriteNum(),
+				feed.getAnswerNum(), feed.getCommentNum(), feed.getFollowNum());
 	}
 
 	@Override

@@ -14,9 +14,9 @@ import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Answer;
-import com.didihe1988.picker.model.AnswerDp;
 import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.User;
+import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.service.AnswerService;
 
 @Service
@@ -172,7 +172,7 @@ public class AnswerServiceImpl implements AnswerService {
 
 	private List<AnswerDp> getAnswerDpListFormAnswerList(
 			List<Answer> answerList, int userId) {
-		List<AnswerDp> list = new ArrayList<AnswerDp>();
+		final List<AnswerDp> list = new ArrayList<AnswerDp>();
 		for (Answer answer : answerList) {
 			AnswerDp answerDp = getAnswerDpByAnswer(answer, userId);
 			list.add(answerDp);

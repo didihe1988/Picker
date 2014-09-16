@@ -11,10 +11,12 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.FollowDao;
+import com.didihe1988.picker.dao.RelatedImageDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
+import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.service.FeedService;
@@ -35,16 +37,19 @@ public class FeedServiceImpl implements FeedService {
 	@Autowired
 	private FavoriteDao favoriteDao;
 
+	@Autowired
+	private RelatedImageDao relatedImageDao;
+
 	@Override
 	public boolean checkOperateValidation(int userId, int feedId) {
 		// TODO Auto-generated method stub
-		return false;
+		return feedDao.checkOperateValidation(userId, feedId);
 	}
 
 	@Override
 	public Feed getFeedById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return feedDao.queryFeedById(id);
 	}
 
 	@Override
@@ -152,8 +157,14 @@ public class FeedServiceImpl implements FeedService {
 					curUserId, feed.getId());
 			break;
 		}
+		String imageUrl = "";
+		List<RelatedImage> list = relatedImageDao.queryRelatedImagesByKey(
+				feed.getId(), feed.getType());
+		if (list != null) {
+			imageUrl = list.get(0).getImageUrl();
+		}
 		FeedDp feedDp = new FeedDp(feed, user.getUsername(),
-				user.getAvatarUrl(), isFollow, isFavorite);
+				user.getAvatarUrl(), isFollow, isFavorite, imageUrl);
 		return feedDp;
 	}
 
@@ -161,7 +172,7 @@ public class FeedServiceImpl implements FeedService {
 	public List<FeedDp> getFeedDpListByUserId(int userId, int type,
 			int curUserId) {
 		// TODO Auto-generated method stub
-		List<Feed> feedList = getFeedListByUserId(userId, type);
+		final List<Feed> feedList = getFeedListByUserId(userId, type);
 		List<FeedDp> list = new ArrayList<FeedDp>();
 		for (Feed feed : feedList) {
 			FeedDp feedDp = getFeedDpByFeed(feed, curUserId);
@@ -174,7 +185,7 @@ public class FeedServiceImpl implements FeedService {
 	public List<FeedDp> getFeedDpListByBookId(int bookId, int type,
 			int curUserId) {
 		// TODO Auto-generated method stub
-		List<Feed> feedList = getFeedListByBookId(bookId, type);
+		final List<Feed> feedList = getFeedListByBookId(bookId, type);
 		List<FeedDp> list = new ArrayList<FeedDp>();
 		for (Feed feed : feedList) {
 			FeedDp feedDp = getFeedDpByFeed(feed, curUserId);
@@ -192,7 +203,7 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public List<FeedDp> getFeedDpListForBrowse(int bookId, int curUserId) {
 		// TODO Auto-generated method stub
-		List<Feed> feedList = getFeedListForBrowse(bookId);
+		final List<Feed> feedList = getFeedListForBrowse(bookId);
 		List<FeedDp> list = new ArrayList<FeedDp>();
 		for (Feed feed : feedList) {
 			FeedDp feedDp = getFeedDpByFeed(feed, curUserId);

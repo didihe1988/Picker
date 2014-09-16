@@ -9,7 +9,7 @@ import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.UserDp;
+import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.StringUtils;
 
@@ -126,6 +126,14 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		User user = userDao.queryUserById(userId);
 		return getUserDpByUser(user, isFollow);
+	}
+	
+	
+
+	@Override
+	public boolean isUserExistsById(int userId) {
+		// TODO Auto-generated method stub
+		return userDao.isUserExistsById(userId);
 	}
 
 	private String encryptByMD5(User user) {

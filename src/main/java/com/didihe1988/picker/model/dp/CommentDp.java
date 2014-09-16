@@ -1,5 +1,6 @@
-package com.didihe1988.picker.model;
+package com.didihe1988.picker.model.dp;
 
+import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.dpInterface.IsFavorite;
 
 public class CommentDp extends Comment implements IsFavorite {
@@ -59,9 +60,7 @@ public class CommentDp extends Comment implements IsFavorite {
 
 	public CommentDp(Comment comment, String producerName,
 			String commentedName, String userAvatarUrl, boolean isFavorite) {
-		super(comment.getId(), comment.getCommentedId(), comment
-				.getProducerId(), comment.getContent(), comment.getType(),
-				comment.getFavoriteNum(), comment.getDate());
+		super(comment);
 		this.producerName = producerName;
 		this.commentedName = commentedName;
 		this.userAvatarUrl = userAvatarUrl;

@@ -3,7 +3,7 @@ package com.didihe1988.picker.service;
 import java.util.List;
 
 import com.didihe1988.picker.model.Answer;
-import com.didihe1988.picker.model.AnswerDp;
+import com.didihe1988.picker.model.dp.AnswerDp;
 
 public interface AnswerService {
 	public int addAnswer(Answer answer);

@@ -17,7 +17,7 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.Message;
-import com.didihe1988.picker.model.UserDp;
+import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.service.CircleMemberService;
 import com.didihe1988.picker.service.CircleService;
 import com.didihe1988.picker.service.MessageService;

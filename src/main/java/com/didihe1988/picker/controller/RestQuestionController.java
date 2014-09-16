@@ -21,7 +21,7 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
-import com.didihe1988.picker.model.UserDp;
+import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.model.form.FeedForm;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;

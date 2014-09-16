@@ -17,7 +17,6 @@ public class RelatedImage implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public static final int QUESTION_IMAGE = 0;
 	public static final int NOTE_IMAGE = 1;
-	public static final int COMMENT_IMAGE = 2;
 
 	@Id
 	@GeneratedValue

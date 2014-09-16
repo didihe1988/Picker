@@ -11,13 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.didihe1988.picker.model.AnswerDp;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
-import com.didihe1988.picker.model.UserDp;
+import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
@@ -57,22 +57,19 @@ public class UserController {
 	/**
 	 * @description user.jsp
 	 */
-	@RequestMapping(value = "/user")
-	public String user() {
-		return "user";
-	}
-
-	/**
-	 * @description user.jsp test rest
-	 */
 	@RequestMapping(value = "/user/{id}")
 	public String getUserProfile(@PathVariable int id, Model model) {
-		addBaseAttribute(id, model);
-		/*
-		 * isFollow暂时设为false
-		 */
-		model.addAttribute("bookList", getBooks(id));
-		return "user";
+		if (userService.isUserExistsById(id)) {
+			addBaseAttribute(id, model);
+			/*
+			 * isFollow暂时设为false
+			 */
+			model.addAttribute("bookList", getBooks(id));
+			return "user";
+		} else {
+			return "error";
+		}
+
 	}
 
 	private void addBaseAttribute(int id, Model model) {
@@ -91,11 +88,16 @@ public class UserController {
 	@RequestMapping(value = "/user/{id}/answers/{page}")
 	public String getAnswers(@PathVariable int id, Model model,
 			HttpServletRequest request) {
-		addBaseAttribute(id, model);
-		List<AnswerDp> list = answerService.getAnswerDpListByReplierId(id,
-				HttpUtils.getSessionUserId(request));
-		model.addAttribute("answerList", list);
-		return "user";
+		if (userService.isUserExistsById(id)) {
+			addBaseAttribute(id, model);
+			List<AnswerDp> list = answerService.getAnswerDpListByReplierId(id,
+					HttpUtils.getSessionUserId(request));
+			model.addAttribute("answerList", list);
+			return "user";
+		} else {
+			return "error";
+		}
+
 	}
 
 	/**
@@ -105,11 +107,16 @@ public class UserController {
 	@RequestMapping(value = "/user/{id}/questions/{page}")
 	public String getQuestions(@PathVariable int id, Model model,
 			HttpServletRequest request) {
-		addBaseAttribute(id, model);
-		List<FeedDp> list = feedService.getFeedDpListByUserId(id,
-				Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request));
-		model.addAttribute("questionList", list);
-		return "user";
+		if (userService.isUserExistsById(id)) {
+			addBaseAttribute(id, model);
+			List<FeedDp> list = feedService.getFeedDpListByUserId(id,
+					Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request));
+			model.addAttribute("questionList", list);
+			return "user";
+		} else {
+			return "error";
+		}
+
 	}
 
 	/**
@@ -119,12 +126,17 @@ public class UserController {
 	@RequestMapping(value = "/user/{id}/notes/{page}")
 	public String getNotes(@PathVariable int id, Model model,
 			HttpServletRequest request) {
-		addBaseAttribute(id, model);
-		List<FeedDp> list = feedService.getFeedDpListByUserId(id,
-				Feed.TYPE_NOTE, HttpUtils.getSessionUserId(request));
-		System.out.println(list);
-		model.addAttribute("noteList", list);
-		return "user";
+		if (userService.isUserExistsById(id)) {
+			addBaseAttribute(id, model);
+			List<FeedDp> list = feedService.getFeedDpListByUserId(id,
+					Feed.TYPE_NOTE, HttpUtils.getSessionUserId(request));
+			System.out.println(list);
+			model.addAttribute("noteList", list);
+			return "user";
+		} else {
+			return "error";
+		}
+
 	}
 
 	/**
@@ -146,7 +158,7 @@ public class UserController {
 	}
 
 	private List<UserDp> getFollowers(int userId) {
-		List<Follow> followList = followService
+		final List<Follow> followList = followService
 				.getFollowListByFollowedUserId(userId);
 		List<UserDp> userList = new ArrayList<UserDp>();
 		for (Follow follow : followList) {
@@ -158,7 +170,7 @@ public class UserController {
 	}
 
 	private List<UserDp> getFollowees(int userId) {
-		List<Follow> followList = followService
+		final List<Follow> followList = followService
 				.getFollowListByFollowerIdByUser(userId);
 		List<UserDp> userList = new ArrayList<UserDp>();
 		for (Follow follow : followList) {
@@ -170,7 +182,7 @@ public class UserController {
 	}
 
 	private List<Book> getBooks(int userId) {
-		List<Bought> boughtList = boughtService.getBoughtByUserId(userId);
+		final List<Bought> boughtList = boughtService.getBoughtByUserId(userId);
 		List<Book> bookList = new ArrayList<Book>();
 		for (Bought bought : boughtList) {
 			Book book = bookService.getBookById(bought.getBookId());

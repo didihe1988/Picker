@@ -20,7 +20,7 @@ public class Comment implements Serializable {
 	public static final int COMMENT_QUESTION = 0;
 	public static final int COMMENT_ANSWER = 1;
 	public static final int COMMENT_NOTE = 2;
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "comment_id")
@@ -128,6 +128,12 @@ public class Comment implements Serializable {
 
 	public Comment(int commentedId, int producerId, String content, int type) {
 		this(commentedId, producerId, content, type, new Date());
+	}
+
+	public Comment(Comment comment) {
+		this(comment.getId(), comment.getCommentedId(),
+				comment.getProducerId(), comment.getContent(), comment
+						.getType(), comment.getFavoriteNum(), comment.getDate());
 	}
 
 	@Override
