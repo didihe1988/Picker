@@ -10,6 +10,8 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String bookName;
+
 	private String userName;
 
 	private String userAvatarUrl;
@@ -68,13 +70,23 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 		this.imageUrl = imageUrl;
 	}
 
+	public String getBookName() {
+		return bookName;
+	}
+
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+
 	public FeedDp() {
 
 	}
 
-	public FeedDp(Feed feed, String userName, String userAvatarUrl,
-			boolean isFollow, boolean isFavorite, String imageUrl) {
+	public FeedDp(Feed feed, String bookName, String userName,
+			String userAvatarUrl, boolean isFollow, boolean isFavorite,
+			String imageUrl) {
 		super(feed);
+		this.bookName = bookName;
 		this.userName = userName;
 		this.userAvatarUrl = userAvatarUrl;
 		this.isFollow = isFollow;

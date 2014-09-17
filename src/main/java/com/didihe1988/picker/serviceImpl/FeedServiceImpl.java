@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.FollowDao;
@@ -39,6 +40,9 @@ public class FeedServiceImpl implements FeedService {
 
 	@Autowired
 	private RelatedImageDao relatedImageDao;
+
+	@Autowired
+	private BookDao bookDao;
 
 	@Override
 	public boolean checkOperateValidation(int userId, int feedId) {
@@ -163,7 +167,8 @@ public class FeedServiceImpl implements FeedService {
 		if (list != null) {
 			imageUrl = list.get(0).getImageUrl();
 		}
-		FeedDp feedDp = new FeedDp(feed, user.getUsername(),
+		String bookName = bookDao.queryBookById(feed.getBookId()).getBookName();
+		FeedDp feedDp = new FeedDp(feed, bookName, user.getUsername(),
 				user.getAvatarUrl(), isFollow, isFavorite, imageUrl);
 		return feedDp;
 	}

@@ -1,4 +1,4 @@
-package com.didihe1988.picker.model;
+package com.didihe1988.picker.model.form;
 
 public class LoginForm {
 	private String email;
