@@ -3,6 +3,8 @@ package com.didihe1988.picker.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -204,13 +206,19 @@ public class RestQuestionController {
 		/*
 		 * ÃÌº”Œ Ã‚
 		 */
-		List<String> list = JsonUtils.getStringList(feedForm.getImageUrls());
+		// List<String> list = JsonUtils.getStringList(feedForm.getImageUrls());
 		int status = feedService.addFeed(feedForm.getFeed(Feed.TYPE_QUESTION));
 		if (status == Status.SUCCESS) {
 			// addQuestionMessage(question, request);
+
+			List<String> tmpImageUrls = getTmpUrlsFromContent(feedForm
+					.getContent());
 			int questionId = feedService.getLatestFeedByBookId(
 					feedForm.getBookId(), Feed.TYPE_QUESTION);
-			addQuestionImage(questionId, list);
+			boolean isSuccess = addQuestionImage(questionId, tmpImageUrls);
+			if (isSuccess) {
+				addNewUrl(feedForm.getContent(), questionId);
+			}
 		}
 
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -261,8 +269,8 @@ public class RestQuestionController {
 		for (int index = 0; index < imageUrls.size(); index++) {
 			String filename = getFileNameFromTmpUrl(imageUrls.get(index));
 			String tmpDirString = Constant.TMPDIR + filename;
-			System.out.println(tmpDirString);
-			System.out.println(dstDirString);
+			// System.out.println(tmpDirString);
+			// System.out.println(dstDirString);
 			// /question/1/0.png
 			File tmpDir = new File(tmpDirString);
 			if (!tmpDir.exists()) {
@@ -270,15 +278,11 @@ public class RestQuestionController {
 				return false;
 			} else {
 				try {
-					System.out.println("in copy");
+					// System.out.println("in copy");
 					String newFileName = getNewFileName(index, filename);
 					String dstFileString = dstDirString + "/" + newFileName;
 					System.out.println(dstFileString);
 					tmpDir.renameTo(new File(dstFileString));
-					RelatedImage relatedImage = new RelatedImage(questionId,
-							RelatedImage.QUESTION_IMAGE, getQuestionImageUrl(
-									questionId, newFileName));
-					relatedImageService.addRelatedImage(relatedImage);
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
@@ -289,17 +293,46 @@ public class RestQuestionController {
 		return true;
 	}
 
-	private String getQuestionImageUrl(int questionId, String filename) {
-		return "/resources/image/question/" + questionId + "/" + filename;
+	private String getQuestionImageUrl(int questionId, int index,
+			String oldImageUrl) {
+		return "/resources/image/question/" + questionId + "/"
+				+ getNewFileName(index, oldImageUrl);
 	}
 
-	private String getNewFileName(int index, String filename) {
+	private String getNewFileName(int index, String oldImageUrl) {
+		return index + "." + getExtension(oldImageUrl);
+	}
+
+	private String getExtension(String filename) {
 		int i = filename.lastIndexOf('.');
-		return index + "." + filename.substring(i + 1);
+		return filename.substring(i + 1);
 	}
 
 	private String getFileNameFromTmpUrl(String imageUrl) {
 		int i = imageUrl.lastIndexOf('/');
 		return imageUrl.substring(i + 1);
+	}
+
+	private void addNewUrl(String content, int questionId) {
+		List<String> list = getTmpUrlsFromContent(content);
+		for (int i = 0; i < list.size(); i++) {
+			String newImageUrl = getQuestionImageUrl(questionId, i, list.get(0));
+			content = content.replace(list.get(i), newImageUrl);
+			RelatedImage relatedImage = new RelatedImage(questionId,
+					RelatedImage.QUESTION_IMAGE, newImageUrl);
+			relatedImageService.addRelatedImage(relatedImage);
+		}
+
+	}
+
+	private List<String> getTmpUrlsFromContent(String content) {
+		String pString = "(\\!\\[image)(.*?)(\\]\\()(.*?)(\\))";
+		Pattern pattern = Pattern.compile(pString, Pattern.MULTILINE);
+		Matcher matcher = pattern.matcher(content);
+		List<String> list = new ArrayList<String>();
+		while (matcher.find()) {
+			list.add(matcher.group(matcher.groupCount() - 1));
+		}
+		return list;
 	}
 }

@@ -6,21 +6,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.utils.JsonUtils;
 
-@Controller
+@RestController
 public class ImageUploadController {
 	@RequestMapping(value = "/json/image_upload", method = RequestMethod.POST, headers = "Accept=application/json")
-	public String imageUpload(@RequestParam("image") MultipartFile file,
-			@RequestParam("name") String name) {
+	public String imageUpload(@RequestParam("image") MultipartFile file) {
+		// System.out.println(file.getContentType());
+		String name = file.getOriginalFilename();
+		System.out.println(name);
 		if (!file.isEmpty()) {
 			String extension = FilenameUtils.getExtension(name);
 			if (!checkExtension(extension)) {
@@ -77,4 +79,5 @@ public class ImageUploadController {
 		String name = files[files.length - 1].getName();
 		return Integer.parseInt(name);
 	}
+
 }

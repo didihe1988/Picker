@@ -1,5 +1,6 @@
 package com.didihe1988.picker.common;
 
+
 public class Status {
 	private Status() {
 
@@ -15,6 +16,7 @@ public class Status {
 	public static final int INVALID = 7;
 	public static final int EMPTY = 8;
 	public static final int INVALID_FORMAT = 9;
+	public static final int OVER_SIZE = 10;
 
 	public static final String EMAIL_USED_STRING = "email used";
 	public static final String USERNAME_USED_STRING = "name used";

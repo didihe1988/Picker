@@ -164,7 +164,7 @@ public class FeedServiceImpl implements FeedService {
 		String imageUrl = "";
 		List<RelatedImage> list = relatedImageDao.queryRelatedImagesByKey(
 				feed.getId(), feed.getType());
-		if (list != null) {
+		if ((list != null) && (list.size() != 0)) {
 			imageUrl = list.get(0).getImageUrl();
 		}
 		String bookName = bookDao.queryBookById(feed.getBookId()).getBookName();

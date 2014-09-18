@@ -54,4 +54,10 @@ public class FeedServiceTest {
 		System.out.println(list);
 	}
 
+	@Test
+	public void test3() {
+		Feed feed = feedService.getFeedById(8);
+		System.out.print(feed.getContent());
+	}
+
 }
