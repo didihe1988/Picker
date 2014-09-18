@@ -1,17 +1,22 @@
 package com.didihe1988.picker.utils;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MarkdownUtils {
-	public static final void removeTags(String content) {
-
+	public static final String removeTags(String content) {
+		String brief = content;
+		if (brief != "") {
+			brief = removeBold(brief);
+			brief = removeItalic(brief);
+			brief = removeHeader(brief);
+			brief = removeHr(brief);
+			brief = removeImgTag(brief);
+		}
+		return brief;
 	}
 
-	private static String removeBold(String content) {
-		String brief = content;
+	private static String removeBold(String brief) {
 		String pString = "(\\*\\*)(.*?)(\\*\\*)";
 		Pattern pattern = Pattern.compile(pString, Pattern.MULTILINE);
 		Matcher matcher = pattern.matcher(brief);
@@ -22,8 +27,7 @@ public class MarkdownUtils {
 		return brief;
 	}
 
-	private static String removeItalic(String content) {
-		String brief = content;
+	private static String removeItalic(String brief) {
 		String pString = "(\\*)(.*?)(\\*)";
 		Pattern pattern = Pattern.compile(pString, Pattern.MULTILINE);
 		Matcher matcher = pattern.matcher(brief);
@@ -33,4 +37,32 @@ public class MarkdownUtils {
 		}
 		return brief;
 	}
+
+	private static String removeHeader(String brief) {
+		String pString = "(\\#)(.*)";
+		Pattern pattern = Pattern.compile(pString, Pattern.MULTILINE);
+		Matcher matcher = pattern.matcher(brief);
+		while (matcher.find()) {
+			String line = matcher.group(0);
+			line = line.replace("#", "");
+			brief = brief.replace(matcher.group(0), line);
+		}
+		return brief;
+	}
+
+	private static String removeImgTag(String brief) {
+		String pString = "(\\!\\[image)(.*?)(\\]\\()(.*?)(\\))";
+		Pattern pattern = Pattern.compile(pString, Pattern.MULTILINE);
+		Matcher matcher = pattern.matcher(brief);
+		while (matcher.find()) {
+			brief = brief.replace(matcher.group(0), "");
+		}
+		return brief;
+	}
+
+	private static String removeHr(String brief) {
+		brief = brief.replace("---", "");
+		return brief;
+	}
+
 }
