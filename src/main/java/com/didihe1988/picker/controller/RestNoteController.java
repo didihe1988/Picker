@@ -16,12 +16,14 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
-import com.didihe1988.picker.model.form.FeedForm;
+import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.MessageService;
+import com.didihe1988.picker.service.RelatedImageService;
 import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.ImageUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
@@ -38,6 +40,9 @@ public class RestNoteController {
 
 	@Autowired
 	private CommentService commentService;
+
+	@Autowired
+	private RelatedImageService relatedImageService;
 
 	@RequestMapping(value = "/json/note/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNote(@PathVariable int id) {
@@ -118,11 +123,16 @@ public class RestNoteController {
 	}
 
 	@RequestMapping(value = "/json/note/add", method = RequestMethod.POST, headers = "Accept=application/json")
-	public String add(@RequestBody FeedForm feedForm, HttpServletRequest request) {
-		Feed feed = feedForm.getFeed(Feed.TYPE_NOTE);
+	public String add(@RequestBody Feed feed, HttpServletRequest request) {
+		if (!feed.checkFieldValidation()) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID_FIELD);
+		}
+		feed.setBriefByContent();
 		int status = feedService.addFeed(feed);
 		if (status == Status.SUCCESS) {
 			addNoteMessage(feed, request);
+			addNoteImage(feed);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
@@ -151,5 +161,37 @@ public class RestNoteController {
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDNOTE, userId, userName, noteId,
 				relatedSourceContent);
+	}
+
+	private void addNoteImage(Feed feed) {
+		int noteId = feedService.getLatestFeedByBookId(feed.getBookId(),
+				Feed.TYPE_NOTE);
+		boolean isSuccess = ImageUtils.moveImage(RelatedImage.NOTE_IMAGE,
+				noteId, feed.getContent());
+		/*
+		 * file剪切出错或是没有imageUrl
+		 */
+		if (isSuccess) {
+			addNewUrl(feed.getContent(), noteId);
+		}
+	}
+
+	private void addNewUrl(String content, int noteId) {
+		List<String> list = ImageUtils.getTmpUrlsFromContent(content);
+		for (int i = 0; i < list.size(); i++) {
+			/*
+			 * 替换content newUrl取代tmpUrl
+			 */
+			String newImageUrl = ImageUtils.getNewImageUrl(
+					RelatedImage.NOTE_IMAGE, noteId, i, list.get(i));
+			content = content.replace(list.get(i), newImageUrl);
+			/*
+			 * 添加RelatedImage
+			 */
+			RelatedImage relatedImage = new RelatedImage(noteId,
+					RelatedImage.NOTE_IMAGE, newImageUrl);
+			relatedImageService.addRelatedImage(relatedImage);
+		}
+
 	}
 }

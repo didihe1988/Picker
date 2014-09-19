@@ -1,10 +1,7 @@
 package com.didihe1988.picker.controller;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,7 +21,6 @@ import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.dp.UserDp;
-import com.didihe1988.picker.model.form.FeedForm;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -34,6 +30,7 @@ import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.RelatedImageService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.ImageUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
@@ -202,23 +199,20 @@ public class RestQuestionController {
 	}
 
 	@RequestMapping(value = "/json/question/add", method = RequestMethod.POST)
-	public String add(@RequestBody FeedForm feedForm, HttpServletRequest request) {
+	public String add(@RequestBody Feed feed, HttpServletRequest request) {
 		/*
 		 * 添加问题
 		 */
 		// List<String> list = JsonUtils.getStringList(feedForm.getImageUrls());
-		int status = feedService.addFeed(feedForm.getFeed(Feed.TYPE_QUESTION));
+		if (!feed.checkFieldValidation()) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID_FIELD);
+		}
+		feed.setBriefByContent();
+		int status = feedService.addFeed(feed);
 		if (status == Status.SUCCESS) {
 			// addQuestionMessage(question, request);
-
-			List<String> tmpImageUrls = getTmpUrlsFromContent(feedForm
-					.getContent());
-			int questionId = feedService.getLatestFeedByBookId(
-					feedForm.getBookId(), Feed.TYPE_QUESTION);
-			boolean isSuccess = addQuestionImage(questionId, tmpImageUrls);
-			if (isSuccess) {
-				addNewUrl(feedForm.getContent(), questionId);
-			}
+			addQuestionImage(feed);
 		}
 
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -257,67 +251,31 @@ public class RestQuestionController {
 				relatedSourceContent);
 	}
 
-	private boolean addQuestionImage(int questionId, List<String> imageUrls) {
-		if (imageUrls == null) {
-			return false;
+	private void addQuestionImage(Feed feed) {
+		int questionId = feedService.getLatestFeedByBookId(feed.getBookId(),
+				Feed.TYPE_QUESTION);
+		boolean isSuccess = ImageUtils.moveImage(RelatedImage.QUESTION_IMAGE,
+				questionId, feed.getContent());
+		/*
+		 * file剪切出错或是没有imageUrl
+		 */
+		if (isSuccess) {
+			addNewUrl(feed.getContent(), questionId);
 		}
-		String dstDirString = Constant.ROOTDIR + "question/" + questionId;
-		File dstDir = new File(dstDirString);
-		if (!dstDir.exists()) {
-			dstDir.mkdirs();
-		}
-		for (int index = 0; index < imageUrls.size(); index++) {
-			String filename = getFileNameFromTmpUrl(imageUrls.get(index));
-			String tmpDirString = Constant.TMPDIR + filename;
-			// System.out.println(tmpDirString);
-			// System.out.println(dstDirString);
-			// /question/1/0.png
-			File tmpDir = new File(tmpDirString);
-			if (!tmpDir.exists()) {
-				System.out.println("tmpDir not exists");
-				return false;
-			} else {
-				try {
-					// System.out.println("in copy");
-					String newFileName = getNewFileName(index, filename);
-					String dstFileString = dstDirString + "/" + newFileName;
-					System.out.println(dstFileString);
-					tmpDir.renameTo(new File(dstFileString));
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-	private String getQuestionImageUrl(int questionId, int index,
-			String oldImageUrl) {
-		return "/resources/image/question/" + questionId + "/"
-				+ getNewFileName(index, oldImageUrl);
-	}
-
-	private String getNewFileName(int index, String oldImageUrl) {
-		return index + "." + getExtension(oldImageUrl);
-	}
-
-	private String getExtension(String filename) {
-		int i = filename.lastIndexOf('.');
-		return filename.substring(i + 1);
-	}
-
-	private String getFileNameFromTmpUrl(String imageUrl) {
-		int i = imageUrl.lastIndexOf('/');
-		return imageUrl.substring(i + 1);
 	}
 
 	private void addNewUrl(String content, int questionId) {
-		List<String> list = getTmpUrlsFromContent(content);
+		List<String> list = ImageUtils.getTmpUrlsFromContent(content);
 		for (int i = 0; i < list.size(); i++) {
-			String newImageUrl = getQuestionImageUrl(questionId, i, list.get(0));
+			/*
+			 * 替换content newUrl取代tmpUrl
+			 */
+			String newImageUrl = ImageUtils.getNewImageUrl(
+					RelatedImage.QUESTION_IMAGE, questionId, i, list.get(i));
 			content = content.replace(list.get(i), newImageUrl);
+			/*
+			 * 添加RelatedImage
+			 */
 			RelatedImage relatedImage = new RelatedImage(questionId,
 					RelatedImage.QUESTION_IMAGE, newImageUrl);
 			relatedImageService.addRelatedImage(relatedImage);
@@ -325,14 +283,4 @@ public class RestQuestionController {
 
 	}
 
-	private List<String> getTmpUrlsFromContent(String content) {
-		String pString = "(\\!\\[image)(.*?)(\\]\\()(.*?)(\\))";
-		Pattern pattern = Pattern.compile(pString, Pattern.MULTILINE);
-		Matcher matcher = pattern.matcher(content);
-		List<String> list = new ArrayList<String>();
-		while (matcher.find()) {
-			list.add(matcher.group(matcher.groupCount() - 1));
-		}
-		return list;
-	}
 }

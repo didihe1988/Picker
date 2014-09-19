@@ -9,9 +9,9 @@ public class MarkdownUtils {
 		if (brief != "") {
 			brief = removeBold(brief);
 			brief = removeItalic(brief);
+			brief = removeImgTag(brief);
 			brief = removeHeader(brief);
 			brief = removeHr(brief);
-			brief = removeImgTag(brief);
 		}
 		return brief;
 	}
@@ -62,6 +62,8 @@ public class MarkdownUtils {
 
 	private static String removeHr(String brief) {
 		brief = brief.replace("---", "");
+		brief = brief.replace("***", "");
+		brief = brief.replace("- - - -", "");
 		return brief;
 	}
 

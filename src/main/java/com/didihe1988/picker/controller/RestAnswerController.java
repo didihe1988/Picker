@@ -15,13 +15,17 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.MessageService;
+import com.didihe1988.picker.service.RelatedImageService;
 import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.ImageUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
@@ -41,6 +45,9 @@ public class RestAnswerController {
 
 	@Autowired
 	private CommentService commentService;
+
+	@Autowired
+	private RelatedImageService relatedImageService;
 
 	@RequestMapping(value = "/json/answer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswer(@PathVariable int id) {
@@ -123,6 +130,7 @@ public class RestAnswerController {
 		int status = answerService.addAnswer(answer);
 		if (status == Status.SUCCESS) {
 			addAnswerMessage(answer, request);
+			addAnserImage(answer);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
@@ -168,6 +176,38 @@ public class RestAnswerController {
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDANSWER, userId, userName, answerId,
 				relatedSourceContent);
+	}
+
+	private void addAnserImage(Answer answer) {
+		int answerId = answerService.getLatestAnswerIdByQuestionId(answer
+				.getQuestionId());
+		boolean isSuccess = ImageUtils.moveImage(RelatedImage.ANSWER_IMAGE,
+				answerId, answer.getContent());
+		/*
+		 * file剪切出错或是没有imageUrl
+		 */
+		if (isSuccess) {
+			addNewUrl(answer.getContent(), answerId);
+		}
+	}
+
+	private void addNewUrl(String content, int answerId) {
+		List<String> list = ImageUtils.getTmpUrlsFromContent(content);
+		for (int i = 0; i < list.size(); i++) {
+			/*
+			 * 替换content newUrl取代tmpUrl
+			 */
+			String newImageUrl = ImageUtils.getNewImageUrl(
+					RelatedImage.ANSWER_IMAGE, answerId, i, list.get(i));
+			content = content.replace(list.get(i), newImageUrl);
+			/*
+			 * 添加RelatedImage
+			 */
+			RelatedImage relatedImage = new RelatedImage(answerId,
+					RelatedImage.ANSWER_IMAGE, newImageUrl);
+			relatedImageService.addRelatedImage(relatedImage);
+		}
+
 	}
 
 }

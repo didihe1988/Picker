@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.didihe1988.picker.utils.MarkdownUtils;
+
 @Entity
 @Table(name = "feed")
 public class Feed implements Serializable {
@@ -38,6 +40,9 @@ public class Feed implements Serializable {
 
 	@Column(name = "feed_content")
 	protected String content;
+
+	@Column(name = "feed_brief")
+	protected String brief;
 
 	@Column(name = "feed_date")
 	protected Date date;
@@ -167,19 +172,35 @@ public class Feed implements Serializable {
 		this.followNum = followNum;
 	}
 
+	public String getBrief() {
+		return brief;
+	}
+
+	public void setBrief(String brief) {
+		this.brief = brief;
+	}
+
+	/**
+	 * @description ÒÆ³ıcontentµÄMarkDown tag
+	 */
+	public void setBriefByContent() {
+		this.brief = MarkdownUtils.removeTags(this.content);
+	}
+
 	public Feed() {
 
 	}
 
 	public Feed(int id, int bookId, int userId, String title, String content,
-			Date date, int page, int type, boolean isPublic, int favoriteNum,
-			int answerNum, int commentNum, int followNum) {
+			String brief, Date date, int page, int type, boolean isPublic,
+			int favoriteNum, int answerNum, int commentNum, int followNum) {
 		super();
 		this.id = id;
 		this.bookId = bookId;
 		this.userId = userId;
 		this.title = title;
 		this.content = content;
+		this.brief = brief;
 		this.date = date;
 		this.page = page;
 		this.type = type;
@@ -191,7 +212,7 @@ public class Feed implements Serializable {
 	}
 
 	public Feed(int bookId, int userId, String title, String content,
-			Date date, int page, int type, boolean isPublic) {
+			String brief, Date date, int page, int type, boolean isPublic) {
 		this.bookId = bookId;
 		this.userId = userId;
 		this.title = title;
@@ -202,8 +223,8 @@ public class Feed implements Serializable {
 		this.isPublic = isPublic;
 	}
 
-	public Feed(int bookId, int userId, String title, String content, int page,
-			int type, boolean isPublic) {
+	public Feed(int bookId, int userId, String title, String content,
+			String brief, int page, int type, boolean isPublic) {
 		this.bookId = bookId;
 		this.userId = userId;
 		this.title = title;
@@ -214,8 +235,8 @@ public class Feed implements Serializable {
 		this.isPublic = isPublic;
 	}
 
-	public Feed(int bookId, int userId, String title, String content, int page,
-			int type) {
+	public Feed(int bookId, int userId, String title, String content,
+			String brief, int page, int type) {
 		this.bookId = bookId;
 		this.userId = userId;
 		this.title = title;
@@ -231,9 +252,10 @@ public class Feed implements Serializable {
 	 */
 	public Feed(Feed feed) {
 		this(feed.getId(), feed.getBookId(), feed.getUserId(), feed.getTitle(),
-				feed.getContent(), feed.getDate(), feed.getPage(), feed
-						.getType(), feed.isPublic(), feed.getFavoriteNum(),
-				feed.getAnswerNum(), feed.getCommentNum(), feed.getFollowNum());
+				feed.getContent(), feed.getBrief(), feed.getDate(), feed
+						.getPage(), feed.getType(), feed.isPublic(), feed
+						.getFavoriteNum(), feed.getAnswerNum(), feed
+						.getCommentNum(), feed.getFollowNum());
 	}
 
 	@Override
@@ -246,4 +268,16 @@ public class Feed implements Serializable {
 				+ followNum + "]";
 	}
 
+	public boolean checkFieldValidation() {
+		/*
+		 * ËãÉÏÁËpage==0
+		 */
+		if ((this.bookId != 0) && (this.userId != 0) && (this.title != null)
+				&& (!this.title.equals("")) && (this.content != null)
+				&& (!this.content.equals("")) && (this.page >= 0)) {
+			return true;
+		}
+		return false;
+
+	}
 }
