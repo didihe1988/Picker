@@ -1,5 +1,7 @@
 package com.didihe1988.picker.model.dp;
 
+import java.util.List;
+
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dpInterface.IsFavorite;
 import com.didihe1988.picker.model.dpInterface.IsFollow;
@@ -20,7 +22,7 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 
 	private boolean isFavorite;
 
-	private String imageUrl;
+	private List<String> imageUrls;
 
 	@Override
 	public boolean isFollow() {
@@ -62,12 +64,12 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 		this.userAvatarUrl = userAvatarUrl;
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
+	public List<String> getImageUrls() {
+		return imageUrls;
 	}
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setImageUrls(List<String> imageUrls) {
+		this.imageUrls = imageUrls;
 	}
 
 	public String getBookName() {
@@ -84,14 +86,14 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 
 	public FeedDp(Feed feed, String bookName, String userName,
 			String userAvatarUrl, boolean isFollow, boolean isFavorite,
-			String imageUrl) {
+			List<String> imageUrls) {
 		super(feed);
 		this.bookName = bookName;
 		this.userName = userName;
 		this.userAvatarUrl = userAvatarUrl;
 		this.isFollow = isFollow;
 		this.isFavorite = isFavorite;
-		this.imageUrl = imageUrl;
+		this.imageUrls = imageUrls;
 	}
 
 }

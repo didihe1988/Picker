@@ -1,5 +1,7 @@
 package com.didihe1988.picker.model.dp;
 
+import java.util.List;
+
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.dpInterface.IsFavorite;
 
@@ -16,6 +18,8 @@ public class AnswerDp extends Answer implements IsFavorite {
 	private String replierAvatarUrl;
 
 	private boolean isFavorite;
+
+	private List<String> imageUrls;
 
 	@Override
 	public boolean isFavorite() {
@@ -53,17 +57,26 @@ public class AnswerDp extends Answer implements IsFavorite {
 		this.replierAvatarUrl = replierAvatarUrl;
 	}
 
+	public List<String> getImageUrls() {
+		return imageUrls;
+	}
+
+	public void setImageUrls(List<String> imageUrls) {
+		this.imageUrls = imageUrls;
+	}
+
 	public AnswerDp() {
 
 	}
 
 	public AnswerDp(Answer answer, String questionName, String replierName,
-			String replierAvatarUrl, boolean isFavorite) {
+			String replierAvatarUrl, boolean isFavorite, List<String> imageUrls) {
 		super(answer);
 		this.questionName = questionName;
 		this.replierName = replierName;
 		this.replierAvatarUrl = replierAvatarUrl;
 		this.isFavorite = isFavorite;
+		this.imageUrls = imageUrls;
 	}
 
 }

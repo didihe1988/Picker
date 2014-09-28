@@ -32,6 +32,9 @@ public class Answer implements Serializable {
 	@Column(name = "answer_content")
 	protected String content;
 
+	@Column(name = "answer_brief")
+	protected String brief;
+
 	@Column(name = "answer_favoritenum")
 	protected int favoriteNum;
 
@@ -46,33 +49,36 @@ public class Answer implements Serializable {
 	}
 
 	public Answer(int id, int questionId, int replierId, String content,
-			int favoriteNum, int commentNum, Date date) {
+			String brief, int favoriteNum, int commentNum, Date date) {
 		super();
 		this.id = id;
 		this.questionId = questionId;
 		this.replierId = replierId;
 		this.content = content;
+		this.brief = brief;
 		this.favoriteNum = favoriteNum;
 		this.commentNum = commentNum;
 		this.date = date;
 	}
 
-	public Answer(int questionId, int replierId, String content, Date date) {
-		super();
+	public Answer(int questionId, int replierId, String content, String brief,
+			Date date) {
 		this.questionId = questionId;
 		this.replierId = replierId;
 		this.content = content;
+		this.brief = brief;
 		this.date = date;
 	}
 
-	public Answer(int questionId, int replierId, String content) {
-		this(questionId, replierId, content, new Date());
+	public Answer(int questionId, int replierId, String content, String brief) {
+		this(questionId, replierId, content, brief, new Date());
 	}
 
 	public Answer(Answer answer) {
 		this(answer.getId(), answer.getQuestionId(), answer.getReplierId(),
-				answer.getContent(), answer.getFavoriteNum(), answer
-						.getCommentNum(), answer.getDate());
+				answer.getContent(), answer.getBrief(),
+				answer.getFavoriteNum(), answer.getCommentNum(), answer
+						.getDate());
 	}
 
 	public int getId() {
@@ -131,11 +137,20 @@ public class Answer implements Serializable {
 		this.commentNum = commentNum;
 	}
 
+	public String getBrief() {
+		return brief;
+	}
+
+	public void setBrief(String brief) {
+		this.brief = brief;
+	}
+
 	@Override
 	public String toString() {
-		return "Answer [id=" + id + ", questionId=" + questionId + ", content="
-				+ content + ", favoriteNum=" + favoriteNum + ", date=" + date
-				+ "]";
+		return "Answer [id=" + id + ", questionId=" + questionId
+				+ ", replierId=" + replierId + ", content=" + content
+				+ ", brief=" + brief + ", favoriteNum=" + favoriteNum
+				+ ", commentNum=" + commentNum + ", date=" + date + "]";
 	}
 
 }

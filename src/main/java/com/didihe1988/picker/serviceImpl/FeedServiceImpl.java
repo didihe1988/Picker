@@ -161,16 +161,26 @@ public class FeedServiceImpl implements FeedService {
 					curUserId, feed.getId());
 			break;
 		}
-		String imageUrl = "";
-		List<RelatedImage> list = relatedImageDao.queryRelatedImagesByKey(
-				feed.getId(), feed.getType());
-		if ((list != null) && (list.size() != 0)) {
-			imageUrl = list.get(0).getImageUrl();
-		}
+
 		String bookName = bookDao.queryBookById(feed.getBookId()).getBookName();
 		FeedDp feedDp = new FeedDp(feed, bookName, user.getUsername(),
-				user.getAvatarUrl(), isFollow, isFavorite, imageUrl);
+				user.getAvatarUrl(), isFollow, isFavorite,
+				getImageUrlsFromFeed(feed));
 		return feedDp;
+	}
+
+	private List<String> getImageUrlsFromFeed(Feed feed) {
+
+		List<RelatedImage> relatedImages = relatedImageDao
+				.queryRelatedImagesByKey(feed.getId(),
+						RelatedImage.getTypeFromObject(feed));
+		List<String> list = new ArrayList<String>();
+		if ((relatedImages != null) && (relatedImages.size() != 0)) {
+			for (RelatedImage relatedImage : relatedImages) {
+				list.add(relatedImage.getImageUrl());
+			}
+		}
+		return list;
 	}
 
 	@Override

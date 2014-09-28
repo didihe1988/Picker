@@ -12,12 +12,16 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.dao.FeedDao;
+import com.didihe1988.picker.dao.RelatedImageDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Favorite;
+import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.service.AnswerService;
+import com.didihe1988.picker.service.RelatedImageService;
 
 @Service
 @Transactional
@@ -33,6 +37,9 @@ public class AnswerServiceImpl implements AnswerService {
 
 	@Autowired
 	private FavoriteDao favoriteDao;
+
+	@Autowired
+	private RelatedImageDao relatedImageDao;
 
 	@Override
 	public int addAnswer(Answer answer) {
@@ -167,7 +174,21 @@ public class AnswerServiceImpl implements AnswerService {
 		User user = userDao.queryUserById(answer.getReplierId());
 		return new AnswerDp(answer, questionName, user.getUsername(),
 				user.getAvatarUrl(), favoriteDao.isFavoriteExistsByKey(userId,
-						answer.getId(), Favorite.FAVORITE_ANSWER));
+						answer.getId(), Favorite.FAVORITE_ANSWER),
+				getImageUrlsFromAnswer(answer));
+	}
+
+	private List<String> getImageUrlsFromAnswer(Answer answer) {
+		List<RelatedImage> relatedImages = relatedImageDao
+				.queryRelatedImagesByKey(answer.getId(),
+						RelatedImage.ANSWER_IMAGE);
+		List<String> list = new ArrayList<String>();
+		if ((relatedImages != null) && (relatedImages.size() != 0)) {
+			for (RelatedImage relatedImage : relatedImages) {
+				list.add(relatedImage.getImageUrl());
+			}
+		}
+		return list;
 	}
 
 	private List<AnswerDp> getAnswerDpListFormAnswerList(

@@ -1,12 +1,12 @@
 package com.didihe1988.picker.model.json;
 
 import java.util.Date;
+import java.util.List;
+
+import com.didihe1988.picker.model.dp.FeedDp;
 
 public class NoteJson extends BaseJson {
-
 	private String brief;
-
-	private String picture;
 
 	public String getBrief() {
 		return brief;
@@ -16,23 +16,28 @@ public class NoteJson extends BaseJson {
 		this.brief = brief;
 	}
 
-	public String getPicture() {
-		return picture;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
-
 	public NoteJson() {
 
 	}
 
-	public NoteJson(String title, String link, String brief, String picture,
-			Date time) {
-		super(title, link, time);
+	public NoteJson(String title, String picture, String link, Date time,
+			String brief) {
+		super(title, picture, link, time);
 		this.brief = brief;
-		this.picture = picture;
 	}
 
+	public static NoteJson getNoteJsonFromNote(FeedDp feedDp) {
+		if (feedDp != null) {
+			String imageUrl = "";
+			List<String> imageUrls = feedDp.getImageUrls();
+			if ((imageUrls != null) && (imageUrls.size() != 0)) {
+				imageUrl = imageUrls.get(0);
+			}
+			String link = "/picker/note/" + feedDp.getId();
+			return new NoteJson(feedDp.getTitle(), imageUrl, link,
+					feedDp.getDate(), feedDp.getBrief());
+		} else {
+			return new NoteJson();
+		}
+	}
 }

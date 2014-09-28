@@ -26,6 +26,7 @@ import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.model.form.LoginForm;
+import com.didihe1988.picker.model.json.AnswerJson;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
@@ -63,28 +64,7 @@ public class RestUserController {
 	@Autowired
 	private CircleMemberService circleMemberService;
 
-	/**
-	 * @description 用户登陆
-	 */
-	@RequestMapping(value = "/login", method = RequestMethod.POST, headers = "Accept=application/json")
-	public String login(@RequestBody LoginForm loginForm,
-			HttpServletRequest request) {
-		int status = Status.ERROR;
-		if (userService.hasMatchUser(loginForm.getEmail(),
-				loginForm.getPassword())) {
-			status = Status.NOT_EXISTS;
-		} else {
-			status = Status.SUCCESS;
-			User user = userService.getUserByEmail(loginForm.getEmail());
-			/*
-			 * 更新登陆时间
-			 */
-			user.setLastVisit(new Date());
-			userService.updateUser(user);
-			HttpUtils.setSessionUserId(request, user.getId());
-		}
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
-	}
+	
 
 	/**
 	 * @description 个人信息
@@ -111,6 +91,22 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswers(@PathVariable int id) {
 		List<Answer> list = answerService.getAnswerListByReplierId(id);
+		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
+	}
+
+	/**
+	 * @description 回答过的问题 web端
+	 */
+	@RequestMapping(value = "/json/user/{id}/answers/{page}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getAnswersByPage(@PathVariable int id, @PathVariable int page) {
+		List<AnswerJson> list = new ArrayList<AnswerJson>();
+		/*
+		 * 之后添加一个由page决定的list
+		 */
+		List<Answer> answerList = answerService.getAnswerListByReplierId(id);
+		if (answerList != null) {
+			
+		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
 	}
 

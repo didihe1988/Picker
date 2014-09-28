@@ -3,7 +3,10 @@ package com.didihe1988.picker.model.json;
 import java.util.Date;
 
 public class BaseJson {
+
 	protected String title;
+
+	protected String picture;
 
 	protected String link;
 
@@ -33,13 +36,21 @@ public class BaseJson {
 		this.time = time;
 	}
 
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
 	public BaseJson() {
 
 	}
 
-	public BaseJson(String title, String link, Date time) {
-		super();
+	public BaseJson(String title, String picture, String link, Date time) {
 		this.title = title;
+		this.picture = picture;
 		this.link = link;
 		this.time = time;
 	}

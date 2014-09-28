@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -21,7 +22,7 @@
 		</div>
 		<div id="msg" data-now=""></div>
 		<div id="login_form">
-			<form action="/picker/login" method="post"
+			<form:form action="/picker/login" method="post"
 				onsubmit="return login_check($(this))">
 				<div>
 					<input name="email" placeholder="邮箱">
@@ -32,7 +33,7 @@
 				<div style="text-align: right">
 					<button type="submit" class="btn btn-success">登陆</button>
 				</div>
-			</form>
+			</form:form>
 		</div>
 		<div id="register_form">
 			<form action="/register" method="post"

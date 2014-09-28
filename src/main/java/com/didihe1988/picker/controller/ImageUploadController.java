@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.apache.commons.io.FilenameUtils;
+import org.junit.Test;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,13 @@ import com.didihe1988.picker.utils.JsonUtils;
 
 @RestController
 public class ImageUploadController {
+	@RequestMapping(value="/json/file_upload",method=RequestMethod.POST)
+	public String Test(@RequestParam("image") MultipartFile file)
+	{
+		System.out.println(file.getOriginalFilename());
+		return "success";
+	}
+	
 	@RequestMapping(value = "/json/image_upload", method = RequestMethod.POST, headers = "Accept=application/json")
 	public String imageUpload(@RequestParam("image") MultipartFile file) {
 		// System.out.println(file.getContentType());

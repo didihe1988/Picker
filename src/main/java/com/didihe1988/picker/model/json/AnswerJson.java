@@ -1,11 +1,12 @@
 package com.didihe1988.picker.model.json;
 
 import java.util.Date;
+import java.util.List;
+
+import com.didihe1988.picker.model.dp.AnswerDp;
 
 public class AnswerJson extends BaseJson {
 	private String brief;
-
-	private String picture;
 
 	public String getBrief() {
 		return brief;
@@ -15,23 +16,28 @@ public class AnswerJson extends BaseJson {
 		this.brief = brief;
 	}
 
-	public String getPicture() {
-		return picture;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
-
 	public AnswerJson() {
 
 	}
 
-	public AnswerJson(String title, String link, String brief, String picture,
-			Date time) {
-		super(title, link, time);
+	public AnswerJson(String title, String picture, String link, Date time,
+			String brief) {
+		super(title, picture, link, time);
 		this.brief = brief;
-		this.picture = picture;
 	}
 
+	public AnswerJson getAnswerJsonFromAnswer(AnswerDp answerDp) {
+		if (answerDp != null) {
+			String imageUrl = "";
+			List<String> imageUrls = answerDp.getImageUrls();
+			if ((imageUrls != null) && (imageUrls.size() != 0)) {
+				imageUrl = imageUrls.get(0);
+			}
+			String link = "/picker/question/" + answerDp.getQuestionId();
+			return new AnswerJson(answerDp.getQuestionName(), imageUrl, link,
+					answerDp.getDate(), answerDp.getBrief());
+		} else {
+			return new AnswerJson();
+		}
+	}
 }

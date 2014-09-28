@@ -261,11 +261,11 @@ public class Feed implements Serializable {
 	@Override
 	public String toString() {
 		return "Feed [id=" + id + ", bookId=" + bookId + ", userId=" + userId
-				+ ", title=" + title + ", content=" + content + ", date="
-				+ date + ", page=" + page + ", type=" + type + ", isPublic="
-				+ isPublic + ", favoriteNum=" + favoriteNum + ", answerNum="
-				+ answerNum + ", commentNum=" + commentNum + ", followNum="
-				+ followNum + "]";
+				+ ", title=" + title + ", content=" + content + ", brief="
+				+ brief + ", date=" + date + ", page=" + page + ", type="
+				+ type + ", isPublic=" + isPublic + ", favoriteNum="
+				+ favoriteNum + ", answerNum=" + answerNum + ", commentNum="
+				+ commentNum + ", followNum=" + followNum + "]";
 	}
 
 	public boolean checkFieldValidation() {

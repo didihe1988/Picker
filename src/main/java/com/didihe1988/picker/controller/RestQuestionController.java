@@ -1,6 +1,7 @@
 package com.didihe1988.picker.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -208,7 +209,10 @@ public class RestQuestionController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID_FIELD);
 		}
+		System.out.println(feed.toString());
 		feed.setBriefByContent();
+		feed.setDate(new Date());
+		System.out.println(feed.toString());
 		int status = feedService.addFeed(feed);
 		if (status == Status.SUCCESS) {
 			// addQuestionMessage(question, request);

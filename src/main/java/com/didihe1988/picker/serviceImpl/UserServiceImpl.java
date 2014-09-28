@@ -26,7 +26,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean hasMatchUser(String email, String password) {
 		// TODO Auto-generated method stub
+		System.out.println(email+" "+password);
 		String passwordAfterEncrypt = encryptByMD5(email, password);
+		System.out.println(passwordAfterEncrypt);
 		return userDao.getMatchCount(email, passwordAfterEncrypt) > 0;
 	}
 

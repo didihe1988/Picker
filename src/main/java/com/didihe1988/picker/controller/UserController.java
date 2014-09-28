@@ -1,23 +1,33 @@
 package com.didihe1988.picker.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.didihe1988.picker.common.Constant;
+import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.dp.UserDp;
+import com.didihe1988.picker.model.form.LoginForm;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
@@ -27,6 +37,7 @@ import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.FollowService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.JsonUtils;
 
 @Controller
 public class UserController {
@@ -53,7 +64,43 @@ public class UserController {
 
 	@Autowired
 	private CircleMemberService circleMemberService;
-
+	
+	
+	/**
+	 * @description 用户登陆 enter.jsp
+	 */
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login(@ModelAttribute LoginForm loginForm,
+			HttpServletRequest request,HttpServletResponse response) {
+		System.out.println(loginForm.toString());
+		int status = Status.ERROR;
+		if (!userService.hasMatchUser(loginForm.getEmail(),
+				loginForm.getPassword())) {
+			status = Status.NOT_EXISTS;
+			//后面可以加toast
+			return "enter";
+		} else {
+			System.out.println("success");
+			status = Status.SUCCESS;	
+			User user = userService.getUserByEmail(loginForm.getEmail());
+			/*
+			 * 更新登陆时间
+			 */
+			user.setLastVisit(new Date());
+			userService.updateUser(user);
+			HttpUtils.setSessionUserId(request, user.getId());
+			//return "/user/"+user.getId();
+			try {
+				response.sendRedirect("/picker/user/"+user.getId());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		//return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		return "enter";
+	}
+	
 	/**
 	 * @description user.jsp
 	 */

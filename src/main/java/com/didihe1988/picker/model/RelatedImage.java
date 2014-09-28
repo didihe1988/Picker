@@ -70,7 +70,6 @@ public class RelatedImage implements Serializable {
 		this.imageUrl = imageUrl;
 	}
 
-	/*
 	public static int getTypeFromObject(Object object) {
 		if (object instanceof Feed) {
 			int type = ((Feed) object).getType();
@@ -84,7 +83,7 @@ public class RelatedImage implements Serializable {
 		} else {
 			return UNKOWN_IMAGE;
 		}
-	}*/
+	}
 
 	public RelatedImage(int id, int relatedId, int type, String imageUrl) {
 		super();

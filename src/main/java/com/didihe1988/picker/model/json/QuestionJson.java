@@ -1,6 +1,9 @@
 package com.didihe1988.picker.model.json;
 
 import java.util.Date;
+import java.util.List;
+
+import com.didihe1988.picker.model.dp.FeedDp;
 
 public class QuestionJson extends BaseJson {
 
@@ -28,11 +31,27 @@ public class QuestionJson extends BaseJson {
 
 	}
 
-	public QuestionJson(String title, String link, Date time, int comment_cnt,
-			int answers_cnt) {
-		super(title, link, time);
+	public QuestionJson(String title, String picture, String link, Date time,
+			int comment_cnt, int answers_cnt) {
+		super(title, picture, link, time);
 		this.comment_cnt = comment_cnt;
 		this.answers_cnt = answers_cnt;
+	}
+
+	public static QuestionJson getQuestionJsonFromQuestion(FeedDp feedDp) {
+		if (feedDp != null) {
+			String imageUrl = "";
+			List<String> imageUrls = feedDp.getImageUrls();
+			if ((imageUrls != null) && (imageUrls.size() != 0)) {
+				imageUrl = imageUrls.get(0);
+			}
+			String link = "/picker/question/" + feedDp.getId();
+			return new QuestionJson(feedDp.getTitle(), imageUrl, link,
+					feedDp.getDate(), feedDp.getCommentNum(),
+					feedDp.getAnswerNum());
+		} else {
+			return new QuestionJson();
+		}
 	}
 
 }
