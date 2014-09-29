@@ -13,13 +13,18 @@ public class HttpUtils {
 	public static User getSessionUser(HttpServletRequest request) {
 		return (User) request.getSession().getAttribute(Constant.USER);
 	}
-
+	
+	public static boolean isSessionUserIdExists(HttpServletRequest request)
+	{
+		return request.getSession().getAttribute(Constant.USERID)!=null;
+	}
+	
 	public static int getSessionUserId(HttpServletRequest request) {
+		/*
 		System.out.println(request);
 		System.out.println(request.getSession());
-		setSessionUserId(request, 1);
+		setSessionUserId(request, 1);*/
 		return (Integer) request.getSession().getAttribute(Constant.USERID);
-
 	}
 
 	public static String getSessionUserName(HttpServletRequest request) {
@@ -41,6 +46,10 @@ public class HttpUtils {
 
 	public static void removeSessionUser(HttpServletRequest request) {
 		request.getSession().removeAttribute(Constant.USER);
+	}
+	
+	public static void removeSessionUserId(HttpServletRequest request) {
+		request.getSession().removeAttribute(Constant.USERID);
 	}
 
 	public static int getIntegerFromReqeust(HttpServletRequest request,

@@ -25,7 +25,7 @@
 			<form:form action="/picker/login" method="post"
 				onsubmit="return login_check($(this))">
 				<div>
-					<input name="email" placeholder="邮箱">
+					<input name="email" placeholder="邮箱" value=${email}>
 				</div>
 				<div>
 					<input name="password" type="password" placeholder="密码">
@@ -36,7 +36,7 @@
 			</form:form>
 		</div>
 		<div id="register_form">
-			<form action="/register" method="post"
+			<form action="/picker/register" method="post"
 				onsubmit="return register_check($(this))">
 				<div>
 					<input name="email" placeholder="邮箱"

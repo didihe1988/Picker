@@ -11,6 +11,7 @@ import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.MessageDao;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.service.MessageService;
 
 @Service
@@ -146,5 +147,14 @@ public class MessageServiceImpl implements MessageService {
 		// TODO Auto-generated method stub
 		return messageDao.queryMessageByReceiverIdAndType(receiverId, type);
 	}
+
+	@Override
+	public List<Message> getMessageByReceiverIdAndFilter(int receiverId,
+			Filter filter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 
 }

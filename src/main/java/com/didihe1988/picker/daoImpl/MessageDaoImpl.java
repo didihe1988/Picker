@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.dao.MessageDao;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.Message.Filter;
 
 @Repository
 @Transactional
@@ -67,7 +68,7 @@ public class MessageDaoImpl implements MessageDao {
 		}
 		String hql = "select count(*) from Message as message where message.id =?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, message.getId());
+		query.setLong(0, message.getId());
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;
@@ -106,6 +107,7 @@ public class MessageDaoImpl implements MessageDao {
 		return query.executeUpdate();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Message> queryMessageByReceiverIdAndType(int receiverId,
 			int type) {
@@ -130,5 +132,20 @@ public class MessageDaoImpl implements MessageDao {
 		query.setInteger(0, receiverId);
 		return query.list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Message> queryMessageByReceiverIdAndFilter(int receiverId,
+			Filter filter) {
+		// TODO Auto-generated method stub
+		String hql = "from Message as message where message.receiverId = ? and message.type between ? and ?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, receiverId);
+		query.setInteger(1, filter.getStartType());
+		query.setInteger(2, filter.getEndType());
+		return query.list();
+	}
+	
+	
 
 }

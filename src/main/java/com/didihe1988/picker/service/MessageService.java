@@ -14,6 +14,8 @@ public interface MessageService {
 	public List<Message> getMessageByReceiverId(int receiverId);
 
 	public List<Message> getMessageByReceiverIdAndType(int receiverId, int type);
+	
+	public List<Message> getMessageByReceiverIdAndFilter(int receiverId,Message.Filter filter);
 
 	public boolean isMessageExists(Message message);
 

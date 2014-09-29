@@ -1,12 +1,17 @@
 package com.didihe1988.picker.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,7 +68,34 @@ public class RestUserController {
 
 	@Autowired
 	private CircleMemberService circleMemberService;
-
+		
+	/**
+	 * @description 安卓端使用
+	 */
+	@RequestMapping(value = "/json/login", method = RequestMethod.POST)
+	public String login(@RequestBody LoginForm loginForm,
+			HttpServletRequest request) {
+		int status=Status.ERROR;
+		if (!userService.hasMatchUser(loginForm.getEmail(),
+				loginForm.getPassword())) {
+			status=Status.NOT_EXISTS;
+		} else {
+			User user = userService.getUserByEmail(loginForm.getEmail());
+			/*
+			 * 更新登陆时间
+			 */
+			user.setLastVisit(new Date());
+			userService.updateUser(user);
+			HttpUtils.setSessionUserId(request, user.getId());
+			String sessionId=request.getSession().getId();
+			status=Status.SUCCESS;
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put(Constant.KEY_STATUS,status);
+			jsonObject.put(Constant.KEY_SESSIONID, sessionId);
+			return jsonObject.toString();
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
 	
 
 	/**

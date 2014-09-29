@@ -267,7 +267,11 @@ public class Feed implements Serializable {
 				+ favoriteNum + ", answerNum=" + answerNum + ", commentNum="
 				+ commentNum + ", followNum=" + followNum + "]";
 	}
-
+	
+	/**
+	 * 
+	 * @description check: bookId userId title content page
+	 */
 	public boolean checkFieldValidation() {
 		/*
 		 * À„…œ¡Àpage==0

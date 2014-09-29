@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			return Status.NULLPOINTER;
 		}
-		String passwordAfterEncrypt = encryptByMD5(user);
-		user.setPassword(passwordAfterEncrypt);
+		//String passwordAfterEncrypt = encryptByMD5(user);
+		//user.setPassword(passwordAfterEncrypt);
 		int status = userDao.updateUser(user);
 		if (status == -1) {
 			return Status.NOT_EXISTS;

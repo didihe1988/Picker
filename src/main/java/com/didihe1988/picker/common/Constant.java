@@ -21,6 +21,7 @@ public class Constant {
 	public static final String QUESTION_NUM = "questionNum";
 	public static final String BOOK_NUM = "bookNum";
 
+	public static final String KEY_SESSIONID="JSESSIONID";
 	public static final String KEY_STATUS = "status";
 	public static final String KEY_QUESTION_LIST = "questionList";
 	public static final String KEY_COMMENT_LIST = "commentList";

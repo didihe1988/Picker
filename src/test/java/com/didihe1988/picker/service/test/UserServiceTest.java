@@ -38,8 +38,9 @@ public class UserServiceTest {
 	@Test
 	public void test1() {
 		User user=userService.getUserById(1);
-		//user.setPassword(encryptByMD5("1075619206@qq.com", "mini2440"));
-		user.setPassword("mini2440");
+		user.setPassword(encryptByMD5("1075619206@qq.com", "mini2440"));
+		//不在updateUser中加密
+		//user.setPassword("mini2440");
 		int status=userService.updateUser(user);
 		assertSame(Status.SUCCESS, status);
 	}

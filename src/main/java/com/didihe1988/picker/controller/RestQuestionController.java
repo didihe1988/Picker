@@ -204,18 +204,22 @@ public class RestQuestionController {
 		/*
 		 * 添加问题
 		 */
-		// List<String> list = JsonUtils.getStringList(feedForm.getImageUrls());
+		if(!HttpUtils.isSessionUserIdExists(request))
+		{
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,Status.NULLSESSION);
+		}
 		if (!feed.checkFieldValidation()) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID_FIELD);
 		}
 		System.out.println(feed.toString());
+		feed.setUserId(HttpUtils.getSessionUserId(request));
 		feed.setBriefByContent();
 		feed.setDate(new Date());
 		System.out.println(feed.toString());
 		int status = feedService.addFeed(feed);
 		if (status == Status.SUCCESS) {
-			// addQuestionMessage(question, request);
+			produceQuestionMessage(feed, request);
 			addQuestionImage(feed);
 		}
 
@@ -230,20 +234,17 @@ public class RestQuestionController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	private void addQuestionMessage(Feed feed, HttpServletRequest request) {
+	private void produceQuestionMessage(Feed feed, HttpServletRequest request) {
 		/*
 		 * 通知关注者 小明 (被关注者)提出了一个问题
 		 */
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = HttpUtils.getSessionUserName(request);
-		/*
-		 * int questionId = questionService.getLatestQuestionIdByBookId(question
-		 * .getBookId());
-		 */
+		//String userName = HttpUtils.getSessionUserName(request);
+		String userName=userService.getUserById(userId).getUsername();
 		int feedId = feedService.getLatestFeedByBookId(feed.getBookId(),
 				Feed.TYPE_QUESTION);
 		String relatedSourceContent = StringUtils.confineStringLength(
-				feed.getContent(), Constant.MESSAGE_LENGTH);
+				feed.getBrief(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ASKQUESTION, userId, userName, feedId,
 				relatedSourceContent);
@@ -261,7 +262,7 @@ public class RestQuestionController {
 		boolean isSuccess = ImageUtils.moveImage(RelatedImage.QUESTION_IMAGE,
 				questionId, feed.getContent());
 		/*
-		 * file剪切出错或是没有imageUrl
+		 * false情况: file剪切出错或是没有imageUrl
 		 */
 		if (isSuccess) {
 			addNewUrl(feed.getContent(), questionId);

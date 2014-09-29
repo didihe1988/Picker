@@ -70,18 +70,14 @@ public class UserController {
 	 * @description 用户登陆 enter.jsp
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@ModelAttribute LoginForm loginForm,
+	public String login(@ModelAttribute LoginForm loginForm,Model model,
 			HttpServletRequest request,HttpServletResponse response) {
-		System.out.println(loginForm.toString());
-		int status = Status.ERROR;
 		if (!userService.hasMatchUser(loginForm.getEmail(),
 				loginForm.getPassword())) {
-			status = Status.NOT_EXISTS;
 			//后面可以加toast
+			model.addAttribute("email", loginForm.getEmail());
 			return "enter";
 		} else {
-			System.out.println("success");
-			status = Status.SUCCESS;	
 			User user = userService.getUserByEmail(loginForm.getEmail());
 			/*
 			 * 更新登陆时间
@@ -89,15 +85,17 @@ public class UserController {
 			user.setLastVisit(new Date());
 			userService.updateUser(user);
 			HttpUtils.setSessionUserId(request, user.getId());
-			//return "/user/"+user.getId();
+			
 			try {
-				response.sendRedirect("/picker/user/"+user.getId());
+				//response.sendRedirect("/picker/user/"+user.getId());
+				response.sendRedirect("/picker/test");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}
-		//return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		model.addAttribute("email", loginForm.getEmail());
 		return "enter";
 	}
 	

@@ -24,4 +24,5 @@ public interface MessageDao {
 	public List<Message> queryMessageByReceiverIdAndType(int receiverId,
 			int type);
 
+	public List<Message> queryMessageByReceiverIdAndFilter(int receiverId,Message.Filter filter);
 }
