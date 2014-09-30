@@ -135,17 +135,23 @@ public class MessageDaoImpl implements MessageDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Message> queryMessageByReceiverIdAndFilter(int receiverId,
+	public List<Message> queryMessageByReceiverIdAndFilter(int objId,
 			Filter filter) {
 		// TODO Auto-generated method stub
-		String hql = "from Message as message where message.receiverId = ? and message.type between ? and ?";
+		String hql="";
+		if(filter==Filter.MESSAGE_FOOTPRINT)
+		{
+			hql = "from Message as message where message.producerId = ? and message.type between ? and ?";
+		}
+		else {
+			hql = "from Message as message where message.receiverId = ? and message.type between ? and ?";
+		}
+		
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, receiverId);
+		query.setInteger(0, objId);
 		query.setInteger(1, filter.getStartType());
 		query.setInteger(2, filter.getEndType());
 		return query.list();
 	}
 	
-	
-
 }

@@ -26,6 +26,8 @@ import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
+import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.dp.FeedDp;
@@ -39,6 +41,7 @@ import com.didihe1988.picker.service.CircleMemberService;
 import com.didihe1988.picker.service.CircleService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.FollowService;
+import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
@@ -68,6 +71,9 @@ public class RestUserController {
 
 	@Autowired
 	private CircleMemberService circleMemberService;
+	
+	@Autowired
+	private MessageService messageService;
 		
 	/**
 	 * @description 安卓端使用
@@ -298,4 +304,36 @@ public class RestUserController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
+	/**
+	 * @description 用户profile里的足迹
+	 */
+	@RequestMapping(value = "/json/user/{id}/footprint", method = RequestMethod.GET)
+	public String footprint(@PathVariable int id,
+			HttpServletRequest request) {
+		List<Message> messageList=messageService.getMessageByReceiverIdAndFilter(id, Filter.MESSAGE_FOOTPRINT);
+		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
+				messageList);
+	}
+	
+	/**
+	 * @description 用户关注的人的动态
+	 */
+	@RequestMapping(value = "/json/user/dynamic", method = RequestMethod.GET)
+	public String dynamic(HttpServletRequest request) {
+		int userId=HttpUtils.getSessionUserId(request);
+		List<Message> messageList=messageService.getMessageByReceiverIdAndFilter(userId, Filter.MESSAGE_DYNAMIC);
+		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
+				messageList);
+	}
+	
+	/**
+	 * @description 与我相关的消息 如我的问题被回答了
+	 */
+	@RequestMapping(value = "/json/user/related_message", method = RequestMethod.GET)
+	public String related(HttpServletRequest request) {
+		int userId=HttpUtils.getSessionUserId(request);
+		List<Message> messageList=messageService.getMessageByReceiverIdAndFilter(userId, Filter.MESSAGE_RELATED);
+		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
+				messageList);
+	}
 }

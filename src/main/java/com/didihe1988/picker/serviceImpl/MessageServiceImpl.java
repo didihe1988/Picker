@@ -149,10 +149,10 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<Message> getMessageByReceiverIdAndFilter(int receiverId,
+	public List<Message> getMessageByReceiverIdAndFilter(int objId,
 			Filter filter) {
 		// TODO Auto-generated method stub
-		return null;
+		return messageDao.queryMessageByReceiverIdAndFilter(objId, filter);
 	}
 	
 	

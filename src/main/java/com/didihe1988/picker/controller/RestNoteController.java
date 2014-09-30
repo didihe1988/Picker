@@ -1,5 +1,6 @@
 package com.didihe1988.picker.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.RelatedImageService;
+import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.ImageUtils;
 import com.didihe1988.picker.utils.JsonUtils;
@@ -43,6 +45,9 @@ public class RestNoteController {
 
 	@Autowired
 	private RelatedImageService relatedImageService;
+	
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "/json/note/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNote(@PathVariable int id) {
@@ -124,17 +129,29 @@ public class RestNoteController {
 
 	@RequestMapping(value = "/json/note/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	public String add(@RequestBody Feed feed, HttpServletRequest request) {
+		if(!HttpUtils.isSessionUserIdExists(request))
+		{
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,Status.NULLSESSION);
+		}
 		if (!feed.checkFieldValidation()) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID_FIELD);
 		}
-		feed.setBriefByContent();
+		setNote(feed, request);
 		int status = feedService.addFeed(feed);
 		if (status == Status.SUCCESS) {
-			addNoteMessage(feed, request);
 			addNoteImage(feed);
+			produceNoteMessage(feed, request);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+	
+	private void setNote(Feed feed,HttpServletRequest request)
+	{
+		feed.setType(Feed.TYPE_QUESTION);
+		feed.setUserId(HttpUtils.getSessionUserId(request));
+		feed.setBriefByContent();
+		feed.setDate(new Date());
 	}
 
 	@RequestMapping(value = "/json/note/update", method = RequestMethod.POST, headers = "Accept=application/json")
@@ -144,9 +161,10 @@ public class RestNoteController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	private void addNoteMessage(Feed feed, HttpServletRequest request) {
+	private void produceNoteMessage(Feed feed, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = HttpUtils.getSessionUserName(request);
+		//String userName = HttpUtils.getSessionUserName(request);
+		String userName=userService.getUserById(userId).getUsername();
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getTitle(), Constant.MESSAGE_LENGTH);
 		int noteId = feedService.getLatestFeedByBookId(feed.getBookId(),
@@ -156,7 +174,7 @@ public class RestNoteController {
 				relatedSourceContent);
 
 		/*
-		 * 用户动态
+		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDNOTE, userId, userName, noteId,

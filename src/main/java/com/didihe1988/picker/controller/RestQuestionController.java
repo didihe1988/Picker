@@ -201,9 +201,6 @@ public class RestQuestionController {
 
 	@RequestMapping(value = "/json/question/add", method = RequestMethod.POST)
 	public String add(@RequestBody Feed feed, HttpServletRequest request) {
-		/*
-		 * 添加问题
-		 */
 		if(!HttpUtils.isSessionUserIdExists(request))
 		{
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,Status.NULLSESSION);
@@ -212,11 +209,7 @@ public class RestQuestionController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID_FIELD);
 		}
-		System.out.println(feed.toString());
-		feed.setUserId(HttpUtils.getSessionUserId(request));
-		feed.setBriefByContent();
-		feed.setDate(new Date());
-		System.out.println(feed.toString());
+		setQuestion(feed, request);
 		int status = feedService.addFeed(feed);
 		if (status == Status.SUCCESS) {
 			produceQuestionMessage(feed, request);
@@ -224,6 +217,14 @@ public class RestQuestionController {
 		}
 
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+	
+	private void setQuestion(Feed feed,HttpServletRequest request)
+	{
+		feed.setType(Feed.TYPE_QUESTION);
+		feed.setUserId(HttpUtils.getSessionUserId(request));
+		feed.setBriefByContent();
+		feed.setDate(new Date());
 	}
 
 	@RequestMapping(value = "/json/question/update", method = RequestMethod.POST)
@@ -249,7 +250,7 @@ public class RestQuestionController {
 				Message.MESSAGE_FOLLOWED_ASKQUESTION, userId, userName, feedId,
 				relatedSourceContent);
 		/*
-		 * 用户动态
+		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDQUESTION, userId, userName, feedId,

@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.didihe1988.picker.utils.MarkdownUtils;
+
 @Entity
 @Table(name = "answer")
 public class Answer implements Serializable {
@@ -144,6 +146,11 @@ public class Answer implements Serializable {
 	public void setBrief(String brief) {
 		this.brief = brief;
 	}
+	
+	public void setBriefByContent() {
+		this.brief = MarkdownUtils.removeTags(this.content);
+	}
+
 
 	@Override
 	public String toString() {
@@ -151,6 +158,15 @@ public class Answer implements Serializable {
 				+ ", replierId=" + replierId + ", content=" + content
 				+ ", brief=" + brief + ", favoriteNum=" + favoriteNum
 				+ ", commentNum=" + commentNum + ", date=" + date + "]";
+	}
+	
+	public boolean checkFieldValidation()
+	{
+		if((this.questionId!=0)&&(this.content!=null)&&(!this.content.equals("")))
+		{
+			return true;
+		}
+		return false;
 	}
 
 }

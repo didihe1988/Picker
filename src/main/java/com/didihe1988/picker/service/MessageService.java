@@ -15,7 +15,11 @@ public interface MessageService {
 
 	public List<Message> getMessageByReceiverIdAndType(int receiverId, int type);
 	
-	public List<Message> getMessageByReceiverIdAndFilter(int receiverId,Message.Filter filter);
+	/**
+	 * 
+	 * @description 用户足迹objId:producerId  动态、与我相关 objId:receiverId
+	 */
+	public List<Message> getMessageByReceiverIdAndFilter(int objId,Message.Filter filter);
 
 	public boolean isMessageExists(Message message);
 

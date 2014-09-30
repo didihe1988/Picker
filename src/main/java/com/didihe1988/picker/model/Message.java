@@ -77,7 +77,8 @@ public class Message implements Serializable {
 		/*
 		 * 好友动态(由用户关注的人产生) , 用户足迹 在用户profile上显示 , 与我相关
 		 */
-		MESSAGE_DYNAMIC, MESSAGE_FOOTPRINT, MESSAGE_RELATED;
+		MESSAGE_DYNAMIC,
+		MESSAGE_FOOTPRINT, MESSAGE_RELATED;
 		private final int startType;
 		private final int endType;
 		Filter()
@@ -262,4 +263,17 @@ public class Message implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString() {
+		return "Message [id=" + id + ", receiverId=" + receiverId
+				+ ", isChecked=" + isChecked + ", type=" + type
+				+ ", producerId=" + producerId + ", producerName="
+				+ producerName + ", relatedSourceId=" + relatedSourceId
+				+ ", relatedSourceContent=" + relatedSourceContent + ", time="
+				+ time + "]";
+	}
+	
+	
+	
+	
 }
