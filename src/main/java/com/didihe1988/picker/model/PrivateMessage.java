@@ -20,22 +20,22 @@ public class PrivateMessage implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "pm_id")
-	private long id;
+	protected long id;
 
 	@Column(name = "pm_senderid")
-	private int senderId;
+	protected int senderId;
 
 	@Column(name = "pm_receiverid")
-	private int receiverId;
+	protected int receiverId;
 
 	@Column(name = "pm_dialogid")
-	private long dialogId;
+	protected long dialogId;
 
 	@Column(name = "pm_content")
-	private String content;
+	protected String content;
 
 	@Column(name = "pm_time")
-	private Date time;
+	protected Date time;
 
 	public long getId() {
 		return id;
@@ -122,8 +122,14 @@ public class PrivateMessage implements Serializable {
 		this.time = new Date();
 	}
 
+	public PrivateMessage(PrivateMessage privateMessage) {
+		this(privateMessage.getId(), privateMessage.getSenderId(),
+				privateMessage.getReceiverId(), privateMessage.getDialogId(),
+				privateMessage.getContent(), privateMessage.getTime());
+	}
+
 	public boolean checkFieldValidation() {
-		if ((this.senderId > 0) && (this.content != null)
+		if ((this.receiverId > 0) && (this.content != null)
 				&& (!this.content.equals(""))) {
 			return true;
 		} else {

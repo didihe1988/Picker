@@ -1,5 +1,6 @@
 package com.didihe1988.picker.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.PrivateMessageDao;
+import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.PrivateMessage;
+import com.didihe1988.picker.model.User;
+import com.didihe1988.picker.model.dp.PrivateMessageDp;
 import com.didihe1988.picker.service.PrivateMessageService;
 
 @Service
@@ -16,6 +20,9 @@ import com.didihe1988.picker.service.PrivateMessageService;
 public class PrivateMessageServiceImpl implements PrivateMessageService {
 	@Autowired
 	private PrivateMessageDao privateMessageDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	@Override
 	public PrivateMessage getPrivateMessageById(int id) {
@@ -87,6 +94,39 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
 	public List<PrivateMessage> getPrivateMessageByDialogId(long dialogId) {
 		// TODO Auto-generated method stub
 		return privateMessageDao.queryPrivateMessageByDialogId(dialogId);
+	}
+
+	@Override
+	public boolean checkOperateValidation(int userId, long dialogId) {
+		// TODO Auto-generated method stub
+		return privateMessageDao.checkOperateValidation(userId, dialogId);
+	}
+
+	@Override
+	public PrivateMessageDp getPrivateMessageDp(PrivateMessage privateMessage) {
+		// TODO Auto-generated method stub
+		User receiver = userDao.queryUserById(privateMessage.getReceiverId());
+		User sender = userDao.queryUserById(privateMessage.getSenderId());
+		return new PrivateMessageDp(privateMessage, sender.getUsername(),
+				sender.getAvatarUrl(), receiver.getUsername(),
+				receiver.getAvatarUrl());
+	}
+
+	@Override
+	public List<PrivateMessageDp> getPrivateMessageDpList(long dialogId) {
+		// TODO Auto-generated method stub
+		return getPrivateMessageDpList(getPrivateMessageByDialogId(dialogId));
+	}
+
+	private List<PrivateMessageDp> getPrivateMessageDpList(
+			List<PrivateMessage> privateMessages) {
+		// TODO Auto-generated method stub
+		List<PrivateMessageDp> list = new ArrayList<PrivateMessageDp>();
+		for (PrivateMessage privateMessage : privateMessages) {
+			PrivateMessageDp privateMessageDp = getPrivateMessageDp(privateMessage);
+			list.add(privateMessageDp);
+		}
+		return list;
 	}
 
 }

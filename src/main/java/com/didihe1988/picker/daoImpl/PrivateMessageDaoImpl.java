@@ -24,15 +24,18 @@ public class PrivateMessageDaoImpl implements PrivateMessageDao {
 		return sessionFactory.getCurrentSession();
 	}
 
+	/**
+	 * @description ownerId:userId objectId:dialogId
+	 */
 	@Override
-	public boolean checkOperateValidation(int ownerId, int objectId) {
+	public boolean checkOperateValidation(int ownerId, long objectId) {
 		// TODO Auto-generated method stub
 
-		String hql = "select count(*) from PrivateMessage as p where (p.senderId =? or p.recerverId=?) and p.id=?";
+		String hql = "select count(*) from PrivateMessage as p where (p.senderId =? or p.receiverId=?) and p.dialogId=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, ownerId);
 		query.setInteger(1, ownerId);
-		query.setInteger(2, objectId);
+		query.setLong(2, objectId);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;
@@ -134,7 +137,7 @@ public class PrivateMessageDaoImpl implements PrivateMessageDao {
 	@Override
 	public List<PrivateMessage> queryPrivateMessageByDialogId(long dialogId) {
 		// TODO Auto-generated method stub
-		String hql = "p from PrivateMessage as p where p.dialogsId=? ";
+		String hql = "from PrivateMessage as p where p.dialogId=? ";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setLong(0, dialogId);
 		return query.list();

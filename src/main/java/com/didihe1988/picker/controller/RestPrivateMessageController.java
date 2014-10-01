@@ -16,6 +16,7 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Dialog;
 import com.didihe1988.picker.model.PrivateMessage;
+import com.didihe1988.picker.model.dp.PrivateMessageDp;
 import com.didihe1988.picker.service.DialogService;
 import com.didihe1988.picker.service.PrivateMessageService;
 import com.didihe1988.picker.utils.HttpUtils;
@@ -86,8 +87,31 @@ public class RestPrivateMessageController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.NULLSESSION);
 		}
+		int userId = HttpUtils.getSessionUserId(request);
+		if (!PMService.checkOperateValidation(userId, dialogId)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<PrivateMessage> list = PMService
 				.getPrivateMessageByDialogId(dialogId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_PRIVATEMESSAGE_LIST,
+				list);
+	}
+
+	@RequestMapping(value = "/json/pmessage/{dialogId}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String pmessageByDialogId_dp(@PathVariable Long dialogId,
+			HttpServletRequest request) {
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
+		}
+		int userId = HttpUtils.getSessionUserId(request);
+		if (!PMService.checkOperateValidation(userId, dialogId)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
+		List<PrivateMessageDp> list = PMService
+				.getPrivateMessageDpList(dialogId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_PRIVATEMESSAGE_LIST,
 				list);
 	}
