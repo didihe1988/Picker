@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.DialogDao;
 import com.didihe1988.picker.dao.PrivateMessageDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.PrivateMessage;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.PrivateMessageDp;
+import com.didihe1988.picker.model.dp.PrivateMessageSum;
 import com.didihe1988.picker.service.PrivateMessageService;
 
 @Service
@@ -23,6 +25,9 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private DialogDao dialogDao;
 
 	@Override
 	public PrivateMessage getPrivateMessageById(int id) {
@@ -125,6 +130,34 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
 		for (PrivateMessage privateMessage : privateMessages) {
 			PrivateMessageDp privateMessageDp = getPrivateMessageDp(privateMessage);
 			list.add(privateMessageDp);
+		}
+		return list;
+	}
+
+	@Override
+	public List<PrivateMessageSum> getPrivateMessageSumByUserId(int userId) {
+		// TODO Auto-generated method stub
+		return getPrivateMessageSumList(getPrivateMessageByUserId(userId));
+	}
+
+	private PrivateMessageSum getPrivateMessageSum(PrivateMessage privateMessage) {
+		// TODO Auto-generated method stub
+		User receiver = userDao.queryUserById(privateMessage.getReceiverId());
+		User sender = userDao.queryUserById(privateMessage.getSenderId());
+		int count = dialogDao.queryDialogById(privateMessage.getDialogId())
+				.getCount();
+		return new PrivateMessageSum(privateMessage, sender.getUsername(),
+				sender.getAvatarUrl(), receiver.getUsername(),
+				receiver.getAvatarUrl(), count);
+	}
+
+	private List<PrivateMessageSum> getPrivateMessageSumList(
+			List<PrivateMessage> privateMessages) {
+		// TODO Auto-generated method stub
+		List<PrivateMessageSum> list = new ArrayList<PrivateMessageSum>();
+		for (PrivateMessage privateMessage : privateMessages) {
+			PrivateMessageSum privateMessageSum = getPrivateMessageSum(privateMessage);
+			list.add(privateMessageSum);
 		}
 		return list;
 	}

@@ -226,5 +226,6 @@ public class FeedServiceImpl implements FeedService {
 		}
 		return list;
 	}
+	
 
 }

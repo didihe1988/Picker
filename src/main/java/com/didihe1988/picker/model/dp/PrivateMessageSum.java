@@ -2,7 +2,11 @@ package com.didihe1988.picker.model.dp;
 
 import com.didihe1988.picker.model.PrivateMessage;
 
-public class PrivateMessageDp extends PrivateMessage {
+/*
+ * 没有继承PrivateMessageDp因为我觉得这样清晰一些
+ * 有空再重构吧。
+ */
+public class PrivateMessageSum extends PrivateMessage {
 	/**
 	 * 
 	 */
@@ -15,6 +19,16 @@ public class PrivateMessageDp extends PrivateMessage {
 	private String receiverName;
 
 	private String receiverAvatarUrl;
+
+	private int count;
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 	public String getSenderName() {
 		return senderName;
@@ -48,18 +62,19 @@ public class PrivateMessageDp extends PrivateMessage {
 		this.receiverAvatarUrl = receiverAvatarUrl;
 	}
 
-	public PrivateMessageDp() {
+	public PrivateMessageSum() {
 
 	}
 
-	public PrivateMessageDp(PrivateMessage privateMessage, String senderName,
+	public PrivateMessageSum(PrivateMessage privateMessage, String senderName,
 			String senderAvatarUrl, String receiverName,
-			String receiverAvatarUrl) {
+			String receiverAvatarUrl, int count) {
 		super(privateMessage);
 		this.senderName = senderName;
 		this.senderAvatarUrl = senderAvatarUrl;
 		this.receiverName = receiverName;
 		this.receiverAvatarUrl = receiverAvatarUrl;
+		this.count = count;
 	}
 
 }

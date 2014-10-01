@@ -17,6 +17,7 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Dialog;
 import com.didihe1988.picker.model.PrivateMessage;
 import com.didihe1988.picker.model.dp.PrivateMessageDp;
+import com.didihe1988.picker.model.dp.PrivateMessageSum;
 import com.didihe1988.picker.service.DialogService;
 import com.didihe1988.picker.service.PrivateMessageService;
 import com.didihe1988.picker.utils.HttpUtils;
@@ -58,6 +59,7 @@ public class RestPrivateMessageController {
 				privateMessage.getSenderId(), privateMessage.getReceiverId());
 		if (dialogId != -1) {
 			privateMessage.setDialogId(dialogId);
+			dialogService.incrementCount(dialogId);
 		} else {
 			/*
 			 * 构造函数内count=1 有一定风险
@@ -75,7 +77,7 @@ public class RestPrivateMessageController {
 					Status.NULLSESSION);
 		}
 		int userId = HttpUtils.getSessionUserId(request);
-		List<PrivateMessage> list = PMService.getPrivateMessageByUserId(userId);
+		List<PrivateMessageSum> list = PMService.getPrivateMessageSumByUserId(userId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_PRIVATEMESSAGE_LIST,
 				list);
 	}

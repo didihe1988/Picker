@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.didihe1988.picker.model.PrivateMessage;
 import com.didihe1988.picker.model.dp.PrivateMessageDp;
+import com.didihe1988.picker.model.dp.PrivateMessageSum;
 
 public interface PrivateMessageService {
 	public PrivateMessage getPrivateMessageById(int id);
@@ -17,6 +18,8 @@ public interface PrivateMessageService {
 	public boolean isPrivateMessageExistsById(int id);
 
 	public List<PrivateMessage> getPrivateMessageByUserId(int userId);
+	
+	public List<PrivateMessageSum> getPrivateMessageSumByUserId(int userId);
 
 	public List<PrivateMessage> getPrivateMessageByDialogId(long dialogId);
 

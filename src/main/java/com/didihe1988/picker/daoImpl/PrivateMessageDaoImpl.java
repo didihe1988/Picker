@@ -1,12 +1,19 @@
 package com.didihe1988.picker.daoImpl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.DistinctResultTransformer;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -97,12 +104,35 @@ public class PrivateMessageDaoImpl implements PrivateMessageDao {
 	@Override
 	public List<PrivateMessage> queryPrivateMessageByUserId(int userId) {
 		// TODO Auto-generated method stub
-		String hql = "select distinct p from PrivateMessage as p where p.senderId=? ";
-		Query query = getCurrentSession().createQuery(hql);
-		// Criteria
-		// criteria=sessionFactory.getCurrentSession().createCriteria(PrivateMessage.class).setProjection(projection)
+		/*
+		 * from PrivateMessage as p where p.senderId=? or p.receiverId =?"
+		 */
+		/*
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(
+				PrivateMessage.class);
+		LogicalExpression expression = Restrictions.or(
+				Restrictions.eq("senderId", userId),
+				Restrictions.eq("receiverId", userId));
+		criteria.add(expression);
+		criteria.setProjection(Projections.distinct(Projections
+				.property("dialogId")));*/
+		String hql="from PrivateMessage as p where p.senderId=? or p.receiverId =?";
+		Query query=getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
-		return query.list();
+		query.setInteger(1, userId);
+		List<PrivateMessage> privateMessages=query.list();
+		List<PrivateMessage> list=new ArrayList<PrivateMessage>();
+		List<Long> dialogIds=new ArrayList<Long>();
+		for(PrivateMessage privateMessage:privateMessages)
+		{
+			long dialogId=privateMessage.getDialogId();
+			if(!dialogIds.contains(dialogId))
+			{
+				dialogIds.add(dialogId);
+				list.add(privateMessage);
+			}
+		}
+		return list;
 	}
 
 	@Override
