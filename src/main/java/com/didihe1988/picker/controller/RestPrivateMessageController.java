@@ -1,10 +1,12 @@
 package com.didihe1988.picker.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -64,4 +66,30 @@ public class RestPrivateMessageController {
 			privateMessage.setDialogId(newDialogId);
 		}
 	}
+
+	@RequestMapping(value = "/json/pmessage", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String pmessage(HttpServletRequest request) {
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
+		}
+		int userId = HttpUtils.getSessionUserId(request);
+		List<PrivateMessage> list = PMService.getPrivateMessageByUserId(userId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_PRIVATEMESSAGE_LIST,
+				list);
+	}
+
+	@RequestMapping(value = "/json/pmessage/{dialogId}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String pmessageByDialogId(@PathVariable Long dialogId,
+			HttpServletRequest request) {
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
+		}
+		List<PrivateMessage> list = PMService
+				.getPrivateMessageByDialogId(dialogId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_PRIVATEMESSAGE_LIST,
+				list);
+	}
+
 }

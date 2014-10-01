@@ -83,4 +83,10 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
 		return privateMessageDao.getDialogIdByUserId(userId1, userId2);
 	}
 
+	@Override
+	public List<PrivateMessage> getPrivateMessageByDialogId(long dialogId) {
+		// TODO Auto-generated method stub
+		return privateMessageDao.queryPrivateMessageByDialogId(dialogId);
+	}
+
 }

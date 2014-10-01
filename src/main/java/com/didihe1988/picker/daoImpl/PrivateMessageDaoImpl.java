@@ -130,4 +130,13 @@ public class PrivateMessageDaoImpl implements PrivateMessageDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PrivateMessage> queryPrivateMessageByDialogId(long dialogId) {
+		// TODO Auto-generated method stub
+		String hql = "p from PrivateMessage as p where p.dialogsId=? ";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setLong(0, dialogId);
+		return query.list();
+	}
 }

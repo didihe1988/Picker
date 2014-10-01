@@ -18,6 +18,8 @@ public interface PrivateMessageDao extends OperateValidation {
 
 	public List<PrivateMessage> queryPrivateMessageByUserId(int userId);
 
+	public List<PrivateMessage> queryPrivateMessageByDialogId(long dialogId);
+
 	public int getLatestPrivateMessageIdByUserId(int id);
 
 	/**

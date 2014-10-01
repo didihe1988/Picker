@@ -17,6 +17,8 @@ public interface PrivateMessageService {
 
 	public List<PrivateMessage> getPrivateMessageByUserId(int userId);
 
+	public List<PrivateMessage> getPrivateMessageByDialogId(long dialogId);
+
 	public int getLatestPrivateMessageIdByUserId(int id);
 
 	public long getDialogIdByUserId(int userId1, int userId2);
