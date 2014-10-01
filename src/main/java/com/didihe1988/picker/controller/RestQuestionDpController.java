@@ -34,6 +34,9 @@ public class RestQuestionDpController {
 
 	@RequestMapping(value = "/json/question/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestionDp(@PathVariable int id, HttpServletRequest request) {
+		/*
+		 * id´«-1Ê±±Àµô
+		 */
 		FeedDp feedDp = feedService.getFeedDpByFeedId(id,
 				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_QUESTION,

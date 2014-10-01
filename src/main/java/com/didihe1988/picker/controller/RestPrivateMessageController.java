@@ -1,0 +1,67 @@
+package com.didihe1988.picker.controller;
+
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.didihe1988.picker.common.Constant;
+import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.model.Dialog;
+import com.didihe1988.picker.model.PrivateMessage;
+import com.didihe1988.picker.service.DialogService;
+import com.didihe1988.picker.service.PrivateMessageService;
+import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.JsonUtils;
+
+@RestController
+public class RestPrivateMessageController {
+	@Autowired
+	private PrivateMessageService PMService;
+
+	@Autowired
+	private DialogService dialogService;
+
+	@RequestMapping(value = "/json/pmessage/send", method = RequestMethod.POST, headers = "Accept=application/json")
+	public String send(@RequestBody PrivateMessage privateMessage,
+			HttpServletRequest request) {
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
+		}
+		if (!privateMessage.checkFieldValidation()) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID_FIELD);
+		}
+		setPM(privateMessage, request);
+		int status = PMService.addPrivateMessage(privateMessage);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	private void setPM(PrivateMessage privateMessage, HttpServletRequest request) {
+		int senderId = HttpUtils.getSessionUserId(request);
+		privateMessage.setSenderId(senderId);
+		privateMessage.setTime(new Date());
+		setDialogId(privateMessage);
+	}
+
+	private void setDialogId(PrivateMessage privateMessage) {
+		long dialogId = PMService.getDialogIdByUserId(
+				privateMessage.getSenderId(), privateMessage.getReceiverId());
+		if (dialogId != -1) {
+			privateMessage.setDialogId(dialogId);
+		} else {
+			/*
+			 * 构造函数内count=1 有一定风险
+			 */
+			dialogService.addDialog(new Dialog());
+			long newDialogId = dialogService.getLatestDialogId();
+			privateMessage.setDialogId(newDialogId);
+		}
+	}
+}

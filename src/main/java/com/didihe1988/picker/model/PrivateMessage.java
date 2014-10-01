@@ -16,11 +16,11 @@ public class PrivateMessage implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "pm_id")
-	private int id;
+	private long id;
 
 	@Column(name = "pm_senderid")
 	private int senderId;
@@ -28,17 +28,20 @@ public class PrivateMessage implements Serializable {
 	@Column(name = "pm_receiverid")
 	private int receiverId;
 
+	@Column(name = "pm_dialogid")
+	private long dialogId;
+
 	@Column(name = "pm_content")
 	private String content;
 
 	@Column(name = "pm_time")
 	private Date time;
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -74,19 +77,32 @@ public class PrivateMessage implements Serializable {
 		this.time = time;
 	}
 
+	public long getDialogId() {
+		return dialogId;
+	}
+
+	public void setDialogId(long dialogId) {
+		this.dialogId = dialogId;
+	}
+
 	@Override
 	public String toString() {
 		return "PrivateMessage [id=" + id + ", senderId=" + senderId
-				+ ", receiverId=" + receiverId + ", content=" + content
-				+ ", time=" + time + "]";
+				+ ", receiverId=" + receiverId + ", dialogId=" + dialogId
+				+ ", content=" + content + ", time=" + time + "]";
 	}
 
-	public PrivateMessage(int id, int senderId, int receiverId, String content,
-			Date time) {
+	public PrivateMessage() {
+
+	}
+
+	public PrivateMessage(long id, int senderId, int receiverId, long dialogId,
+			String content, Date time) {
 		super();
 		this.id = id;
 		this.senderId = senderId;
 		this.receiverId = receiverId;
+		this.dialogId = dialogId;
 		this.content = content;
 		this.time = time;
 	}
@@ -104,5 +120,14 @@ public class PrivateMessage implements Serializable {
 		this.receiverId = receiverId;
 		this.content = content;
 		this.time = new Date();
+	}
+
+	public boolean checkFieldValidation() {
+		if ((this.senderId > 0) && (this.content != null)
+				&& (!this.content.equals(""))) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

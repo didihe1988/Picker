@@ -10,15 +10,19 @@ public interface PrivateMessageDao extends OperateValidation {
 
 	public int addPrivateMessage(PrivateMessage privateMessage);
 
-	public int deletePMById(int id);
+	public int deletePrivateMessageById(int id);
 
 	public int updatePrivateMessage(PrivateMessage privateMessage);
 
-	public boolean isPrivateMessageExistsById(int id);
+	public boolean isPrivateMessageExistsById(long id);
 
-	public List<PrivateMessage> queryPrivateMessageByUserId(int userId1,
-			int userId2);
+	public List<PrivateMessage> queryPrivateMessageByUserId(int userId);
 
 	public int getLatestPrivateMessageIdByUserId(int id);
+
+	/**
+	 * @description return -1 if dialog not exists
+	 */
+	public long getDialogIdByUserId(int userId1, int userId2);
 
 }

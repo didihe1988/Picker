@@ -37,9 +37,9 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
 	}
 
 	@Override
-	public int deletePMById(int id) {
+	public int deletePrivateMessageById(int id) {
 		// TODO Auto-generated method stub
-		int status = privateMessageDao.deletePMById(id);
+		int status = privateMessageDao.deletePrivateMessageById(id);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}
@@ -66,16 +66,21 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
 	}
 
 	@Override
-	public List<PrivateMessage> getPrivateMessageByUserId(int userId1,
-			int userId2) {
+	public List<PrivateMessage> getPrivateMessageByUserId(int userId) {
 		// TODO Auto-generated method stub
-		return privateMessageDao.queryPrivateMessageByUserId(userId1, userId2);
+		return privateMessageDao.queryPrivateMessageByUserId(userId);
 	}
 
 	@Override
 	public int getLatestPrivateMessageIdByUserId(int id) {
 		// TODO Auto-generated method stub
 		return privateMessageDao.getLatestPrivateMessageIdByUserId(id);
+	}
+
+	@Override
+	public long getDialogIdByUserId(int userId1, int userId2) {
+		// TODO Auto-generated method stub
+		return privateMessageDao.getDialogIdByUserId(userId1, userId2);
 	}
 
 }

@@ -109,6 +109,7 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getUser(@PathVariable int id, HttpServletRequest request) {
+		System.out.println(id);
 		UserDp userDp = userService.getUserDpByUserId(id,
 				HttpUtils.getSessionUserId(request));
 		return JsonUtils

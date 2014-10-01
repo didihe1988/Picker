@@ -41,8 +41,10 @@ public class RestBookController {
 	 */
 	@RequestMapping(value = "/json/book/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestions(@PathVariable int id) {
+		System.out.println(id);
 		List<Feed> list = feedService.getFeedListByBookId(id,
 				Feed.TYPE_QUESTION);
+		System.out.println(list);
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 

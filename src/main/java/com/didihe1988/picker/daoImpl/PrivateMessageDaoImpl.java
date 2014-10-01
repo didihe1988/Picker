@@ -1,7 +1,9 @@
 package com.didihe1988.picker.daoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.PrivateMessageDao;
 import com.didihe1988.picker.model.PrivateMessage;
+
 @Repository
 @Transactional
 public class PrivateMessageDaoImpl implements PrivateMessageDao {
@@ -53,7 +56,7 @@ public class PrivateMessageDaoImpl implements PrivateMessageDao {
 	}
 
 	@Override
-	public int deletePMById(int id) {
+	public int deletePrivateMessageById(int id) {
 		// TODO Auto-generated method stub
 		if (!isPrivateMessageExistsById(id)) {
 			return -1;
@@ -75,11 +78,11 @@ public class PrivateMessageDaoImpl implements PrivateMessageDao {
 	}
 
 	@Override
-	public boolean isPrivateMessageExistsById(int id) {
+	public boolean isPrivateMessageExistsById(long id) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from PrivateMessage as p where p.id =?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, id);
+		query.setLong(0, id);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;
@@ -89,15 +92,13 @@ public class PrivateMessageDaoImpl implements PrivateMessageDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<PrivateMessage> queryPrivateMessageByUserId(int userId1,
-			int userId2) {
+	public List<PrivateMessage> queryPrivateMessageByUserId(int userId) {
 		// TODO Auto-generated method stub
-		String hql = "from PrivateMessage as p where (p.senderId=? and p.receiverId=? ) or (p.senderId=? and p.receiverId=? )";
+		String hql = "select distinct p from PrivateMessage as p where p.senderId=? ";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, userId1);
-		query.setInteger(1, userId2);
-		query.setInteger(2, userId2);
-		query.setInteger(3, userId1);
+		// Criteria
+		// criteria=sessionFactory.getCurrentSession().createCriteria(PrivateMessage.class).setProjection(projection)
+		query.setInteger(0, userId);
 		return query.list();
 	}
 
@@ -109,6 +110,24 @@ public class PrivateMessageDaoImpl implements PrivateMessageDao {
 		query.setInteger(0, id);
 		query.setInteger(1, id);
 		return (Integer) query.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public long getDialogIdByUserId(int userId1, int userId2) {
+		// TODO Auto-generated method stub
+		String hql = "from PrivateMessage as p where (p.receiverId =? and p.senderId= ?) or (p.senderId =? and p.receiverId= ?)";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, userId1);
+		query.setInteger(1, userId2);
+		query.setInteger(2, userId1);
+		query.setInteger(3, userId2);
+		List<PrivateMessage> list = query.list();
+		if (list.size() == 0) {
+			return -1;
+		} else {
+			return list.get(0).getDialogId();
+		}
 	}
 
 }

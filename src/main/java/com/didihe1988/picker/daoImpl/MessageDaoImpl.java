@@ -114,10 +114,11 @@ public class MessageDaoImpl implements MessageDao {
 		// TODO Auto-generated method stub
 		String hql = "";
 		// 未查看的消息
+		/*
 		if (type == Message.MESSAGE_UNCHECKED) {
 			hql = "from Message as message where message.receiverId = ? and message.isChecked =false";
 
-		}
+		}*/
 		/*
 		 * // 有关问题的消息 else if (type == Message.MESSAGE_QUESTION) { hql =
 		 * "from Message as message where message.receiverId = ? and message.type =4"

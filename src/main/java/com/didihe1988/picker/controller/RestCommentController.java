@@ -154,8 +154,10 @@ public class RestCommentController {
 		/*
 		 * ÓÃ»§¶¯Ì¬
 		 */
-		messageService.addMessageByRecerver(Message.NULL_receiverId,
-				Message.MESSAGE_USER_ADDCOMMENT, userId, userName, commentId,
-				relatedSourceContent);
+		/*
+		 * messageService.addMessageByRecerver(Message.NULL_receiverId,
+		 * Message.MESSAGE_USER_ADDCOMMENT, userId, userName, commentId,
+		 * relatedSourceContent);
+		 */
 	}
 }
