@@ -22,5 +22,7 @@ public interface CircleService {
 	public boolean checkDeleteValidation(int establisherId, int circleId);
 
 	public int getLatestCircleIdByEstablisherId(int id);
-
+	
+	public List<Circle> search(String name);
+	
 }

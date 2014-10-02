@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.didihe1988.picker.dao.daoInterface.OperateValidation;
 import com.didihe1988.picker.dao.daoInterface.NumOperation;
+import com.didihe1988.picker.dao.daoInterface.SearchOperation;
 import com.didihe1988.picker.model.Circle;
 
-public interface CircleDao extends OperateValidation, NumOperation {
+public interface CircleDao extends OperateValidation, NumOperation,SearchOperation<Circle>{
 	public Circle queryCircleById(int id);
 
 	public int addCircle(Circle circle);
@@ -24,5 +25,5 @@ public interface CircleDao extends OperateValidation, NumOperation {
 	public boolean isEstablisherOfCircle(int userId, int circleId);
 
 	public int queryLatestCircleIdByEstablisherId(int id);
-
+	
 }

@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.didihe1988.picker.dao.daoInterface.OperateValidation;
 import com.didihe1988.picker.dao.daoInterface.NumOperation;
+import com.didihe1988.picker.dao.daoInterface.SearchOperation;
 import com.didihe1988.picker.model.Answer;
 
-public interface AnswerDao extends OperateValidation, NumOperation {
+public interface AnswerDao extends OperateValidation, NumOperation,SearchOperation<Answer>{
 	public Answer queryAnswerById(int id);
 
 	public int addAnswer(Answer answer);

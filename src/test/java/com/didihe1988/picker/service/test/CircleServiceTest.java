@@ -40,5 +40,11 @@ public class CircleServiceTest {
 		List<Circle> circles = circleService.getCircleListByEstablisherId(1);
 		System.out.println(circles);
 	}
+	
+	@Test
+	public void test03() {
+		List<Circle> circles = circleService.search("a");
+		System.out.println(circles);
+	}
 
 }

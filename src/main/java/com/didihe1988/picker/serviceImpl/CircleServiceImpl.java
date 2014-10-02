@@ -105,4 +105,10 @@ public class CircleServiceImpl implements CircleService {
 		return circleDao.queryLatestCircleIdByEstablisherId(id);
 	}
 
+	@Override
+	public List<Circle> search(String name) {
+		// TODO Auto-generated method stub
+		return circleDao.search(name);
+	}
+
 }

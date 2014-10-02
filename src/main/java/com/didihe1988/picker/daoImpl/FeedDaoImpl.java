@@ -160,4 +160,27 @@ public class FeedDaoImpl implements FeedDao {
 		return query.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Feed> search(String string) {
+		// TODO Auto-generated method stub
+		String hql = "from Feed as f where f.title like ? or f.content like ?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setString(0, "%" + string + "%");
+		query.setString(1, "%" + string + "%");
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Feed> search(String string, int type) {
+		// TODO Auto-generated method stub
+		String hql = "from Feed as f where (f.title like ? or f.content like ?) and f.type=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setString(0, "%" + string + "%");
+		query.setString(1, "%" + string + "%");
+		query.setInteger(2, type);
+		return query.list();
+	}
+
 }

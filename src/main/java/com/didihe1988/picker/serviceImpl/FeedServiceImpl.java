@@ -169,6 +169,15 @@ public class FeedServiceImpl implements FeedService {
 		return feedDp;
 	}
 
+	private List<FeedDp> getFeedDpList(List<Feed> feedList, int curUserId) {
+		List<FeedDp> list = new ArrayList<FeedDp>();
+		for (Feed feed : feedList) {
+			FeedDp feedDp = getFeedDpByFeed(feed, curUserId);
+			list.add(feedDp);
+		}
+		return list;
+	}
+
 	private List<String> getImageUrlsFromFeed(Feed feed) {
 
 		List<RelatedImage> relatedImages = relatedImageDao
@@ -226,6 +235,17 @@ public class FeedServiceImpl implements FeedService {
 		}
 		return list;
 	}
-	
+
+	@Override
+	public List<FeedDp> search(String string, int curUserId) {
+		// TODO Auto-generated method stub
+		return getFeedDpList(feedDao.search(string), curUserId);
+	}
+
+	@Override
+	public List<FeedDp> search(String string, int type, int curUserId) {
+		// TODO Auto-generated method stub
+		return getFeedDpList(feedDao.search(string, type), curUserId);
+	}
 
 }

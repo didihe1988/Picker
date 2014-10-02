@@ -170,4 +170,14 @@ public class AnswerDaoImpl implements AnswerDao {
 
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Answer> search(String string) {
+		// TODO Auto-generated method stub
+		String hql = "from Answer as a where a.content like ?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setString(0, "%" + string + "%");
+		return query.list();
+	}
+
 }

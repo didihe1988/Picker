@@ -33,6 +33,7 @@ public class Constant {
 	public static final String KEY_USER_LIST = "userList";
 	public static final String KEY_MESSAGE_LIST = "messageList";
 	public static final String KEY_PRIVATEMESSAGE_LIST = "privateMessageList";
+	public static final String KEY_FEED_LIST = "feedList";
 	public static final String KEY_QUESTION = "question";
 	public static final String KEY_COMMENT = "comment";
 	public static final String KEY_ANSWER = "answer";

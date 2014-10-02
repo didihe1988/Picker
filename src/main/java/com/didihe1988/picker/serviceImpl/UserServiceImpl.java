@@ -1,5 +1,8 @@
 package com.didihe1988.picker.serviceImpl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean hasMatchUser(String email, String password) {
 		// TODO Auto-generated method stub
-		System.out.println(email+" "+password);
+		System.out.println(email + " " + password);
 		String passwordAfterEncrypt = encryptByMD5(email, password);
 		System.out.println(passwordAfterEncrypt);
 		return userDao.getMatchCount(email, passwordAfterEncrypt) > 0;
@@ -44,8 +47,8 @@ public class UserServiceImpl implements UserService {
 		if (user == null) {
 			return Status.NULLPOINTER;
 		}
-		//String passwordAfterEncrypt = encryptByMD5(user);
-		//user.setPassword(passwordAfterEncrypt);
+		// String passwordAfterEncrypt = encryptByMD5(user);
+		// user.setPassword(passwordAfterEncrypt);
 		int status = userDao.updateUser(user);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
@@ -109,6 +112,15 @@ public class UserServiceImpl implements UserService {
 		return new UserDp(user, isFollow);
 	}
 
+	private List<UserDp> getUserDpList(List<User> userList, int curUserId) {
+		List<UserDp> list = new ArrayList<UserDp>();
+		for (User user : userList) {
+			UserDp userDp = getUserDpByUserId(user.getId(), curUserId);
+			list.add(userDp);
+		}
+		return list;
+	}
+
 	/*
 	 * @Override public UserDp getUserDpByUserId(int id) { // TODO
 	 * Auto-generated method stub User user = userDao.queryUserById(id); return
@@ -129,8 +141,6 @@ public class UserServiceImpl implements UserService {
 		User user = userDao.queryUserById(userId);
 		return getUserDpByUser(user, isFollow);
 	}
-	
-	
 
 	@Override
 	public boolean isUserExistsById(int userId) {
@@ -147,4 +157,11 @@ public class UserServiceImpl implements UserService {
 		String emailAfterMD5 = StringUtils.getMd5String(email);
 		return passwordAfterMD5 + emailAfterMD5.substring(0, 2);
 	}
+
+	@Override
+	public List<UserDp> search(String username, int curUserId) {
+		// TODO Auto-generated method stub
+		return getUserDpList(userDao.search(username), curUserId);
+	}
+
 }

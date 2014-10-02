@@ -154,4 +154,16 @@ public class CircleDaoImpl implements CircleDao {
 		return (Integer) query.uniqueResult();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Circle> search(String name) {
+		// TODO Auto-generated method stub
+		String hql = "from Circle as c where c.name like ?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setString(0, "%"+name+"%");
+		return query.list();
+	}
+	
+	
+
 }

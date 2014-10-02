@@ -1,5 +1,8 @@
 package com.didihe1988.picker.service;
 
+import java.util.List;
+
+import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.UserDp;
 
@@ -29,4 +32,6 @@ public interface UserService {
 	public boolean isEmailExists(String email);
 
 	public boolean isUsernameExists(String username);
+
+	public List<UserDp> search(String username, int curUserId);
 }

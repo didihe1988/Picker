@@ -200,4 +200,11 @@ public class AnswerServiceImpl implements AnswerService {
 		}
 		return list;
 	}
+
+	@Override
+	public List<AnswerDp> search(String content, int userId) {
+		// TODO Auto-generated method stub
+		return getAnswerDpListFormAnswerList(answerDao.search(content), userId);
+	}
+
 }

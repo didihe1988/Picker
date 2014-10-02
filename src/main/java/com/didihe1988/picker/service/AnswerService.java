@@ -36,4 +36,6 @@ public interface AnswerService {
 
 	public AnswerDp getAnswerDpByAnswerId(int id, int userId);
 
+	public List<AnswerDp> search(String content, int userId);
+
 }

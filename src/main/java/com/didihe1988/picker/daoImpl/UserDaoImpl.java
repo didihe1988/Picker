@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.User;
+import com.didihe1988.picker.model.dp.UserDp;
 
 @Repository
 @Transactional
@@ -156,6 +157,16 @@ public class UserDaoImpl implements UserDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> search(String string) {
+		// TODO Auto-generated method stub
+		String hql = "from User as u where u.username like ?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setString(0, "%" + string + "%");
+		return query.list();
 	}
 
 }

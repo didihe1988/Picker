@@ -27,7 +27,7 @@ public class Feed implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "feed_id")
-	protected int id;
+	protected int id; 
 
 	@Column(name = "feed_bookid")
 	protected int bookId;
