@@ -12,6 +12,7 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.UserService;
+import com.didihe1988.picker.utils.HttpUtils;
 
 @Controller
 public class QuestionController {
@@ -27,7 +28,7 @@ public class QuestionController {
 		if (feedService.isFeedExistsById(id)) {
 			Feed feed = feedService.getFeedById(id);
 			UserDp userDp = userService.getUserDpByUserId(feed.getUserId(),
-					false);
+					HttpUtils.getSessionUserId(request));
 			model.addAttribute("user", userDp);
 			model.addAttribute("question", feed);
 			return "question";

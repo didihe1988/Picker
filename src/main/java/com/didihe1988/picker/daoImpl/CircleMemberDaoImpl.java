@@ -40,7 +40,7 @@ public class CircleMemberDaoImpl implements CircleMemberDao {
 	@Override
 	public int addCircleMember(CircleMember circleMember) {
 		// TODO Auto-generated method stub
-		if (isCircleMemberExistsByCircleIdMemberId(circleMember)) {
+		if (isCircleMemberExists(circleMember)) {
 			return -1;
 		}
 		getCurrentSession().save(circleMember);
@@ -102,8 +102,7 @@ public class CircleMemberDaoImpl implements CircleMemberDao {
 	}
 
 	@Override
-	public boolean isCircleMemberExistsByCircleIdMemberId(
-			CircleMember circleMember) {
+	public boolean isCircleMemberExists(CircleMember circleMember) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from CircleMember as c where c.circleId = ? and c.memberId=?";
 		Query query = getCurrentSession().createQuery(hql);
@@ -126,6 +125,20 @@ public class CircleMemberDaoImpl implements CircleMemberDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, ownerId);
 		query.setInteger(1, objectId);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isUserInCircle(int userId, int circleId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from CircleMember as c where c.circleId = ? and c.memberId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, circleId);
+		query.setInteger(1, userId);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;

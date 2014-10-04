@@ -67,20 +67,20 @@ public class RestUserController {
 
 	@Autowired
 	private CircleMemberService circleMemberService;
-	
+
 	@Autowired
 	private MessageService messageService;
-		
+
 	/**
 	 * @description 安卓端使用
 	 */
 	@RequestMapping(value = "/json/login", method = RequestMethod.POST)
 	public String login(@RequestBody LoginForm loginForm,
 			HttpServletRequest request) {
-		int status=Status.ERROR;
+		int status = Status.ERROR;
 		if (!userService.hasMatchUser(loginForm.getEmail(),
 				loginForm.getPassword())) {
-			status=Status.NOT_EXISTS;
+			status = Status.NOT_EXISTS;
 		} else {
 			User user = userService.getUserByEmail(loginForm.getEmail());
 			/*
@@ -89,23 +89,26 @@ public class RestUserController {
 			user.setLastVisit(new Date());
 			userService.updateUser(user);
 			HttpUtils.setSessionUserId(request, user.getId());
-			String sessionId=request.getSession().getId();
-			status=Status.SUCCESS;
+			String sessionId = request.getSession().getId();
+			status = Status.SUCCESS;
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put(Constant.KEY_STATUS,status);
+			jsonObject.put(Constant.KEY_STATUS, status);
 			jsonObject.put(Constant.KEY_SESSIONID, sessionId);
 			return jsonObject.toString();
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
-	
 
 	/**
 	 * @description 个人信息
 	 */
 	@RequestMapping(value = "/json/user/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getUser(@PathVariable int id, HttpServletRequest request) {
-		System.out.println(id);
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
+		}
+
 		UserDp userDp = userService.getUserDpByUserId(id,
 				HttpUtils.getSessionUserId(request));
 		return JsonUtils
@@ -114,6 +117,10 @@ public class RestUserController {
 
 	@RequestMapping(value = "/json/user", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getUser(HttpServletRequest request) {
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
+		}
 		int userId = HttpUtils.getSessionUserId(request);
 		UserDp userDp = userService.getUserDpByUserId(userId, userId);
 		return JsonUtils
@@ -140,7 +147,7 @@ public class RestUserController {
 		 */
 		List<Answer> answerList = answerService.getAnswerListByReplierId(id);
 		if (answerList != null) {
-			
+
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
 	}
@@ -272,7 +279,11 @@ public class RestUserController {
 	 * @description 加入的圈子
 	 */
 	@RequestMapping(value = "/json/user/{id}/circles", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getCircles(@PathVariable int id) {
+	public String getCircles(@PathVariable int id, HttpServletRequest request) {
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
+		}
 		List<Circle> circleList = circleMemberService
 				.getCircleListByMemberId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_CIRCLE_LIST,
@@ -305,31 +316,33 @@ public class RestUserController {
 	 * @description 用户profile里的足迹
 	 */
 	@RequestMapping(value = "/json/user/{id}/footprint", method = RequestMethod.GET)
-	public String footprint(@PathVariable int id,
-			HttpServletRequest request) {
-		List<Message> messageList=messageService.getMessageByReceiverIdAndFilter(id, Filter.MESSAGE_FOOTPRINT);
+	public String footprint(@PathVariable int id, HttpServletRequest request) {
+		List<Message> messageList = messageService
+				.getMessageByReceiverIdAndFilter(id, Filter.MESSAGE_FOOTPRINT);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
-	
+
 	/**
 	 * @description 用户关注的人的动态
 	 */
 	@RequestMapping(value = "/json/user/dynamic", method = RequestMethod.GET)
 	public String dynamic(HttpServletRequest request) {
-		int userId=HttpUtils.getSessionUserId(request);
-		List<Message> messageList=messageService.getMessageByReceiverIdAndFilter(userId, Filter.MESSAGE_DYNAMIC);
+		int userId = HttpUtils.getSessionUserId(request);
+		List<Message> messageList = messageService
+				.getMessageByReceiverIdAndFilter(userId, Filter.MESSAGE_DYNAMIC);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
-	
+
 	/**
 	 * @description 与我相关的消息 如我的问题被回答了
 	 */
 	@RequestMapping(value = "/json/user/related_message", method = RequestMethod.GET)
 	public String related(HttpServletRequest request) {
-		int userId=HttpUtils.getSessionUserId(request);
-		List<Message> messageList=messageService.getMessageByReceiverIdAndFilter(userId, Filter.MESSAGE_RELATED);
+		int userId = HttpUtils.getSessionUserId(request);
+		List<Message> messageList = messageService
+				.getMessageByReceiverIdAndFilter(userId, Filter.MESSAGE_RELATED);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}

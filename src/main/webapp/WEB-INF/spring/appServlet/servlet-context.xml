@@ -12,7 +12,13 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven>
-
+		<message-converters>
+			<beans:bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<beans:constructor-arg value="UTF-8" />
+				<beans:property name="writeAcceptCharset" value="false" />
+			</beans:bean>
+		</message-converters>
 	</annotation-driven>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 

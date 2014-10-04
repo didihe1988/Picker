@@ -1,5 +1,6 @@
 package com.didihe1988.picker.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -77,7 +78,8 @@ public class RestPrivateMessageController {
 					Status.NULLSESSION);
 		}
 		int userId = HttpUtils.getSessionUserId(request);
-		List<PrivateMessageSum> list = PMService.getPrivateMessageSumByUserId(userId);
+		List<PrivateMessageSum> list = PMService
+				.getPrivateMessageSumByUserId(userId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_PRIVATEMESSAGE_LIST,
 				list);
 	}
@@ -114,6 +116,23 @@ public class RestPrivateMessageController {
 		}
 		List<PrivateMessageDp> list = PMService
 				.getPrivateMessageDpList(dialogId);
+		return JsonUtils.getJsonObjectString(Constant.KEY_PRIVATEMESSAGE_LIST,
+				list);
+	}
+
+	@RequestMapping(value = "/json/pmessage/user/{userId}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String pmessageByUserId(@PathVariable int userId,
+			HttpServletRequest request) {
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
+		}
+		int curUserId = HttpUtils.getSessionUserId(request);
+		long dialogId = PMService.getDialogIdByUserId(userId, curUserId);
+		List<PrivateMessageDp> list = new ArrayList<PrivateMessageDp>();
+		if (dialogId != -1) {
+			list = PMService.getPrivateMessageDpList(dialogId);
+		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_PRIVATEMESSAGE_LIST,
 				list);
 	}

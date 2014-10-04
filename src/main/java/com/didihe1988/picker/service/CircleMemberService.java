@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
-import com.didihe1988.picker.model.dp.CircleDp;
+import com.didihe1988.picker.model.dp.CircleMemberDp;
 import com.didihe1988.picker.model.dp.UserDp;
 
 public interface CircleMemberService {
@@ -19,7 +19,7 @@ public interface CircleMemberService {
 
 	public CircleMember getCircleMemberById(int id);
 
-	public boolean isCircleMemberExistsByCircleIdMemberId(
+	public boolean isCircleMemberExists(
 			CircleMember circleMember);
 
 	public boolean isCircleMemberExistsById(int id);
@@ -30,6 +30,6 @@ public interface CircleMemberService {
 
 	public List<Circle> getCircleListByMemberId(int id);
 
-	public List<CircleDp> getCircleDpListByMemberId(int id);
+	//public List<CircleMemberDp> getCircleMemberDpListByMemberId(int id);
 
 }

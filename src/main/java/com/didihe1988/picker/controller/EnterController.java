@@ -11,9 +11,4 @@ public class EnterController {
 		return "enter";
 	}
 	
-	@RequestMapping(value="/test")
-	public String test()
-	{
-		return "test";
-	}
 }

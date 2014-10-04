@@ -3,6 +3,7 @@ package com.didihe1988.picker.service;
 import java.util.List;
 
 import com.didihe1988.picker.model.Circle;
+import com.didihe1988.picker.model.dp.CircleDp;
 
 public interface CircleService {
 	public int addCircle(Circle circle);
@@ -17,12 +18,14 @@ public interface CircleService {
 
 	public Circle getCircleById(int id);
 
+	public CircleDp getCircleDpById(int id, int curUserId);
+
 	public List<Circle> getCircleListByEstablisherId(int id);
 
 	public boolean checkDeleteValidation(int establisherId, int circleId);
 
 	public int getLatestCircleIdByEstablisherId(int id);
-	
+
 	public List<Circle> search(String name);
-	
+
 }

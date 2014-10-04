@@ -134,13 +134,14 @@ public class UserServiceImpl implements UserService {
 		return getUserDpByUser(user, followDao.isFollowExistsByKey(
 				Follow.FOLLOW_USER, curUserId, userId));
 	}
-
+	
+	/*
 	@Override
 	public UserDp getUserDpByUserId(int userId, boolean isFollow) {
 		// TODO Auto-generated method stub
 		User user = userDao.queryUserById(userId);
 		return getUserDpByUser(user, isFollow);
-	}
+	}*/
 
 	@Override
 	public boolean isUserExistsById(int userId) {

@@ -1,32 +1,31 @@
 package com.didihe1988.picker.model.dp;
 
-import java.util.Date;
-
 import com.didihe1988.picker.model.Circle;
 
 public class CircleDp extends Circle {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Date memberJoinTime;
+	private boolean isJoin;
 
-	public Date getMemberJoinTime() {
-		return memberJoinTime;
+	public boolean isJoin() {
+		return isJoin;
 	}
 
-	public void setMemberJoinTime(Date memberJoinTime) {
-		this.memberJoinTime = memberJoinTime;
+	public void setJoin(boolean isJoin) {
+		this.isJoin = isJoin;
+	}
+
+	public CircleDp(Circle circle, boolean isJoin) {
+		super(circle);
+		this.isJoin = isJoin;
 	}
 
 	public CircleDp() {
 
-	}
-
-	public CircleDp(Circle circle, Date memberJoinTime) {
-		super(circle);
-		this.memberJoinTime = memberJoinTime;
 	}
 
 }

@@ -64,17 +64,16 @@ public class UserController {
 
 	@Autowired
 	private CircleMemberService circleMemberService;
-	
-	
+
 	/**
 	 * @description 用户登陆 enter.jsp
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@ModelAttribute LoginForm loginForm,Model model,
-			HttpServletRequest request,HttpServletResponse response) {
+	public String login(@ModelAttribute LoginForm loginForm, Model model,
+			HttpServletRequest request, HttpServletResponse response) {
 		if (!userService.hasMatchUser(loginForm.getEmail(),
 				loginForm.getPassword())) {
-			//后面可以加toast
+			// 后面可以加toast
 			model.addAttribute("email", loginForm.getEmail());
 			return "enter";
 		} else {
@@ -85,27 +84,28 @@ public class UserController {
 			user.setLastVisit(new Date());
 			userService.updateUser(user);
 			HttpUtils.setSessionUserId(request, user.getId());
-			
+
 			try {
-				//response.sendRedirect("/picker/user/"+user.getId());
-				response.sendRedirect("/picker/test");
+				response.sendRedirect("/picker/user/"+user.getId());
+				//response.sendRedirect("/picker/test");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 		model.addAttribute("email", loginForm.getEmail());
 		return "enter";
 	}
-	
+
 	/**
 	 * @description user.jsp
 	 */
 	@RequestMapping(value = "/user/{id}")
-	public String getUserProfile(@PathVariable int id, Model model) {
+	public String getUserProfile(@PathVariable int id, Model model,
+			HttpServletRequest request) {
 		if (userService.isUserExistsById(id)) {
-			addBaseAttribute(id, model);
+			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
 			/*
 			 * isFollow暂时设为false
 			 */
@@ -117,13 +117,13 @@ public class UserController {
 
 	}
 
-	private void addBaseAttribute(int id, Model model) {
-		UserDp user = userService.getUserDpByUserId(id, false);
+	private void addBaseAttribute(int id, Model model, int curUserId) {
+		UserDp user = userService.getUserDpByUserId(id, curUserId);
 		model.addAttribute("user", user);
 		model.addAttribute("circleList",
 				circleMemberService.getCircleListByMemberId(id));
-		model.addAttribute("followerList", getFollowers(id));
-		model.addAttribute("followeeList", getFollowees(id));
+		model.addAttribute("followerList", getFollowers(id, curUserId));
+		model.addAttribute("followeeList", getFollowees(id, curUserId));
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class UserController {
 	public String getAnswers(@PathVariable int id, Model model,
 			HttpServletRequest request) {
 		if (userService.isUserExistsById(id)) {
-			addBaseAttribute(id, model);
+			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
 			List<AnswerDp> list = answerService.getAnswerDpListByReplierId(id,
 					HttpUtils.getSessionUserId(request));
 			model.addAttribute("answerList", list);
@@ -153,7 +153,7 @@ public class UserController {
 	public String getQuestions(@PathVariable int id, Model model,
 			HttpServletRequest request) {
 		if (userService.isUserExistsById(id)) {
-			addBaseAttribute(id, model);
+			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
 			List<FeedDp> list = feedService.getFeedDpListByUserId(id,
 					Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request));
 			model.addAttribute("questionList", list);
@@ -172,7 +172,7 @@ public class UserController {
 	public String getNotes(@PathVariable int id, Model model,
 			HttpServletRequest request) {
 		if (userService.isUserExistsById(id)) {
-			addBaseAttribute(id, model);
+			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
 			List<FeedDp> list = feedService.getFeedDpListByUserId(id,
 					Feed.TYPE_NOTE, HttpUtils.getSessionUserId(request));
 			System.out.println(list);
@@ -202,25 +202,25 @@ public class UserController {
 		return "group_index";
 	}
 
-	private List<UserDp> getFollowers(int userId) {
+	private List<UserDp> getFollowers(int userId, int curUserId) {
 		final List<Follow> followList = followService
 				.getFollowListByFollowedUserId(userId);
 		List<UserDp> userList = new ArrayList<UserDp>();
 		for (Follow follow : followList) {
 			UserDp user = userService.getUserDpByUserId(follow.getFollowerId(),
-					false);
+					curUserId);
 			userList.add(user);
 		}
 		return userList;
 	}
 
-	private List<UserDp> getFollowees(int userId) {
+	private List<UserDp> getFollowees(int userId, int curUserId) {
 		final List<Follow> followList = followService
 				.getFollowListByFollowerIdByUser(userId);
 		List<UserDp> userList = new ArrayList<UserDp>();
 		for (Follow follow : followList) {
 			UserDp user = userService.getUserDpByUserId(follow.getSourceId(),
-					false);
+					curUserId);
 			userList.add(user);
 		}
 		return userList;

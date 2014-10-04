@@ -14,8 +14,7 @@ import com.didihe1988.picker.dao.CircleMemberDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
-import com.didihe1988.picker.model.dp.CircleDp;
-import com.didihe1988.picker.model.dp.UserDp;
+import com.didihe1988.picker.model.dp.CircleMemberDp;
 import com.didihe1988.picker.service.CircleMemberService;
 
 @Service
@@ -72,18 +71,17 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 	@Override
 	public int deleteCircleMember(int userId, int circleId) {
 		// TODO Auto-generated method stub
-		/*check validation
-		if (!circleMemberDao.checkOperateValidation(circleMember.getMemberId(),
-				circleMember.getId())) {
-			return Status.INVALID;
-		}*/
-		
+		/*
+		 * check validation if
+		 * (!circleMemberDao.checkOperateValidation(circleMember.getMemberId(),
+		 * circleMember.getId())) { return Status.INVALID; }
+		 */
+
 		circleMemberDao.deleteCircleMember(userId, circleId);
 		/*
 		 * CircleµÄmemberNum--
 		 */
-		circleDao.decrementNum(Circle.CIRCLE_MEMBER_NUM,
-				circleId);
+		circleDao.decrementNum(Circle.CIRCLE_MEMBER_NUM, circleId);
 		return Status.SUCCESS;
 	}
 
@@ -101,7 +99,7 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 		if (!circleDao.isEstablisherOfCircle(establisherId, circleId)) {
 			return Status.INVALID;
 		}
-	//	circleMemberDao.deleteCircleMember(circleMember);
+		// circleMemberDao.deleteCircleMember(circleMember);
 		/*
 		 * CircleµÄmemberNum--
 		 */
@@ -117,14 +115,12 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 	}
 
 	@Override
-	public boolean isCircleMemberExistsByCircleIdMemberId(
-			CircleMember circleMember) {
+	public boolean isCircleMemberExists(CircleMember circleMember) {
 		// TODO Auto-generated method stub
 		if (circleMember == null) {
 			return false;
 		}
-		return circleMemberDao
-				.isCircleMemberExistsByCircleIdMemberId(circleMember);
+		return circleMemberDao.isCircleMemberExists(circleMember);
 	}
 
 	@Override
@@ -159,14 +155,15 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 	}
 
 	@Override
-	public List<CircleDp> getCircleDpListByMemberId(int id) {
+	public List<CircleMemberDp> getCircleDpListByMemberId(int id) {
 		// TODO Auto-generated method stub
 		final List<CircleMember> cirMembers = getCircleMemberListByMemberId(id);
-		List<CircleDp> list = new ArrayList<CircleDp>();
+		List<CircleMemberDp> list = new ArrayList<CircleMemberDp>();
 		for (CircleMember circleMember : cirMembers) {
 			Circle circle = circleDao.queryCircleById(circleMember
 					.getCircleId());
-			CircleDp circleDp = new CircleDp(circle, circleMember.getJoinTime());
+			CircleMemberDp circleDp = new CircleMemberDp(circle,
+					circleMember.getJoinTime());
 			list.add(circleDp);
 		}
 		return list;

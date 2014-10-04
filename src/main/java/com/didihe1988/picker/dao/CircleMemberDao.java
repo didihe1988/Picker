@@ -16,10 +16,11 @@ public interface CircleMemberDao extends OperateValidation {
 
 	public int updateCircleMember(CircleMember circleMember);
 
-	public boolean isCircleMemberExistsByCircleIdMemberId(
-			CircleMember circleMember);
+	public boolean isCircleMemberExists(CircleMember circleMember);
 
 	public boolean isCircleMemberExistsById(int id);
+
+	public boolean isUserInCircle(int userId, int circleId);
 
 	public List<CircleMember> queryCircleMemberListByCircleId(int id);
 

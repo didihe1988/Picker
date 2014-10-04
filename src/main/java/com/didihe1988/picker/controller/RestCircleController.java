@@ -17,6 +17,7 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.dp.CircleDp;
 import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.service.CircleMemberService;
 import com.didihe1988.picker.service.CircleService;
@@ -40,11 +41,26 @@ public class RestCircleController {
 	@Autowired
 	private MessageService messageService;
 
+	/*
+	 * 查看circle的详细内容
+	 */
 	@RequestMapping(value = "/json/circle/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCircle(@PathVariable int id) {
 		Circle circle = circleService.getCircleById(id);
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_CIRCLE,
 				circle);
+	}
+
+	@RequestMapping(value = "/json/circle/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getCircleDp(@PathVariable int id, HttpServletRequest request) {
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
+		}
+		CircleDp circleDp = circleService.getCircleDpById(id,
+				HttpUtils.getSessionUserId(request));
+		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_CIRCLE,
+				circleDp);
 	}
 
 	/**

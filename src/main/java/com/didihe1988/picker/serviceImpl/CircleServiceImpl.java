@@ -11,6 +11,7 @@ import com.didihe1988.picker.dao.CircleDao;
 import com.didihe1988.picker.dao.CircleMemberDao;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
+import com.didihe1988.picker.model.dp.CircleDp;
 import com.didihe1988.picker.service.CircleService;
 
 @Service
@@ -85,6 +86,14 @@ public class CircleServiceImpl implements CircleService {
 	public Circle getCircleById(int id) {
 		// TODO Auto-generated method stub
 		return circleDao.queryCircleById(id);
+	}
+
+	@Override
+	public CircleDp getCircleDpById(int id, int curUserId) {
+		// TODO Auto-generated method stub
+		Circle circle = circleDao.queryCircleById(id);
+		return new CircleDp(circle, circleMemberDao.isUserInCircle(curUserId,
+				id));
 	}
 
 	@Override
