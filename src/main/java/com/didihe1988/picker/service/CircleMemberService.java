@@ -30,6 +30,8 @@ public interface CircleMemberService {
 
 	public List<Circle> getCircleListByMemberId(int id);
 
-	//public List<CircleMemberDp> getCircleMemberDpListByMemberId(int id);
+	public List<CircleMemberDp> getCircleMemberDpListByMemberId(int id);
+	
+	public List<CircleMemberDp> getCircleMemberDpListByCircleId(int id);
 
 }

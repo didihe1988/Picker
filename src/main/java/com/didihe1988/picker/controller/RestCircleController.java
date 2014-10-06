@@ -1,6 +1,5 @@
 package com.didihe1988.picker.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,7 @@ import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.dp.CircleDp;
-import com.didihe1988.picker.model.dp.UserDp;
+import com.didihe1988.picker.model.dp.CircleMemberDp;
 import com.didihe1988.picker.service.CircleMemberService;
 import com.didihe1988.picker.service.CircleService;
 import com.didihe1988.picker.service.MessageService;
@@ -68,15 +67,8 @@ public class RestCircleController {
 	 */
 	@RequestMapping(value = "/json/circle/{id}/members", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getMembers(@PathVariable int id, HttpServletRequest request) {
-		List<CircleMember> circleMembers = circleMemberService
-				.getCircleMemberListByCircleId(id);
-		List<UserDp> list = new ArrayList<UserDp>();
-		for (CircleMember circleMember : circleMembers) {
-			UserDp userDp = userService.getUserDpByUserId(
-					circleMember.getMemberId(),
-					HttpUtils.getSessionUserId(request));
-			list.add(userDp);
-		}
+		List<CircleMemberDp> list = circleMemberService
+				.getCircleMemberDpListByMemberId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_USER_LIST, list);
 	}
 

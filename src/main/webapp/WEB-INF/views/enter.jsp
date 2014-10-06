@@ -22,7 +22,7 @@
 		</div>
 		<div id="msg" data-now=""></div>
 		<div id="login_form">
-			<form:form action="/picker/login" method="post"
+			<form:form action="/login" method="post"
 				onsubmit="return login_check($(this))">
 				<div>
 					<input name="email" placeholder="邮箱" value=${email}>
@@ -36,7 +36,7 @@
 			</form:form>
 		</div>
 		<div id="register_form">
-			<form action="/picker/register" method="post"
+			<form action="/register" method="post"
 				onsubmit="return register_check($(this))">
 				<div>
 					<input name="email" placeholder="邮箱"
@@ -77,7 +77,7 @@
         function unique_check(data, status_obj, now) {
             status_obj.data('value', 'waiting');
             $.ajax({
-                url: '/picker/register/check',
+                url: '/register/check',
                 data: data,
                 success: function (req){
                     var msg = req['status'];

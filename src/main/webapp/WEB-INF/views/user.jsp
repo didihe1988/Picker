@@ -7,19 +7,19 @@
 <meta charset="UTF-8">
 <title></title>
 <link type="text/css" rel="stylesheet" charset="UTF-8"
-	href="/picker/static/lib/font-awesome/css/font-awesome.min.css">
+	href="/static/lib/font-awesome/css/font-awesome.min.css">
 <link type="text/css" rel="stylesheet" charset="UTF-8"
-	href="/picker/static/lib/nprogress/nprogress.css">
+	href="/static/lib/nprogress/nprogress.css">
 <link type="text/css" rel="stylesheet" charset="UTF-8"
-	href="/picker/static/lib/fake_bootstrap/fake_bootstrap.css">
+	href="/static/lib/fake_bootstrap/fake_bootstrap.css">
 <link type="text/css" rel="stylesheet" charset="UTF-8"
-	href="/picker/static/css/picker.css">
+	href="/static/css/picker.css">
 
-<script src="/picker/static/js/jquery.js"></script>
-<script src="/picker/static/lib/nprogress/nprogress.js"></script>
-<script src="/picker/static/lib/jquery.pjax.js"></script>
-<script src="/picker/static/js/picker.js"></script>
-<script src="/picker/static/js/epiceditor/js/epiceditor.min.js"></script>
+<script src="/static/js/jquery.js"></script>
+<script src="/static/lib/nprogress/nprogress.js"></script>
+<script src="/static/lib/jquery.pjax.js"></script>
+<script src="/static/js/picker.js"></script>
+<script src="/static/js/epiceditor/js/epiceditor.min.js"></script>
 
 </head>
 
@@ -30,7 +30,7 @@
 			<div class="col-13">
 				<div id="logo" class="row">
 					<div class="col-25">
-						<img src="/picker/static/images/elements/logo.png">
+						<img src="/static/images/elements/logo.png">
 					</div>
 					<div class="col-65">
 						<span id="go_index"><a data-pjax href="/">Picker</a></span>
@@ -66,7 +66,7 @@
 					<a data-pjax href="/user/1234">
 						<div id="nav_user">
 							<div id="nav_photo">
-								<img src="/picker/static/images/photo/0.png">
+								<img src="/static/images/photo/0.png">
 							</div>
 							<div id="nav_id">韩寒</div>
 						</div>
@@ -91,21 +91,21 @@
 		<!--**xx-->
 
 		<!--为 提问/回答/笔记 提供url定位-->
-		<div id="user_home_url" data-value="/picker/user/${user.id}"
+		<div id="user_home_url" data-value="/user/${user.id}"
 			style="display: none"></div>
-		<div id="notes_url" data-value="/picker/user/${user.id}/notes/1"
+		<div id="notes_url" data-value="/user/${user.id}/notes/1"
 			style="display: none"></div>
-		<div id="answers_url" data-value="/picker/user/${user.id}/answers/1"
+		<div id="answers_url" data-value="/user/${user.id}/answers/1"
 			style="display: none"></div>
 		<div id="questions_url"
-			data-value="/picker/user/${user.id}/questions/1"
+			data-value="/user/${user.id}/questions/1"
 			style="display: none"></div>
 		<!--end-->
 
 		<div class="row" style="margin-top: 10px">
 			<div class="col-21">
 				<div id="user_photo">
-					<!--<img src="/picker/static/images/big_photo/0.png">-->
+					<!--<img src="/static/images/big_photo/0.png">-->
 					<img src="<c:url value="${user.avatarUrl}"/>" />
 				</div>
 				<div id="user_action">

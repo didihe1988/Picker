@@ -86,8 +86,8 @@ public class UserController {
 			HttpUtils.setSessionUserId(request, user.getId());
 
 			try {
-				response.sendRedirect("/picker/user/"+user.getId());
-				//response.sendRedirect("/picker/test");
+				response.sendRedirect("/user/" + user.getId());
+				// response.sendRedirect("/picker/test");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -197,8 +197,11 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/{id}/group")
 	public String getUserGroup(@PathVariable int id, Model model) {
-		model.addAttribute("circleList",
-				circleMemberService.getCircleDpListByMemberId(id));
+		/*
+		 * model.addAttribute("circleList",
+		 * circleMemberService.getCircleDpListByMemberId(id));
+		 */
+
 		return "group_index";
 	}
 

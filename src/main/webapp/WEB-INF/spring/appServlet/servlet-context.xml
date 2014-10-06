@@ -41,11 +41,20 @@
 		<beans:property name="maxUploadSize" value="400000" />
 	</beans:bean>
 
+	<beans:bean id="handlerMapping"
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+		<beans:property name="interceptors">
+			<beans:bean class="com.didihe1988.picker.interceptor.SessionInterceptor" />
+		</beans:property>
+	</beans:bean>
+
+
 	<context:component-scan base-package="com.didihe1988.picker.mapper" />
 	<context:component-scan base-package="com.didihe1988.picker.serviceImpl" />
 	<context:component-scan base-package="com.didihe1988.picker.service" />
 	<context:component-scan base-package="com.didihe1988.picker.controller" />
 	<context:component-scan base-package="com.didihe1988.picker.daoImpl" />
+	<context:component-scan base-package="com.didihe1988.picker.interceptor" />
 
 	<tx:annotation-driven />
 </beans:beans>

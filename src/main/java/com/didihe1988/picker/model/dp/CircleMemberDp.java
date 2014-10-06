@@ -2,9 +2,9 @@ package com.didihe1988.picker.model.dp;
 
 import java.util.Date;
 
-import com.didihe1988.picker.model.Circle;
+import com.didihe1988.picker.model.User;
 
-public class CircleMemberDp extends UserDp {
+public class CircleMemberDp extends User {
 	/**
 	 * 
 	 */
@@ -23,10 +23,18 @@ public class CircleMemberDp extends UserDp {
 	public CircleMemberDp() {
 
 	}
-	/*
-	public CircleMemberDp(UserDp userDp, Date memberJoinTime) {
-		super(userDp);
+
+	public CircleMemberDp(User user, Date memberJoinTime) {
+		/*
+		 * È¥µô password
+		 */
+		super(user.getId(), user.getUsername(), user.getEmail(), user
+				.getLastVisit(), user.getRegisterTime(), user.getFavoriteNum(),
+				user.getFollowNum(), user.getFollowOthersNum(), user
+						.getQuestionNum(), user.getAnswerNum(), user
+						.getNoteNum(), user.getCircleNum(), user.getBookNum(),
+				user.getAvatarUrl(), user.getSignature());
 		this.memberJoinTime = memberJoinTime;
-	}*/
+	}
 
 }

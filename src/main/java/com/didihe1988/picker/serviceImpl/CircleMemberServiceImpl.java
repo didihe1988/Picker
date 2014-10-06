@@ -14,6 +14,7 @@ import com.didihe1988.picker.dao.CircleMemberDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.CircleMemberDp;
 import com.didihe1988.picker.service.CircleMemberService;
 
@@ -154,19 +155,28 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 		return list;
 	}
 
-	@Override
-	public List<CircleMemberDp> getCircleDpListByMemberId(int id) {
-		// TODO Auto-generated method stub
-		final List<CircleMember> cirMembers = getCircleMemberListByMemberId(id);
+	private List<CircleMemberDp> getCircleMemberDpList(
+			List<CircleMember> circleMembers) {
 		List<CircleMemberDp> list = new ArrayList<CircleMemberDp>();
-		for (CircleMember circleMember : cirMembers) {
-			Circle circle = circleDao.queryCircleById(circleMember
-					.getCircleId());
-			CircleMemberDp circleDp = new CircleMemberDp(circle,
+		for (CircleMember circleMember : circleMembers) {
+			User user = userDao.queryUserById(circleMember.getId());
+			CircleMemberDp circleMemberDp = new CircleMemberDp(user,
 					circleMember.getJoinTime());
-			list.add(circleDp);
+			list.add(circleMemberDp);
 		}
 		return list;
+	}
+
+	@Override
+	public List<CircleMemberDp> getCircleMemberDpListByMemberId(int id) {
+		// TODO Auto-generated method stub
+		return getCircleMemberDpList(getCircleMemberListByMemberId(id));
+	}
+
+	@Override
+	public List<CircleMemberDp> getCircleMemberDpListByCircleId(int id) {
+		// TODO Auto-generated method stub
+		return getCircleMemberDpList(getCircleMemberListByCircleId(id));
 	}
 
 }
