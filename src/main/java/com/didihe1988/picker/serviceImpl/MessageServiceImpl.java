@@ -1,5 +1,6 @@
 package com.didihe1988.picker.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.MessageDao;
+import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Message.Filter;
+import com.didihe1988.picker.model.dp.MessageDp;
 import com.didihe1988.picker.service.MessageService;
 
 @Service
@@ -22,6 +25,9 @@ public class MessageServiceImpl implements MessageService {
 
 	@Autowired
 	private FollowDao followDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	/*
 	 * 用户关注的人产生的消息
@@ -154,7 +160,36 @@ public class MessageServiceImpl implements MessageService {
 		// TODO Auto-generated method stub
 		return messageDao.queryMessageByReceiverIdAndFilter(objId, filter);
 	}
-	
-	
+
+	@Override
+	public MessageDp getMessageDpFromMessage(Message message) {
+		// TODO Auto-generated method stub
+		String avatarUrl = userDao.queryUserById(message.getProducerId())
+				.getAvatarUrl();
+		return new MessageDp(message, avatarUrl);
+	}
+
+	private List<MessageDp> getMessageDpList(List<Message> messages) {
+		List<MessageDp> list = new ArrayList<MessageDp>();
+		for (Message message : messages) {
+			MessageDp messageDp = getMessageDpFromMessage(message);
+			list.add(messageDp);
+		}
+		return list;
+	}
+
+	@Override
+	public List<MessageDp> getMessageDpByReceiverIdAndType(int receiverId,
+			int type) {
+		// TODO Auto-generated method stub
+		return getMessageDpList(getMessageByReceiverIdAndType(receiverId, type));
+	}
+
+	@Override
+	public List<MessageDp> getMessageDpByReceiverIdAndFilter(int objId,
+			Filter filter) {
+		// TODO Auto-generated method stub
+		return getMessageDpList(getMessageByReceiverIdAndFilter(objId, filter));
+	}
 
 }

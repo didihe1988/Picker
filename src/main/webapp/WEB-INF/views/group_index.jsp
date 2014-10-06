@@ -7,19 +7,19 @@
 <meta charset="UTF-8">
 <title></title>
 <link type="text/css" rel="stylesheet" charset="UTF-8"
-	href="/picker/static/lib/font-awesome/css/font-awesome.min.css">
+	href="/static/lib/font-awesome/css/font-awesome.min.css">
 <link type="text/css" rel="stylesheet" charset="UTF-8"
-	href="/picker/static/lib/nprogress/nprogress.css">
+	href="/static/lib/nprogress/nprogress.css">
 <link type="text/css" rel="stylesheet" charset="UTF-8"
-	href="/picker/static/lib/fake_bootstrap/fake_bootstrap.css">
+	href="/static/lib/fake_bootstrap/fake_bootstrap.css">
 <link type="text/css" rel="stylesheet" charset="UTF-8"
-	href="/picker/static/css/picker.css">
+	href="/static/css/picker.css">
 
-<script src="/picker/static/js/jquery.js"></script>
-<script src="/picker/static/lib/nprogress/nprogress.js"></script>
-<script src="/picker/static/lib/jquery.pjax.js"></script>
-<script src="/picker/static/js/picker.js"></script>
-<script src="/picker/static/js/epiceditor/js/epiceditor.min.js"></script>
+<script src="/static/js/jquery.js"></script>
+<script src="/static/lib/nprogress/nprogress.js"></script>
+<script src="/static/lib/jquery.pjax.js"></script>
+<script src="/static/js/picker.js"></script>
+<script src="/static/js/epiceditor/js/epiceditor.min.js"></script>
 
 </head>
 
@@ -66,7 +66,7 @@
 					<a data-pjax href="/user/1234">
 						<div id="nav_user">
 							<div id="nav_photo">
-								<img src="/picker/static/images/photo/0.png">
+								<img src="/static/images/photo/0.png">
 							</div>
 							<div id="nav_id">韩寒</div>
 						</div>

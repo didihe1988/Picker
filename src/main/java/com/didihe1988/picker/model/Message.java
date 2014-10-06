@@ -75,8 +75,9 @@ public class Message implements Serializable {
 	public static final int MESSAGE_USER_FAVORITE_COMMENT = 35;
 
 	/*
-	public static final int MESSAGE_UNCHECKED = 8;
-	public static final int MESSAGE_CHECKED = 9;*/
+	 * public static final int MESSAGE_UNCHECKED = 8; public static final int
+	 * MESSAGE_CHECKED = 9;
+	 */
 
 	public enum Filter {
 		/*
@@ -259,6 +260,13 @@ public class Message implements Serializable {
 			String relatedSourceContent) {
 		this(receiverId, false, type, producerId, producerName,
 				relatedSourceId, relatedSourceContent, new Date());
+	}
+
+	public Message(Message message) {
+		this(message.getId(), message.getReceiverId(), message.isChecked(),
+				message.getType(), message.getProducerId(), message
+						.getProducerName(), message.getReceiverId(), message
+						.getRelatedSourceContent(), message.getTime());
 	}
 
 	public Message() {

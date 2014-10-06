@@ -68,7 +68,7 @@ public class RestCircleController {
 	@RequestMapping(value = "/json/circle/{id}/members", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getMembers(@PathVariable int id, HttpServletRequest request) {
 		List<CircleMemberDp> list = circleMemberService
-				.getCircleMemberDpListByMemberId(id);
+				.getCircleMemberDpListByCircleId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_USER_LIST, list);
 	}
 

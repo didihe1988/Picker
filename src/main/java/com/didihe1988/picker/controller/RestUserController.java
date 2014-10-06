@@ -27,6 +27,7 @@ import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.model.dp.MessageDp;
 import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.model.form.LoginForm;
 import com.didihe1988.picker.model.json.AnswerJson;
@@ -317,8 +318,8 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/footprint", method = RequestMethod.GET)
 	public String footprint(@PathVariable int id, HttpServletRequest request) {
-		List<Message> messageList = messageService
-				.getMessageByReceiverIdAndFilter(id, Filter.MESSAGE_FOOTPRINT);
+		List<MessageDp> messageList = messageService
+				.getMessageDpByReceiverIdAndFilter(id, Filter.MESSAGE_FOOTPRINT);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
@@ -329,8 +330,8 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/dynamic", method = RequestMethod.GET)
 	public String dynamic(HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		List<Message> messageList = messageService
-				.getMessageByReceiverIdAndFilter(userId, Filter.MESSAGE_DYNAMIC);
+		List<MessageDp> messageList = messageService
+				.getMessageDpByReceiverIdAndFilter(userId, Filter.MESSAGE_DYNAMIC);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
@@ -341,8 +342,8 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/related_message", method = RequestMethod.GET)
 	public String related(HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		List<Message> messageList = messageService
-				.getMessageByReceiverIdAndFilter(userId, Filter.MESSAGE_RELATED);
+		List<MessageDp> messageList = messageService
+				.getMessageDpByReceiverIdAndFilter(userId, Filter.MESSAGE_RELATED);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
