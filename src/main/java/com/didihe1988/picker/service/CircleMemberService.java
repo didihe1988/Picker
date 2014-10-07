@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
-import com.didihe1988.picker.model.dp.CircleMemberDp;
+import com.didihe1988.picker.model.dp.CircleWebDp;
 import com.didihe1988.picker.model.dp.UserDp;
 
 public interface CircleMemberService {
@@ -30,8 +30,8 @@ public interface CircleMemberService {
 
 	public List<Circle> getCircleListByMemberId(int id);
 
-	public List<CircleMemberDp> getCircleMemberDpListByMemberId(int id);
+	public List<CircleWebDp> getCircleWebDpListByMemberId(int id);
 	
-	public List<CircleMemberDp> getCircleMemberDpListByCircleId(int id);
+	public List<CircleWebDp> getCircleWebDpListByCircleId(int id);
 
 }

@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head lang="en">
 <meta charset="UTF-8">
@@ -137,26 +138,65 @@
 							</div>
 							<div class="col-76">
 								<div class="people_name">
-									<span><a href="<c:url value="/user/${user.id}"/>"><c:out value='${user.username}' /></a></span>
-									<span>,<c:out value='${user.signature}' /></span>
+									<span><a href="<c:url value="/user/${user.id}"/>"><c:out
+												value='${user.username}' /></a></span> <span>,<c:out
+											value='${user.signature}' /></span>
 								</div>
 								<div class="people_labels">
-									<i class="icon-tags"></i> <span>电子科技大学</span> <span>实验班</span>
+									<i class="icon-tags"></i>
+									<!-- 
+									<span>电子科技大学</span> 
+									<span>实验班</span>
 									<span>作家协会</span>
+									-->
+									<c:forEach var="circle" items="${user.circleList}">
+										<span>${circle.name}</span>
+									</c:forEach>
 								</div>
 							</div>
 							<div class="col-18">
 								<div class="people_follow">
-									<div class="follow_action" style="float: right"
-										onclick="do_follow($(this))">
-										<i class="icon-plus"></i> 加关注
-									</div>
-									<div class="cancel_follow" style="float: right; display: none"
-										onclick="cancel_follow($(this))">
-										<i class="icon-ok"></i> 取消关注
-									</div>
+									<c:choose>
+										<c:when test="${user.id ==curUserId}">
+										</c:when>
+										<c:when test="${user.follow == false}">
+											<div class="follow_action" style="float: right"
+												onclick="do_follow($(this),${user.id})">
+												<i class="icon-plus"></i> 加关注
+											</div>
+											<div class="cancel_follow"
+												style="float: right; display: none"
+												onclick="cancel_follow($(this),${user.id})">
+												<i class="icon-ok"></i> 取消关注
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="follow_action"
+												style="float: right; display: none"
+												onclick="do_follow($(this),${user.id})">
+												<i class="icon-plus"></i> 加关注
+											</div>
+											<div class="cancel_follow" style="float: right"
+												onclick="cancel_follow($(this),${user.id})">
+												<i class="icon-ok"></i> 取消关注
+											</div>
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="col-18">
+									<!-- 
+                            <div class="people_follow">
+                                <div class="follow_action" style="float: right" onclick="do_follow($(this))">
+                                    <i class="icon-plus"></i>加关注
+                                </div>
+                                <div class="cancel_follow" style="float: right;display: none" onclick="cancel_follow($(this))">
+                                    <i class="icon-ok"></i> 取消关注
+                                </div>
+                            </div>
+                             -->
 								</div>
 							</div>
+
 						</div>
 					</div>
 				</c:forEach>

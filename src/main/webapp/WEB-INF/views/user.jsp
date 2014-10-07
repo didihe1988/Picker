@@ -25,6 +25,13 @@
 
 <!--TODO: AJAX取消息-->
 <body>
+	<!-- set curUserId -->
+	<%
+		int curUserId = (Integer) request.getSession().getAttribute(
+				"picker_userId");
+	%>
+	<c:set var="curUserId" scope="session" value="<%=curUserId%>" />
+	<!-- end set curUserId -->
 	<div id="nav" class="row">
 		<div id="nav_content">
 			<div class="col-13">
@@ -97,8 +104,7 @@
 			style="display: none"></div>
 		<div id="answers_url" data-value="/user/${user.id}/answers/1"
 			style="display: none"></div>
-		<div id="questions_url"
-			data-value="/user/${user.id}/questions/1"
+		<div id="questions_url" data-value="/user/${user.id}/questions/1"
 			style="display: none"></div>
 		<!--end-->
 

@@ -10,7 +10,7 @@ public class UserDp extends User implements IsFollow {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private boolean isFollow;
+	protected boolean isFollow;
 
 	@Override
 	public boolean isFollow() {
@@ -22,6 +22,10 @@ public class UserDp extends User implements IsFollow {
 	public void setFollow(boolean value) {
 		// TODO Auto-generated method stub
 		this.isFollow = value;
+	}
+
+	public boolean getFollow() {
+		return isFollow;
 	}
 
 	public UserDp() {
@@ -40,13 +44,16 @@ public class UserDp extends User implements IsFollow {
 				user.getAvatarUrl(), user.getSignature());
 		this.isFollow = isFollow;
 	}
-	/*
-	 * public UserDp(User user) { super(user.getId(), user.getUsername(),
-	 * user.getEmail(), user .getLastVisit(), user.getRegisterTime(),
-	 * user.getFavoriteNum(), user.getFollowNum(), user.getFollowOthersNum(),
-	 * user .getQuestionNum(), user.getAnswerNum(), user .getNoteNum(),
-	 * user.getCircleNum(), user.getBookNum(), user.getAvatarUrl(),
-	 * user.getSignature()); this.isFollow = false; }
-	 */
+
+	public UserDp(UserDp userDp) {
+		super(userDp.getId(), userDp.getUsername(), userDp.getEmail(), userDp
+				.getLastVisit(), userDp.getRegisterTime(), userDp
+				.getFavoriteNum(), userDp.getFollowNum(), userDp
+				.getFollowOthersNum(), userDp.getQuestionNum(), userDp
+				.getAnswerNum(), userDp.getNoteNum(), userDp.getCircleNum(),
+				userDp.getBookNum(), userDp.getAvatarUrl(), userDp
+						.getSignature());
+		this.isFollow = userDp.isFollow();
+	}
 
 }

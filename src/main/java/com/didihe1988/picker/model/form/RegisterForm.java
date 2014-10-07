@@ -42,4 +42,20 @@ public class RegisterForm {
 		this.password = password;
 	}
 
+	@Override
+	public String toString() {
+		return "RegisterForm [email=" + email + ", name=" + name
+				+ ", password=" + password + "]";
+	}
+
+	public boolean checkFieldValidation() {
+		if ((this.email != null) && (!this.email.equals(""))
+				&& (this.name != null) && (!this.name.equals(""))
+				&& (this.password != null) && (!this.password.equals(""))) {
+			return true;
+		}
+		return false;
+
+	}
+
 }

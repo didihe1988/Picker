@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,6 @@ import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
-import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
@@ -30,6 +30,7 @@ import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.dp.MessageDp;
 import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.model.form.LoginForm;
+import com.didihe1988.picker.model.form.RegisterForm;
 import com.didihe1988.picker.model.json.AnswerJson;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
@@ -90,12 +91,37 @@ public class RestUserController {
 			user.setLastVisit(new Date());
 			userService.updateUser(user);
 			HttpUtils.setSessionUserId(request, user.getId());
-			String sessionId = request.getSession().getId();
 			status = Status.SUCCESS;
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put(Constant.KEY_STATUS, status);
-			jsonObject.put(Constant.KEY_SESSIONID, sessionId);
-			return jsonObject.toString();
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	@RequestMapping(value = "/json/register", method = RequestMethod.POST)
+	public String register(@RequestBody RegisterForm registerForm,
+			HttpServletRequest request) {
+		if (!registerForm.checkFieldValidation()) {
+			JsonUtils.getJsonObjectString(Constant.KEY_STATUS, Status.INVALID);
+		}
+		System.out.println(registerForm.toString());
+		int status = Status.ERROR;
+		if (userService.isEmailExists(registerForm.getEmail())) {
+			status = Status.EXISTS;
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		} else {
+			User user = new User(registerForm.getName(),
+					registerForm.getEmail(), registerForm.getPassword(),
+					"/resources/image/avatar/user_avatar2.jpg", "tmp");
+			/*
+			 * 加密在UserService完成
+			 */
+			status = userService.addUser(user);
+			if (status == Status.SUCCESS) {
+				UserDp userDp = userService.getUserDpByEmail(registerForm
+						.getEmail());
+				HttpUtils.setSessionUserId(request, userDp.getId());
+				return JsonUtils.getJsonObjectStringFromModel(
+						Constant.KEY_USER, userDp);
+			}
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
@@ -331,7 +357,8 @@ public class RestUserController {
 	public String dynamic(HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		List<MessageDp> messageList = messageService
-				.getMessageDpByReceiverIdAndFilter(userId, Filter.MESSAGE_DYNAMIC);
+				.getMessageDpByReceiverIdAndFilter(userId,
+						Filter.MESSAGE_DYNAMIC);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
@@ -343,7 +370,8 @@ public class RestUserController {
 	public String related(HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		List<MessageDp> messageList = messageService
-				.getMessageDpByReceiverIdAndFilter(userId, Filter.MESSAGE_RELATED);
+				.getMessageDpByReceiverIdAndFilter(userId,
+						Filter.MESSAGE_RELATED);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}

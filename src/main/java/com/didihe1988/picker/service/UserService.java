@@ -25,6 +25,11 @@ public interface UserService {
 
 	public UserDp getUserDpByUserId(int userId, int curUserId);
 
+	/**
+	 * @description 用于register后获取用户自己的UserDp
+	 */
+	public UserDp getUserDpByEmail(String email);
+
 	public boolean isEmailExists(String email);
 
 	public boolean isUsernameExists(String username);

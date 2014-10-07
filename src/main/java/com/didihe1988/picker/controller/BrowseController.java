@@ -8,21 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.didihe1988.picker.common.Constant;
-import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Book;
-import com.didihe1988.picker.model.Duck;
 import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
-import com.didihe1988.picker.utils.JsonUtils;
 
 @Controller
 public class BrowseController {
@@ -55,10 +48,4 @@ public class BrowseController {
 
 	}
 	
-	@RequestMapping(value = "/json/test", method = RequestMethod.POST, headers = "Accept=*")
-	public String test(@RequestParam("name") String name,@RequestParam("age") int age,@RequestParam("weight") int weight ) {
-		System.out.println("post test");
-		System.out.println(new Duck(name, age, weight).toString());
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,Status.SUCCESS);
-	}
 }

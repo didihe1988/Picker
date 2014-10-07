@@ -242,14 +242,32 @@ function merge_url(a, b){
     return (a+b).replace(/\/\//g, '/')
 }
 
-function do_follow(t) {
+function do_follow(t, user_id) {
     t.hide();
-    t.parent().find('.cancel_follow').show();
+    $.ajax({
+            url: '/json/user/' + user_id + '/follow',
+            type: 'get',
+            success: function () {
+                t.parent().find('.cancel_follow').show();
+            },
+            error: function () {
+                console.log('error')
+            }
+        })
 }
 
-function cancel_follow(t) {
+function cancel_follow(t, user_id) {
     t.hide();
-    t.parent().find('.follow_action').show();
+    $.ajax({
+            url: '/json/user/' + user_id + '/withdraw_follow',
+            type: 'get',
+            success: function () {
+                t.parent().find('.follow_action').show();
+            },
+            error: function () {
+                console.log('error')
+            }
+        })
 }
 
 //面板之间的切换操作及动画
@@ -355,7 +373,7 @@ function panel_action(t) {
                 //第一次更新
                 $.ajax({
                     //url: /user/1234/notes/1/get
-                    url: merge_url('/picker/json', show_url),
+                    url: merge_url('/json', show_url),
                     type: 'get',
                     success: function (req) {
                         dom.find('.wait').hide();

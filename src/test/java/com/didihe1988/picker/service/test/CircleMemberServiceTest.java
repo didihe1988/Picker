@@ -21,7 +21,7 @@ public class CircleMemberServiceTest {
 
 	@Test
 	public void test01() {
-		CircleMember circleMember = new CircleMember(1, 4);
+		CircleMember circleMember = new CircleMember(1, 2);
 		circleMemberService.addCircleMember(circleMember);
 	}
 	

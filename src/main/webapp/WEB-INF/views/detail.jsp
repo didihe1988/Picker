@@ -20,6 +20,7 @@
 <script src="/static/lib/jquery.pjax.js"></script>
 <script src="/static/js/picker.js"></script>
 <script src="/static/js/epiceditor/js/epiceditor.min.js"></script>
+<script src="/static/js/ajaxfileupload.js"></script>
 
 </head>
 
@@ -86,6 +87,43 @@
 	<div style="height: 55px; width: 100%; position: relative"></div>
 
 	<div id="main">
+		<!--图片上传功能 开始-->
+		<div id="image_insert_panel" class="shadow">
+			<form action="" method="POST" enctype="multipart/form-data">
+				<div class="title clear_fix">
+					<div style="float: left">上传图片</div>
+					<div class="point_cursor"
+						onclick="hide_panel($('#image_insert_panel'), $('#cancel_image_insert'))"
+						style="float: right">
+						<i class="icon-remove"></i>
+					</div>
+				</div>
+				<div class="content">
+					<div>
+						<a href="javascript:void(0)" onclick="show_upload_local_image()">上传本地图片</a>
+						或 <a href="javascript:void(0)" onclick="show_link_outside_image()">引用站外图片</a>
+					</div>
+
+					<div id="upload_local_image">
+						<input id="image_file" type="file" name="image" /> <input
+							type="button" value="提交" onclick="image_upload()" />
+					</div>
+					<div id="link_image">
+						<input id="outside_image_link" type="text" placeholder="图片地址" />
+						<input type="button" value="添加" onclick="image_link()" />
+					</div>
+					<div id="result">
+						将<span></span>添加到你想要插入图片的地方。
+					</div>
+				</div>
+			</form>
+		</div>
+		<div id="cancel_image_insert" class="cancel_panel"
+			onclick="hide_panel($('#image_insert_panel'), $(this))"></div>
+		<div id="cancel_page_change" class="cancel_panel"
+			onclick="hide_panel(null, $(this))"></div>
+		<!--图片上传 结束-->
+
 		<!--**xx-->
 		<div class="row">
 			<div class="col-25">
@@ -384,8 +422,12 @@
 			var editor = create_editor();
 			editor_listened();
 			editor.load();
+			//给epiceditor添加图片上传按钮
+			$('#epiceditor').find('iframe').contents().find(
+					'button.image-insert-btn').on('click',
+					show_image_insert_panel);
 			var current_url = location.href; //初始设置防止pjax处理时index出错
-			autosave(location.href);
+			autosave();
 		</script>
 		<!--xx**-->
 	</div>

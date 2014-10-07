@@ -1,6 +1,7 @@
 package com.didihe1988.picker.serviceImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.dp.CircleMemberDp;
+import com.didihe1988.picker.model.dp.CircleWebDp;
 import com.didihe1988.picker.service.CircleMemberService;
 
 @Service
@@ -155,28 +156,29 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 		return list;
 	}
 
-	private List<CircleMemberDp> getCircleMemberDpList(
+	private List<CircleWebDp> getCircleWebDpList(
 			List<CircleMember> circleMembers) {
-		List<CircleMemberDp> list = new ArrayList<CircleMemberDp>();
+		List<CircleWebDp> list = new ArrayList<CircleWebDp>();
 		for (CircleMember circleMember : circleMembers) {
-			User user = userDao.queryUserById(circleMember.getId());
-			CircleMemberDp circleMemberDp = new CircleMemberDp(user,
+			Circle circle = circleDao.queryCircleById(circleMember
+					.getCircleId());
+			CircleWebDp circleWebDp = new CircleWebDp(circle,
 					circleMember.getJoinTime());
-			list.add(circleMemberDp);
+			list.add(circleWebDp);
 		}
 		return list;
 	}
 
 	@Override
-	public List<CircleMemberDp> getCircleMemberDpListByMemberId(int id) {
+	public List<CircleWebDp> getCircleWebDpListByMemberId(int id) {
 		// TODO Auto-generated method stub
-		return getCircleMemberDpList(getCircleMemberListByMemberId(id));
+		return getCircleWebDpList(getCircleMemberListByMemberId(id));
 	}
 
 	@Override
-	public List<CircleMemberDp> getCircleMemberDpListByCircleId(int id) {
+	public List<CircleWebDp> getCircleWebDpListByCircleId(int id) {
 		// TODO Auto-generated method stub
-		return getCircleMemberDpList(getCircleMemberListByCircleId(id));
+		return getCircleWebDpList(getCircleMemberListByCircleId(id));
 	}
 
 }

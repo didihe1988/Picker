@@ -197,11 +197,8 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/user/{id}/group")
 	public String getUserGroup(@PathVariable int id, Model model) {
-		/*
-		 * model.addAttribute("circleList",
-		 * circleMemberService.getCircleDpListByMemberId(id));
-		 */
-
+		  model.addAttribute("circleList",
+		  circleMemberService.getCircleWebDpListByMemberId(id));
 		return "group_index";
 	}
 
