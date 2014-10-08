@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import com.didihe1988.picker.model.dp.SearchResult;
 import com.didihe1988.picker.model.dp.SearchResult.Type;
 import com.didihe1988.picker.model.interfaces.Search;
+import com.didihe1988.picker.model.json.CircleJson;
 
 @Entity
 @Table(name = "circle")
@@ -132,10 +133,26 @@ public class Circle implements Serializable, Search {
 		this(name, new Date(), establisherId, describe);
 	}
 
+	public boolean checkFieldValidation() {
+		if ((this.name != null) && (!this.name.equals(""))
+				&& (this.describe != null) && (!this.describe.equals(""))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	@Override
 	public SearchResult toSearchResult() {
 		// TODO Auto-generated method stub
 		return new SearchResult(this.id, Type.Circle, this.name, this.describe);
+	}
+
+	public CircleJson toCircleJson() {
+		return new CircleJson("/group/" + this.id, this.name, this.describe,
+				this.memberNum, "/json/circle/" + this.id + "/join",
+				this.establishTime);
+
 	}
 
 }

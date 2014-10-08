@@ -50,7 +50,7 @@ public class RestPrivateMessageController {
 	}
 
 	@RequestMapping(value = "/pmessage/send", method = RequestMethod.POST, headers = "Accept=application/json")
-	public String webSFend(@ModelAttribute PrivateMessage privateMessage,
+	public String webSend(@ModelAttribute PrivateMessage privateMessage,
 			HttpServletRequest request) {
 		if (!HttpUtils.isSessionUserIdExists(request)) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,

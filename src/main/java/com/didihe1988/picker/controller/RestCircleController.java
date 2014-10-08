@@ -1,11 +1,13 @@
 package com.didihe1988.picker.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,13 +87,56 @@ public class RestCircleController {
 	 * 添加一个圈子
 	 */
 	@RequestMapping(value = "/json/circle/add", method = RequestMethod.POST, headers = "Accept=application/json")
-	public String add(@RequestBody Circle circle, HttpServletRequest request) {
+	public String webAdd(@RequestBody Circle circle, HttpServletRequest request) {
 		/*
 		 * 添加问题
 		 */
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
+		}
+		if (!circle.checkFieldValidation()) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID_FIELD);
+		}
+		setCircle(circle, request);
 		int status = circleService.addCircle(circle);
 		if (status == Status.SUCCESS) {
-			addCircleMessage(circle, request);
+			// addCircleMessage(circle, request);
+
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	private void setCircle(Circle circle, HttpServletRequest request) {
+		circle.setEstablishTime(new Date());
+		circle.setEstablisherId(HttpUtils.getSessionUserId(request));
+		/*
+		 * 可能有风险，待验证
+		 */
+		circle.setMemberNum(1);
+	}
+
+	/**
+	 * 添加一个圈子
+	 */
+	@RequestMapping(value = "/circle/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	public String add(@ModelAttribute Circle circle, HttpServletRequest request) {
+		/*
+		 * 添加问题
+		 */
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
+		}
+		if (!circle.checkFieldValidation()) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID_FIELD);
+		}
+		setCircle(circle, request);
+		int status = circleService.addCircle(circle);
+		if (status == Status.SUCCESS) {
+			// addCircleMessage(circle, request);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}

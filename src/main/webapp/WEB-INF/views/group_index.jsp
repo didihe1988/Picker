@@ -89,6 +89,31 @@
 
 	<div id="main">
 		<!--**xx-->
+
+		<!-- *** change here *** -->
+		<!-- 发送私信面板 -->
+		<div id="create_group_panel" class="shadow">
+			<div class="title clear_fix">
+				<div style="float: left">创建圈子</div>
+				<div class="point_cursor"
+					onclick="hide_panel($('#create_group_panel'), $('#cancel_create_group'))"
+					style="float: right">
+					<i class="icon-remove"></i>
+				</div>
+			</div>
+
+			<div class="content">
+				<input type="text" placeholder="圈子名称" id="group_name">
+				<textarea id="group_describe" placeholder="圈子描述" rows="5"></textarea>
+				<input type="button"
+					style="float: right; padding: 5px; margin-top: 10px" value="创建"
+					onclick="create_group()" />
+			</div>
+		</div>
+		<div id="cancel_create_group" class="cancel_panel"
+			onclick="hide_panel($('#create_group_panel'), $(this))"></div>
+		<!-- *** change end *** -->
+
 		<div id="groups_content">
 			<div id="groups_content_head" class="clear_fix">
 				<div class="title">我的圈子</div>
@@ -133,7 +158,8 @@
 				<c:forEach var="circle" items="${circleList}">
 					<div class="group_info">
 						<div class="group_name">
-							<a data-pjax href=<c:url value="/group/${circle.id}"/>><c:out value='${circle.name}' /></a>
+							<a data-pjax href=<c:url value="/group/${circle.id}"/>><c:out
+									value='${circle.name}' /></a>
 						</div>
 						<div class="group_intro">
 							<c:out value='${circle.describe}' />

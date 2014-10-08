@@ -1255,7 +1255,7 @@ form.group_search .btn{
     color: #999999;
 }
 
-#message_content{
+textarea{
     width: 100%;
     border-radius: 5px;
     border: 1px solid #EEEEEE;

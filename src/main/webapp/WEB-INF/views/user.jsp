@@ -201,7 +201,7 @@
 					</div>
 					<div style="height: 35px; overflow: hidden;">
 						<c:forEach var="user" items="${followerList}">
-							<span><img src="<c:url value="${user.avatarUrl}"/>" /> /></span>
+							<span><img src="<c:url value="${user.avatarUrl}"/>" /></span>
 						</c:forEach>
 					</div>
 				</div>

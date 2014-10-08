@@ -6,10 +6,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
@@ -17,11 +17,8 @@ import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.dp.SearchResult;
-import com.didihe1988.picker.model.dp.SearchResult.Type;
-import com.didihe1988.picker.model.dp.UserDp;
-import com.didihe1988.picker.model.interfaces.Search;
+import com.didihe1988.picker.model.json.CircleJson;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.CircleService;
@@ -30,7 +27,7 @@ import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 
-@Controller
+@RestController
 public class RestSearchController {
 	@Autowired
 	private UserService userService;
@@ -151,6 +148,22 @@ public class RestSearchController {
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
 				list);
+	}
+
+	@RequestMapping(value = "/group_search", produces = "application/json")
+	public String groupSearch(HttpServletRequest request) {
+
+		/*
+		 * 如果为""怎么办
+		 */
+		String groupName = (String) request.getParameter("group_name");
+		List<Circle> circleList = circleService.search(groupName);
+
+		List<CircleJson> list = new ArrayList<CircleJson>();
+		for (Circle circle : circleList) {
+			list.add(circle.toCircleJson());
+		}
+		return JsonUtils.getJsonObjectString("groups", list);
 	}
 
 }

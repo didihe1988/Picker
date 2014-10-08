@@ -14,7 +14,7 @@ $(document).ready(function(){
 });
 
 function nano_template(template, data) {
-    //hack patch. 涓轰簡瑙ｅ喅妯℃澘涓浘鐗囧湴鍧�閿欒鍦伴棶棰�
+    //hack patch. 为了解决模板中图片地址错误地问题
     data['hack'] = {
         s: '<!--',
         e: '-->'
@@ -29,7 +29,7 @@ function nano_template(template, data) {
     });
 }
 
-//鍏充簬瀵艰埅鏉＄殑鍔ㄤ綔
+//关于导航条的动作
 function nav_thing(){
     $('#nav_mail_icon').find('a').hover(function () {
         $('#nav_mail_cnt').css({'background-color': '#009EDA'});
@@ -43,7 +43,7 @@ function nav_thing(){
     });
 }
 
-//娑堟伅锛岀淇′俊鎭幏鍙�
+//消息，私信信息获取
 function get_cnt() {
     $.get('/new_message_count', function (req) {
         if(req['mail']){
@@ -217,7 +217,7 @@ function read_flag(button) {
 
     button.html('<i class="icon-spinner icon-spin"></i>');
     var error_handle = function () {
-        button.html('宸茶');
+        button.html('已读');
     };
     $.ajax({url: '/mail_read_flag/'+mail_id, success: function (req) {
         if(req.status == 'success'){
@@ -277,7 +277,7 @@ function cancel_follow(t, user_id) {
         })
 }
 
-//闈㈡澘涔嬮棿鐨勫垏鎹㈡搷浣滃強鍔ㄧ敾
+//面板之间的切换操作及动画
 function set_init_panel(obj) {
     var flag_class = 'current_panel';
     if($('.'+flag_class).length == 0){
@@ -288,7 +288,7 @@ function set_init_panel(obj) {
 }
 
 function gen_paging(current_page, total_page, base_url) {
-    //鐢熸垚鍒嗛〉
+    //生成分页
     if(total_page > 1){
         var pagination_template = $('#pagination_template').html();
         var handle = {
@@ -359,25 +359,25 @@ function panel_action(t) {
             this.showPanel($('#followed_panel'));
         },
         'questions': function () {
-            this.q_a_n_action('questions', $('#questions_url').data('value'), $('#questions_panel'), '鍏ㄩ儴鎻愰棶',
+            this.q_a_n_action('questions', $('#questions_url').data('value'), $('#questions_panel'), '全部提问',
                 $('#questions_feed_template').html(), $('#questions_feed_template').html());
         },
         'answers': function () {
-            this.q_a_n_action('answers', $('#answers_url').data('value'), $('#answers_panel'), '鍏ㄩ儴鍥炵瓟',
+            this.q_a_n_action('answers', $('#answers_url').data('value'), $('#answers_panel'), '全部回答',
                 $('#answers_feed_with_picture_template').html(), $('#answers_feed_with_no_picture_template').html());
         },
         'notes': function () {
-            //淇敼url
-            this.q_a_n_action('notes', $('#notes_url').data('value'), $('#notes_panel'), '鍏ㄩ儴绗旇',
+            //修改url
+            this.q_a_n_action('notes', $('#notes_url').data('value'), $('#notes_panel'), '全部笔记',
                 $('#notes_feed_with_picture_template').html(), $('#notes_feed_with_no_picture_template').html());
         },
         //questions, answers, notes action.basic the same
         'q_a_n_action': function (type, show_url, dom, title, with_picture_template, no_picture_template) {
-            //淇敼url
+            //修改url
             window.history.pushState(null, title, show_url);
             //check
             if(dom.find('.content').data('current_page') == 0){
-                //绗竴娆℃洿鏂�
+                //第一次更新
                 $.ajax({
                     //url: /user/1234/notes/1/get
                     url: merge_url('/json', show_url),
@@ -422,7 +422,7 @@ function panel_action(t) {
             var panel_id_to_change_url = ['notes_panel', 'questions_panel', 'answers_panel'];
             for(var i in panel_id_to_change_url){
                 if(cp.attr('id') == panel_id_to_change_url[i])
-                    window.history.pushState(null, '鐢ㄦ埛涓婚〉', $('#user_home_url').data('value'));
+                    window.history.pushState(null, '用户主页', $('#user_home_url').data('value'));
             }
             if(e.attr('id') === cp.attr('id'))
                 return;
@@ -445,7 +445,7 @@ function panel_action(t) {
     }
 }
 
-//鍔ㄦ�佺畝浠嬩笌璇︾粏淇℃伅鐨勫垏鎹�
+//动态简介与详细信息的切换
 function user_feed_show_full(t) {
     t.hide();
     t.parent().find('.user_feed_all').show();
@@ -462,7 +462,7 @@ function group_search(form){
     if(name == ''){
         return false;
     }
-    //鍔ㄦ�佽姹�
+    //动态请求
     NProgress.start();
     $.ajax({
         url: '/group_search',
@@ -480,11 +480,42 @@ function group_search(form){
         },
         error: function (req) {
             NProgress.done();
-            $('#group_search_content').html('鏌ヨ鍑洪敊')
+            $('#group_search_content').html('查询出错')
         }
     });
 
-    return false;   //闃绘form鎻愪氦
+    return false;   //阻止form提交
+}
+
+function show_create_group(){
+    $('#create_group_panel').show();
+    $('#cancel_create_group').show();
+}
+
+function create_group(){
+    if($('#group_name').val().trim() == '' || $('#group_describe').val().trim() == ''){
+        alert('圈子名称和描述不能为空');
+        return ;
+    }
+
+    NProgress.start();
+    $.ajax({
+//        TODO
+        url: '/circle/add',
+        type: 'post',
+        data: {
+            'name': $('#group_name').val().trim(),
+            'describe': $('#group_describe').val().trim()
+        },
+        success: function () {
+            NProgress.done();
+            location.reload();
+        },
+        error: function () {
+            NProgress.done();
+            alert('创建出错');
+        }
+    });
 }
 
 function show_message_panel(){
@@ -494,6 +525,10 @@ function show_message_panel(){
 
 function send_message(receiver_id){
     NProgress.start();
+    if($("#message_content").val().trim() == ''){
+        alert('消息不能为空');
+        return ;
+    }
     $.ajax({
         url: '/pmessage/send',
         type: 'post',
@@ -540,13 +575,13 @@ function gen_dom(post) {
 }
 
 /*
-浼犲叆涓�涓猣lag鍏冪礌(load_next_flag鎴栬�卨oad_previous_flag)銆傞�氳繃ajax鍔ㄦ�佸姞杞藉唴瀹�
+传入一个flag元素(load_next_flag或者load_previous_flag)。通过ajax动态加载内容
  */
 function load_page(flag_dom) {
     if(flag_dom.data('lock') == true || flag_dom.data('end') == true){
         return;
     }
-    flag_dom.data('lock', true);        //涓婇攣
+    flag_dom.data('lock', true);        //上锁
     flag_dom.slideDown();
 
     if(flag_dom.data('end') == false){
@@ -556,7 +591,7 @@ function load_page(flag_dom) {
         var direct = flag_dom.data('direction');
         var error_handle = function(req){
             flag_dom.hide();
-            flag_dom.data('lock', false);   //瑙ｉ攣
+            flag_dom.data('lock', false);   //解锁
         };
         $.ajax({
             url: '/page/'+book_id+'/'+start_page,
@@ -565,7 +600,7 @@ function load_page(flag_dom) {
             success: function (req) {
                 flag_dom.hide();
                 if(req.status == 'success'){
-                    //灞曠ず鍐呭锛屽皝闈紝闂瓟锛岀瑪璁般��
+                    //展示内容，封面，问答，笔记。
                     if(req.page == '0'){
                         var new_dom = $(nano_template(
                             $('#cover_page_template').html(), {book: req.book}));
@@ -573,7 +608,7 @@ function load_page(flag_dom) {
                         if(direct == 'up'){
                             flag_dom.data('end', true);
                             $('#pages_container').prepend(new_dom);
-                            //淇濇寔鐩墠绐楀彛涓嶇Щ鍔�. 20鏄痜lag_dom鐨勪笂涓媘argin
+                            //保持目前窗口不移动. 20是flag_dom的上下margin
                             $(window).scrollTop(
                                 $(window).scrollTop()+new_dom.height()-flag_dom.height()-20
                             );
@@ -592,7 +627,7 @@ function load_page(flag_dom) {
                         if(direct == 'up'){
                             $('#pages_container').prepend(new_dom);
                             $(window).scrollTop(
-                                //淇濇寔鐩墠绐楀彛涓嶇Щ鍔�. 20鏄痜lag_dom鐨勪笂涓媘argin
+                                //保持目前窗口不移动. 20是flag_dom的上下margin
                                 $(window).scrollTop()+new_dom.height()-flag_dom.height()-20
                             )
                         }
@@ -602,7 +637,7 @@ function load_page(flag_dom) {
                     if(req.end == 'true')
                     {
                         flag_dom.data('end', true);
-                        //娌℃湁鍐呭浜�
+                        //没有内容了
                         if(direct == 'down')
                             $('#pages_container').append(
                                 $(nano_template($('#page_end_template').html(), {})));
@@ -611,7 +646,7 @@ function load_page(flag_dom) {
                         flag_dom.data('start-page', parseInt(req.page)-1);
                     else
                         flag_dom.data('start-page', parseInt(req.page)+1);
-                    flag_dom.data('lock', false);       //瑙ｉ攣
+                    flag_dom.data('lock', false);       //解锁
                 }
                 else
                     error_handle(req);
@@ -623,7 +658,7 @@ function load_page(flag_dom) {
     }
 }
 
-//  鐩戝惉scroll浜嬩欢锛屽綋婊氬姩鍋滄鏃跺搷搴�
+//  监听scroll事件，当滚动停止时响应
 function browse_page_change_init() {
     var timer = null;
     $(window).scroll(function () {
@@ -633,7 +668,7 @@ function browse_page_change_init() {
 
         var settled = false;
         timer = setTimeout(function () {
-            //璁剧疆褰撳墠鏄剧ず鐨勯〉鏁�
+            //设置当前显示的页数
             $('.page').each(function (i, c) {
                 if(!settled) {
                     var top = $(c).offset().top;
@@ -649,7 +684,7 @@ function browse_page_change_init() {
                 }
             });
 
-            //搴曢儴瑙﹀彂鏇存柊
+            //底部触发更新
             if($(window).scrollTop()+$(window).height() == $(document).height()){
                 load_page($('#load_next_flag'));
             }
@@ -698,9 +733,9 @@ function create_editor(){
             preview: 80
         },
         string: {
-            togglePreview: '棰勮妯″紡',
-            toggleEdit: '缂栬緫妯″紡',
-            toggleFullscreen: '杩涘叆鍏ㄥ睆'
+            togglePreview: '预览模式',
+            toggleEdit: '编辑模式',
+            toggleFullscreen: '进入全屏'
         },
         autogrow: false
     };
@@ -785,7 +820,7 @@ function image_upload() {
         console.log('choose file first');
         return ;
     }
-    $('#upload_local_image').find('input[type=button]').attr('value', '鎻愪氦涓�...');
+    $('#upload_local_image').find('input[type=button]').attr('value', '提交中...');
     try{
         $.ajaxFileUpload({
             url: '/image_upload',
@@ -797,25 +832,25 @@ function image_upload() {
                     $('#result').find('span').html(gen_mark(data['url']));
                     $('#result').slideDown();
                 }else{
-                    alert('璇烽�夋嫨鍥剧墖鏂囦欢');
+                    alert('请选择图片文件');
                 }
 
-                $('#upload_local_image').find('input[type=button]').attr('value', '鎻愪氦');
+                $('#upload_local_image').find('input[type=button]').attr('value', '提交');
             },
             error: function (data) {
                 alert('error');
-                $('#upload_local_image').find('input[type=button]').attr('value', '鎻愪氦');
+                $('#upload_local_image').find('input[type=button]').attr('value', '提交');
             }
         });
     }catch(e){
-        $('#upload_local_image').find('input[type=button]').attr('value', '鎻愪氦');
+        $('#upload_local_image').find('input[type=button]').attr('value', '提交');
     }
 }
 
 function image_link() {
     var url = $('#outside_image_link').val();
     if(url == ''){
-        alert('璇峰厛杈撳叆鍥剧墖鍦板潃');
+        alert('请先输入图片地址');
         return ;
     }
     $('#result').find('span').html(gen_mark(url));
