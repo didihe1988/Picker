@@ -1,5 +1,7 @@
 package com.didihe1988.picker.daoImpl;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -136,6 +138,16 @@ public class BookDaoImpl implements BookDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Book> search(String string) {
+		// TODO Auto-generated method stub
+		String hql = "from Book as b where b.bookName like ?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setString(0, "%" + string + "%");
+		return query.list();
 	}
 
 }

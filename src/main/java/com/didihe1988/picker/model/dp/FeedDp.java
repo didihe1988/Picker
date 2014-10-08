@@ -3,8 +3,8 @@ package com.didihe1988.picker.model.dp;
 import java.util.List;
 
 import com.didihe1988.picker.model.Feed;
-import com.didihe1988.picker.model.dpInterface.IsFavorite;
-import com.didihe1988.picker.model.dpInterface.IsFollow;
+import com.didihe1988.picker.model.interfaces.IsFavorite;
+import com.didihe1988.picker.model.interfaces.IsFollow;
 
 public class FeedDp extends Feed implements IsFavorite, IsFollow {
 	/**

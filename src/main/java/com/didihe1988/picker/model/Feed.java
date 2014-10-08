@@ -1,5 +1,6 @@
 package com.didihe1988.picker.model;
 
+import java.io.ObjectInputStream.GetField;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,11 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.didihe1988.picker.model.dp.SearchResult;
+import com.didihe1988.picker.model.dp.SearchResult.Type;
+import com.didihe1988.picker.model.interfaces.Search;
 import com.didihe1988.picker.utils.MarkdownUtils;
 
 @Entity
 @Table(name = "feed")
-public class Feed implements Serializable {
+public class Feed implements Serializable, Search {
 
 	/**
 	 * 
@@ -27,7 +31,7 @@ public class Feed implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "feed_id")
-	protected int id; 
+	protected int id;
 
 	@Column(name = "feed_bookid")
 	protected int bookId;
@@ -267,7 +271,7 @@ public class Feed implements Serializable {
 				+ favoriteNum + ", answerNum=" + answerNum + ", commentNum="
 				+ commentNum + ", followNum=" + followNum + "]";
 	}
-	
+
 	/**
 	 * 
 	 * @description check: bookId userId title content page
@@ -276,7 +280,7 @@ public class Feed implements Serializable {
 		/*
 		 * ËãÉÏÁËpage==0
 		 */
-		if ((this.bookId != 0)&& (this.title != null)
+		if ((this.bookId != 0) && (this.title != null)
 				&& (!this.title.equals("")) && (this.content != null)
 				&& (!this.content.equals("")) && (this.page >= 0)) {
 			return true;
@@ -284,4 +288,20 @@ public class Feed implements Serializable {
 		return false;
 
 	}
+
+	@Override
+	public SearchResult toSearchResult() {
+		// TODO Auto-generated method stub
+
+		return new SearchResult(this.bookId, getSearchResultType(), this.title,
+				this.brief);
+	}
+
+	private Type getSearchResultType() {
+		if (this.type == TYPE_QUESTION) {
+			return Type.Question;
+		}
+		return Type.Note;
+	}
+
 }

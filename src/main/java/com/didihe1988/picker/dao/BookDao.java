@@ -1,8 +1,9 @@
 package com.didihe1988.picker.dao;
 
+import com.didihe1988.picker.dao.daoInterface.SearchOperation;
 import com.didihe1988.picker.model.Book;
 
-public interface BookDao {
+public interface BookDao extends SearchOperation<Book> {
 	public Book queryBookById(int id);
 
 	public int queryBookIdByISBN(String isbn);

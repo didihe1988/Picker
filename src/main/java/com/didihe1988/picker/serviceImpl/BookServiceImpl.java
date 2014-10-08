@@ -1,5 +1,7 @@
 package com.didihe1988.picker.serviceImpl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,6 +105,12 @@ public class BookServiceImpl implements BookService {
 		int status = bookDao.decrementQuestionNum(id);
 		// 这个应该怎样判断返回
 		return Status.SUCCESS;
+	}
+
+	@Override
+	public List<Book> search(String bookName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

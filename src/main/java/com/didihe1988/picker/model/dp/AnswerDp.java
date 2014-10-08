@@ -3,7 +3,7 @@ package com.didihe1988.picker.model.dp;
 import java.util.List;
 
 import com.didihe1988.picker.model.Answer;
-import com.didihe1988.picker.model.dpInterface.IsFavorite;
+import com.didihe1988.picker.model.interfaces.IsFavorite;
 
 public class AnswerDp extends Answer implements IsFavorite {
 	/**

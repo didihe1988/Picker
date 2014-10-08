@@ -35,4 +35,6 @@ public interface UserService {
 	public boolean isUsernameExists(String username);
 
 	public List<UserDp> search(String username, int curUserId);
+
+	public List<User> search(String username);
 }

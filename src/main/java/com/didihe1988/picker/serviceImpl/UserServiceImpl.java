@@ -169,4 +169,10 @@ public class UserServiceImpl implements UserService {
 		return getUserDpByUser(getUserByEmail(email), false);
 	}
 
+	@Override
+	public List<User> search(String username) {
+		// TODO Auto-generated method stub
+		return userDao.search(username);
+	}
+
 }

@@ -1,7 +1,7 @@
 package com.didihe1988.picker.model.dp;
 
 import com.didihe1988.picker.model.Comment;
-import com.didihe1988.picker.model.dpInterface.IsFavorite;
+import com.didihe1988.picker.model.interfaces.IsFavorite;
 
 public class CommentDp extends Comment implements IsFavorite {
 

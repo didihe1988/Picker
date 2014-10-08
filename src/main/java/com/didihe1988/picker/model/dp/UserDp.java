@@ -1,7 +1,7 @@
 package com.didihe1988.picker.model.dp;
 
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.dpInterface.IsFollow;
+import com.didihe1988.picker.model.interfaces.IsFollow;
 
 public class UserDp extends User implements IsFollow {
 

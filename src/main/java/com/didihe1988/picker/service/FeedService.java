@@ -38,7 +38,7 @@ public interface FeedService {
 
 	public List<FeedDp> getFeedDpListForBrowse(int bookId, int curUserId);
 
-	public List<FeedDp> search(String string, int curUserId);
-
 	public List<FeedDp> search(String string, int type, int curUserId);
+
+	public List<Feed> search(String string, int type);
 }

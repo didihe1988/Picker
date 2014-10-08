@@ -9,12 +9,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.didihe1988.picker.model.dp.SearchResult;
+import com.didihe1988.picker.model.dp.SearchResult.Type;
+import com.didihe1988.picker.model.interfaces.Search;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class User implements Serializable, Search {
 	/**
 	 * 
 	 */
@@ -281,4 +284,13 @@ public class User implements Serializable {
 				+ ", avatarUrl=" + avatarUrl + ", signature=" + signature + "]";
 	}
 
+	@Override
+	public SearchResult toSearchResult() {
+		StringBuilder content = new StringBuilder();
+		content.append("关注: ").append(this.followNum).append(" 问题: ")
+				.append(this.questionNum).append(" 笔记: ").append(this.noteNum)
+				.append(" 回答: ").append(this.answerNum);
+		return new SearchResult(this.id, Type.User,
+				this.username, content.toString(), this.avatarUrl);
+	}
 }

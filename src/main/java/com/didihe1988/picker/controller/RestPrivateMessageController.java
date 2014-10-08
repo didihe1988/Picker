@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,22 @@ public class RestPrivateMessageController {
 
 	@RequestMapping(value = "/json/pmessage/send", method = RequestMethod.POST, headers = "Accept=application/json")
 	public String send(@RequestBody PrivateMessage privateMessage,
+			HttpServletRequest request) {
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
+		}
+		if (!privateMessage.checkFieldValidation()) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID_FIELD);
+		}
+		setPM(privateMessage, request);
+		int status = PMService.addPrivateMessage(privateMessage);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	@RequestMapping(value = "/pmessage/send", method = RequestMethod.POST, headers = "Accept=application/json")
+	public String webSFend(@ModelAttribute PrivateMessage privateMessage,
 			HttpServletRequest request) {
 		if (!HttpUtils.isSessionUserIdExists(request)) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,

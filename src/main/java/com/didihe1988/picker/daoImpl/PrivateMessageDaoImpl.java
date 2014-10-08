@@ -116,7 +116,7 @@ public class PrivateMessageDaoImpl implements PrivateMessageDao {
 		criteria.add(expression);
 		criteria.setProjection(Projections.distinct(Projections
 				.property("dialogId")));*/
-		String hql="from PrivateMessage as p where p.senderId=? or p.receiverId =?";
+		String hql="from PrivateMessage as p where p.senderId=? or p.receiverId =? order by p.time desc";
 		Query query=getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
 		query.setInteger(1, userId);

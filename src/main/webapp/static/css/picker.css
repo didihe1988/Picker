@@ -1255,6 +1255,14 @@ form.group_search .btn{
     color: #999999;
 }
 
+#message_content{
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #EEEEEE;
+    margin-top: 10px;
+    padding: 5px
+}
+
 /*----------------------------------------browse part---------------------------------*/
 
 .browse_list_meta{

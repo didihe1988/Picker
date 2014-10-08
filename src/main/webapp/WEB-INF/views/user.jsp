@@ -31,7 +31,7 @@
 				"picker_userId");
 	%>
 	<c:set var="curUserId" scope="session" value="<%=curUserId%>" />
-	<!-- end set curUserId -->
+	<!--set curUserId end-->
 	<div id="nav" class="row">
 		<div id="nav_content">
 			<div class="col-13">
@@ -47,8 +47,10 @@
 			<div class="col-22">
 				<div id="search_bar">
 					<!--<i class="icon-search"></i>-->
-					<label for="search" style="display: none">搜索</label> <input
-						type="text" id="search" name="search" placeholder="搜索书、笔记或人...">
+					<form action="/search" method="get">
+						<label for="search" style="display: none">搜索</label> <input
+							type="text" id="search" name="s" placeholder="搜索书、笔记或人...">
+					</form>
 				</div>
 			</div>
 			<div class="col-25">
@@ -97,6 +99,30 @@
 	<div id="main">
 		<!--**xx-->
 
+		<!-- *** change here *** -->
+		<div id="receiver_id" data-value="${user.id}" style="display: none"></div>
+		<!-- 发送私信面板 -->
+		<div id="message_panel" class="shadow">
+			<div class="title clear_fix">
+				<div style="float: left">发送私信</div>
+				<div class="point_cursor"
+					onclick="hide_panel($('#message_panel'), $('#cancel_message_panel'))"
+					style="float: right">
+					<i class="icon-remove"></i>
+				</div>
+			</div>
+
+			<div class="content">
+				<textarea id="message_content" placeholder="消息" rows="5"></textarea>
+				<input type="button"
+					style="float: right; padding: 5px; margin-top: 10px" value="发送"
+					onclick="send_message($('#receiver_id').data('value'))" />
+			</div>
+		</div>
+		<div id="cancel_message_panel" class="cancel_panel"
+			onclick="hide_panel($('#message_panel'), $(this))"></div>
+		<!-- *** change end *** -->
+
 		<!--为 提问/回答/笔记 提供url定位-->
 		<div id="user_home_url" data-value="/user/${user.id}"
 			style="display: none"></div>
@@ -116,12 +142,15 @@
 				</div>
 				<div id="user_action">
 					<div class="row">
-						<div class="col-50">
+
+						<!-- *** change here *** -->
+						<div class="col-50" onclick="show_message_panel()">
 							<div class="split">
-								<a data-pjax href="/mail" style="color: inherit"><i
-									class="icon-envelope-alt"></i>发私信</a>
+								<i class="icon-envelope-alt"></i>发私信
 							</div>
 						</div>
+						<!-- *** change end *** -->
+
 						<div class="col-50">
 							<div class="follow_action" onclick="do_follow($(this))">
 								<i class="icon-plus"></i>加关注
@@ -307,15 +336,32 @@
 									</div>
 									<div class="col-18">
 										<div class="people_follow">
-											<div class="follow_action" style="float: right"
-												onclick="do_follow($(this))">
-												<i class="icon-plus"></i> 加关注
-											</div>
-											<div class="cancel_follow"
-												style="float: right; display: none"
-												onclick="cancel_follow($(this))">
-												<i class="icon-ok"></i> 取消关注
-											</div>
+											<c:choose>
+												<c:when test="${user.id ==curUserId}">
+												</c:when>
+												<c:when test="${user.follow == false}">
+													<div class="follow_action" style="float: right"
+														onclick="do_follow($(this),${user.id})">
+														<i class="icon-plus"></i> 加关注
+													</div>
+													<div class="cancel_follow"
+														style="float: right; display: none"
+														onclick="cancel_follow($(this),${user.id})">
+														<i class="icon-ok"></i> 取消关注
+													</div>
+												</c:when>
+												<c:otherwise>
+													<div class="follow_action"
+														style="float: right; display: none"
+														onclick="do_follow($(this),${user.id})">
+														<i class="icon-plus"></i> 加关注
+													</div>
+													<div class="cancel_follow" style="float: right"
+														onclick="cancel_follow($(this),${user.id})">
+														<i class="icon-ok"></i> 取消关注
+													</div>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</div>
@@ -350,15 +396,32 @@
 									</div>
 									<div class="col-18">
 										<div class="people_follow">
-											<div class="follow_action" style="float: right"
-												onclick="do_follow($(this))">
-												<i class="icon-plus"></i> 加关注
-											</div>
-											<div class="cancel_follow"
-												style="float: right; display: none"
-												onclick="cancel_follow($(this))">
-												<i class="icon-ok"></i> 取消关注
-											</div>
+											<c:choose>
+												<c:when test="${user.id ==curUserId}">
+												</c:when>
+												<c:when test="${user.follow == false}">
+													<div class="follow_action" style="float: right"
+														onclick="do_follow($(this),${user.id})">
+														<i class="icon-plus"></i> 加关注
+													</div>
+													<div class="cancel_follow"
+														style="float: right; display: none"
+														onclick="cancel_follow($(this),${user.id})">
+														<i class="icon-ok"></i> 取消关注
+													</div>
+												</c:when>
+												<c:otherwise>
+													<div class="follow_action"
+														style="float: right; display: none"
+														onclick="do_follow($(this),${user.id})">
+														<i class="icon-plus"></i> 加关注
+													</div>
+													<div class="cancel_follow" style="float: right"
+														onclick="cancel_follow($(this),${user.id})">
+														<i class="icon-ok"></i> 取消关注
+													</div>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 								</div>

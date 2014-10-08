@@ -8,9 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.didihe1988.picker.model.dp.SearchResult;
+import com.didihe1988.picker.model.dp.SearchResult.Type;
+import com.didihe1988.picker.model.interfaces.Search;
+
 @Entity
 @Table(name = "book")
-public class Book implements Serializable {
+public class Book implements Serializable, Search {
 
 	/**
 	 * 
@@ -141,6 +145,16 @@ public class Book implements Serializable {
 				+ ", writer=" + writer + ", press=" + press + ", followNum="
 				+ followNum + ", questionNum=" + questionNum + ", noteNum="
 				+ noteNum + ", imageUrl=" + imageUrl + "]";
+	}
+
+	@Override
+	public SearchResult toSearchResult() {
+		// TODO Auto-generated method stub
+		StringBuilder content = new StringBuilder();
+		content.append("作者: ").append(this.writer).append(" 出版社: ")
+				.append(this.questionNum);
+		return new SearchResult(this.id, Type.Book, this.bookName, "作者: "
+				+ this.writer, this.imageUrl);
 	}
 
 }
