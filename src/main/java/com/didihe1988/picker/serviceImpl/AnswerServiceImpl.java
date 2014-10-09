@@ -3,6 +3,7 @@ package com.didihe1988.picker.serviceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
+import com.didihe1988.picker.model.json.AnswerJson;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.RelatedImageService;
 
@@ -205,6 +207,22 @@ public class AnswerServiceImpl implements AnswerService {
 	public List<AnswerDp> search(String content, int userId) {
 		// TODO Auto-generated method stub
 		return getAnswerDpListFormAnswerList(answerDao.search(content), userId);
+	}
+
+	@Override
+	public List<AnswerJson> getAnswerJsons(int userId, int page) {
+		// TODO Auto-generated method stub
+		List<Answer> answerList = answerDao
+				.queryAnswerByReplierId(userId, page);
+		List<AnswerJson> list = new ArrayList<AnswerJson>();
+		for (Answer answer : answerList) {
+			Feed feed = feedDao.queryFeedById(answer.getQuestionId());
+			AnswerJson answerJson = new AnswerJson(feed.getTitle(), null,
+					"/detail/" + answer.getQuestionId(), answer.getDate(),
+					answer.getContent());
+			list.add(answerJson);
+		}
+		return list;
 	}
 
 }

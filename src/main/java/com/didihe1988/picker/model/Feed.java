@@ -1,6 +1,5 @@
 package com.didihe1988.picker.model;
 
-import java.io.ObjectInputStream.GetField;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,6 +12,8 @@ import javax.persistence.Table;
 import com.didihe1988.picker.model.dp.SearchResult;
 import com.didihe1988.picker.model.dp.SearchResult.Type;
 import com.didihe1988.picker.model.interfaces.Search;
+import com.didihe1988.picker.model.json.NoteJson;
+import com.didihe1988.picker.model.json.QuestionJson;
 import com.didihe1988.picker.utils.MarkdownUtils;
 
 @Entity
@@ -302,6 +303,20 @@ public class Feed implements Serializable, Search {
 			return Type.Question;
 		}
 		return Type.Note;
+	}
+
+	public QuestionJson toQuestionJson() {
+		/*
+		 * if(this.type!=TYPE_QUESTION) { throw new Exception("type not match");
+		 * }
+		 */
+		return new QuestionJson(this.title, null, "/detail/" + this.id,
+				this.date, this.commentNum, this.answerNum);
+	}
+
+	public NoteJson toNoteJson() {
+		return new NoteJson(this.title, null, "/detail/" + this.id, this.date,
+				this.content);
 	}
 
 }

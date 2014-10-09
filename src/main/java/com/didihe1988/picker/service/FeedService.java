@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.model.json.NoteJson;
+import com.didihe1988.picker.model.json.QuestionJson;
 
 public interface FeedService {
 	public boolean checkOperateValidation(int userId, int feedId);
@@ -41,4 +43,6 @@ public interface FeedService {
 	public List<FeedDp> search(String string, int type, int curUserId);
 
 	public List<Feed> search(String string, int type);
+
+	public List<NoteJson> getNoteJsons(int userId, int page);
 }

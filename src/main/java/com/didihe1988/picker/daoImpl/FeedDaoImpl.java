@@ -2,6 +2,7 @@ package com.didihe1988.picker.daoImpl;
 
 import java.util.List;
 
+import org.aspectj.weaver.loadtime.definition.Definition.ConcreteAspect;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.model.Feed;
 
@@ -118,6 +120,19 @@ public class FeedDaoImpl implements FeedDao {
 		addTypeConstrain(hql, type);
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Feed> queryFeedListByUserId(int userId, int type, int page) {
+		// TODO Auto-generated method stub
+		String hql = "from Feed as f where f.userId=?";
+		addTypeConstrain(hql, type);
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, userId);
+		query.setFirstResult(Constant.MAX_QUERYRESULT * (page - 1));
+		query.setMaxResults(Constant.MAX_QUERYRESULT);
 		return query.list();
 	}
 

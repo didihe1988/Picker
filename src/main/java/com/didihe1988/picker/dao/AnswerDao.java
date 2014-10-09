@@ -23,6 +23,8 @@ public interface AnswerDao extends OperateValidation, NumOperation,SearchOperati
 	public List<Answer> queryAnswerByQuestionId(int id);
 
 	public List<Answer> queryAnswerByReplierId(int id);
+	
+	public List<Answer> queryAnswerByReplierId(int id,int page);
 
 	public int queryLatestAnswerIdByQuestionId(int id);
 

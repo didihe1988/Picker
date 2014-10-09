@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Answer;
+import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.dp.UserDp;
+import com.didihe1988.picker.model.json.CircleJson;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -201,9 +203,9 @@ public class RestQuestionController {
 
 	@RequestMapping(value = "/json/question/add", method = RequestMethod.POST)
 	public String add(@RequestBody Feed feed, HttpServletRequest request) {
-		if(!HttpUtils.isSessionUserIdExists(request))
-		{
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,Status.NULLSESSION);
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
 		}
 		if (!feed.checkFieldValidation()) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
@@ -218,9 +220,8 @@ public class RestQuestionController {
 
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
-	
-	private void setQuestion(Feed feed,HttpServletRequest request)
-	{
+
+	private void setQuestion(Feed feed, HttpServletRequest request) {
 		feed.setType(Feed.TYPE_QUESTION);
 		feed.setUserId(HttpUtils.getSessionUserId(request));
 		feed.setBriefByContent();
@@ -240,8 +241,8 @@ public class RestQuestionController {
 		 * 通知关注者 小明 (被关注者)提出了一个问题
 		 */
 		int userId = HttpUtils.getSessionUserId(request);
-		//String userName = HttpUtils.getSessionUserName(request);
-		String userName=userService.getUserById(userId).getUsername();
+		// String userName = HttpUtils.getSessionUserName(request);
+		String userName = userService.getUserById(userId).getUsername();
 		int feedId = feedService.getLatestFeedByBookId(feed.getBookId(),
 				Feed.TYPE_QUESTION);
 		String relatedSourceContent = StringUtils.confineStringLength(

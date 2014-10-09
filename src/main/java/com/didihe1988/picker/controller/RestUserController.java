@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +31,8 @@ import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.model.form.LoginForm;
 import com.didihe1988.picker.model.form.RegisterForm;
 import com.didihe1988.picker.model.json.AnswerJson;
+import com.didihe1988.picker.model.json.NoteJson;
+import com.didihe1988.picker.model.json.QuestionJson;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
@@ -160,22 +161,6 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswers(@PathVariable int id) {
 		List<Answer> list = answerService.getAnswerListByReplierId(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
-	}
-
-	/**
-	 * @description 回答过的问题 web端
-	 */
-	@RequestMapping(value = "/json/user/{id}/answers/{page}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getAnswersByPage(@PathVariable int id, @PathVariable int page) {
-		List<AnswerJson> list = new ArrayList<AnswerJson>();
-		/*
-		 * 之后添加一个由page决定的list
-		 */
-		List<Answer> answerList = answerService.getAnswerListByReplierId(id);
-		if (answerList != null) {
-
-		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
 	}
 
@@ -374,5 +359,63 @@ public class RestUserController {
 						Filter.MESSAGE_RELATED);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
+	}
+
+	/**
+	 * 
+	 * @description 回答过的问题 web端
+	 */
+	@RequestMapping(value = "/json/user/{userId}/answers/{page}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getAnswersByPage(@PathVariable int userId,
+			@PathVariable int page) {
+		int answerNum = userService.getUserById(userId).getAnswerNum();
+		int total_page = getTotalPage(answerNum);
+		int current_page = page;
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("answers", answerService.getAnswerJsons(userId, page));
+		jsonObject.put("total_page", total_page);
+		jsonObject.put("current_page", current_page);
+		return jsonObject.toString();
+	}
+
+	/*
+	 * http://localhost:8090/user/1/questions/1
+	 */
+	@RequestMapping(value = "/user/{userId}/questions/{page}", produces = "application/json")
+	public String getQuestionsByPage(@PathVariable int userId,
+			@PathVariable int page, HttpServletRequest request) {
+		int total_page = 3;
+		int current_page = 2;
+		List<Feed> questions = feedService.getFeedListByUserId(userId,
+				Feed.TYPE_QUESTION);
+		List<QuestionJson> list = new ArrayList<QuestionJson>();
+		for (Feed feed : questions) {
+			list.add(feed.toQuestionJson());
+		}
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("questions", list);
+		jsonObject.put("total_page", total_page);
+		jsonObject.put("current_page", current_page);
+		return jsonObject.toString();
+	}
+
+	/*
+	 * http://localhost:8090/user/1/questions/1
+	 */
+	@RequestMapping(value = "/json/user/{userId}/notes/{page}", produces = "application/json")
+	public String getNotessByPage(@PathVariable int userId,
+			@PathVariable int page, HttpServletRequest request) {
+		int noteNum = userService.getUserById(userId).getNoteNum();
+		int total_page = getTotalPage(noteNum);
+		int current_page = page;
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("notes", feedService.getNoteJsons(userId, page));
+		jsonObject.put("total_page", total_page);
+		jsonObject.put("current_page", current_page);
+		return jsonObject.toString();
+	}
+
+	private int getTotalPage(int num) {
+		return num / Constant.MAX_QUERYRESULT + 1;
 	}
 }

@@ -22,6 +22,8 @@ public interface FeedDao extends OperateValidation, NumOperation,
 	public List<Feed> queryFeedListByBookId(int bookId, int type);
 
 	public List<Feed> queryFeedListByUserId(int userId, int type);
+	
+	public List<Feed> queryFeedListByUserId(int userId, int type, int page);
 
 	public int getLatestFeedByBookId(int bookId, int type);
 
@@ -30,4 +32,6 @@ public interface FeedDao extends OperateValidation, NumOperation,
 	public List<Feed> queryFeedListForBrowse(int bookId);
 
 	public List<Feed> search(String string, int type);
+
+	
 }

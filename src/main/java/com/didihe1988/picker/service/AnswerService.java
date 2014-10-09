@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.dp.AnswerDp;
+import com.didihe1988.picker.model.json.AnswerJson;
 
 public interface AnswerService {
 	public int addAnswer(Answer answer);
@@ -37,5 +38,7 @@ public interface AnswerService {
 	public AnswerDp getAnswerDpByAnswerId(int id, int userId);
 
 	public List<AnswerDp> search(String content, int userId);
+
+	public List<AnswerJson> getAnswerJsons(int userId, int page);
 
 }

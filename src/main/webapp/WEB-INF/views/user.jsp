@@ -441,108 +441,38 @@
 					</div>
 					<div id="group_search_content"></div>
 				</div>
-				<!-- 
+
+
 				<div id="notes_panel" class="content_panel" style="display: none">
 					<div class="back_nav clear_fix">
 						<div class="go_back" onclick="panel_action($(this))">
-							<i class="icon-circle-arrow-left"></i> 返回
+							<i class="icon-circle-arrow-left"></i> 返回
 						</div>
 					</div>
 
-				
+					<!--动态加载-->
 					<div class="content" data-current_page="0">
-				
+						<!-- 加载圈 -->
 						<div class="wait">
 							<i class="icon-spinner icon-spin"></i>
 						</div>
 					</div>
 				</div>
-				 -->
-				<div id="notes_panel" class="content_panel" style="display: none">
-					<div class="back_nav clear_fix">
-						<div class="go_back" onclick="panel_action($(this))">
-							<i class="icon-circle-arrow-left"></i> 返回
-						</div>
-					</div>
-
-					<c:forEach var="note" items="${noteList}">
-						<div class="feeds">
-
-							<div class="browse_list_meta clear_fix">
-								<div class="title note">
-									<i class="icon-edit"></i>笔记：<a data-pjax href="/detail/11"><span
-										class="text">${note.title}</span></a>
-								</div>
-							</div>
-
-							<div class="browse_brief clear_fix">
-								<div>
-									<a href="{q.link}">
-										<div class="feed_text">${note.content}</div>
-									</a>
-								</div>
-							</div>
-							<div class="time">${note.date}</div>
-							<div style="clear: both"></div>
-						</div>
-					</c:forEach>
-				</div>
-				<div id="questions_panel" class="content_panel"
-					style="display: none">
-					<div class="back_nav clear_fix">
-						<div class="go_back" onclick="panel_action($(this))">
-							<i class="icon-circle-arrow-left"></i> 返回
-						</div>
-					</div>
-
-					<c:forEach var="question" items="${questionList}">
-						<div class="feeds">
-
-							<div class="browse_list_meta clear_fix">
-								<div class="title">
-									<a data-pjax href=<c:url value="/question/${question.id}"/>>${question.title}</a>
-								</div>
-							</div>
-							<div class="feed_tool_bar" style="margin-left: -15px">
-								<div class="line show_comment" data-action="get_comment">
-									<i class="icon-comments-alt"></i>${question.commentNum}条评论
-								</div>
-								<div class="line link" data-action="show_all_answer">
-									<a data-pjax href="/detail/11"><i class="icon-lightbulb"></i>${question.answerNum}个回答</a>
-								</div>
-							</div>
-							<div class="time">${question.date}</div>
-							<div style="clear: both"></div>
-
-						</div>
-					</c:forEach>
-				</div>
-
 
 				<div id="answers_panel" class="content_panel" style="display: none">
 					<div class="back_nav clear_fix">
 						<div class="go_back" onclick="panel_action($(this))">
-							<i class="icon-circle-arrow-left"></i> 返回
+							<i class="icon-circle-arrow-left"></i> 返回
 						</div>
 					</div>
 
-					<c:forEach var="answer" items="${answerList}">
-						<div class="feeds">
-
-							<div class="browse_list_meta clear_fix">
-								<div class="title">
-									<a data-pjax href="{q.link}">${answer.questionName}</a>
-								</div>
-								<span class="time">${answer.date}</span>
-							</div>
-							<div style="clear: both"></div>
-							<div class="browse_brief clear_fix">
-								<a data-pjax href="{q.link}">
-									<div class="feed_text">${answer.content}</div>
-								</a>
-							</div>
+					<!--动态加载-->
+					<div class="content" data-current_page="0">
+						<!-- 加载圈 -->
+						<div class="wait">
+							<i class="icon-spinner icon-spin"></i>
 						</div>
-					</c:forEach>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -556,7 +486,69 @@
                     <div class="group_bar">
                         <span class="left">{group.number_of_people}位成员</span>
                         <span class="left"><a href="{group.join_link}">+申请加入</a></span>
-                        <span class="time">创建于{group.create_date}</span>
+                        <span class="time">创建于{group.create_date}</span>
+                    </div>
+                    {hack.s} -->
+				</div>
+			</div>
+
+			<div id="questions_feed_template">
+				<div class="feeds">
+					<!-- {hack.e}
+                    <div class="browse_list_meta clear_fix">
+                        <div class="title">
+                            <a data-pjax href="{q.link}">{q.title}</a>
+                        </div>
+                    </div>
+                    <div class="feed_tool_bar" style="margin-left: -15px">
+                        <div class="line show_comment" data-action="get_comment"><i class="icon-comments-alt"></i>{q.comment_cnt}条评论</div>
+                        <div class="line link" data-action="show_all_answer"><a data-pjax href="/detail/11"><i class="icon-lightbulb"></i>{q.answers_cnt}个回答</a></div>
+                    </div>
+                    <div class="time">{q.time}</div>
+                    <div style="clear: both"></div>
+                    {hack.s} -->
+				</div>
+			</div>
+
+			<div id="answers_feed_with_no_picture_template">
+				<div class="feeds">
+					<!-- {hack.e}
+                    <div class="browse_list_meta clear_fix">
+                        <div class="title">
+                            <a data-pjax href="{q.link}">{q.title}</a>
+                        </div>
+                        <span class="time">{q.time}</span>
+                    </div>
+                    <div style="clear: both"></div>
+                    <div class="browse_brief clear_fix">
+                        <a data-pjax href="{q.link}">
+                            <div class="feed_text">{q.brief}</div>
+                        </a>
+                    </div>
+                    {hack.s} -->
+				</div>
+			</div>
+
+			<div id="answers_feed_with_picture_template">
+				<div class="feeds">
+					<!-- {hack.e}
+                    <div class="browse_list_meta clear_fix">
+                        <div class="title">
+                            <a data-pjax href="{q.link}">{q.title}</a>
+                        </div>
+                        <span class="time">{q.time}</span>
+                    </div>
+                    <div style="clear: both"></div>
+                    <div class="browse_brief clear_fix">
+                        <div class="feed_text_wrap">
+                            <a data-pjax href="{q.link}">
+                                <div class="feed_text">{q.brief}</div>
+                            </a>
+                        </div>
+                        <div style="width: 2%; height: 1px; float: left"></div>
+                        <div class="feed_picture">
+                            <img src="{q.picture}">
+                        </div>
                     </div>
                     {hack.s} -->
 				</div>
@@ -567,21 +559,21 @@
 					<!-- {hack.e}
                     <div class="browse_list_meta clear_fix">
                         <div class="title note">
-                            <i class="icon-edit"></i>笔记
+                            <i class="icon-edit"></i>笔记：<a data-pjax href="/detail/11"><span class="text">{q.title}</span></a>
                         </div>
                     </div>
                     <div class="browse_brief clear_fix">
                         <div class="feed_text_wrap">
-                            <a href="{note.link}">
-                                <div class="feed_text">{note.brief}</div>
+                            <a href="{q.link}">
+                                <div class="feed_text">{q.brief}</div>
                             </a>
                         </div>
                         <div style="width: 2%; height: 1px; float: left"></div>
                         <div class="feed_picture">
-                            <img src="{note.picture}">
+                            <img src="{q.picture}">
                         </div>
                     </div>
-                    <div class="time">{note.time}</div>
+                    <div class="time">{q.time}</div>
                     <div style="clear: both"></div>
                     {hack.s} -->
 				</div>
@@ -592,18 +584,18 @@
 					<!-- {hack.e}
                     <div class="browse_list_meta clear_fix">
                         <div class="title note">
-                            <i class="icon-edit"></i>笔记
+                            <i class="icon-edit"></i>笔记：<a data-pjax href="/detail/11"><span class="text">{q.title}</span></a>
                         </div>
                     </div>
 
                     <div class="browse_brief clear_fix">
                         <div>
-                            <a href="{note.link}">
-                                <div class="feed_text">{note.brief}</div>
+                            <a href="{q.link}">
+                                <div class="feed_text">{q.brief}</div>
                             </a>
                         </div>
                     </div>
-                    <div class="time">{note.time}</div>
+                    <div class="time">{q.time}</div>
                     <div style="clear: both"></div>
                     {hack.s} -->
 				</div>

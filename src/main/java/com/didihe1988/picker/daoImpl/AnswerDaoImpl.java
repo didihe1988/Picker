@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.model.Answer;
 
@@ -102,6 +103,18 @@ public class AnswerDaoImpl implements AnswerDao {
 		String hql = "from Answer as a where a.replierId=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Answer> queryAnswerByReplierId(int id, int page) {
+		// TODO Auto-generated method stub
+		String hql = "from Answer as a where a.replierId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		query.setFirstResult(Constant.MAX_QUERYRESULT * (page - 1));
+		query.setMaxResults(Constant.MAX_QUERYRESULT);
 		return query.list();
 	}
 

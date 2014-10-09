@@ -20,6 +20,7 @@ import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.service.FeedService;
 
 @Service
@@ -246,6 +247,18 @@ public class FeedServiceImpl implements FeedService {
 	public List<Feed> search(String string, int type) {
 		// TODO Auto-generated method stub
 		return feedDao.search(string, type);
+	}
+
+	@Override
+	public List<NoteJson> getNoteJsons(int userId, int page) {
+		// TODO Auto-generated method stub
+		List<Feed> noteList = feedDao.queryFeedListByUserId(userId,
+				Feed.TYPE_NOTE, page);
+		List<NoteJson> list = new ArrayList<NoteJson>();
+		for (Feed feed : noteList) {
+			list.add(feed.toNoteJson());
+		}
+		return list;
 	}
 
 }
