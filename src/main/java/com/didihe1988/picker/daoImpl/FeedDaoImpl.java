@@ -106,7 +106,7 @@ public class FeedDaoImpl implements FeedDao {
 	public List<Feed> queryFeedListByBookId(int bookId, int type) {
 		// TODO Auto-generated method stub
 		String hql = "from Feed as f where f.bookId=?";
-		addTypeConstrain(hql, type);
+		hql=addTypeConstrain(hql, type);
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		return query.list();
@@ -117,7 +117,7 @@ public class FeedDaoImpl implements FeedDao {
 	public List<Feed> queryFeedListByUserId(int userId, int type) {
 		// TODO Auto-generated method stub
 		String hql = "from Feed as f where f.userId=?";
-		addTypeConstrain(hql, type);
+		hql=addTypeConstrain(hql, type);
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
 		return query.list();
@@ -128,7 +128,7 @@ public class FeedDaoImpl implements FeedDao {
 	public List<Feed> queryFeedListByUserId(int userId, int type, int page) {
 		// TODO Auto-generated method stub
 		String hql = "from Feed as f where f.userId=?";
-		addTypeConstrain(hql, type);
+		hql=addTypeConstrain(hql, type);
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
 		query.setFirstResult(Constant.MAX_QUERYRESULT * (page - 1));
@@ -140,16 +140,17 @@ public class FeedDaoImpl implements FeedDao {
 	public int getLatestFeedByBookId(int bookId, int type) {
 		// TODO Auto-generated method stub
 		String hql = "select max(f.id) from Feed as f where f.bookId=?";
-		addTypeConstrain(hql, type);
+		hql=addTypeConstrain(hql, type);
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		return (Integer) query.uniqueResult();
 	}
 
-	private void addTypeConstrain(String hql, int type) {
+	private String addTypeConstrain(String hql, int type) {
 		if (type == Feed.TYPE_NOTE || type == Feed.TYPE_QUESTION) {
 			hql += " and f.type =" + type;
 		}
+		return hql;
 	}
 
 	@Override

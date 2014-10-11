@@ -39,4 +39,15 @@ public class RelatedImageDaoImpl implements RelatedImageDao {
 		return query.list();
 	}
 
+	@Override
+	public RelatedImage queryFirstRelatedImagesByKey(int relatedId, int type) {
+		// TODO Auto-generated method stub
+		String hql = "from RelatedImage as r where r.relatedId=? and r.type=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, relatedId);
+		query.setInteger(1, type);
+		query.setMaxResults(1);
+		return (RelatedImage) query.uniqueResult();
+	}
+
 }

@@ -216,8 +216,15 @@ public class AnswerServiceImpl implements AnswerService {
 				.queryAnswerByReplierId(userId, page);
 		List<AnswerJson> list = new ArrayList<AnswerJson>();
 		for (Answer answer : answerList) {
+			RelatedImage relatedImage = relatedImageDao
+					.queryFirstRelatedImagesByKey(answer.getId(),
+							RelatedImage.ANSWER_IMAGE);
+			String imageUrl = "";
+			if (relatedImage != null) {
+				imageUrl = relatedImage.getImageUrl();
+			}
 			Feed feed = feedDao.queryFeedById(answer.getQuestionId());
-			AnswerJson answerJson = new AnswerJson(feed.getTitle(), null,
+			AnswerJson answerJson = new AnswerJson(feed.getTitle(), imageUrl,
 					"/detail/" + answer.getQuestionId(), answer.getDate(),
 					answer.getContent());
 			list.add(answerJson);

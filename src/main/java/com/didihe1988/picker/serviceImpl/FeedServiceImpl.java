@@ -21,6 +21,7 @@ import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
+import com.didihe1988.picker.model.json.QuestionJson;
 import com.didihe1988.picker.service.FeedService;
 
 @Service
@@ -256,7 +257,39 @@ public class FeedServiceImpl implements FeedService {
 				Feed.TYPE_NOTE, page);
 		List<NoteJson> list = new ArrayList<NoteJson>();
 		for (Feed feed : noteList) {
-			list.add(feed.toNoteJson());
+			RelatedImage relatedImage = relatedImageDao
+					.queryFirstRelatedImagesByKey(feed.getId(),
+							RelatedImage.NOTE_IMAGE);
+			String imageUrl = "";
+			if (relatedImage != null) {
+				imageUrl = relatedImage.getImageUrl();
+			}
+			NoteJson noteJson = new NoteJson(feed.getTitle(), imageUrl,
+					"/detail/" + feed.getId(), feed.getDate(),
+					feed.getContent());
+			list.add(noteJson);
+		}
+		return list;
+	}
+
+	@Override
+	public List<QuestionJson> getQuestoinJsons(int userId, int page) {
+		// TODO Auto-generated method stub
+		List<Feed> questionList = feedDao.queryFeedListByUserId(userId,
+				Feed.TYPE_QUESTION, page);
+		List<QuestionJson> list = new ArrayList<QuestionJson>();
+		for (Feed feed : questionList) {
+			RelatedImage relatedImage = relatedImageDao
+					.queryFirstRelatedImagesByKey(feed.getId(),
+							RelatedImage.QUESTION_IMAGE);
+			String imageUrl = "";
+			if (relatedImage != null) {
+				imageUrl = relatedImage.getImageUrl();
+			}
+			QuestionJson questionJson = new QuestionJson(feed.getTitle(),
+					imageUrl, "/detail/" + feed.getId(), feed.getDate(),
+					feed.getCommentNum(), feed.getAnswerNum());
+			list.add(questionJson);
 		}
 		return list;
 	}

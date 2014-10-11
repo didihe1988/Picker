@@ -45,4 +45,6 @@ public interface FeedService {
 	public List<Feed> search(String string, int type);
 
 	public List<NoteJson> getNoteJsons(int userId, int page);
+
+	public List<QuestionJson> getQuestoinJsons(int userId, int page);
 }

@@ -13,5 +13,7 @@ public interface RelatedImageDao {
 	// public int updateRelatedImage(RelatedImage relatedImage);
 
 	public List<RelatedImage> queryRelatedImagesByKey(int relatedId, int type);
+	
+	public RelatedImage queryFirstRelatedImagesByKey(int relatedId, int type);
 
 }

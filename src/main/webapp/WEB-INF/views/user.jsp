@@ -140,28 +140,54 @@
 					<!--<img src="/static/images/big_photo/0.png">-->
 					<img src="<c:url value="${user.avatarUrl}"/>" />
 				</div>
-				<div id="user_action">
-					<div class="row">
+				<c:choose>
+					<c:when test="${(user.id!=curUserId)&&(user.follow==false)}">
+						<div id="user_action">
+							<div class="row">
+								<!-- *** change here *** -->
+								<div class="col-50" onclick="show_message_panel()">
+									<div class="split">
+										<i class="icon-envelope-alt"></i>发私信
+									</div>
+								</div>
+								<!-- *** change end *** -->
 
-						<!-- *** change here *** -->
-						<div class="col-50" onclick="show_message_panel()">
-							<div class="split">
-								<i class="icon-envelope-alt"></i>发私信
+								<div class="col-50">
+									<div class="follow_action" onclick="do_follow($(this))">
+										<i class="icon-plus"></i>加关注
+									</div>
+									<div class="cancel_follow" style="display: none"
+										onclick="cancel_follow($(this))">
+										<i class="icon-ok"></i>取消关注
+									</div>
+								</div>
 							</div>
 						</div>
-						<!-- *** change end *** -->
+					</c:when>
+					<c:when test="${(user.id!=curUserId)&&(user.follow==true)}">
+						<div id="user_action">
+							<div class="row">
+								<!-- *** change here *** -->
+								<div class="col-50" onclick="show_message_panel()">
+									<div class="split">
+										<i class="icon-envelope-alt"></i>发私信
+									</div>
+								</div>
+								<!-- *** change end *** -->
 
-						<div class="col-50">
-							<div class="follow_action" onclick="do_follow($(this))">
-								<i class="icon-plus"></i>加关注
-							</div>
-							<div class="cancel_follow" style="display: none"
-								onclick="cancel_follow($(this))">
-								<i class="icon-ok"></i>取消关注
+								<div class="col-50">
+									<div class="follow_action" onclick="do_follow($(this))"
+										style="display: none">
+										<i class="icon-plus"></i>加关注
+									</div>
+									<div class="cancel_follow" onclick="cancel_follow($(this))">
+										<i class="icon-ok"></i>取消关注
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
+					</c:when>
+				</c:choose>
 				<div id="labels">
 					<div class="info">
 						<span>加入<c:out value='${user.circleNum}' />个圈子
@@ -444,6 +470,23 @@
 
 
 				<div id="notes_panel" class="content_panel" style="display: none">
+					<div class="back_nav clear_fix">
+						<div class="go_back" onclick="panel_action($(this))">
+							<i class="icon-circle-arrow-left"></i> 返回
+						</div>
+					</div>
+
+					<!--动态加载-->
+					<div class="content" data-current_page="0">
+						<!-- 加载圈 -->
+						<div class="wait">
+							<i class="icon-spinner icon-spin"></i>
+						</div>
+					</div>
+				</div>
+
+				<div id="questions_panel" class="content_panel"
+					style="display: none">
 					<div class="back_nav clear_fix">
 						<div class="go_back" onclick="panel_action($(this))">
 							<i class="icon-circle-arrow-left"></i> 返回

@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.service.FeedService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -58,6 +59,14 @@ public class FeedServiceTest {
 	public void test3() {
 		Feed feed = feedService.getFeedById(8);
 		System.out.print(feed.getContent());
+	}
+
+	
+
+	@Test
+	public void test4() {
+		List<NoteJson> list=feedService.getNoteJsons(1, 1);
+		System.out.println(list);
 	}
 
 }

@@ -40,4 +40,11 @@ public class NoteJson extends BaseJson {
 			return new NoteJson();
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "NoteJson [brief=" + brief + ", title=" + title + ", picture="
+				+ picture + ", link=" + link + ", time=" + time + "]";
+	}
+
 }

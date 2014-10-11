@@ -365,7 +365,7 @@ public class RestUserController {
 	 * 
 	 * @description 回答过的问题 web端
 	 */
-	@RequestMapping(value = "/json/user/{userId}/answers/{page}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/user/{userId}/answers/{page}", produces = "application/json")
 	public String getAnswersByPage(@PathVariable int userId,
 			@PathVariable int page) {
 		int answerNum = userService.getUserById(userId).getAnswerNum();
@@ -381,19 +381,15 @@ public class RestUserController {
 	/*
 	 * http://localhost:8090/user/1/questions/1
 	 */
-	@RequestMapping(value = "/user/{userId}/questions/{page}", produces = "application/json")
+
+	@RequestMapping(value = "/json/user/{userId}/questions/{page}", produces = "application/json")
 	public String getQuestionsByPage(@PathVariable int userId,
 			@PathVariable int page, HttpServletRequest request) {
-		int total_page = 3;
-		int current_page = 2;
-		List<Feed> questions = feedService.getFeedListByUserId(userId,
-				Feed.TYPE_QUESTION);
-		List<QuestionJson> list = new ArrayList<QuestionJson>();
-		for (Feed feed : questions) {
-			list.add(feed.toQuestionJson());
-		}
+		int questionNum = userService.getUserById(userId).getQuestionNum();
+		int total_page = getTotalPage(questionNum);
+		int current_page = page;
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("questions", list);
+		jsonObject.put("questions", feedService.getQuestoinJsons(userId, page));
 		jsonObject.put("total_page", total_page);
 		jsonObject.put("current_page", current_page);
 		return jsonObject.toString();

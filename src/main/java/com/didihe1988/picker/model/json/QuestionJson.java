@@ -62,6 +62,13 @@ public class QuestionJson extends BaseJson {
 		this.answers_cnt = answers_cnt;
 	}
 
+	@Override
+	public String toString() {
+		return "QuestionJson [comment_cnt=" + comment_cnt + ", answers_cnt="
+				+ answers_cnt + ", title=" + title + ", picture=" + picture
+				+ ", link=" + link + ", time=" + time + "]";
+	}
+
 	/*
 	 * public static QuestionJson getQuestionJsonFromQuestion(FeedDp feedDp) {
 	 * if (feedDp != null) { String imageUrl = ""; List<String> imageUrls =

@@ -98,4 +98,11 @@ public class RelatedImage implements Serializable {
 		this.type = type;
 		this.imageUrl = imageUrl;
 	}
+
+	@Override
+	public String toString() {
+		return "RelatedImage [id=" + id + ", relatedId=" + relatedId
+				+ ", type=" + type + ", imageUrl=" + imageUrl + "]";
+	}
+
 }
