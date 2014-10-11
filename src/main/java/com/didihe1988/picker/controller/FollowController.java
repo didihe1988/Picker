@@ -93,7 +93,7 @@ public class FollowController {
 		 */
 		if (sourceType == Follow.FOLLOW_USER) {
 			messageService.addMessageByRecerver(userId,
-					Message.MESSAGE_USER_FOLLOWED, followerId, userName,
+					Message.MESSAGE_FOLLOWEDUSER_FOLLOW, followerId, userName,
 					sourceId, Message.NULL_RelatedSourceContent);
 		}
 

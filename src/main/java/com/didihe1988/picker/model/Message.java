@@ -46,33 +46,45 @@ public class Message implements Serializable {
 	public static final int MESSAGE_FOLLOWED_ADDNOTE = 14;
 	public static final int MESSAGE_QUESTION_EDIT = 15;
 	public static final int MESSAGE_QUESTION_NEWANSWER = 16;
-	public static final int MESSAGE_USER_FOLLOWED = 17;
+	/*
+	 * 小明(被关注者)关注了XXX
+	 */
+	public static final int MESSAGE_FOLLOWEDUSER_FOLLOW = 17;
 
 	/*
 	 * 用户相关的消息 用户在消息通知中接受
 	 */
+	// 你的问题有了新的回答
 	public static final int MESSAGE_YOUR_QUESTION_UPDATE = 18;
+	// 你的问题被点赞
 	public static final int MESSAGE_YOUR_QUESTION_FAVORITED = 19;
+	// 你的回答被点赞
 	public static final int MESSAGE_YOUR_ANSWER_FAVORITED = 20;
+	// 你的评论被点赞
 	public static final int MESSAGE_YOUR_COMMENT_FAVORITED = 21;
+	// 你的笔记被点赞
 	public static final int MESSAGE_YOUR_NOTE_FAVORITED = 22;
+	// 你的回答被评论
 	public static final int MESSAGE_YOUR_ANSWER_COMMENTED = 23;
+	// 你的问题被评论
 	public static final int MESSAGE_YOUR_QUESTION_COMMENTED = 24;
+	// 你被关注XXX了
+	public static final int MESSAGE_OTHERS_FOLLOW_YOU = 25;
 
 	/*
 	 * 用户动作产生的消息 在用户的最新动态里显示
 	 */
-	public static final int MESSAGE_USER_ADDQUESTION = 25;
-	public static final int MESSAGE_USER_ADDANSWER = 26;
-	public static final int MESSAGE_USER_ADD_QUESTIONCOMMENT = 27;
-	public static final int MESSAGE_USER_ADD_NOTECOMMENT = 28;
-	public static final int MESSAGE_USER_ADD_ANSWERCOMMENT = 29;
-	public static final int MESSAGE_USER_ADDNOTE = 30;
-	public static final int MESSAGE_USER_FOLLOW_OTHER = 31;
-	public static final int MESSAGE_USER_FAVORITE_QUESTION = 32;
-	public static final int MESSAGE_USER_FAVORITE_NOTE = 33;
-	public static final int MESSAGE_USER_FAVORITE_ANSWER = 34;
-	public static final int MESSAGE_USER_FAVORITE_COMMENT = 35;
+	public static final int MESSAGE_USER_ADDQUESTION = 26;
+	public static final int MESSAGE_USER_ADDANSWER = 27;
+	public static final int MESSAGE_USER_ADD_QUESTIONCOMMENT = 28;
+	public static final int MESSAGE_USER_ADD_NOTECOMMENT = 29;
+	public static final int MESSAGE_USER_ADD_ANSWERCOMMENT = 30;
+	public static final int MESSAGE_USER_ADDNOTE = 31;
+	public static final int MESSAGE_USER_FOLLOW_OTHER = 32;
+	public static final int MESSAGE_USER_FAVORITE_QUESTION = 33;
+	public static final int MESSAGE_USER_FAVORITE_NOTE = 34;
+	public static final int MESSAGE_USER_FAVORITE_ANSWER = 35;
+	public static final int MESSAGE_USER_FAVORITE_COMMENT = 36;
 
 	/*
 	 * public static final int MESSAGE_UNCHECKED = 8; public static final int
@@ -94,12 +106,12 @@ public class Message implements Serializable {
 				endType = 17;
 				break;
 			case 1:
-				startType = 25;
-				endType = 35;
+				startType = 26;
+				endType = 36;
 				break;
 			case 2:
 				startType = 18;
-				endType = 24;
+				endType = 25;
 				break;
 			default:
 				startType = 1;

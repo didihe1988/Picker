@@ -151,39 +151,9 @@ public class RestQuestionController {
 	@RequestMapping(value = "/json/question/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = HttpUtils.getSessionUserName(request);
 		int status = favoriteService.incrementQuestionFavorite(id, userId);
-
 		if (status == Status.SUCCESS) {
-			/*
-			 * XXX赞了您的问题
-			 */
-			// Question question = questionService.getQuestionById(id);
-			Feed feed = feedService.getFeedById(id);
-			String relatedSourceContent = StringUtils.confineStringLength(
-					feed.getContent(), Constant.MESSAGE_LENGTH);
-			/*
-			 * messageService.addMessageByRecerver(question.getAskerId(),
-			 * Message.MESSAGE_YOUR_QUESTION_FAVORITED, userId, userName, id,
-			 * relatedSourceContent);
-			 */
-
-			/*
-			 * 通知关注者 小明 (被关注者)赞了XXX的问题
-			 */
-			/*
-			 * messageService.addMessageByFollowedUser(
-			 * Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, userId, userName, id,
-			 * relatedSourceContent);
-			 */
-			/*
-			 * 用户动态
-			 */
-			/*
-			 * messageService.addMessageByRecerver(Message.NULL_receiverId,
-			 * Message.MESSAGE_USER_FAVORITE_QUESTION, userId, userName, id,
-			 * relatedSourceContent);
-			 */
+			produceSubscribeMessage(id, userId);
 		}
 
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -241,7 +211,6 @@ public class RestQuestionController {
 		 * 通知关注者 小明 (被关注者)提出了一个问题
 		 */
 		int userId = HttpUtils.getSessionUserId(request);
-		// String userName = HttpUtils.getSessionUserName(request);
 		String userName = userService.getUserById(userId).getUsername();
 		int feedId = feedService.getLatestFeedByBookId(feed.getBookId(),
 				Feed.TYPE_QUESTION);
@@ -256,6 +225,36 @@ public class RestQuestionController {
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDQUESTION, userId, userName, feedId,
 				relatedSourceContent);
+	}
+
+	private void produceSubscribeMessage(int feedId, int curUserId) {
+		/*
+		 * XXX赞了您的问题
+		 */
+		String curUserName = userService.getUserById(curUserId).getUsername();
+		Feed feed = feedService.getFeedById(feedId);
+		String relatedSourceContent = StringUtils.confineStringLength(
+				feed.getContent(), Constant.MESSAGE_LENGTH);
+		/*
+		 * 与我相关
+		 */
+		messageService.addMessageByRecerver(feed.getUserId(),
+				Message.MESSAGE_YOUR_QUESTION_FAVORITED, curUserId,
+				curUserName, feedId, relatedSourceContent);
+		/*
+		 * 通知关注者 小明 (被关注者)赞了XXX的问题
+		 */
+		messageService.addMessageByFollowedUser(
+				Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, curUserId,
+				curUserName, feedId, relatedSourceContent);
+		/*
+		 * 用户动态
+		 */
+
+		messageService.addMessageByRecerver(Message.NULL_receiverId,
+				Message.MESSAGE_USER_FAVORITE_QUESTION, curUserId, curUserName,
+				feedId, relatedSourceContent);
+
 	}
 
 	private void addQuestionImage(Feed feed) {

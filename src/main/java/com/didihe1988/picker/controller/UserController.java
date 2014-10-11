@@ -23,6 +23,7 @@ import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
+import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.dp.FeedDp;
@@ -35,6 +36,7 @@ import com.didihe1988.picker.service.CircleMemberService;
 import com.didihe1988.picker.service.CircleService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.FollowService;
+import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
@@ -64,6 +66,9 @@ public class UserController {
 
 	@Autowired
 	private CircleMemberService circleMemberService;
+
+	@Autowired
+	private MessageService messageService;
 
 	/**
 	 * @description 用户登陆 enter.jsp
@@ -187,18 +192,23 @@ public class UserController {
 	/**
 	 * @description 显示我的消息
 	 */
-	@RequestMapping(value = "/user/{id}/message")
-	public String getUserMessage(@PathVariable int id) {
+	@RequestMapping(value = "/message")
+	public String message(Model model, HttpServletRequest request) {
+		int userId = HttpUtils.getSessionUserId(request);
+		model.addAttribute("messageList", messageService
+				.getMessageDpByReceiverIdAndFilter(userId,
+						Message.Filter.MESSAGE_RELATED));
 		return "message";
 	}
 
 	/**
 	 * @description 显示我的圈子
 	 */
-	@RequestMapping(value = "/user/{id}/group")
-	public String getUserGroup(@PathVariable int id, Model model) {
-		  model.addAttribute("circleList",
-		  circleMemberService.getCircleWebDpListByMemberId(id));
+	@RequestMapping(value = "/group")
+	public String getUserGroup(Model model, HttpServletRequest request) {
+		int curUserId = HttpUtils.getSessionUserId(request);
+		model.addAttribute("circleList",
+				circleMemberService.getCircleWebDpListByMemberId(curUserId));
 		return "group_index";
 	}
 

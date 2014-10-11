@@ -60,11 +60,11 @@
 					</div>
 					<div class="col-33">
 						<span class="nav_link"><a data-pjax
-							href=<c:url value="/user/${user.id}/group"/>>圈子</a></span>
+							href=<c:url value="/group"/>>圈子</a></span>
 					</div>
 					<div class="col-33">
 						<span id="nav_msg" class="nav_link"><a data-pjax
-							href=<c:url value="/user/${user.id}/message"/>>消息</a></span> <span
+							href=<c:url value="/message"/>>消息</a></span> <span
 							id="nav_msg_cnt">0</span>
 					</div>
 				</div>

@@ -45,7 +45,7 @@ public class RestNoteController {
 
 	@Autowired
 	private RelatedImageService relatedImageService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -83,36 +83,40 @@ public class RestNoteController {
 	@RequestMapping(value = "/json/note/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = HttpUtils.getSessionUserName(request);
 		int status = favoriteService.incrementNoteFavorite(id, userId);
-
 		if (status == Status.SUCCESS) {
-			/*
-			 * XXX赞了您的笔记
-			 */
-			Feed feed = feedService.getFeedById(id);
-			String relatedSourceContent = StringUtils.confineStringLength(
-					feed.getContent(), Constant.MESSAGE_LENGTH);
-			messageService.addMessageByRecerver(feed.getUserId(),
-					Message.MESSAGE_YOUR_ANSWER_FAVORITED, userId, userName,
-					id, relatedSourceContent);
-
-			/*
-			 * 通知关注者 小明 (被关注者)赞了XXX的笔记
-			 */
-
-			messageService.addMessageByFollowedUser(
-					Message.MESSAGE_FOLLOWED_FAVORITE_NOTE, userId, userName,
-					id, relatedSourceContent);
-			/*
-			 * 用户动态
-			 */
-
-			messageService.addMessageByRecerver(Message.NULL_receiverId,
-					Message.MESSAGE_USER_FAVORITE_NOTE, userId, userName, id,
-					relatedSourceContent);
+			produceSubscribeMessage(id, userId);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	private void produceSubscribeMessage(int feedId, int curUserId) {
+		/*
+		 * XXX赞了您的问题
+		 */
+		String curUserName = userService.getUserById(curUserId).getUsername();
+		Feed feed = feedService.getFeedById(feedId);
+		String relatedSourceContent = StringUtils.confineStringLength(
+				feed.getContent(), Constant.MESSAGE_LENGTH);
+		/*
+		 * 与我相关
+		 */
+		messageService.addMessageByRecerver(feed.getUserId(),
+				Message.MESSAGE_YOUR_NOTE_FAVORITED, curUserId, curUserName,
+				feedId, relatedSourceContent);
+		/*
+		 * 通知关注者 小明 (被关注者)赞了XXX的问题
+		 */
+		messageService.addMessageByFollowedUser(
+				Message.MESSAGE_FOLLOWED_FAVORITE_NOTE, curUserId, curUserName,
+				feedId, relatedSourceContent);
+		/*
+		 * 用户动态
+		 */
+
+		messageService.addMessageByRecerver(Message.NULL_receiverId,
+				Message.MESSAGE_USER_FAVORITE_NOTE, curUserId, curUserName,
+				feedId, relatedSourceContent);
 	}
 
 	/**
@@ -129,9 +133,9 @@ public class RestNoteController {
 
 	@RequestMapping(value = "/json/note/add", method = RequestMethod.POST, headers = "Accept=application/json")
 	public String add(@RequestBody Feed feed, HttpServletRequest request) {
-		if(!HttpUtils.isSessionUserIdExists(request))
-		{
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,Status.NULLSESSION);
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
 		}
 		if (!feed.checkFieldValidation()) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
@@ -145,9 +149,8 @@ public class RestNoteController {
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
-	
-	private void setNote(Feed feed,HttpServletRequest request)
-	{
+
+	private void setNote(Feed feed, HttpServletRequest request) {
 		feed.setType(Feed.TYPE_QUESTION);
 		feed.setUserId(HttpUtils.getSessionUserId(request));
 		feed.setBriefByContent();
@@ -163,8 +166,8 @@ public class RestNoteController {
 
 	private void produceNoteMessage(Feed feed, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		//String userName = HttpUtils.getSessionUserName(request);
-		String userName=userService.getUserById(userId).getUsername();
+		// String userName = HttpUtils.getSessionUserName(request);
+		String userName = userService.getUserById(userId).getUsername();
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getTitle(), Constant.MESSAGE_LENGTH);
 		int noteId = feedService.getLatestFeedByBookId(feed.getBookId(),

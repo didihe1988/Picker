@@ -97,32 +97,74 @@
 			</div>
 
 			<div id="message_list">
-				<div class="message clear_fix">
-					<div style="width: 40px">
-						<img src="/static/images/photo/7.jpg">
-					</div>
-					<div style="width: 860px">
-						<span><a href="#">维鲁斯</a></span> <span>赞了你的答案</span> <span><a
-							href="#">我是谁？从哪来？到哪去？</a></span>
-					</div>
-				</div>
-				<div class="message clear_fix">
-					<div style="width: 40px">
-						<img src="/static/images/photo/7.jpg">
-					</div>
-					<div style="width: 860px">
-						<span><a href="#">维鲁斯</a></span> <span>关注了你</span>
-					</div>
-				</div>
-				<div class="message clear_fix">
-					<div style="width: 40px">
-						<img src="/static/images/photo/7.jpg">
-					</div>
-					<div style="width: 860px">
-						<span><a href="#">维鲁斯</a></span> <span>回答了问题</span> <span><a
-							href="#">我是谁？从哪来？到哪去？</a></span>
-					</div>
-				</div>
+				<c:forEach var="message" items="${messageList}">
+					<c:choose>
+						<c:when test="${message.type==18 }">
+							<div class="message clear_fix">
+								<div style="width: 40px">
+									<img src="<c:url value="${message.producerAvatarUrl}"/>">
+								</div>
+								<div style="width: 860px">
+									<span><a
+										href="<c:url value="/user/${message.producerId}"/>">${message.producerName}</a></span>
+									<span>回答了你的问题</span> <span><a
+										href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.relatedSourceContent}</a></span>
+								</div>
+							</div>
+						</c:when>
+						<c:when test="${message.type==19 }">
+							<div class="message clear_fix">
+								<div style="width: 40px">
+									<img src="<c:url value="${message.producerAvatarUrl}"/>">
+								</div>
+								<div style="width: 860px">
+									<span><a
+										href="<c:url value="/user/${message.producerId}"/>">${message.producerName}</a></span>
+									<span>赞了你的问题</span> <span><a
+										href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.relatedSourceContent}</a></span>
+								</div>
+							</div>
+						</c:when>
+						<c:when test="${message.type==20}">
+							<div class="message clear_fix">
+								<div style="width: 40px">
+									<img src="<c:url value="${message.producerAvatarUrl}"/>">
+								</div>
+								<div style="width: 860px">
+									<span><a
+										href="<c:url value="/user/${message.producerId}"/>">${message.producerName}</a></span>
+									<span>赞了你的答案</span> <span><a
+										href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.relatedSourceContent}</a></span>
+								</div>
+							</div>
+						</c:when>
+						<c:when test="${message.type==22}">
+							<div class="message clear_fix">
+								<div style="width: 40px">
+									<img src="<c:url value="${message.producerAvatarUrl}"/>">
+								</div>
+								<div style="width: 860px">
+									<span><a
+										href="<c:url value="/user/${message.producerId}"/>">${message.producerName}</a></span>
+									<span>赞了你的笔记</span> <span><a href="#">${message.relatedSourceContent}</a></span>
+								</div>
+							</div>
+						</c:when>
+
+						<c:when test="${message.type==25 }">
+							<div class="message clear_fix">
+								<div style="width: 40px">
+									<img src="<c:url value="${message.producerAvatarUrl}"/>">
+								</div>
+								<div style="width: 860px">
+									<span><a
+										href="<c:url value="/user/${message.producerId}"/>">${message.producerName}</a></span>
+									<span>关注了你</span>
+								</div>
+							</div>
+						</c:when>
+					</c:choose>
+				</c:forEach>
 			</div>
 		</div>
 		<!--xx**-->

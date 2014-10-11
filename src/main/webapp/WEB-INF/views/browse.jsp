@@ -111,7 +111,7 @@
 								<div class="feeds">
 									<div class="browse_list_meta clear_fix">
 										<div class="title">
-											<a data-pjax href="/detail/777">${feed.title}</a>
+											<a data-pjax href="<c:url value="/detail/${feed.id}"/>">${feed.title}</a>
 										</div>
 										<div class="photo">
 											<img src=<c:url value="${feed.userAvatarUrl}"/>>

@@ -22,6 +22,7 @@ import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
+import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
@@ -44,6 +45,7 @@ import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
+import com.didihe1988.picker.utils.StringUtils;
 
 @RestController
 public class RestUserController {
@@ -310,7 +312,36 @@ public class RestUserController {
 		int userId = HttpUtils.getSessionUserId(request);
 		Follow follow = new Follow(Follow.FOLLOW_USER, userId, id);
 		int status = followService.addFollow(follow);
+		if (status == Status.SUCCESS) {
+			produceFollowMessage(follow);
+		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	private void produceFollowMessage(Follow follow) {
+		System.out.println("add Follow Message");
+		int followedId = follow.getSourceId();
+		int followerId = follow.getFollowerId();
+		String followerName = userService.getUserById(followerId).getUsername();
+		String followedName = userService.getUserById(followedId).getUsername();
+		/*
+		 * 与我相关
+		 */
+		messageService.addMessageByRecerver(followedId,
+				Message.MESSAGE_OTHERS_FOLLOW_YOU, followerId, followerName,
+				followedId, followedName);
+		/*
+		 * 通知关注者 小明(被关注者)关注了xxx
+		 */
+		messageService.addMessageByFollowedUser(
+				Message.MESSAGE_FOLLOWEDUSER_FOLLOW, followerId, followerName,
+				followedId, followedName);
+		/*
+		 * 用户动态
+		 */
+		messageService.addMessageByRecerver(Message.NULL_receiverId,
+				Message.MESSAGE_USER_FOLLOW_OTHER, followerId, followerName,
+				followedId, followedName);
 	}
 
 	/**
