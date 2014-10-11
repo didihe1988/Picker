@@ -329,19 +329,19 @@ public class RestUserController {
 		 */
 		messageService.addMessageByRecerver(followedId,
 				Message.MESSAGE_OTHERS_FOLLOW_YOU, followerId, followerName,
-				followedId, followedName);
+				followedId, followedName, Message.NULL_parentId);
 		/*
 		 * 通知关注者 小明(被关注者)关注了xxx
 		 */
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWEDUSER_FOLLOW, followerId, followerName,
-				followedId, followedName);
+				followedId, followedName, Message.NULL_parentId);
 		/*
 		 * 用户动态
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_FOLLOW_OTHER, followerId, followerName,
-				followedId, followedName);
+				followedId, followedName, Message.NULL_parentId);
 	}
 
 	/**
@@ -361,7 +361,7 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/{id}/footprint", method = RequestMethod.GET)
 	public String footprint(@PathVariable int id, HttpServletRequest request) {
 		List<MessageDp> messageList = messageService
-				.getMessageDpByReceiverIdAndFilter(id, Filter.MESSAGE_FOOTPRINT);
+				.getMessageDpByUserIdAndFilter(id, Filter.MESSAGE_FOOTPRINT);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
@@ -373,8 +373,7 @@ public class RestUserController {
 	public String dynamic(HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		List<MessageDp> messageList = messageService
-				.getMessageDpByReceiverIdAndFilter(userId,
-						Filter.MESSAGE_DYNAMIC);
+				.getMessageDpByUserIdAndFilter(userId, Filter.MESSAGE_DYNAMIC);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
@@ -386,8 +385,7 @@ public class RestUserController {
 	public String related(HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		List<MessageDp> messageList = messageService
-				.getMessageDpByReceiverIdAndFilter(userId,
-						Filter.MESSAGE_RELATED);
+				.getMessageDpByUserIdAndFilter(userId, Filter.MESSAGE_RELATED);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}

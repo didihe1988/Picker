@@ -110,11 +110,12 @@ public class UserController {
 	public String getUserProfile(@PathVariable int id, Model model,
 			HttpServletRequest request) {
 		if (userService.isUserExistsById(id)) {
-			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
-			/*
-			 * isFollowÔÝÊ±ÉèÎªfalse
-			 */
+			int curUserId = HttpUtils.getSessionUserId(request);
+			addBaseAttribute(id, model, curUserId);
 			model.addAttribute("bookList", getBooks(id));
+			model.addAttribute("messageList", messageService
+					.getFullMessageByUserIdAndFilter(curUserId,
+							Message.Filter.MESSAGE_FOOTPRINT));
 			return "user";
 		} else {
 			return "error";
@@ -196,7 +197,7 @@ public class UserController {
 	public String message(Model model, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		model.addAttribute("messageList", messageService
-				.getMessageDpByReceiverIdAndFilter(userId,
+				.getMessageDpByUserIdAndFilter(userId,
 						Message.Filter.MESSAGE_RELATED));
 		return "message";
 	}

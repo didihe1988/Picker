@@ -30,27 +30,24 @@ public class UserServiceTest {
 		int status = userService.addUser(user);
 		assertSame(Status.SUCCESS, status);
 	}
-	
+
 	/*
 	 * 改下密码，忘记之前的密码了
 	 */
-	
+
 	@Test
 	public void test1() {
-		User user=userService.getUserById(1);
-		user.setPassword(encryptByMD5("1075619206@qq.com", "mini2440"));
-		//不在updateUser中加密
-		//user.setPassword("mini2440");
-		int status=userService.updateUser(user);
+		User user = userService.getUserById(3);
+		// 不在updateUser中加密
+		user.setPassword(encryptByMD5(user.getEmail(), "mini2440"));
+		int status = userService.updateUser(user);
 		assertSame(Status.SUCCESS, status);
 	}
-	
-	
 
 	private String encryptByMD5(String email, String password) {
 		String passwordAfterMD5 = StringUtils.getMd5String(password);
 		String emailAfterMD5 = StringUtils.getMd5String(email);
 		return passwordAfterMD5 + emailAfterMD5.substring(0, 2);
 	}
-	
+
 }

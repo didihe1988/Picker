@@ -78,21 +78,21 @@ public class RestCommentController {
 					comment.getContent(), Constant.MESSAGE_LENGTH);
 			messageService.addMessageByRecerver(comment.getProducerId(),
 					Message.MESSAGE_YOUR_COMMENT_FAVORITED, userId, userName,
-					id, relatedSourceContent);
+					id, relatedSourceContent, Message.NULL_parentId);
 
 			/*
 			 * 通知关注者 小明 (被关注者)赞了XXX的评论
 			 */
 			messageService.addMessageByFollowedUser(
 					Message.MESSAGE_FOLLOWED_FAVORITE_COMMENT, userId,
-					userName, id, relatedSourceContent);
+					userName, id, relatedSourceContent, Message.NULL_parentId);
 
 			/*
 			 * 用户动态
 			 */
 			messageService.addMessageByRecerver(Message.NULL_receiverId,
 					Message.MESSAGE_USER_FAVORITE_COMMENT, userId, userName,
-					id, relatedSourceContent);
+					id, relatedSourceContent, Message.NULL_parentId);
 		}
 
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -137,7 +137,7 @@ public class RestCommentController {
 			messageService.addMessageByRecerver(feed.getUserId(),
 					Message.MESSAGE_YOUR_QUESTION_COMMENTED,
 					comment.getProducerId(), userName, commentId,
-					relatedSourceContent);
+					relatedSourceContent, Message.NULL_parentId);
 		}
 
 		/*
@@ -148,7 +148,7 @@ public class RestCommentController {
 					.getCommentedId());
 			messageService.addMessageByRecerver(answer.getReplierId(),
 					Message.MESSAGE_YOUR_ANSWER_COMMENTED, userId, userName,
-					commentId, relatedSourceContent);
+					commentId, relatedSourceContent, Message.NULL_parentId);
 		}
 
 		/*

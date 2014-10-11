@@ -64,8 +64,7 @@
 					</div>
 					<div class="col-33">
 						<span id="nav_msg" class="nav_link"><a data-pjax
-							href=<c:url value="/message"/>>消息</a></span> <span
-							id="nav_msg_cnt">0</span>
+							href=<c:url value="/message"/>>消息</a></span> <span id="nav_msg_cnt">0</span>
 					</div>
 				</div>
 			</div>
@@ -286,53 +285,182 @@
 					</div>
 
 					<div id="user_feeds">
-						<div class="user_feed">
-							<div>
-								<span class="user_feed_label">添加了回答 @ </span> <span
-									class="user_feed_book">《魔龙的狂舞》</span> <span class="time">1天前</span>
-							</div>
-							<div style="margin-top: 5px">
-								<div class="feed_question_title">
-									<a data-pjax href="/detail/777">千面神是不是真正的神祗？</a>
-								</div>
-								<div class="user_feed_brief"
-									onclick="user_feed_show_full($(this))">红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。</div>
-								<div class="user_feed_all">
-									红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
-									<div class="feed_all_roll_up" style="text-align: right"
-										onclick="user_feed_show_brief($(this))">
-										<a href="javascript: void(0)">收起</a>
+						<c:forEach var="message" items="${messageList}">
+							<c:choose>
+								<c:when test="${message.type==26 }">
+									<div class="user_feed">
+										<div>
+											<span class="user_feed_label">提出了问题 @ </span> <span
+												class="user_feed_book">《${message.parentName}》</span> <span
+												class="time">1天前</span>
+										</div>
+										<div style="margin-top: 5px">
+											<div class="feed_question_title">
+												<a data-pjax
+													href="<c:url value="/detail/${message.relatedSourceId}"/>">千面神是不是真正的神祗？</a>
+											</div>
+											<div class="user_feed_brief"
+												onclick="user_feed_show_full($(this))">
+												${message.relatedSourceContent}</div>
+											<div class="user_feed_all">
+												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+												<div class="feed_all_roll_up" style="text-align: right"
+													onclick="user_feed_show_brief($(this))">
+													<a href="javascript: void(0)">收起</a>
+												</div>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-						</div>
+								</c:when>
 
-						<div class="user_feed">
-							<div>
-								<span class="user_feed_label">>添加了笔记 @ </span> <span
-									class="user_feed_book">《灿烂千阳》</span> <span class="time">1天前</span>
-							</div>
-							<div style="margin-top: 5px">
-								<!--<div class="feed_question_title"><a href="#">åé¢ç¥æ¯ä¸æ¯çæ­£çç¥ç¥ï¼</a></div>-->
-								<div class="user_feed_brief"
-									onclick="user_feed_show_full($(this))">私生女玛丽雅姆在父亲的宅院门口苦苦守候，回到家却看到因绝望而上吊自杀的母亲。那天是她十五岁的生日，而童年嘎然而止。玛丽雅姆随后由父亲安排远嫁喀布尔四十多岁的鞋匠拉希德，几经流产，终因无法生子而长期生活在家暴阴影之下。
-
-									十八年后，少女莱拉的父母死于战火，青梅竹马的恋人也在战乱中失踪，举目无亲的莱拉别无选择，被迫嫁给拉希德。...</div>
-								<div class="user_feed_all">
-									私生女玛丽雅姆在父亲的宅院门口苦苦守候，回到家却看到因绝望而上吊自杀的母亲。那天是她十五岁的生日，而童年嘎然而止。玛丽雅姆随后由父亲安排远嫁喀布尔四十多岁的鞋匠拉希德，几经流产，终因无法生子而长期生活在家暴阴影之下。
-
-									十八年后，少女莱拉的父母死于战火，青梅竹马的恋人也在战乱中失踪，举目无亲的莱拉别无选择，被迫嫁给拉希德。两名阿富汗女性各自带着属于不同时代的悲惨回忆，共同经受着战乱、贫困与家庭暴力的重压，心底潜藏着的悲苦与忍耐相互交织，让她们曾经水火不容，又让她们缔结情谊，如母女般相濡以沫。然而，多年的骗局终有被揭穿的一天……
-
-									她们将做出如何的选择？她们的命运又将何去何从？
-
-									关于不可宽恕的时代，不可能的友谊以及不可毁灭的爱。《灿烂千阳》再次以阿富汗战乱为背景，时空跨越三十年，用细腻感人的笔触描绘了阿富汗旧家族制度下苦苦挣扎的妇女，她们所怀抱的希望、爱情...
-									<div class="feed_all_roll_up" style="text-align: right"
-										onclick="user_feed_show_brief($(this))">
-										<a href="javascript: void(0)">收起</a>
+								<c:when test="${message.type==27 }">
+									<div class="user_feed">
+										<div>
+											<span class="user_feed_label">回答了问题 @ </span> <span
+												class="user_feed_book">${message.parentName}</span> <span
+												class="time">1天前</span>
+										</div>
+										<div style="margin-top: 5px">
+											<div class="user_feed_brief"
+												onclick="user_feed_show_full($(this))">
+												${message.relatedSourceContent}</div>
+											<div class="user_feed_all">
+												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+												<div class="feed_all_roll_up" style="text-align: right"
+													onclick="user_feed_show_brief($(this))">
+													<a href="javascript: void(0)">收起</a>
+												</div>
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
-						</div>
+								</c:when>
+								<c:when test="${message.type==31 }">
+									<div class="user_feed">
+										<div>
+											<span class="user_feed_label">添加了笔记 @ </span> <span
+												class="user_feed_book">《${message.parentName}》</span> <span
+												class="time">1天前</span>
+										</div>
+										<div style="margin-top: 5px">
+											<div class="feed_question_title">
+												<a data-pjax
+													href="<c:url value="/detail/${message.relatedSourceId}"/>">千面神是不是真正的神祗？</a>
+											</div>
+											<div class="user_feed_brief"
+												onclick="user_feed_show_full($(this))">
+												${message.relatedSourceContent}</div>
+											<div class="user_feed_all">
+												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+												<div class="feed_all_roll_up" style="text-align: right"
+													onclick="user_feed_show_brief($(this))">
+													<a href="javascript: void(0)">收起</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:when>
+									<c:when test="${message.type==32 }">
+									<div class="user_feed">
+										<div>
+											<span class="user_feed_label">关注了用户 @ </span> <span
+												class="user_feed_book">《${message.parentName}》</span> <span
+												class="time">1天前</span>
+										</div>
+										<div style="margin-top: 5px">
+											<div class="feed_question_title">
+												<a data-pjax
+													href="<c:url value="/detail/${message.relatedSourceId}"/>">千面神是不是真正的神祗？</a>
+											</div>
+											<div class="user_feed_brief"
+												onclick="user_feed_show_full($(this))">
+												${message.relatedSourceContent}</div>
+											<div class="user_feed_all">
+												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+												<div class="feed_all_roll_up" style="text-align: right"
+													onclick="user_feed_show_brief($(this))">
+													<a href="javascript: void(0)">收起</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:when>
+								<c:when test="${message.type==33 }">
+									<div class="user_feed">
+										<div>
+											<span class="user_feed_label">赞了问题@ </span> <span
+												class="user_feed_book">《${message.parentName}》</span> <span
+												class="time">1天前</span>
+										</div>
+										<div style="margin-top: 5px">
+											<div class="feed_question_title">
+												<a data-pjax
+													href="<c:url value="/detail/${message.relatedSourceId}"/>">千面神是不是真正的神祗？</a>
+											</div>
+											<div class="user_feed_brief"
+												onclick="user_feed_show_full($(this))">
+												${message.relatedSourceContent}</div>
+											<div class="user_feed_all">
+												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+												<div class="feed_all_roll_up" style="text-align: right"
+													onclick="user_feed_show_brief($(this))">
+													<a href="javascript: void(0)">收起</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:when>
+								<c:when test="${message.type==34 }">
+									<div class="user_feed">
+										<div>
+											<span class="user_feed_label">赞了笔记@ </span> <span
+												class="user_feed_book">《${message.parentName}》</span> <span
+												class="time">1天前</span>
+										</div>
+										<div style="margin-top: 5px">
+											<div class="feed_question_title">
+												<a data-pjax
+													href="<c:url value="/detail/${message.relatedSourceId}"/>">千面神是不是真正的神祗？</a>
+											</div>
+											<div class="user_feed_brief"
+												onclick="user_feed_show_full($(this))">
+												${message.relatedSourceContent}</div>
+											<div class="user_feed_all">
+												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+												<div class="feed_all_roll_up" style="text-align: right"
+													onclick="user_feed_show_brief($(this))">
+													<a href="javascript: void(0)">收起</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:when>
+								<c:when test="${message.type==35 }">
+									<div class="user_feed">
+										<div>
+											<span class="user_feed_label">赞了回答@ </span> <span
+												class="user_feed_book">${message.parentName}</span> <span
+												class="time">1天前</span>
+										</div>
+										<div style="margin-top: 5px">
+											<div class="feed_question_title">
+												<a data-pjax
+													href="<c:url value="/detail/${message.relatedSourceId}"/>">千面神是不是真正的神祗？</a>
+											</div>
+											<div class="user_feed_brief"
+												onclick="user_feed_show_full($(this))">
+												${message.relatedSourceContent}</div>
+											<div class="user_feed_all">
+												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+												<div class="feed_all_roll_up" style="text-align: right"
+													onclick="user_feed_show_brief($(this))">
+													<a href="javascript: void(0)">收起</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</c:when>
+							</c:choose>
+						</c:forEach>
 					</div>
 				</div>
 

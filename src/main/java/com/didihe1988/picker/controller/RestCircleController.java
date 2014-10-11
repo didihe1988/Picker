@@ -20,7 +20,6 @@ import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.dp.CircleDp;
-import com.didihe1988.picker.model.dp.CircleWebDp;
 import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.service.CircleMemberService;
 import com.didihe1988.picker.service.CircleService;
@@ -150,7 +149,7 @@ public class RestCircleController {
 				.getEstablisherId());
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ADDCIRCLE, userId, userName, circleId,
-				relatedSourceContent);
+				relatedSourceContent, Message.NULL_parentId);
 	}
 
 	/*
@@ -189,6 +188,6 @@ public class RestCircleController {
 				circle.getName(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_JOINCIRCLE, userId, userName,
-				circleId, relatedSourceContent);
+				circleId, relatedSourceContent,Message.NULL_parentId);
 	}
 }

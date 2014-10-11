@@ -50,7 +50,7 @@ public class RestAnswerController {
 
 	@Autowired
 	private RelatedImageService relatedImageService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -89,34 +89,43 @@ public class RestAnswerController {
 	@RequestMapping(value = "/json/answer/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = HttpUtils.getSessionUserName(request);
 		int status = favoriteService.incrementAnswerFavorite(id, userId);
-
 		if (status == Status.SUCCESS) {
-			/*
-			 * XXX赞了您的回答
-			 */
-			Answer answer = answerService.getAnswerById(id);
-			String relatedSourceContent = StringUtils.confineStringLength(
-					answer.getContent(), Constant.MESSAGE_LENGTH);
-			messageService.addMessageByRecerver(answer.getReplierId(),
-					Message.MESSAGE_YOUR_ANSWER_FAVORITED, userId, userName,
-					id, relatedSourceContent);
-
-			/*
-			 * 通知关注者 小明 (被关注者)赞了XXX的问题
-			 */
-			messageService.addMessageByFollowedUser(
-					Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, userId, userName,
-					id, relatedSourceContent);
-			/*
-			 * 用户动态
-			 */
-			messageService.addMessageByRecerver(Message.NULL_receiverId,
-					Message.MESSAGE_USER_FAVORITE_ANSWER, userId, userName, id,
-					relatedSourceContent);
+			produceSubscribeMessage(id, userId);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	private void produceSubscribeMessage(int answerId, int curUserId) {
+		/*
+		 * relatedId 设为questionId
+		 */
+		/*
+		 * XXX赞了您的回答
+		 */
+		String curUserName = userService.getUserById(curUserId).getUsername();
+		Answer answer = answerService.getAnswerById(answerId);
+		String relatedSourceContent = StringUtils.confineStringLength(
+				answer.getContent(), Constant.MESSAGE_LENGTH);
+		messageService.addMessageByRecerver(answer.getReplierId(),
+				Message.MESSAGE_YOUR_ANSWER_FAVORITED, curUserId, curUserName,
+				answer.getQuestionId(), relatedSourceContent,
+				answer.getQuestionId());
+
+		/*
+		 * 通知关注者 小明 (被关注者)赞了XXX的问题
+		 */
+		messageService.addMessageByFollowedUser(
+				Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, curUserId,
+				curUserName, answer.getQuestionId(), relatedSourceContent,
+				answer.getQuestionId());
+		/*
+		 * 用户动态
+		 */
+		messageService.addMessageByRecerver(Message.NULL_receiverId,
+				Message.MESSAGE_USER_FAVORITE_ANSWER, curUserId, curUserName,
+				answer.getQuestionId(), relatedSourceContent,
+				answer.getQuestionId());
 	}
 
 	@RequestMapping(value = "/json/answer/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -129,15 +138,15 @@ public class RestAnswerController {
 
 	@RequestMapping(value = "/json/answer/add", method = RequestMethod.POST)
 	public String add(@RequestBody Answer answer, HttpServletRequest request) {
-		if(!HttpUtils.isSessionUserIdExists(request))
-		{
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,Status.NULLSESSION);
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.NULLSESSION);
 		}
 		if (!answer.checkFieldValidation()) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID_FIELD);
 		}
-		setAnswer(answer,request);
+		setAnswer(answer, request);
 		int status = answerService.addAnswer(answer);
 		if (status == Status.SUCCESS) {
 			addAnserImage(answer);
@@ -145,9 +154,8 @@ public class RestAnswerController {
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
-	
-	private void setAnswer(Answer answer,HttpServletRequest request)
-	{
+
+	private void setAnswer(Answer answer, HttpServletRequest request) {
 		answer.setReplierId(HttpUtils.getSessionUserId(request));
 		answer.setBriefByContent();
 		answer.setDate(new Date());
@@ -165,11 +173,11 @@ public class RestAnswerController {
 
 	private void produceAnswerMessage(Answer answer, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName=userService.getUserById(userId).getUsername();
+		String userName = userService.getUserById(userId).getUsername();
 		int askerId = feedService.getFeedById(answer.getQuestionId())
 				.getUserId();
 
-		//String userName = HttpUtils.getSessionUserName(request);
+		// String userName = HttpUtils.getSessionUserName(request);
 		/*
 		 * answerId 需要查询获得
 		 */
@@ -183,19 +191,19 @@ public class RestAnswerController {
 		 */
 		messageService.addMessageByRecerver(askerId,
 				Message.MESSAGE_YOUR_QUESTION_UPDATE, userId, userName,
-				answerId, relatedSourceContent);
+				answerId, relatedSourceContent, answer.getQuestionId());
 		/*
 		 * 通知关注者 小明 (被关注者)回答了一个问题
 		 */
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ANSWER_QUESTION, userId, userName,
-				answerId, relatedSourceContent);
+				answerId, relatedSourceContent, answer.getQuestionId());
 		/*
 		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDANSWER, userId, userName, answerId,
-				relatedSourceContent);
+				relatedSourceContent, answer.getQuestionId());
 	}
 
 	private void addAnserImage(Answer answer) {

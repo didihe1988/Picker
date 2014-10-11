@@ -94,7 +94,8 @@ public class FollowController {
 		if (sourceType == Follow.FOLLOW_USER) {
 			messageService.addMessageByRecerver(userId,
 					Message.MESSAGE_FOLLOWEDUSER_FOLLOW, followerId, userName,
-					sourceId, Message.NULL_RelatedSourceContent);
+					sourceId, Message.NULL_RelatedSourceContent,
+					Message.NULL_parentId);
 		}
 
 		/*
@@ -106,7 +107,7 @@ public class FollowController {
 					feed.getContent(), Constant.MESSAGE_LENGTH);
 			messageService.addMessageByFollowedUser(
 					Message.MESSAGE_FOLLOWED_FOLLOWQUESTION, userId, userName,
-					sourceId, relatedSourceContent);
+					sourceId, relatedSourceContent, Message.NULL_parentId);
 		}
 		/*
 		 * ÓÃ»§¶¯Ì¬

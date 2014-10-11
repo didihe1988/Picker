@@ -218,13 +218,13 @@ public class RestQuestionController {
 				feed.getBrief(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ASKQUESTION, userId, userName, feedId,
-				relatedSourceContent);
+				relatedSourceContent, feed.getBookId());
 		/*
 		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDQUESTION, userId, userName, feedId,
-				relatedSourceContent);
+				relatedSourceContent, feed.getBookId());
 	}
 
 	private void produceSubscribeMessage(int feedId, int curUserId) {
@@ -240,20 +240,20 @@ public class RestQuestionController {
 		 */
 		messageService.addMessageByRecerver(feed.getUserId(),
 				Message.MESSAGE_YOUR_QUESTION_FAVORITED, curUserId,
-				curUserName, feedId, relatedSourceContent);
+				curUserName, feedId, relatedSourceContent, feed.getBookId());
 		/*
 		 * 通知关注者 小明 (被关注者)赞了XXX的问题
 		 */
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, curUserId,
-				curUserName, feedId, relatedSourceContent);
+				curUserName, feedId, relatedSourceContent, feed.getBookId());
 		/*
 		 * 用户动态
 		 */
 
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_FAVORITE_QUESTION, curUserId, curUserName,
-				feedId, relatedSourceContent);
+				feedId, relatedSourceContent, feed.getBookId());
 
 	}
 

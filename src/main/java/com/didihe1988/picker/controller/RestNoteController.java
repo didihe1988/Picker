@@ -103,20 +103,20 @@ public class RestNoteController {
 		 */
 		messageService.addMessageByRecerver(feed.getUserId(),
 				Message.MESSAGE_YOUR_NOTE_FAVORITED, curUserId, curUserName,
-				feedId, relatedSourceContent);
+				feedId, relatedSourceContent, feed.getBookId());
 		/*
 		 * 通知关注者 小明 (被关注者)赞了XXX的问题
 		 */
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_FAVORITE_NOTE, curUserId, curUserName,
-				feedId, relatedSourceContent);
+				feedId, relatedSourceContent, feed.getBookId());
 		/*
 		 * 用户动态
 		 */
 
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_FAVORITE_NOTE, curUserId, curUserName,
-				feedId, relatedSourceContent);
+				feedId, relatedSourceContent, feed.getBookId());
 	}
 
 	/**
@@ -174,14 +174,14 @@ public class RestNoteController {
 				Feed.TYPE_NOTE);
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ADDNOTE, userId, userName, noteId,
-				relatedSourceContent);
+				relatedSourceContent, feed.getBookId());
 
 		/*
 		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDNOTE, userId, userName, noteId,
-				relatedSourceContent);
+				relatedSourceContent, feed.getBookId());
 	}
 
 	private void addNoteImage(Feed feed) {

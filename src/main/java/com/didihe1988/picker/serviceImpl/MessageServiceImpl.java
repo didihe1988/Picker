@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.AnswerDao;
+import com.didihe1988.picker.dao.BookDao;
+import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.MessageDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Message.Filter;
+import com.didihe1988.picker.model.dp.FullMessage;
 import com.didihe1988.picker.model.dp.MessageDp;
 import com.didihe1988.picker.service.MessageService;
 
@@ -29,19 +33,28 @@ public class MessageServiceImpl implements MessageService {
 	@Autowired
 	private UserDao userDao;
 
+	@Autowired
+	private FeedDao feedDao;
+
+	@Autowired
+	private AnswerDao answerDao;
+
+	@Autowired
+	private BookDao bookDao;
+
 	/*
 	 * 用户关注的人产生的消息
 	 */
 	@Override
 	public void addMessageByFollowedUser(int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent) {
+			String relatedSourceContent, int parentId) {
 		final List<Follow> followList = followDao
 				.queryFollowListByFollowedUserId(producerId);
 		for (Follow follow : followList) {
 			Message message = new Message(follow.getFollowerId(), type,
 					producerId, producerName, relatedSourceId,
-					relatedSourceContent);
+					relatedSourceContent, parentId);
 			messageDao.addMessage(message);
 		}
 	}
@@ -52,13 +65,13 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public void addMessageByFollowedQuestion(int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent) {
+			String relatedSourceContent, int parentId) {
 		final List<Follow> followList = followDao
 				.queryFollowListByQuestionId(producerId);
 		for (Follow follow : followList) {
 			Message message = new Message(follow.getFollowerId(), type,
 					producerId, producerName, relatedSourceId,
-					relatedSourceContent);
+					relatedSourceContent, parentId);
 			messageDao.addMessage(message);
 		}
 	}
@@ -69,9 +82,9 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public void addMessageByRecerver(int receiverId, int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent) {
+			String relatedSourceContent, int parentId) {
 		Message message = new Message(receiverId, type, producerId,
-				producerName, relatedSourceId, relatedSourceContent);
+				producerName, relatedSourceId, relatedSourceContent, parentId);
 		messageDao.addMessage(message);
 
 	}
@@ -155,10 +168,9 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<Message> getMessageByReceiverIdAndFilter(int objId,
-			Filter filter) {
+	public List<Message> getMessageByUserIdAndFilter(int objId, Filter filter) {
 		// TODO Auto-generated method stub
-		return messageDao.queryMessageByReceiverIdAndFilter(objId, filter);
+		return messageDao.queryMessageByUserIdAndFilter(objId, filter);
 	}
 
 	@Override
@@ -169,11 +181,41 @@ public class MessageServiceImpl implements MessageService {
 		return new MessageDp(message, avatarUrl);
 	}
 
+	@Override
+	public FullMessage getFullMessageFromMessage(Message message) {
+		// TODO Auto-generated method stub
+		String avatarUrl = userDao.queryUserById(message.getProducerId())
+				.getAvatarUrl();
+		int type = message.getType();
+		String parentName = "";
+		if ((type == Message.MESSAGE_USER_ADDQUESTION)
+				|| (type == Message.MESSAGE_USER_ADDNOTE)
+				|| (type == Message.MESSAGE_USER_FAVORITE_QUESTION)
+				|| (type == Message.MESSAGE_USER_FAVORITE_NOTE)) {
+			parentName = bookDao.queryBookById(message.getParentId())
+					.getBookName();
+		} else if ((type == Message.MESSAGE_USER_ADDANSWER)
+				|| (type == Message.MESSAGE_USER_FAVORITE_ANSWER)) {
+			parentName = feedDao.queryFeedById(message.getParentId())
+					.getTitle();
+		}
+		return new FullMessage(message, avatarUrl, parentName);
+	}
+
 	private List<MessageDp> getMessageDpList(List<Message> messages) {
 		List<MessageDp> list = new ArrayList<MessageDp>();
 		for (Message message : messages) {
 			MessageDp messageDp = getMessageDpFromMessage(message);
 			list.add(messageDp);
+		}
+		return list;
+	}
+
+	private List<FullMessage> getFullMessageList(List<Message> messages) {
+		List<FullMessage> list = new ArrayList<FullMessage>();
+		for (Message message : messages) {
+			FullMessage fullMessage = getFullMessageFromMessage(message);
+			list.add(fullMessage);
 		}
 		return list;
 	}
@@ -186,10 +228,17 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<MessageDp> getMessageDpByReceiverIdAndFilter(int objId,
+	public List<MessageDp> getMessageDpByUserIdAndFilter(int objId,
 			Filter filter) {
 		// TODO Auto-generated method stub
-		return getMessageDpList(getMessageByReceiverIdAndFilter(objId, filter));
+		return getMessageDpList(getMessageByUserIdAndFilter(objId, filter));
+	}
+
+	@Override
+	public List<FullMessage> getFullMessageByUserIdAndFilter(int userId,
+			Filter filter) {
+		// TODO Auto-generated method stub
+		return getFullMessageList(getMessageByUserIdAndFilter(userId, filter));
 	}
 
 }

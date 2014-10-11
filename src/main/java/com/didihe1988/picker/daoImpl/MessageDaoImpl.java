@@ -136,7 +136,7 @@ public class MessageDaoImpl implements MessageDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Message> queryMessageByReceiverIdAndFilter(int objId,
+	public List<Message> queryMessageByUserIdAndFilter(int objId,
 			Filter filter) {
 		// TODO Auto-generated method stub
 		String hql="";

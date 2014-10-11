@@ -3,6 +3,7 @@ package com.didihe1988.picker.service;
 import java.util.List;
 
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.dp.FullMessage;
 import com.didihe1988.picker.model.dp.MessageDp;
 
 public interface MessageService {
@@ -15,24 +16,32 @@ public interface MessageService {
 	public List<Message> getMessageByReceiverId(int receiverId);
 
 	public List<Message> getMessageByReceiverIdAndType(int receiverId, int type);
-	
-	public List<MessageDp> getMessageDpByReceiverIdAndType(int receiverId, int type);
-	
+
+	public List<MessageDp> getMessageDpByReceiverIdAndType(int receiverId,
+			int type);
+
 	/**
 	 * 
-	 * @description 用户足迹objId:producerId  动态、与我相关 objId:receiverId
+	 * @description 用户足迹userId:producerId 动态、与我相关 userId:receiverId
 	 */
-	public List<Message> getMessageByReceiverIdAndFilter(int objId,Message.Filter filter);
-	
-	public List<MessageDp> getMessageDpByReceiverIdAndFilter(int objId,Message.Filter filter);
+	public List<Message> getMessageByUserIdAndFilter(int userId,
+			Message.Filter filter);
+
+	public List<MessageDp> getMessageDpByUserIdAndFilter(int userId,
+			Message.Filter filter);
+
+	public List<FullMessage> getFullMessageByUserIdAndFilter(int userId,
+			Message.Filter filter);
 
 	public boolean isMessageExists(Message message);
 
 	public boolean isUncheckedMessageExists(int receiverId);
 
 	public Message getMessageById(int id);
-	
+
 	public MessageDp getMessageDpFromMessage(Message message);
+
+	public FullMessage getFullMessageFromMessage(Message message);
 
 	public int setMessageChecked(int id);
 
@@ -41,20 +50,20 @@ public interface MessageService {
 	 */
 	public void addMessageByFollowedUser(int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent);
+			String relatedSourceContent, int parentId);
 
 	/*
 	 * 用户关注的问题产生的消息
 	 */
 	public void addMessageByFollowedQuestion(int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent);
+			String relatedSourceContent, int parentId);
 
 	/*
 	 * xxx赞了/关注了 您的XXX
 	 */
 	public void addMessageByRecerver(int receiverId, int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent);
+			String relatedSourceContent, int parentId);
 
 }
