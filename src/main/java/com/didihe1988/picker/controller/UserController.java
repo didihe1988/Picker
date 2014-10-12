@@ -220,9 +220,8 @@ public class UserController {
 	@RequestMapping(value = "/dynamic")
 	public String dynamic(Model model, HttpServletRequest request) {
 		int curUserId = HttpUtils.getSessionUserId(request);
-		model.addAttribute("messageList", messageService
-				.getFullMessageByUserIdAndFilter(curUserId,
-						Filter.MESSAGE_DYNAMIC));
+		model.addAttribute("messageList",
+				messageService.getDynamicByUserId(curUserId));
 		model.addAttribute("bookList", getBooks(curUserId));
 		return "index";
 	}

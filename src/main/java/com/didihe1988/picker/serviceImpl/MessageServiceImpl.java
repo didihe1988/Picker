@@ -13,10 +13,13 @@ import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.MessageDao;
+import com.didihe1988.picker.dao.RelatedImageDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Message.Filter;
+import com.didihe1988.picker.model.RelatedImage;
+import com.didihe1988.picker.model.dp.Dynamic;
 import com.didihe1988.picker.model.dp.FullMessage;
 import com.didihe1988.picker.model.dp.MessageDp;
 import com.didihe1988.picker.service.MessageService;
@@ -41,6 +44,9 @@ public class MessageServiceImpl implements MessageService {
 
 	@Autowired
 	private BookDao bookDao;
+
+	@Autowired
+	private RelatedImageDao relatedImageDao;
 
 	/*
 	 * 用户关注的人产生的消息
@@ -191,8 +197,25 @@ public class MessageServiceImpl implements MessageService {
 		if ((type == Message.MESSAGE_USER_ADDQUESTION)
 				|| (type == Message.MESSAGE_USER_ADDNOTE)
 				|| (type == Message.MESSAGE_USER_FAVORITE_QUESTION)
-				|| (type == Message.MESSAGE_USER_FAVORITE_NOTE)
-				|| (type == Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION)
+				|| (type == Message.MESSAGE_USER_FAVORITE_NOTE)) {
+			parentName = bookDao.queryBookById(message.getParentId())
+					.getBookName();
+			title = feedDao.queryFeedById(message.getRelatedSourceId())
+					.getTitle();
+		} else if ((type == Message.MESSAGE_USER_ADDANSWER)
+				|| (type == Message.MESSAGE_USER_FAVORITE_ANSWER)) {
+			parentName = feedDao.queryFeedById(message.getParentId())
+					.getTitle();
+		}
+		return new FullMessage(message, avatarUrl, parentName, title);
+	}
+
+	private Dynamic getDynamicFromMessage(Message message) {
+		String avatarUrl = userDao.queryUserById(message.getProducerId())
+				.getAvatarUrl();
+		int type = message.getType();
+		String parentName = "", title = "", imageUrl = "";
+		if ((type == Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION)
 				|| (type == Message.MESSAGE_FOLLOWED_ANSWER_QUESTION)
 				|| (type == Message.MESSAGE_FOLLOWED_ASKQUESTION)
 				|| (type == Message.MESSAGE_FOLLOWED_FAVORITE_NOTE)
@@ -201,13 +224,30 @@ public class MessageServiceImpl implements MessageService {
 					.getBookName();
 			title = feedDao.queryFeedById(message.getRelatedSourceId())
 					.getTitle();
-		} else if ((type == Message.MESSAGE_USER_ADDANSWER)
-				|| (type == Message.MESSAGE_USER_FAVORITE_ANSWER)
-				|| (type == Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER)) {
+			RelatedImage image = relatedImageDao.queryFirstRelatedImagesByKey(
+					message.getRelatedSourceId(), RelatedImage.NOTE_IMAGE);
+			if (image != null) {
+				imageUrl = image.getImageUrl();
+			}
+		} else if (type == Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER) {
 			parentName = feedDao.queryFeedById(message.getParentId())
 					.getTitle();
+			RelatedImage image = relatedImageDao.queryFirstRelatedImagesByKey(
+					message.getRelatedSourceId(), RelatedImage.ANSWER_IMAGE);
+			if (image != null) {
+				imageUrl = image.getImageUrl();
+			}
 		}
-		return new FullMessage(message, avatarUrl, parentName, title);
+		return new Dynamic(message, avatarUrl, parentName, title, imageUrl);
+	}
+
+	private List<Dynamic> getDynamicList(List<Message> messages) {
+		List<Dynamic> list = new ArrayList<Dynamic>();
+		for (Message message : messages) {
+			Dynamic dynamic = getDynamicFromMessage(message);
+			list.add(dynamic);
+		}
+		return list;
 	}
 
 	private List<MessageDp> getMessageDpList(List<Message> messages) {
@@ -247,6 +287,13 @@ public class MessageServiceImpl implements MessageService {
 			Filter filter) {
 		// TODO Auto-generated method stub
 		return getFullMessageList(getMessageByUserIdAndFilter(userId, filter));
+	}
+
+	@Override
+	public List<Dynamic> getDynamicByUserId(int userId) {
+		// TODO Auto-generated method stub
+		return getDynamicList(getMessageByUserIdAndFilter(userId,
+				Message.Filter.MESSAGE_DYNAMIC));
 	}
 
 }

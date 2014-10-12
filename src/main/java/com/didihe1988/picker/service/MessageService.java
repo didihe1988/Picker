@@ -3,6 +3,7 @@ package com.didihe1988.picker.service;
 import java.util.List;
 
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.dp.Dynamic;
 import com.didihe1988.picker.model.dp.FullMessage;
 import com.didihe1988.picker.model.dp.MessageDp;
 
@@ -32,6 +33,8 @@ public interface MessageService {
 
 	public List<FullMessage> getFullMessageByUserIdAndFilter(int userId,
 			Message.Filter filter);
+
+	public List<Dynamic> getDynamicByUserId(int userId);
 
 	public boolean isMessageExists(Message message);
 

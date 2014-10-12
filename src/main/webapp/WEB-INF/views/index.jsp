@@ -153,7 +153,7 @@
 									</div>
 									<div style="width: 2%; height: 1px; float: left"></div>
 									<div class="feed_picture">
-										<img src="/static/images/content/1.png">
+										<img src="<c:url value="${message.imageUrl}"/>">
 									</div>
 								</div>
 								<div style="clear: both"></div>
@@ -209,7 +209,7 @@
 									</div>
 									<div style="width: 2%; height: 1px; float: left"></div>
 									<div class="feed_picture">
-										<img src="/static/images/content/1.png">
+										<img src="<c:url value="${message.imageUrl}"/>">
 									</div>
 								</div>
 								<div style="clear: both"></div>
@@ -265,7 +265,7 @@
 									</div>
 									<div style="width: 2%; height: 1px; float: left"></div>
 									<div class="feed_picture">
-										<img src="/static/images/content/1.png">
+										<img src="<c:url value="${message.imageUrl}"/>">
 									</div>
 								</div>
 								<div style="clear: both"></div>
@@ -321,7 +321,7 @@
 									</div>
 									<div style="width: 2%; height: 1px; float: left"></div>
 									<div class="feed_picture">
-										<img src="/static/images/content/1.png">
+										<img src="<c:url value="${message.imageUrl}"/>">
 									</div>
 								</div>
 								<div style="clear: both"></div>
@@ -377,7 +377,7 @@
 									</div>
 									<div style="width: 2%; height: 1px; float: left"></div>
 									<div class="feed_picture">
-										<img src="/static/images/content/1.png">
+										<img src="<c:url value="${message.imageUrl}"/>">
 									</div>
 								</div>
 								<div style="clear: both"></div>
@@ -433,7 +433,7 @@
 									</div>
 									<div style="width: 2%; height: 1px; float: left"></div>
 									<div class="feed_picture">
-										<img src="/static/images/content/1.png">
+										<img src="<c:url value="${message.imageUrl}"/>">
 									</div>
 								</div>
 								<div style="clear: both"></div>
