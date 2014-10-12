@@ -24,6 +24,7 @@ import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.dp.FeedDp;
@@ -211,6 +212,19 @@ public class UserController {
 		model.addAttribute("circleList",
 				circleMemberService.getCircleWebDpListByMemberId(curUserId));
 		return "group_index";
+	}
+
+	/**
+	 * @description 显示我的动态 暂时
+	 */
+	@RequestMapping(value = "/dynamic")
+	public String dynamic(Model model, HttpServletRequest request) {
+		int curUserId = HttpUtils.getSessionUserId(request);
+		model.addAttribute("messageList", messageService
+				.getFullMessageByUserIdAndFilter(curUserId,
+						Filter.MESSAGE_DYNAMIC));
+		model.addAttribute("bookList", getBooks(curUserId));
+		return "index";
 	}
 
 	private List<UserDp> getFollowers(int userId, int curUserId) {

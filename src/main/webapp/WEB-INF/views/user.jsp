@@ -297,7 +297,7 @@
 										<div style="margin-top: 5px">
 											<div class="feed_question_title">
 												<a data-pjax
-													href="<c:url value="/detail/${message.relatedSourceId}"/>">千面神是不是真正的神祗？</a>
+													href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
 											</div>
 											<div class="user_feed_brief"
 												onclick="user_feed_show_full($(this))">
@@ -344,7 +344,7 @@
 										<div style="margin-top: 5px">
 											<div class="feed_question_title">
 												<a data-pjax
-													href="<c:url value="/detail/${message.relatedSourceId}"/>">千面神是不是真正的神祗？</a>
+													href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
 											</div>
 											<div class="user_feed_brief"
 												onclick="user_feed_show_full($(this))">
@@ -359,17 +359,17 @@
 										</div>
 									</div>
 								</c:when>
-									<c:when test="${message.type==32 }">
+								<c:when test="${message.type==32 }">
 									<div class="user_feed">
 										<div>
-											<span class="user_feed_label">关注了用户 @ </span> <span
-												class="user_feed_book">《${message.parentName}》</span> <span
+											<span class="user_feed_label">关注了用户  </span> <span
+												class="user_feed_book">${message.parentName}</span> <span
 												class="time">1天前</span>
 										</div>
 										<div style="margin-top: 5px">
 											<div class="feed_question_title">
 												<a data-pjax
-													href="<c:url value="/detail/${message.relatedSourceId}"/>">千面神是不是真正的神祗？</a>
+													href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
 											</div>
 											<div class="user_feed_brief"
 												onclick="user_feed_show_full($(this))">
@@ -394,7 +394,7 @@
 										<div style="margin-top: 5px">
 											<div class="feed_question_title">
 												<a data-pjax
-													href="<c:url value="/detail/${message.relatedSourceId}"/>">千面神是不是真正的神祗？</a>
+													href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
 											</div>
 											<div class="user_feed_brief"
 												onclick="user_feed_show_full($(this))">
@@ -419,7 +419,7 @@
 										<div style="margin-top: 5px">
 											<div class="feed_question_title">
 												<a data-pjax
-													href="<c:url value="/detail/${message.relatedSourceId}"/>">千面神是不是真正的神祗？</a>
+													href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
 											</div>
 											<div class="user_feed_brief"
 												onclick="user_feed_show_full($(this))">
@@ -444,7 +444,7 @@
 										<div style="margin-top: 5px">
 											<div class="feed_question_title">
 												<a data-pjax
-													href="<c:url value="/detail/${message.relatedSourceId}"/>">千面神是不是真正的神祗？</a>
+													href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
 											</div>
 											<div class="user_feed_brief"
 												onclick="user_feed_show_full($(this))">

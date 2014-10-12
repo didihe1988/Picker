@@ -12,6 +12,8 @@ public class FullMessage extends Message {
 
 	private String parentName;
 
+	private String title;
+
 	public String getProducerAvatarUrl() {
 		return producerAvatarUrl;
 	}
@@ -28,14 +30,23 @@ public class FullMessage extends Message {
 		this.parentName = parentName;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public FullMessage() {
 
 	}
 
 	public FullMessage(Message message, String producerAvatarUrl,
-			String parentName) {
+			String parentName, String title) {
 		super(message);
 		this.producerAvatarUrl = producerAvatarUrl;
 		this.parentName = parentName;
+		this.title = title;
 	}
 }

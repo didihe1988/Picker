@@ -187,19 +187,22 @@ public class MessageServiceImpl implements MessageService {
 		String avatarUrl = userDao.queryUserById(message.getProducerId())
 				.getAvatarUrl();
 		int type = message.getType();
-		String parentName = "";
+		String parentName = "", title = "";
 		if ((type == Message.MESSAGE_USER_ADDQUESTION)
 				|| (type == Message.MESSAGE_USER_ADDNOTE)
 				|| (type == Message.MESSAGE_USER_FAVORITE_QUESTION)
-				|| (type == Message.MESSAGE_USER_FAVORITE_NOTE)) {
+				|| (type == Message.MESSAGE_USER_FAVORITE_NOTE)
+				|| (type == Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION)) {
 			parentName = bookDao.queryBookById(message.getParentId())
 					.getBookName();
+			title = feedDao.queryFeedById(message.getRelatedSourceId())
+					.getTitle();
 		} else if ((type == Message.MESSAGE_USER_ADDANSWER)
 				|| (type == Message.MESSAGE_USER_FAVORITE_ANSWER)) {
 			parentName = feedDao.queryFeedById(message.getParentId())
 					.getTitle();
 		}
-		return new FullMessage(message, avatarUrl, parentName);
+		return new FullMessage(message, avatarUrl, parentName, title);
 	}
 
 	private List<MessageDp> getMessageDpList(List<Message> messages) {
