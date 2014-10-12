@@ -410,8 +410,9 @@ input[type=button]{
 }
 
 .feed_approve{
-    font-size: 0.8rem;
+    font-size: 1.0rem;
     color: #999999;
+    margin-bottom: 0.6rem
 }
 
 .feed_user{

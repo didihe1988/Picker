@@ -102,14 +102,16 @@
 
 					<div class="feeds">
 						<c:forEach var="message" items="${messageList}">
-							<c:if test="${message.type==3 }">
+							<!--   MESSAGE_FOLLOWED_ASKQUESTION  -->
+							<c:if test="${message.type==1 }">
 								<div class="feed_meta clear_fix">
 									<div class="feed_user_photo">
 										<img src="<c:url value="${message.producerAvatarUrl}"/>">
 									</div>
 									<div class="feed_meta_word">
 										<div class="feed_approve">
-											<span class="feed_user">${message.producerName}</span>赞同回答
+											<span class="feed_user">${message.producerName}</span>
+											提出问题@ <a href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a>
 										</div>
 										<div class="feed_title">
 											<a data-pjax
@@ -156,6 +158,287 @@
 								</div>
 								<div style="clear: both"></div>
 							</c:if>
+							<!--   MESSAGE_FOLLOWED_ANSWER_QUESTION  -->
+							<c:if test="${message.type==2 }">
+								<div class="feed_meta clear_fix">
+									<div class="feed_user_photo">
+										<img src="<c:url value="${message.producerAvatarUrl}"/>">
+									</div>
+									<div class="feed_meta_word">
+										<div class="feed_approve">
+											<span class="feed_user">${message.producerName}</span>
+											回答问题@ <a href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a> 
+										</div>
+										<div class="feed_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
+										</div>
+									</div>
+									<div class="feed_time">${message.time}</div>
+								</div>
+								<div class="feed_brief clear_fix">
+									<div class="feed_text_wrap">
+										<div class="feed_text" data-passage-id="123"
+											onclick="show_full($(this))">
+											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
+										</div>
+										<div class="feed_tool_bar">
+											<div class="line watch" data-action="watch"
+												data-passage-id="123" onclick="tool_bar_action($(this))">
+												<i class="icon-plus"></i>关注问题
+											</div>
+											<div style="display: none" class="line cancel_watch"
+												data-action="cancel_watch" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-ok"></i>取消关注
+											</div>
+											<div class="line show_comment" data-action="get_comment"
+												data-passage-id="123" onclick="tool_bar_action($(this))">
+												<i class="icon-comments-alt"></i>32条评论
+											</div>
+											<div style="display: none" class="line hide_comment"
+												data-action="hide_comment" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-double-angle-up"></i>收起评论
+											</div>
+											<div class="line link" data-action="show_all_answer"
+												data-passage-id="123">
+												<a data-pjax href="/detail/11"><i class="icon-lightbulb"></i>2个其他回答</a>
+											</div>
+										</div>
+									</div>
+									<div style="width: 2%; height: 1px; float: left"></div>
+									<div class="feed_picture">
+										<img src="/static/images/content/1.png">
+									</div>
+								</div>
+								<div style="clear: both"></div>
+							</c:if>
+							<!--   MESSAGE_FOLLOWED_FAVORITE_QEUSTION  -->
+							<c:if test="${message.type==3 }">
+								<div class="feed_meta clear_fix">
+									<div class="feed_user_photo">
+										<img src="<c:url value="${message.producerAvatarUrl}"/>">
+									</div>
+									<div class="feed_meta_word">
+										<div class="feed_approve">
+											<span class="feed_user">${message.producerName}</span>
+											赞同问题@ <a href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a> 
+										</div>
+										<div class="feed_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
+										</div>
+									</div>
+									<div class="feed_time">${message.time}</div>
+								</div>
+								<div class="feed_brief clear_fix">
+									<div class="feed_text_wrap">
+										<div class="feed_text" data-passage-id="123"
+											onclick="show_full($(this))">
+											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
+										</div>
+										<div class="feed_tool_bar">
+											<div class="line watch" data-action="watch"
+												data-passage-id="123" onclick="tool_bar_action($(this))">
+												<i class="icon-plus"></i>关注问题
+											</div>
+											<div style="display: none" class="line cancel_watch"
+												data-action="cancel_watch" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-ok"></i>取消关注
+											</div>
+											<div class="line show_comment" data-action="get_comment"
+												data-passage-id="123" onclick="tool_bar_action($(this))">
+												<i class="icon-comments-alt"></i>32条评论
+											</div>
+											<div style="display: none" class="line hide_comment"
+												data-action="hide_comment" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-double-angle-up"></i>收起评论
+											</div>
+											<div class="line link" data-action="show_all_answer"
+												data-passage-id="123">
+												<a data-pjax href="/detail/11"><i class="icon-lightbulb"></i>2个其他回答</a>
+											</div>
+										</div>
+									</div>
+									<div style="width: 2%; height: 1px; float: left"></div>
+									<div class="feed_picture">
+										<img src="/static/images/content/1.png">
+									</div>
+								</div>
+								<div style="clear: both"></div>
+							</c:if>
+							<!--   MESSAGE_FOLLOWED_FAVORITE_ANSWER  -->
+							<c:if test="${message.type==4 }">
+								<div class="feed_meta clear_fix">
+									<div class="feed_user_photo">
+										<img src="<c:url value="${message.producerAvatarUrl}"/>">
+									</div>
+									<div class="feed_meta_word">
+										<div class="feed_approve">
+											<span class="feed_user">${message.producerName}</span>
+											赞同回答@ <a href="<c:url value="/detail/${message.parentId}"/>">${message.parentName}</a>
+										</div>
+										<div class="feed_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.parentId}"/>">${message.title}</a>
+										</div>
+									</div>
+									<div class="feed_time">${message.time}</div>
+								</div>
+								<div class="feed_brief clear_fix">
+									<div class="feed_text_wrap">
+										<div class="feed_text" data-passage-id="123"
+											onclick="show_full($(this))">
+											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
+										</div>
+										<div class="feed_tool_bar">
+											<div class="line watch" data-action="watch"
+												data-passage-id="123" onclick="tool_bar_action($(this))">
+												<i class="icon-plus"></i>关注问题
+											</div>
+											<div style="display: none" class="line cancel_watch"
+												data-action="cancel_watch" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-ok"></i>取消关注
+											</div>
+											<div class="line show_comment" data-action="get_comment"
+												data-passage-id="123" onclick="tool_bar_action($(this))">
+												<i class="icon-comments-alt"></i>32条评论
+											</div>
+											<div style="display: none" class="line hide_comment"
+												data-action="hide_comment" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-double-angle-up"></i>收起评论
+											</div>
+											<div class="line link" data-action="show_all_answer"
+												data-passage-id="123">
+												<a data-pjax href="/detail/11"><i class="icon-lightbulb"></i>2个其他回答</a>
+											</div>
+										</div>
+									</div>
+									<div style="width: 2%; height: 1px; float: left"></div>
+									<div class="feed_picture">
+										<img src="/static/images/content/1.png">
+									</div>
+								</div>
+								<div style="clear: both"></div>
+							</c:if>
+							<!--   MESSAGE_FOLLOWED_FAVORITE_NOTE  -->
+							<c:if test="${message.type==5 }">
+								<div class="feed_meta clear_fix">
+									<div class="feed_user_photo">
+										<img src="<c:url value="${message.producerAvatarUrl}"/>">
+									</div>
+									<div class="feed_meta_word">
+										<div class="feed_approve">
+											<span class="feed_user">${message.producerName}</span>
+											赞同笔记@ <a href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a>
+										</div>
+										<div class="feed_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.parentId}"/>">${message.title}</a>
+										</div>
+									</div>
+									<div class="feed_time">${message.time}</div>
+								</div>
+								<div class="feed_brief clear_fix">
+									<div class="feed_text_wrap">
+										<div class="feed_text" data-passage-id="123"
+											onclick="show_full($(this))">
+											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
+										</div>
+										<div class="feed_tool_bar">
+											<div class="line watch" data-action="watch"
+												data-passage-id="123" onclick="tool_bar_action($(this))">
+												<i class="icon-plus"></i>关注问题
+											</div>
+											<div style="display: none" class="line cancel_watch"
+												data-action="cancel_watch" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-ok"></i>取消关注
+											</div>
+											<div class="line show_comment" data-action="get_comment"
+												data-passage-id="123" onclick="tool_bar_action($(this))">
+												<i class="icon-comments-alt"></i>32条评论
+											</div>
+											<div style="display: none" class="line hide_comment"
+												data-action="hide_comment" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-double-angle-up"></i>收起评论
+											</div>
+											<div class="line link" data-action="show_all_answer"
+												data-passage-id="123">
+												<a data-pjax href="/detail/11"><i class="icon-lightbulb"></i>2个其他回答</a>
+											</div>
+										</div>
+									</div>
+									<div style="width: 2%; height: 1px; float: left"></div>
+									<div class="feed_picture">
+										<img src="/static/images/content/1.png">
+									</div>
+								</div>
+								<div style="clear: both"></div>
+							</c:if>
+							<!--   MESSAGE_FOLLOWED_ADDNOTE  -->
+							<c:if test="${message.type==14 }">
+								<div class="feed_meta clear_fix">
+									<div class="feed_user_photo">
+										<img src="<c:url value="${message.producerAvatarUrl}"/>">
+									</div>
+									<div class="feed_meta_word">
+										<div class="feed_approve">
+											<span class="feed_user">${message.producerName}</span>
+											添加笔记@ <a href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a>
+										</div>
+										<div class="feed_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.parentId}"/>">${message.title}</a>
+										</div>
+									</div>
+									<div class="feed_time">${message.time}</div>
+								</div>
+								<div class="feed_brief clear_fix">
+									<div class="feed_text_wrap">
+										<div class="feed_text" data-passage-id="123"
+											onclick="show_full($(this))">
+											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
+										</div>
+										<div class="feed_tool_bar">
+											<div class="line watch" data-action="watch"
+												data-passage-id="123" onclick="tool_bar_action($(this))">
+												<i class="icon-plus"></i>关注问题
+											</div>
+											<div style="display: none" class="line cancel_watch"
+												data-action="cancel_watch" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-ok"></i>取消关注
+											</div>
+											<div class="line show_comment" data-action="get_comment"
+												data-passage-id="123" onclick="tool_bar_action($(this))">
+												<i class="icon-comments-alt"></i>32条评论
+											</div>
+											<div style="display: none" class="line hide_comment"
+												data-action="hide_comment" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-double-angle-up"></i>收起评论
+											</div>
+											<div class="line link" data-action="show_all_answer"
+												data-passage-id="123">
+												<a data-pjax href="/detail/11"><i class="icon-lightbulb"></i>2个其他回答</a>
+											</div>
+										</div>
+									</div>
+									<div style="width: 2%; height: 1px; float: left"></div>
+									<div class="feed_picture">
+										<img src="/static/images/content/1.png">
+									</div>
+								</div>
+								<div style="clear: both"></div>
+							</c:if>
+							
 						</c:forEach>
 						<!-- 
 						<div class="feed_meta clear_fix">

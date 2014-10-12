@@ -192,13 +192,18 @@ public class MessageServiceImpl implements MessageService {
 				|| (type == Message.MESSAGE_USER_ADDNOTE)
 				|| (type == Message.MESSAGE_USER_FAVORITE_QUESTION)
 				|| (type == Message.MESSAGE_USER_FAVORITE_NOTE)
-				|| (type == Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION)) {
+				|| (type == Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION)
+				|| (type == Message.MESSAGE_FOLLOWED_ANSWER_QUESTION)
+				|| (type == Message.MESSAGE_FOLLOWED_ASKQUESTION)
+				|| (type == Message.MESSAGE_FOLLOWED_FAVORITE_NOTE)
+				|| (type == Message.MESSAGE_FOLLOWED_ADDNOTE)) {
 			parentName = bookDao.queryBookById(message.getParentId())
 					.getBookName();
 			title = feedDao.queryFeedById(message.getRelatedSourceId())
 					.getTitle();
 		} else if ((type == Message.MESSAGE_USER_ADDANSWER)
-				|| (type == Message.MESSAGE_USER_FAVORITE_ANSWER)) {
+				|| (type == Message.MESSAGE_USER_FAVORITE_ANSWER)
+				|| (type == Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER)) {
 			parentName = feedDao.queryFeedById(message.getParentId())
 					.getTitle();
 		}
