@@ -56,6 +56,10 @@ public class RestAnswerController {
 
 	@RequestMapping(value = "/json/answer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswer(@PathVariable int id) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		Answer answer = answerService.getAnswerById(id);
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_ANSWER,
 				answer);
@@ -67,6 +71,10 @@ public class RestAnswerController {
 	 */
 	@RequestMapping(value = "/json/answer/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String deleteAnswer(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = answerService.deleteAnswerById(id, userId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -77,6 +85,10 @@ public class RestAnswerController {
 	 */
 	@RequestMapping(value = "/json/answer/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommets(@PathVariable int id) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_ANSWER);
 		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT_LIST, list);
@@ -88,6 +100,10 @@ public class RestAnswerController {
 	 */
 	@RequestMapping(value = "/json/answer/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.incrementAnswerFavorite(id, userId);
 		if (status == Status.SUCCESS) {
@@ -131,6 +147,10 @@ public class RestAnswerController {
 	@RequestMapping(value = "/json/answer/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.decrementAnswerFavorite(id, userId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);

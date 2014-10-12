@@ -109,7 +109,8 @@ public class RestPrivateMessageController {
 					Status.NULLSESSION);
 		}
 		int userId = HttpUtils.getSessionUserId(request);
-		if (!PMService.checkOperateValidation(userId, dialogId)) {
+		if ((!PMService.checkOperateValidation(userId, dialogId))
+				|| (dialogId < (long)1)) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
@@ -127,7 +128,8 @@ public class RestPrivateMessageController {
 					Status.NULLSESSION);
 		}
 		int userId = HttpUtils.getSessionUserId(request);
-		if (!PMService.checkOperateValidation(userId, dialogId)) {
+		if ((!PMService.checkOperateValidation(userId, dialogId))
+				|| (dialogId < (long)1)) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
@@ -140,6 +142,10 @@ public class RestPrivateMessageController {
 	@RequestMapping(value = "/json/pmessage/user/{userId}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String pmessageByUserId(@PathVariable int userId,
 			HttpServletRequest request) {
+		if (userId < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		if (!HttpUtils.isSessionUserIdExists(request)) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.NULLSESSION);

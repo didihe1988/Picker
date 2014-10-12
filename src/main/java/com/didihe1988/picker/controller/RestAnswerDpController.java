@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
+import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.dp.CommentDp;
@@ -29,6 +30,10 @@ public class RestAnswerDpController {
 
 	@RequestMapping(value = "/json/answer/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswerDp(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		AnswerDp answerDp = answerService.getAnswerDpByAnswerId(id,
 				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_ANSWER,

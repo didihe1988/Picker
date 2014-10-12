@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
+import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.utils.HttpUtils;
@@ -24,6 +25,10 @@ public class RestMessageController {
 
 	@RequestMapping(value = "/json/message/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getMessage(@PathVariable int id) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		Message message = messageService.getMessageById(id);
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_MESSAGE,
 				message);

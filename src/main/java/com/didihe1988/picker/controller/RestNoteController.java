@@ -51,6 +51,10 @@ public class RestNoteController {
 
 	@RequestMapping(value = "/json/note/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNote(@PathVariable int id) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		Feed feed = feedService.getFeedById(id);
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_NOTE, feed);
 	}
@@ -60,6 +64,10 @@ public class RestNoteController {
 	 */
 	@RequestMapping(value = "/json/note/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommets(@PathVariable int id) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_NOTE);
 		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT_LIST, list);
@@ -71,6 +79,10 @@ public class RestNoteController {
 	 */
 	@RequestMapping(value = "/json/note/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String deleteNote(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = feedService.deleteFeedById(id, userId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -82,6 +94,10 @@ public class RestNoteController {
 	 */
 	@RequestMapping(value = "/json/note/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.incrementNoteFavorite(id, userId);
 		if (status == Status.SUCCESS) {
@@ -126,6 +142,10 @@ public class RestNoteController {
 	@RequestMapping(value = "/json/note/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.decrementNoteFavorite(id, userId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);

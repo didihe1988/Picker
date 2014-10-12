@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
+import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.service.BookService;
@@ -36,6 +37,10 @@ public class BoughtController {
 
 	@RequestMapping(value = "/json/book/{id}/add", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String add(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int userId = HttpUtils.getSessionUserId(request);
 		Bought bought = new Bought(userId, id);
 		int status = boughtService.addBought(bought);
@@ -44,9 +49,13 @@ public class BoughtController {
 
 	@RequestMapping(value = "/json/book/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String delete(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = boughtService.deleteBought(new Bought(userId, id));
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
-	
+
 }

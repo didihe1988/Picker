@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
+import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.dp.CommentDp;
@@ -37,6 +38,10 @@ public class RestQuestionDpController {
 		/*
 		 * id´«-1Ê±±Àµô
 		 */
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		FeedDp feedDp = feedService.getFeedDpByFeedId(id,
 				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_QUESTION,
@@ -48,6 +53,10 @@ public class RestQuestionDpController {
 	 */
 	@RequestMapping(value = "/json/question/{id}/answerdps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswers(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<AnswerDp> list = answerService.getAnswerDpListByQuestionId(id,
 				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
@@ -58,6 +67,10 @@ public class RestQuestionDpController {
 	 */
 	@RequestMapping(value = "/json/question/{id}/commentdps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommets(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<CommentDp> list = commentService.getCommentDpListByCommentedId(id,
 				Comment.COMMENT_QUESTION, HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_COMMENT_LIST, list);

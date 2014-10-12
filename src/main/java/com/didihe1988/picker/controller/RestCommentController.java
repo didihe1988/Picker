@@ -65,6 +65,10 @@ public class RestCommentController {
 	 */
 	@RequestMapping(value = "/json/comment/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int userId = HttpUtils.getSessionUserId(request);
 		String userName = HttpUtils.getSessionUserName(request);
 		int status = favoriteService.incrementCommentFavorite(id, userId);
@@ -105,6 +109,10 @@ public class RestCommentController {
 	@RequestMapping(value = "/json/comment/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int userId = HttpUtils.getSessionUser(request).getId();
 		int status = favoriteService.decrementCommentFavorite(id, userId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);

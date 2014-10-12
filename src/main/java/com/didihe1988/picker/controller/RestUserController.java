@@ -134,6 +134,10 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getUser(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		if (!HttpUtils.isSessionUserIdExists(request)) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.NULLSESSION);
@@ -162,6 +166,10 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswers(@PathVariable int id) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<Answer> list = answerService.getAnswerListByReplierId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
 	}
@@ -171,6 +179,10 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/answerdps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswerDps(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<AnswerDp> list = answerService.getAnswerDpListByReplierId(id,
 				HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
@@ -181,6 +193,10 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestions(@PathVariable int id) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		// List<Question> list = questionService.getQuestionListByAskerId(id);
 		List<Feed> list = feedService.getFeedListByUserId(id,
 				Feed.TYPE_QUESTION);
@@ -193,6 +209,10 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/{id}/questiondps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestionDps(@PathVariable int id,
 			HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<FeedDp> list = feedService.getFeedDpListByUserId(id,
 				Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
@@ -209,6 +229,10 @@ public class RestUserController {
 		 * id) { list = noteService.getALlNoteListByUserId(id); } list =
 		 * noteService.getPublicNoteListByUserId(id);
 		 */
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		list = feedService.getFeedListByUserId(id, Feed.TYPE_NOTE);
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
 	}
@@ -224,6 +248,10 @@ public class RestUserController {
 		 * list = noteService.getALlNoteDpListByUserId(id,
 		 * HttpUtils.getSessionUserId(request)); }
 		 */
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int curUserId = HttpUtils.getSessionUserId(request);
 		list = feedService.getFeedDpListByUserId(id, Feed.TYPE_NOTE, curUserId);
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
@@ -234,6 +262,10 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/followees", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getFollowees(@PathVariable int id) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<Follow> followList = followService
 				.getFollowListByFollowerIdByUser(id);
 		List<User> userList = new ArrayList<User>();
@@ -249,6 +281,10 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/followers", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getFollowers(@PathVariable int id) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<Follow> followList = followService
 				.getFollowListByFollowedUserId(id);
 		List<User> userList = new ArrayList<User>();
@@ -264,6 +300,10 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/questions_followed", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestionsFollowed(@PathVariable int id) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<Follow> followList = followService
 				.getFollowListByFollowerIdByQuestion(id);
 		List<Feed> feedList = new ArrayList<Feed>();
@@ -280,6 +320,10 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/books", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getBooks(@PathVariable int id) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<Bought> boughtList = boughtService.getBoughtByUserId(id);
 		List<Book> bookList = new ArrayList<Book>();
 		for (Bought bought : boughtList) {
@@ -294,6 +338,10 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/circles", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCircles(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		if (!HttpUtils.isSessionUserIdExists(request)) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.NULLSESSION);
@@ -309,6 +357,10 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/follow", method = RequestMethod.GET)
 	public String follow(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int userId = HttpUtils.getSessionUserId(request);
 		Follow follow = new Follow(Follow.FOLLOW_USER, userId, id);
 		int status = followService.addFollow(follow);
@@ -350,6 +402,10 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/{id}/withdraw_follow", method = RequestMethod.GET)
 	public String withdrawFollow(@PathVariable int id,
 			HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = followService.deleteFollow(Follow.FOLLOW_USER, userId, id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -360,6 +416,10 @@ public class RestUserController {
 	 */
 	@RequestMapping(value = "/json/user/{id}/footprint", method = RequestMethod.GET)
 	public String footprint(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		List<MessageDp> messageList = messageService
 				.getMessageDpByUserIdAndFilter(id, Filter.MESSAGE_FOOTPRINT);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
@@ -397,6 +457,10 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/{userId}/answers/{page}", produces = "application/json")
 	public String getAnswersByPage(@PathVariable int userId,
 			@PathVariable int page) {
+		if ((userId < 1) || (page < 1)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int answerNum = userService.getUserById(userId).getAnswerNum();
 		int total_page = getTotalPage(answerNum);
 		int current_page = page;
@@ -414,6 +478,10 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/{userId}/questions/{page}", produces = "application/json")
 	public String getQuestionsByPage(@PathVariable int userId,
 			@PathVariable int page, HttpServletRequest request) {
+		if ((userId < 1) || (page < 1)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int questionNum = userService.getUserById(userId).getQuestionNum();
 		int total_page = getTotalPage(questionNum);
 		int current_page = page;
@@ -430,6 +498,10 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/{userId}/notes/{page}", produces = "application/json")
 	public String getNotessByPage(@PathVariable int userId,
 			@PathVariable int page, HttpServletRequest request) {
+		if ((userId < 1) || (page < 1)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
 		int noteNum = userService.getUserById(userId).getNoteNum();
 		int total_page = getTotalPage(noteNum);
 		int current_page = page;
