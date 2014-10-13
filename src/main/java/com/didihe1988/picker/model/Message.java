@@ -299,7 +299,7 @@ public class Message implements Serializable {
 	public Message(Message message) {
 		this(message.getId(), message.getReceiverId(), message.isChecked(),
 				message.getType(), message.getProducerId(), message
-						.getProducerName(), message.getReceiverId(), message
+						.getProducerName(), message.getRelatedSourceId(), message
 						.getRelatedSourceContent(), message.getTime(), message
 						.getParentId());
 	}

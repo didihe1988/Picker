@@ -3,7 +3,6 @@ package com.didihe1988.picker.serviceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +22,6 @@ import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.json.AnswerJson;
 import com.didihe1988.picker.service.AnswerService;
-import com.didihe1988.picker.service.RelatedImageService;
 
 @Service
 @Transactional
@@ -181,16 +179,7 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	private List<String> getImageUrlsFromAnswer(Answer answer) {
-		List<RelatedImage> relatedImages = relatedImageDao
-				.queryRelatedImagesByKey(answer.getId(),
-						RelatedImage.ANSWER_IMAGE);
-		List<String> list = new ArrayList<String>();
-		if ((relatedImages != null) && (relatedImages.size() != 0)) {
-			for (RelatedImage relatedImage : relatedImages) {
-				list.add(relatedImage.getImageUrl());
-			}
-		}
-		return list;
+		return relatedImageDao.queryImageUrlsByKey(answer.getId(), RelatedImage.ANSWER_IMAGE);
 	}
 
 	private List<AnswerDp> getAnswerDpListFormAnswerList(
@@ -216,13 +205,7 @@ public class AnswerServiceImpl implements AnswerService {
 				.queryAnswerByReplierId(userId, page);
 		List<AnswerJson> list = new ArrayList<AnswerJson>();
 		for (Answer answer : answerList) {
-			RelatedImage relatedImage = relatedImageDao
-					.queryFirstRelatedImagesByKey(answer.getId(),
-							RelatedImage.ANSWER_IMAGE);
-			String imageUrl = "";
-			if (relatedImage != null) {
-				imageUrl = relatedImage.getImageUrl();
-			}
+			String imageUrl=relatedImageDao.queryFirstImageUrlByKey(answer.getId(), RelatedImage.ANSWER_IMAGE);
 			Feed feed = feedDao.queryFeedById(answer.getQuestionId());
 			AnswerJson answerJson = new AnswerJson(feed.getTitle(), imageUrl,
 					"/detail/" + answer.getQuestionId(), answer.getDate(),

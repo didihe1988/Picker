@@ -181,17 +181,8 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	private List<String> getImageUrlsFromFeed(Feed feed) {
-
-		List<RelatedImage> relatedImages = relatedImageDao
-				.queryRelatedImagesByKey(feed.getId(),
-						RelatedImage.getTypeFromObject(feed));
-		List<String> list = new ArrayList<String>();
-		if ((relatedImages != null) && (relatedImages.size() != 0)) {
-			for (RelatedImage relatedImage : relatedImages) {
-				list.add(relatedImage.getImageUrl());
-			}
-		}
-		return list;
+		return relatedImageDao.queryImageUrlsByKey(feed.getId(),
+				RelatedImage.FEED_IMAGE);
 	}
 
 	@Override
@@ -257,13 +248,8 @@ public class FeedServiceImpl implements FeedService {
 				Feed.TYPE_NOTE, page);
 		List<NoteJson> list = new ArrayList<NoteJson>();
 		for (Feed feed : noteList) {
-			RelatedImage relatedImage = relatedImageDao
-					.queryFirstRelatedImagesByKey(feed.getId(),
-							RelatedImage.FEED_IMAGE);
-			String imageUrl = "";
-			if (relatedImage != null) {
-				imageUrl = relatedImage.getImageUrl();
-			}
+			String imageUrl = relatedImageDao.queryFirstImageUrlByKey(
+					feed.getId(), RelatedImage.FEED_IMAGE);
 			NoteJson noteJson = new NoteJson(feed.getTitle(), imageUrl,
 					"/detail/" + feed.getId(), feed.getDate(),
 					feed.getContent());
@@ -279,13 +265,8 @@ public class FeedServiceImpl implements FeedService {
 				Feed.TYPE_QUESTION, page);
 		List<QuestionJson> list = new ArrayList<QuestionJson>();
 		for (Feed feed : questionList) {
-			RelatedImage relatedImage = relatedImageDao
-					.queryFirstRelatedImagesByKey(feed.getId(),
-							RelatedImage.FEED_IMAGE);
-			String imageUrl = "";
-			if (relatedImage != null) {
-				imageUrl = relatedImage.getImageUrl();
-			}
+			String imageUrl = relatedImageDao.queryFirstImageUrlByKey(
+					feed.getId(), RelatedImage.FEED_IMAGE);
 			QuestionJson questionJson = new QuestionJson(feed.getTitle(),
 					imageUrl, "/detail/" + feed.getId(), feed.getDate(),
 					feed.getCommentNum(), feed.getAnswerNum());

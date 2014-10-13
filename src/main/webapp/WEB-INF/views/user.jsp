@@ -474,19 +474,21 @@
 							<c:if test="${message.type==37 }">
 								<div class="user_feed">
 									<div>
-										<span class="user_feed_label">创建圈子 </span> <span
+										<span class="user_feed_label">创建圈子@ </span> <span
 											class="user_feed_book"><a
-											href="<c:url value="/detail/${message.parentId}"/>">${message.parentName}</a></span>
+											href="<c:url value="/group/${message.relatedSourceId}"/>">${message.relatedSourceContent}</a></span>
 										<span class="time">1天前</span>
 									</div>
 									<div style="margin-top: 5px">
+										<!-- 
 										<div class="feed_question_title">
 											<a data-pjax
 												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
 										</div>
+									 	-->
 										<div class="user_feed_brief"
 											onclick="user_feed_show_full($(this))">
-											${message.relatedSourceContent}</div>
+											${message.title}</div>
 										<div class="user_feed_all">
 											红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
 											<div class="feed_all_roll_up" style="text-align: right"
@@ -501,19 +503,21 @@
 							<c:if test="${message.type==38 }">
 								<div class="user_feed">
 									<div>
-										<span class="user_feed_label">加入圈子 </span> <span
+										<span class="user_feed_label">加入圈子@ </span> <span
 											class="user_feed_book"><a
-											href="<c:url value="/detail/${message.parentId}"/>">${message.parentName}</a></span>
+											href="<c:url value="/group/${message.relatedSourceId}"/>">${message.relatedSourceContent}</a></span>
 										<span class="time">1天前</span>
 									</div>
 									<div style="margin-top: 5px">
+										<!--  
 										<div class="feed_question_title">
 											<a data-pjax
 												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
 										</div>
+										-->
 										<div class="user_feed_brief"
 											onclick="user_feed_show_full($(this))">
-											${message.relatedSourceContent}</div>
+											${message.title}</div>
 										<div class="user_feed_all">
 											红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
 											<div class="feed_all_roll_up" style="text-align: right"

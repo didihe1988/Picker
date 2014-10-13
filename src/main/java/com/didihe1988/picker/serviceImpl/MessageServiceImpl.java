@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.dao.BookDao;
+import com.didihe1988.picker.dao.CircleDao;
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.MessageDao;
@@ -47,6 +48,9 @@ public class MessageServiceImpl implements MessageService {
 
 	@Autowired
 	private RelatedImageDao relatedImageDao;
+
+	@Autowired
+	private CircleDao circleDao;
 
 	/*
 	 * 用户关注的人产生的消息
@@ -206,6 +210,10 @@ public class MessageServiceImpl implements MessageService {
 				|| (type == Message.MESSAGE_USER_FAVORITE_ANSWER)) {
 			parentName = feedDao.queryFeedById(message.getParentId())
 					.getTitle();
+		} else if ((type == Message.MESSAGE_USER_ADDCIRCLE)
+				|| (type == Message.MESSAGE_USER_JOINCIRCLE)) {
+			title = circleDao.queryCircleById(message.getRelatedSourceId())
+					.getDescribe();
 		}
 		return new FullMessage(message, avatarUrl, parentName, title);
 	}
@@ -224,19 +232,13 @@ public class MessageServiceImpl implements MessageService {
 					.getBookName();
 			title = feedDao.queryFeedById(message.getRelatedSourceId())
 					.getTitle();
-			RelatedImage image = relatedImageDao.queryFirstRelatedImagesByKey(
+			imageUrl = relatedImageDao.queryFirstImageUrlByKey(
 					message.getRelatedSourceId(), RelatedImage.FEED_IMAGE);
-			if (image != null) {
-				imageUrl = image.getImageUrl();
-			}
 		} else if (type == Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER) {
 			parentName = feedDao.queryFeedById(message.getParentId())
 					.getTitle();
-			RelatedImage image = relatedImageDao.queryFirstRelatedImagesByKey(
+			imageUrl = relatedImageDao.queryFirstImageUrlByKey(
 					message.getRelatedSourceId(), RelatedImage.ANSWER_IMAGE);
-			if (image != null) {
-				imageUrl = image.getImageUrl();
-			}
 		}
 		return new Dynamic(message, avatarUrl, parentName, title, imageUrl);
 	}

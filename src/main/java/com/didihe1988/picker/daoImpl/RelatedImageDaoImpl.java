@@ -1,5 +1,6 @@
 package com.didihe1988.picker.daoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -28,9 +29,7 @@ public class RelatedImageDaoImpl implements RelatedImageDao {
 		return (Integer) getCurrentSession().save(relatedImage);
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<RelatedImage> queryRelatedImagesByKey(int relatedId, int type) {
+	private List<RelatedImage> queryRelatedImagesByKey(int relatedId, int type) {
 		// TODO Auto-generated method stub
 		String hql = "from RelatedImage as r where r.relatedId=? and r.type=?";
 		Query query = getCurrentSession().createQuery(hql);
@@ -39,8 +38,7 @@ public class RelatedImageDaoImpl implements RelatedImageDao {
 		return query.list();
 	}
 
-	@Override
-	public RelatedImage queryFirstRelatedImagesByKey(int relatedId, int type) {
+	private RelatedImage queryFirstRelatedImagesByKey(int relatedId, int type) {
 		// TODO Auto-generated method stub
 		String hql = "from RelatedImage as r where r.relatedId=? and r.type=?";
 		Query query = getCurrentSession().createQuery(hql);
@@ -48,6 +46,30 @@ public class RelatedImageDaoImpl implements RelatedImageDao {
 		query.setInteger(1, type);
 		query.setMaxResults(1);
 		return (RelatedImage) query.uniqueResult();
+	}
+
+	@Override
+	public String queryFirstImageUrlByKey(int relatedId, int type) {
+		// TODO Auto-generated method stub
+		String imageUrl = "";
+		RelatedImage relatedImage = queryFirstRelatedImagesByKey(relatedId,
+				type);
+		if (relatedImage != null) {
+			imageUrl = relatedImage.getImageUrl();
+		}
+		return imageUrl;
+	}
+
+	@Override
+	public List<String> queryImageUrlsByKey(int relatedId, int type) {
+		// TODO Auto-generated method stub
+		List<RelatedImage> relatedImages = queryRelatedImagesByKey(relatedId,
+				type);
+		List<String> imageUrls = new ArrayList<String>();
+		for (RelatedImage relatedImage : relatedImages) {
+			imageUrls.add(relatedImage.getImageUrl());
+		}
+		return imageUrls;
 	}
 
 }
