@@ -113,7 +113,7 @@ public class RestCircleController {
 		setCircle(circle, request);
 		int status = circleService.addCircle(circle);
 		if (status == Status.SUCCESS) {
-			// addCircleMessage(circle, request);
+			addCircleMessage(circle, request);
 
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -147,20 +147,23 @@ public class RestCircleController {
 		setCircle(circle, request);
 		int status = circleService.addCircle(circle);
 		if (status == Status.SUCCESS) {
-			// addCircleMessage(circle, request);
+			addCircleMessage(circle, request);
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
 	private void addCircleMessage(Circle circle, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = HttpUtils.getSessionUserName(request);
+		String userName = userService.getUserById(userId).getUsername();
 		String relatedSourceContent = StringUtils.confineStringLength(
 				circle.getName(), Constant.MESSAGE_LENGTH);
 		int circleId = circleService.getLatestCircleIdByEstablisherId(circle
 				.getEstablisherId());
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ADDCIRCLE, userId, userName, circleId,
+				relatedSourceContent, Message.NULL_parentId);
+		messageService.addMessageByRecerver(Message.NULL_receiverId,
+				Message.MESSAGE_USER_ADDCIRCLE, userId, userName, circleId,
 				relatedSourceContent, Message.NULL_parentId);
 	}
 
@@ -201,12 +204,16 @@ public class RestCircleController {
 
 	private void joinCircleMessage(int circleId, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = HttpUtils.getSessionUserName(request);
+		String userName = userService.getUserById(userId).getUsername();
 		Circle circle = circleService.getCircleById(circleId);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				circle.getName(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_JOINCIRCLE, userId, userName,
 				circleId, relatedSourceContent, Message.NULL_parentId);
+		messageService.addMessageByRecerver(Message.NULL_receiverId,
+				Message.MESSAGE_USER_JOINCIRCLE, userId, userName, circleId,
+				relatedSourceContent, Message.NULL_parentId);
+
 	}
 }

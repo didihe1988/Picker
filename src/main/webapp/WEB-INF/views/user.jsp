@@ -286,180 +286,245 @@
 
 					<div id="user_feeds">
 						<c:forEach var="message" items="${messageList}">
-							<c:choose>
-								<c:when test="${message.type==26 }">
-									<div class="user_feed">
-										<div>
-											<span class="user_feed_label">提出了问题 @ </span> <span
-												class="user_feed_book">《${message.parentName}》</span> <span
-												class="time">1天前</span>
+							<!-- MESSAGE_USER_ADDQUESTION -->
+							<c:if test="${message.type==26 }">
+								<div class="user_feed">
+									<div>
+										<span class="user_feed_label">提出了问题 @ </span> <span
+											class="user_feed_book"><a
+											href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a></span>
+										<span class="time">1天前</span>
+									</div>
+									<div style="margin-top: 5px">
+										<div class="feed_question_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
 										</div>
-										<div style="margin-top: 5px">
-											<div class="feed_question_title">
-												<a data-pjax
-													href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
-											</div>
-											<div class="user_feed_brief"
-												onclick="user_feed_show_full($(this))">
-												${message.relatedSourceContent}</div>
-											<div class="user_feed_all">
-												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
-												<div class="feed_all_roll_up" style="text-align: right"
-													onclick="user_feed_show_brief($(this))">
-													<a href="javascript: void(0)">收起</a>
-												</div>
+										<div class="user_feed_brief"
+											onclick="user_feed_show_full($(this))">
+											${message.relatedSourceContent}</div>
+										<div class="user_feed_all">
+											红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+											<div class="feed_all_roll_up" style="text-align: right"
+												onclick="user_feed_show_brief($(this))">
+												<a href="javascript: void(0)">收起</a>
 											</div>
 										</div>
 									</div>
-								</c:when>
+								</div>
+							</c:if>
+							<!-- MESSAGE_USER_ADDANSWER -->
+							<c:if test="${message.type==27 }">
+								<div class="user_feed">
+									<div>
+										<span class="user_feed_label">回答了问题 @ </span> <span
+											class="user_feed_book"><a
+											href="<c:url value="/detail/${message.parentId}"/>">${message.parentName}</a></span>
+										<span class="time">1天前</span>
+									</div>
+									<div style="margin-top: 5px">
+										<div class="user_feed_brief"
+											onclick="user_feed_show_full($(this))">
+											${message.relatedSourceContent}</div>
+										<div class="user_feed_all">
+											红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+											<div class="feed_all_roll_up" style="text-align: right"
+												onclick="user_feed_show_brief($(this))">
+												<a href="javascript: void(0)">收起</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
+							<!-- MESSAGE_USER_ADDNOTE -->
+							<c:if test="${message.type==31 }">
+								<div class="user_feed">
+									<div>
+										<span class="user_feed_label">添加了笔记 @ </span> <span
+											class="user_feed_book"><a
+											href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a></span>
+										<span class="time">1天前</span>
+									</div>
+									<div style="margin-top: 5px">
+										<div class="feed_question_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
+										</div>
+										<div class="user_feed_brief"
+											onclick="user_feed_show_full($(this))">
+											${message.relatedSourceContent}</div>
+										<div class="user_feed_all">
+											红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+											<div class="feed_all_roll_up" style="text-align: right"
+												onclick="user_feed_show_brief($(this))">
+												<a href="javascript: void(0)">收起</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
+							<!-- MESSAGE_USER_FOLLOW_OTHER -->
+							<c:if test="${message.type==32 }">
+								<div class="user_feed">
+									<div>
+										<span class="user_feed_label">关注了用户 </span> <span
+											class="user_feed_book">${message.parentName}</span> <span
+											class="time">1天前</span>
+									</div>
+									<div style="margin-top: 5px">
+										<div class="feed_question_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
+										</div>
+										<div class="user_feed_brief"
+											onclick="user_feed_show_full($(this))">
+											${message.relatedSourceContent}</div>
+										<div class="user_feed_all">
+											红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+											<div class="feed_all_roll_up" style="text-align: right"
+												onclick="user_feed_show_brief($(this))">
+												<a href="javascript: void(0)">收起</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
+							<!-- MESSAGE_USER_FAVORITE_QUESTION -->
+							<c:if test="${message.type==33 }">
+								<div class="user_feed">
+									<div>
+										<span class="user_feed_label">赞了问题@ </span> <span
+											class="user_feed_book"><a
+											href="<c:url value="/detail/${message.parentId}"/>">《${message.parentName}》</a></span>
+										<span class="time">1天前</span>
+									</div>
+									<div style="margin-top: 5px">
+										<div class="feed_question_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
+										</div>
+										<div class="user_feed_brief"
+											onclick="user_feed_show_full($(this))">
+											${message.relatedSourceContent}</div>
+										<div class="user_feed_all">
+											红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+											<div class="feed_all_roll_up" style="text-align: right"
+												onclick="user_feed_show_brief($(this))">
+												<a href="javascript: void(0)">收起</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
+							<!-- MESSAGE_USER_FAVORITE_NOTE -->
+							<c:if test="${message.type==34 }">
+								<div class="user_feed">
+									<div>
+										<span class="user_feed_label">赞了笔记@ </span> <span
+											class="user_feed_book"><a
+											href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a></span>
+										<span class="time">1天前</span>
+									</div>
+									<div style="margin-top: 5px">
+										<div class="feed_question_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
+										</div>
+										<div class="user_feed_brief"
+											onclick="user_feed_show_full($(this))">
+											${message.relatedSourceContent}</div>
+										<div class="user_feed_all">
+											红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+											<div class="feed_all_roll_up" style="text-align: right"
+												onclick="user_feed_show_brief($(this))">
+												<a href="javascript: void(0)">收起</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
+							<!--MESSAGE_USER_FAVORITE_ANSWER-->
+							<c:if test="${message.type==35 }">
+								<div class="user_feed">
+									<div>
+										<span class="user_feed_label">赞了回答@ </span> <span
+											class="user_feed_book"><a
+											href="<c:url value="/detail/${message.parentId}"/>">${message.parentName}</a></span>
+										<span class="time">1天前</span>
+									</div>
+									<div style="margin-top: 5px">
+										<div class="feed_question_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
+										</div>
+										<div class="user_feed_brief"
+											onclick="user_feed_show_full($(this))">
+											${message.relatedSourceContent}</div>
+										<div class="user_feed_all">
+											红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+											<div class="feed_all_roll_up" style="text-align: right"
+												onclick="user_feed_show_brief($(this))">
+												<a href="javascript: void(0)">收起</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
+							<!--MESSAGE_USER_ADDCIRCLE-->
+							<c:if test="${message.type==37 }">
+								<div class="user_feed">
+									<div>
+										<span class="user_feed_label">创建圈子 </span> <span
+											class="user_feed_book"><a
+											href="<c:url value="/detail/${message.parentId}"/>">${message.parentName}</a></span>
+										<span class="time">1天前</span>
+									</div>
+									<div style="margin-top: 5px">
+										<div class="feed_question_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
+										</div>
+										<div class="user_feed_brief"
+											onclick="user_feed_show_full($(this))">
+											${message.relatedSourceContent}</div>
+										<div class="user_feed_all">
+											红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+											<div class="feed_all_roll_up" style="text-align: right"
+												onclick="user_feed_show_brief($(this))">
+												<a href="javascript: void(0)">收起</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
+							<!--MESSAGE_USER_JOINCIRCLE-->
+							<c:if test="${message.type==38 }">
+								<div class="user_feed">
+									<div>
+										<span class="user_feed_label">加入圈子 </span> <span
+											class="user_feed_book"><a
+											href="<c:url value="/detail/${message.parentId}"/>">${message.parentName}</a></span>
+										<span class="time">1天前</span>
+									</div>
+									<div style="margin-top: 5px">
+										<div class="feed_question_title">
+											<a data-pjax
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
+										</div>
+										<div class="user_feed_brief"
+											onclick="user_feed_show_full($(this))">
+											${message.relatedSourceContent}</div>
+										<div class="user_feed_all">
+											红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
+											<div class="feed_all_roll_up" style="text-align: right"
+												onclick="user_feed_show_brief($(this))">
+												<a href="javascript: void(0)">收起</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
 
-								<c:when test="${message.type==27 }">
-									<div class="user_feed">
-										<div>
-											<span class="user_feed_label">回答了问题 @ </span> <span
-												class="user_feed_book">${message.parentName}</span> <span
-												class="time">1天前</span>
-										</div>
-										<div style="margin-top: 5px">
-											<div class="user_feed_brief"
-												onclick="user_feed_show_full($(this))">
-												${message.relatedSourceContent}</div>
-											<div class="user_feed_all">
-												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
-												<div class="feed_all_roll_up" style="text-align: right"
-													onclick="user_feed_show_brief($(this))">
-													<a href="javascript: void(0)">收起</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</c:when>
-								<c:when test="${message.type==31 }">
-									<div class="user_feed">
-										<div>
-											<span class="user_feed_label">添加了笔记 @ </span> <span
-												class="user_feed_book">《${message.parentName}》</span> <span
-												class="time">1天前</span>
-										</div>
-										<div style="margin-top: 5px">
-											<div class="feed_question_title">
-												<a data-pjax
-													href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
-											</div>
-											<div class="user_feed_brief"
-												onclick="user_feed_show_full($(this))">
-												${message.relatedSourceContent}</div>
-											<div class="user_feed_all">
-												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
-												<div class="feed_all_roll_up" style="text-align: right"
-													onclick="user_feed_show_brief($(this))">
-													<a href="javascript: void(0)">收起</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</c:when>
-								<c:when test="${message.type==32 }">
-									<div class="user_feed">
-										<div>
-											<span class="user_feed_label">关注了用户  </span> <span
-												class="user_feed_book">${message.parentName}</span> <span
-												class="time">1天前</span>
-										</div>
-										<div style="margin-top: 5px">
-											<div class="feed_question_title">
-												<a data-pjax
-													href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
-											</div>
-											<div class="user_feed_brief"
-												onclick="user_feed_show_full($(this))">
-												${message.relatedSourceContent}</div>
-											<div class="user_feed_all">
-												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
-												<div class="feed_all_roll_up" style="text-align: right"
-													onclick="user_feed_show_brief($(this))">
-													<a href="javascript: void(0)">收起</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</c:when>
-								<c:when test="${message.type==33 }">
-									<div class="user_feed">
-										<div>
-											<span class="user_feed_label">赞了问题@ </span> <span
-												class="user_feed_book">《${message.parentName}》</span> <span
-												class="time">1天前</span>
-										</div>
-										<div style="margin-top: 5px">
-											<div class="feed_question_title">
-												<a data-pjax
-													href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
-											</div>
-											<div class="user_feed_brief"
-												onclick="user_feed_show_full($(this))">
-												${message.relatedSourceContent}</div>
-											<div class="user_feed_all">
-												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
-												<div class="feed_all_roll_up" style="text-align: right"
-													onclick="user_feed_show_brief($(this))">
-													<a href="javascript: void(0)">收起</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</c:when>
-								<c:when test="${message.type==34 }">
-									<div class="user_feed">
-										<div>
-											<span class="user_feed_label">赞了笔记@ </span> <span
-												class="user_feed_book">《${message.parentName}》</span> <span
-												class="time">1天前</span>
-										</div>
-										<div style="margin-top: 5px">
-											<div class="feed_question_title">
-												<a data-pjax
-													href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
-											</div>
-											<div class="user_feed_brief"
-												onclick="user_feed_show_full($(this))">
-												${message.relatedSourceContent}</div>
-											<div class="user_feed_all">
-												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
-												<div class="feed_all_roll_up" style="text-align: right"
-													onclick="user_feed_show_brief($(this))">
-													<a href="javascript: void(0)">收起</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</c:when>
-								<c:when test="${message.type==35 }">
-									<div class="user_feed">
-										<div>
-											<span class="user_feed_label">赞了回答@ </span> <span
-												class="user_feed_book">${message.parentName}</span> <span
-												class="time">1天前</span>
-										</div>
-										<div style="margin-top: 5px">
-											<div class="feed_question_title">
-												<a data-pjax
-													href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
-											</div>
-											<div class="user_feed_brief"
-												onclick="user_feed_show_full($(this))">
-												${message.relatedSourceContent}</div>
-											<div class="user_feed_all">
-												红神只是千面之神的一面，当时贾昆等三人是被艾莉亚从火上救回，因而贾大人才说欠以火为代表的红神三命嘛，关于红神不是有句话说“唯死亡方能换取生命”嘛，个人理解呢。。
-												<div class="feed_all_roll_up" style="text-align: right"
-													onclick="user_feed_show_brief($(this))">
-													<a href="javascript: void(0)">收起</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</c:when>
-							</c:choose>
 						</c:forEach>
 					</div>
 				</div>

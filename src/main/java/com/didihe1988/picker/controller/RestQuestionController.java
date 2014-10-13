@@ -296,7 +296,7 @@ public class RestQuestionController {
 	private void addQuestionImage(Feed feed) {
 		int questionId = feedService.getLatestFeedByBookId(feed.getBookId(),
 				Feed.TYPE_QUESTION);
-		boolean isSuccess = ImageUtils.moveImage(RelatedImage.QUESTION_IMAGE,
+		boolean isSuccess = ImageUtils.moveImage(RelatedImage.FEED_IMAGE,
 				questionId, feed.getContent());
 		/*
 		 * false情况: file剪切出错或是没有imageUrl
@@ -313,13 +313,13 @@ public class RestQuestionController {
 			 * 替换content newUrl取代tmpUrl
 			 */
 			String newImageUrl = ImageUtils.getNewImageUrl(
-					RelatedImage.QUESTION_IMAGE, questionId, i, list.get(i));
+					RelatedImage.FEED_IMAGE, questionId, i, list.get(i));
 			content = content.replace(list.get(i), newImageUrl);
 			/*
 			 * 添加RelatedImage
 			 */
 			RelatedImage relatedImage = new RelatedImage(questionId,
-					RelatedImage.QUESTION_IMAGE, newImageUrl);
+					RelatedImage.FEED_IMAGE, newImageUrl);
 			relatedImageService.addRelatedImage(relatedImage);
 		}
 

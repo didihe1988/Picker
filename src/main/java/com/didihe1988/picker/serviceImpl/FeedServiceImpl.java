@@ -259,7 +259,7 @@ public class FeedServiceImpl implements FeedService {
 		for (Feed feed : noteList) {
 			RelatedImage relatedImage = relatedImageDao
 					.queryFirstRelatedImagesByKey(feed.getId(),
-							RelatedImage.NOTE_IMAGE);
+							RelatedImage.FEED_IMAGE);
 			String imageUrl = "";
 			if (relatedImage != null) {
 				imageUrl = relatedImage.getImageUrl();
@@ -281,7 +281,7 @@ public class FeedServiceImpl implements FeedService {
 		for (Feed feed : questionList) {
 			RelatedImage relatedImage = relatedImageDao
 					.queryFirstRelatedImagesByKey(feed.getId(),
-							RelatedImage.QUESTION_IMAGE);
+							RelatedImage.FEED_IMAGE);
 			String imageUrl = "";
 			if (relatedImage != null) {
 				imageUrl = relatedImage.getImageUrl();

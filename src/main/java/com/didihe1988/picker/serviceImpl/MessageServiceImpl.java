@@ -225,7 +225,7 @@ public class MessageServiceImpl implements MessageService {
 			title = feedDao.queryFeedById(message.getRelatedSourceId())
 					.getTitle();
 			RelatedImage image = relatedImageDao.queryFirstRelatedImagesByKey(
-					message.getRelatedSourceId(), RelatedImage.NOTE_IMAGE);
+					message.getRelatedSourceId(), RelatedImage.FEED_IMAGE);
 			if (image != null) {
 				imageUrl = image.getImageUrl();
 			}

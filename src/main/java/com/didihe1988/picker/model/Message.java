@@ -14,7 +14,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "message")
 public class Message implements Serializable {
-
+	/*
+	 * comment的消息只留footprint和dynamic的
+	 */
 	/**
 	 * 由关注产生的消息 用户的动态中显示
 	 */
@@ -70,9 +72,12 @@ public class Message implements Serializable {
 	public static final int MESSAGE_YOUR_QUESTION_COMMENTED = 24;
 	// 你被关注XXX了
 	public static final int MESSAGE_OTHERS_FOLLOW_YOU = 25;
+	/*
+	 * 缺少:XXX加入了你创建的圈子
+	 */
 
 	/*
-	 * 用户动作产生的消息 在用户的最新动态里显示
+	 * 用户动作产生的消息 在用户的profile里显示
 	 */
 
 	public static final int MESSAGE_USER_ADDQUESTION = 26;
@@ -86,6 +91,8 @@ public class Message implements Serializable {
 	public static final int MESSAGE_USER_FAVORITE_NOTE = 34;
 	public static final int MESSAGE_USER_FAVORITE_ANSWER = 35;
 	public static final int MESSAGE_USER_FAVORITE_COMMENT = 36;
+	public static final int MESSAGE_USER_ADDCIRCLE = 37;
+	public static final int MESSAGE_USER_JOINCIRCLE = 38;
 
 	/*
 	 * public static final int MESSAGE_UNCHECKED = 8; public static final int
@@ -108,7 +115,7 @@ public class Message implements Serializable {
 				break;
 			case 1:
 				startType = 26;
-				endType = 36;
+				endType = 38;
 				break;
 			case 2:
 				startType = 18;

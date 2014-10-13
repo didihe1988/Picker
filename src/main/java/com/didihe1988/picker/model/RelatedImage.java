@@ -15,8 +15,11 @@ public class RelatedImage implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static final int QUESTION_IMAGE = 0;
-	public static final int NOTE_IMAGE = 1;
+	/*
+	 * public static final int QUESTION_IMAGE = 0; public static final int
+	 * NOTE_IMAGE = 1;
+	 */
+	public static final int FEED_IMAGE = 1;
 	public static final int ANSWER_IMAGE = 2;
 	public static final int UNKOWN_IMAGE = 3;
 
@@ -72,12 +75,11 @@ public class RelatedImage implements Serializable {
 
 	public static int getTypeFromObject(Object object) {
 		if (object instanceof Feed) {
-			int type = ((Feed) object).getType();
-			if (type == Feed.TYPE_NOTE) {
-				return QUESTION_IMAGE;
-			} else {
-				return NOTE_IMAGE;
-			}
+			/*
+			 * int type = ((Feed) object).getType(); if (type == Feed.TYPE_NOTE)
+			 * { return QUESTION_IMAGE; } else { return NOTE_IMAGE; }
+			 */
+			return FEED_IMAGE;
 		} else if (object instanceof Answer) {
 			return ANSWER_IMAGE;
 		} else {

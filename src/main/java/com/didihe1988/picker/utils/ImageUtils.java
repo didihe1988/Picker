@@ -39,10 +39,12 @@ public class ImageUtils {
 
 	private static String getTypeStringFromType(int type) {
 		switch (type) {
-		case RelatedImage.QUESTION_IMAGE:
-			return "question";
-		case RelatedImage.NOTE_IMAGE:
-			return "note";
+		/*
+		 * case RelatedImage.QUESTION_IMAGE: return "question"; case
+		 * RelatedImage.NOTE_IMAGE: return "note";
+		 */
+		case RelatedImage.FEED_IMAGE:
+			return "feed";
 		case RelatedImage.ANSWER_IMAGE:
 			return "answer";
 		default:

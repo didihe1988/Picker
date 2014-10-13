@@ -207,7 +207,7 @@ public class RestNoteController {
 	private void addNoteImage(Feed feed) {
 		int noteId = feedService.getLatestFeedByBookId(feed.getBookId(),
 				Feed.TYPE_NOTE);
-		boolean isSuccess = ImageUtils.moveImage(RelatedImage.NOTE_IMAGE,
+		boolean isSuccess = ImageUtils.moveImage(RelatedImage.FEED_IMAGE,
 				noteId, feed.getContent());
 		/*
 		 * file剪切出错或是没有imageUrl
@@ -224,13 +224,13 @@ public class RestNoteController {
 			 * 替换content newUrl取代tmpUrl
 			 */
 			String newImageUrl = ImageUtils.getNewImageUrl(
-					RelatedImage.NOTE_IMAGE, noteId, i, list.get(i));
+					RelatedImage.FEED_IMAGE, noteId, i, list.get(i));
 			content = content.replace(list.get(i), newImageUrl);
 			/*
 			 * 添加RelatedImage
 			 */
 			RelatedImage relatedImage = new RelatedImage(noteId,
-					RelatedImage.NOTE_IMAGE, newImageUrl);
+					RelatedImage.FEED_IMAGE, newImageUrl);
 			relatedImageService.addRelatedImage(relatedImage);
 		}
 
