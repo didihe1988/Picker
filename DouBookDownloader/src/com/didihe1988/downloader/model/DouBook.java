@@ -19,6 +19,8 @@ public class DouBook {
 
 	private String isbn13;
 
+	private String image;
+
 	public int getInnerId() {
 		return innerId;
 	}
@@ -83,12 +85,25 @@ public class DouBook {
 		this.isbn13 = isbn13;
 	}
 
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public void toLargeImageUrl() {
+		image=image.replaceAll("mpic", "lpic");
+	}
+
 	public DouBook() {
 
 	}
 
 	public DouBook(int innerId, int id, String publisher, String title,
-			int pages, List<String> author, String pubdate, String isbn13) {
+			int pages, List<String> author, String pubdate, String isbn13,
+			String image) {
 		super();
 		this.innerId = innerId;
 		this.id = id;
@@ -98,10 +113,11 @@ public class DouBook {
 		this.author = author;
 		this.pubdate = pubdate;
 		this.isbn13 = isbn13;
+		this.image = image;
 	}
 
 	public DouBook(int id, String publisher, String title, int pages,
-			List<String> author, String pubdate, String isbn13) {
+			List<String> author, String pubdate, String isbn13, String image) {
 		super();
 		this.id = id;
 		this.publisher = publisher;
@@ -110,6 +126,7 @@ public class DouBook {
 		this.author = author;
 		this.pubdate = pubdate;
 		this.isbn13 = isbn13;
+		this.image = image;
 	}
 
 	@Override
@@ -117,7 +134,7 @@ public class DouBook {
 		return "DouBook [innerId=" + innerId + ", id=" + id + ", publisher="
 				+ publisher + ", title=" + title + ", pages=" + pages
 				+ ", author=" + author + ", pubdate=" + pubdate + ", isbn13="
-				+ isbn13 + "]";
+				+ isbn13 + ", image=" + image + "]";
 	}
 
 }

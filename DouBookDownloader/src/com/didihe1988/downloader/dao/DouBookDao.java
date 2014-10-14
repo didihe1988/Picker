@@ -2,16 +2,19 @@ package com.didihe1988.downloader.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import com.didihe1988.downloader.model.DouBook;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 public class DouBookDao extends BaseDao {
 	private static DouBookDao dao;
 
 	private DouBookDao() {
-		super("com.mysql.jdbc.Driver","jdbc:mysql://localhost:3306/picker", "root","1234");
+		super("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/picker",
+				"root", "1234");
 	}
 
 	public static DouBookDao getDao() {
@@ -21,10 +24,10 @@ public class DouBookDao extends BaseDao {
 		return dao;
 	}
 
-	public void insert(DouBook douBook) throws SQLException {
+	public boolean insert(DouBook douBook) throws SQLException {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		String insertSql = "insert into doubook (doubook_id,doubook_publisher,doubook_title,doubook_pages,doubook_author,doubook_pubdate,doubook_isbn13) values (?,?,?,?,?,?,?)";
+		String insertSql = "insert into doubook (doubook_id,doubook_publisher,doubook_title,doubook_pages,doubook_author,doubook_pubdate,doubook_isbn13,doubook_image) values (?,?,?,?,?,?,?,?)";
 		try {
 			connection = getConnection();
 			statement = connection.prepareStatement(insertSql);
@@ -35,7 +38,11 @@ public class DouBookDao extends BaseDao {
 			statement.setString(5, getAuthorString(douBook.getAuthor()));
 			statement.setString(6, douBook.getPubdate());
 			statement.setString(7, douBook.getIsbn13());
-			statement.executeUpdate();
+			statement.setString(8, douBook.getImage());
+			int row = statement.executeUpdate();
+			if (row == 1) {
+				return true;
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -43,10 +50,30 @@ public class DouBookDao extends BaseDao {
 			if (statement != null) {
 				statement.close();
 			}
-			if (connection != null) {
-				connection.close();
+		}
+		return false;
+	}
+
+	public int queryLatestBookId() throws SQLException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		String querySql = "select max(doubook_innerid) from doubook";
+		try {
+			connection = getConnection();
+			statement = connection.prepareStatement(querySql);
+			ResultSet set = statement.executeQuery();
+			if (set.next()) {
+				return set.getInt(1);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
 			}
 		}
+		return -1;
 	}
 
 	private String getAuthorString(List<String> authors) {

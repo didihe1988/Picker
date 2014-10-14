@@ -10,22 +10,35 @@ import com.google.gson.GsonBuilder;
 
 public class Main {
 	public static void main(String[] args) {
-		String url = "https://api.douban.com/v2/book/1858513?fields=id,title,pages,author,publisher,isbn13,pubdate";
+		String url = "https://api.douban.com/v2/book/17604305?fields=id,title,pages,author,publisher,isbn13,pubdate,image";
 		Executor executor = new Executor(url);
-		Object result = executor.execute();
+		Object result = executor.httpGet();
 		if (result instanceof String) {
 			// System.out.println(result);
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM").create();
 			DouBook douBook = gson.fromJson((String) result, DouBook.class);
+			douBook.toLargeImageUrl();
 			System.out.println(douBook.toString());
 			DouBookDao dao = DouBookDao.getDao();
 			try {
-				dao.insert(douBook);
+				boolean success = dao.insert(douBook);
+				if (success) {
+					executor.setUrl(douBook.getImage());
+					int innerId = dao.queryLatestBookId();
+					System.out.println(innerId);
+					executor.downloadImage(innerId);
+				}
+
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				dao.closeConnection();
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-
 }
