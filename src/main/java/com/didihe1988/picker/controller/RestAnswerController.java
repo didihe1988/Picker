@@ -129,12 +129,15 @@ public class RestAnswerController {
 				answer.getQuestionId());
 
 		/*
-		 * 通知关注者 小明 (被关注者)赞了XXX的问题
+		 * 通知关注者 小明 (被关注者)赞了XXX的
 		 */
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, curUserId,
 				curUserName, answer.getQuestionId(), relatedSourceContent,
 				answer.getQuestionId());
+		/*
+		 * 通知关注该问题的人 xxx回答了该问题
+		 */
 		/*
 		 * 用户动态
 		 */
@@ -212,6 +215,12 @@ public class RestAnswerController {
 		messageService.addMessageByRecerver(askerId,
 				Message.MESSAGE_YOUR_QUESTION_UPDATE, userId, userName,
 				answerId, relatedSourceContent, answer.getQuestionId());
+		/*
+		 * 通知关注该问题的人 问题有了新的回答
+		 */
+		messageService.addMessageByFollowedQuestion(
+				Message.MESSAGE_QUESTION_NEWANSWER, userId, userName, answerId,
+				relatedSourceContent, answer.getQuestionId());
 		/*
 		 * 通知关注者 小明 (被关注者)回答了一个问题
 		 */

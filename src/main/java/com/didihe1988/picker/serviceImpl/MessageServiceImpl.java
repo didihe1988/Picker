@@ -239,6 +239,13 @@ public class MessageServiceImpl implements MessageService {
 					.getTitle();
 			imageUrl = relatedImageDao.queryFirstImageUrlByKey(
 					message.getRelatedSourceId(), RelatedImage.ANSWER_IMAGE);
+		} else if ((type == Message.MESSAGE_FOLLOWED_ADDCIRCLE)
+				|| (type == Message.MESSAGE_FOLLOWED_JOINCIRCLE)) {
+			title = circleDao.queryCircleById(message.getRelatedSourceId())
+					.getDescribe();
+		} else if (type == Message.MESSAGE_FOLLOWED_ADDBOUGHT) {
+			title = bookDao.queryBookById(message.getRelatedSourceId())
+					.getWriter();
 		}
 		return new Dynamic(message, avatarUrl, parentName, title, imageUrl);
 	}
