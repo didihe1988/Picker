@@ -11,7 +11,7 @@ public class DouBook {
 
 	private String title;
 
-	private int pages;
+	private String pages;
 
 	private List<String> author;
 
@@ -53,11 +53,11 @@ public class DouBook {
 		this.title = title;
 	}
 
-	public int getPages() {
+	public String getPages() {
 		return pages;
 	}
 
-	public void setPages(int pages) {
+	public void setPages(String pages) {
 		this.pages = pages;
 	}
 
@@ -93,8 +93,10 @@ public class DouBook {
 		this.image = image;
 	}
 
-	public void toLargeImageUrl() {
+	public void resetField()
+	{
 		image=image.replaceAll("mpic", "lpic");
+		pages=pages.replaceAll("ҳ", "");
 	}
 
 	public DouBook() {
@@ -102,7 +104,7 @@ public class DouBook {
 	}
 
 	public DouBook(int innerId, int id, String publisher, String title,
-			int pages, List<String> author, String pubdate, String isbn13,
+			String pages, List<String> author, String pubdate, String isbn13,
 			String image) {
 		super();
 		this.innerId = innerId;
@@ -116,7 +118,7 @@ public class DouBook {
 		this.image = image;
 	}
 
-	public DouBook(int id, String publisher, String title, int pages,
+	public DouBook(int id, String publisher, String title, String pages,
 			List<String> author, String pubdate, String isbn13, String image) {
 		super();
 		this.id = id;

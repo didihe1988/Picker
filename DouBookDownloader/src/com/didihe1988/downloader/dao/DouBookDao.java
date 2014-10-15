@@ -34,7 +34,7 @@ public class DouBookDao extends BaseDao {
 			statement.setInt(1, douBook.getId());
 			statement.setString(2, douBook.getPublisher());
 			statement.setString(3, douBook.getTitle());
-			statement.setInt(4, douBook.getPages());
+			statement.setInt(4, Integer.parseInt(douBook.getPages()));
 			statement.setString(5, getAuthorString(douBook.getAuthor()));
 			statement.setString(6, douBook.getPubdate());
 			statement.setString(7, douBook.getIsbn13());
@@ -74,6 +74,29 @@ public class DouBookDao extends BaseDao {
 			}
 		}
 		return -1;
+	}
+
+	public boolean isExistsByDouId(int id) throws SQLException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		String querySql = "select * from doubook where doubook_id =?";
+		try {
+			connection = getConnection();
+			statement = connection.prepareStatement(querySql);
+			statement.setInt(1, id);
+			ResultSet set = statement.executeQuery();
+			if (set.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if (statement != null) {
+				statement.close();
+			}
+		}
+		return false;
 	}
 
 	private String getAuthorString(List<String> authors) {

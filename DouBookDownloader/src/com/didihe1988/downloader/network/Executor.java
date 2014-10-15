@@ -78,7 +78,7 @@ public class Executor {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		FileOutputStream output = new FileOutputStream(dirString + "/0.jpg");
+		FileOutputStream output = new FileOutputStream(dirString + "/lpic.jpg");
 		byte[] buffer = new byte[1024];
 		int bytes = 0;
 		while ((bytes = inputStream.read(buffer)) != -1) {

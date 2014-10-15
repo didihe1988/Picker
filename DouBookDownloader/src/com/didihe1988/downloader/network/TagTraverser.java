@@ -19,11 +19,30 @@ public class TagTraverser {
 
 	private int endPage;
 
-	private HashSet<Integer> getIds(int page) throws IOException {
+	public TagTraverser() {
+
+	}
+
+	public TagTraverser(String tag, int startPage, int endPage) {
+		this.tag = tag;
+		this.startPage = startPage;
+		this.endPage = endPage;
+	}
+
+	public HashSet<Integer> getIds() throws IOException {
+		HashSet<Integer> idSet = new HashSet<Integer>();
+		for (int page = startPage; page <= endPage; page++) {
+			idSet.addAll(getIdsByPage(page));
+		}
+		return idSet;
+	}
+
+	private HashSet<Integer> getIdsByPage(int page) throws IOException {
 		StringBuilder urlBuilder = new StringBuilder();
 		// http://book.douban.com/tag/ÃûÖø?start=0&type=T
 		urlBuilder.append("http://book.douban.com/tag/").append(this.tag)
 				.append("?start=").append((page - 1) * 20).append("&type=T");
+		System.out.println(urlBuilder.toString());
 		HashSet<Integer> set = new HashSet<Integer>();
 		Document doc = Jsoup.connect(urlBuilder.toString()).get();
 		Elements aTags = doc.select("a");
@@ -39,14 +58,11 @@ public class TagTraverser {
 	}
 
 	private static int getIdFromUrl(String url) {
-		String id = "";
-		String pString = "(http://book.douban.com/subject/)(.*?)";
+		String pString = "(http://book.douban.com/subject/)(.*?)(/)";
 		Pattern pattern = Pattern.compile(pString, Pattern.MULTILINE);
 		Matcher matcher = pattern.matcher(url);
 		while (matcher.find()) {
-			id = url.replaceAll("http://book.douban.com/subject/", "")
-					.replaceAll("/", "").replaceAll("buylinks", "");
-			return Integer.parseInt(id);
+			return Integer.parseInt(matcher.group(matcher.groupCount() - 1));
 		}
 		return -1;
 	}
