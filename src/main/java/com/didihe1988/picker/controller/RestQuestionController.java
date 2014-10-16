@@ -16,14 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Answer;
-import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.dp.UserDp;
-import com.didihe1988.picker.model.json.CircleJson;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -254,13 +252,13 @@ public class RestQuestionController {
 				feed.getBrief(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ASKQUESTION, userId, userName, feedId,
-				relatedSourceContent, feed.getBookId());
+				relatedSourceContent, feed.getTitle(), feed.getBookId());
 		/*
 		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDQUESTION, userId, userName, feedId,
-				relatedSourceContent, feed.getBookId());
+				relatedSourceContent, feed.getTitle(), feed.getBookId());
 	}
 
 	private void produceSubscribeMessage(int feedId, int curUserId) {
@@ -276,20 +274,24 @@ public class RestQuestionController {
 		 */
 		messageService.addMessageByRecerver(feed.getUserId(),
 				Message.MESSAGE_YOUR_QUESTION_FAVORITED, curUserId,
-				curUserName, feedId, relatedSourceContent, feed.getBookId());
+				curUserName, feedId, relatedSourceContent, feed.getTitle(),
+				feed.getBookId());
 		/*
 		 * 通知关注者 小明 (被关注者)赞了XXX的问题
 		 */
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, curUserId,
-				curUserName, feedId, relatedSourceContent, feed.getBookId());
+				curUserName, feedId, relatedSourceContent, feed.getTitle(),
+				feed.getBookId());
 		/*
 		 * 用户动态
 		 */
 
-		messageService.addMessageByRecerver(Message.NULL_receiverId,
-				Message.MESSAGE_USER_FAVORITE_QUESTION, curUserId, curUserName,
-				feedId, relatedSourceContent, feed.getBookId());
+		messageService
+				.addMessageByRecerver(Message.NULL_receiverId,
+						Message.MESSAGE_USER_FAVORITE_QUESTION, curUserId,
+						curUserName, feedId, relatedSourceContent,
+						feed.getTitle(), feed.getBookId());
 
 	}
 

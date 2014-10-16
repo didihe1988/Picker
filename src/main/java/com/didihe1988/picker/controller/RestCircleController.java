@@ -159,12 +159,14 @@ public class RestCircleController {
 				circle.getName(), Constant.MESSAGE_LENGTH);
 		int circleId = circleService.getLatestCircleIdByEstablisherId(circle
 				.getEstablisherId());
+		String extraContent = StringUtils.confineStringLength(
+				circle.getDescribe(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ADDCIRCLE, userId, userName, circleId,
-				relatedSourceContent, Message.NULL_parentId);
+				relatedSourceContent, extraContent, Message.NULL_parentId);
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDCIRCLE, userId, userName, circleId,
-				relatedSourceContent, Message.NULL_parentId);
+				relatedSourceContent, extraContent, Message.NULL_parentId);
 	}
 
 	/*
@@ -208,12 +210,15 @@ public class RestCircleController {
 		Circle circle = circleService.getCircleById(circleId);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				circle.getName(), Constant.MESSAGE_LENGTH);
+		String extraContent = StringUtils.confineStringLength(
+				circle.getDescribe(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_JOINCIRCLE, userId, userName,
-				circleId, relatedSourceContent, Message.NULL_parentId);
+				circleId, relatedSourceContent, extraContent,
+				Message.NULL_parentId);
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_JOINCIRCLE, userId, userName, circleId,
-				relatedSourceContent, Message.NULL_parentId);
+				relatedSourceContent, extraContent, Message.NULL_parentId);
 
 	}
 }

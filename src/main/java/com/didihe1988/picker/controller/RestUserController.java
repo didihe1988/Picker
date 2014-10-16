@@ -31,9 +31,6 @@ import com.didihe1988.picker.model.dp.MessageDp;
 import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.model.form.LoginForm;
 import com.didihe1988.picker.model.form.RegisterForm;
-import com.didihe1988.picker.model.json.AnswerJson;
-import com.didihe1988.picker.model.json.NoteJson;
-import com.didihe1988.picker.model.json.QuestionJson;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
@@ -45,7 +42,6 @@ import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
-import com.didihe1988.picker.utils.StringUtils;
 
 @RestController
 public class RestUserController {
@@ -381,19 +377,22 @@ public class RestUserController {
 		 */
 		messageService.addMessageByRecerver(followedId,
 				Message.MESSAGE_OTHERS_FOLLOW_YOU, followerId, followerName,
-				followedId, followedName, Message.NULL_parentId);
+				followedId, followedName, Message.NULL_ExtraContent,
+				Message.NULL_parentId);
 		/*
 		 * 通知关注者 小明(被关注者)关注了xxx
 		 */
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWEDUSER_FOLLOW, followerId, followerName,
-				followedId, followedName, Message.NULL_parentId);
+				followedId, followedName, Message.NULL_ExtraContent,
+				Message.NULL_parentId);
 		/*
 		 * 用户动态
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_FOLLOW_OTHER, followerId, followerName,
-				followedId, followedName, Message.NULL_parentId);
+				followedId, followedName, Message.NULL_ExtraContent,
+				Message.NULL_parentId);
 	}
 
 	/**

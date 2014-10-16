@@ -91,11 +91,14 @@ public class FollowController {
 		/*
 		 * XXX关注了您
 		 */
+		/*
+		 * 后面可以为ExtraContent加上获赞数、关注数
+		 */
 		if (sourceType == Follow.FOLLOW_USER) {
 			messageService.addMessageByRecerver(userId,
 					Message.MESSAGE_FOLLOWEDUSER_FOLLOW, followerId, userName,
 					sourceId, Message.NULL_RelatedSourceContent,
-					Message.NULL_parentId);
+					Message.NULL_ExtraContent, Message.NULL_parentId);
 		}
 
 		/*
@@ -107,7 +110,8 @@ public class FollowController {
 					feed.getContent(), Constant.MESSAGE_LENGTH);
 			messageService.addMessageByFollowedUser(
 					Message.MESSAGE_FOLLOWED_FOLLOWQUESTION, userId, userName,
-					sourceId, relatedSourceContent, Message.NULL_parentId);
+					sourceId, relatedSourceContent, Message.NULL_ExtraContent,
+					Message.NULL_parentId);
 		}
 		/*
 		 * 用户动态

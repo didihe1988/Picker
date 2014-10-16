@@ -63,11 +63,13 @@ public class BoughtController {
 		// TODO Auto-generated method stub
 		String userName = userService.getUserById(bought.getUserId())
 				.getUsername();
-		String relatedSourceContent=bookService.getBookById(bought.getBookId()).getBookName();
-		messageService.addMessageByFollowedUser(
-				Message.MESSAGE_FOLLOWED_ADDBOUGHT, bought.getUserId(),
+		String relatedSourceContent = bookService.getBookById(
+				bought.getBookId()).getBookName();
+		String extraContent = bookService.getBookById(bought.getBookId())
+				.getWriter();
+		messageService.addMessageByFollowedUser(Message.MESSAGE_FOLLOWED_ADDBOUGHT, bought.getUserId(),
 				userName, bought.getBookId(), relatedSourceContent,
-				Message.NULL_parentId);
+				extraContent, Message.NULL_parentId);
 	}
 
 	@RequestMapping(value = "/json/book/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")

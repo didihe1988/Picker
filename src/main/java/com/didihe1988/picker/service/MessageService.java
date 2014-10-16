@@ -2,6 +2,7 @@ package com.didihe1988.picker.service;
 
 import java.util.List;
 
+import com.didihe1988.picker.model.FollowedMessage;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.dp.Dynamic;
 import com.didihe1988.picker.model.dp.FullMessage;
@@ -51,22 +52,28 @@ public interface MessageService {
 	/*
 	 * 用户关注的人产生的消息
 	 */
+
 	public void addMessageByFollowedUser(int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent, int parentId);
+			String relatedSourceContent, String extraContent, int parentId);
+
+	// public void addMessageByFollowedUser(FollowedMessage foMessage);
 
 	/*
 	 * 用户关注的问题产生的消息
 	 */
+
 	public void addMessageByFollowedQuestion(int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent, int parentId);
+			String relatedSourceContent, String extraContent, int parentId);
+
+	// public void addMessageByFollowedQuestion(FollowedMessage foMessage);
 
 	/*
 	 * xxx赞了/关注了 您的XXX
 	 */
 	public void addMessageByRecerver(int receiverId, int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent, int parentId);
+			String relatedSourceContent, String extraContent, int parentId);
 
 }

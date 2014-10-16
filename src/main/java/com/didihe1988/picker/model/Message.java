@@ -138,8 +138,10 @@ public class Message implements Serializable {
 
 	}
 
-	public static final int NULL_RelatedSourceId = -1;
+	
 	public static final String NULL_RelatedSourceContent = "";
+	public static final String NULL_ExtraContent = "";
+	public static final int NULL_RelatedSourceId = -1;
 	public static final int NULL_receiverId = -1;
 	public static final int NULL_parentId = -1;
 
@@ -171,6 +173,9 @@ public class Message implements Serializable {
 
 	@Column(name = "message_relatedsourcecontent")
 	private String relatedSourceContent;
+
+	@Column(name = "message_extracontent")
+	private String extraContent;
 
 	@Column(name = "message_time")
 	private Date time;
@@ -258,9 +263,18 @@ public class Message implements Serializable {
 		this.parentId = parentId;
 	}
 
+	public String getExtraContent() {
+		return extraContent;
+	}
+
+	public void setExtraContent(String extraContent) {
+		this.extraContent = extraContent;
+	}
+
 	public Message(long id, int receiverId, boolean isChecked, int type,
 			int producerId, String producerName, int relatedSourceId,
-			String relatedSourceContent, Date time, int parentId) {
+			String relatedSourceContent, String extraContent, Date time,
+			int parentId) {
 		super();
 		this.id = id;
 		this.receiverId = receiverId;
@@ -270,13 +284,15 @@ public class Message implements Serializable {
 		this.producerName = producerName;
 		this.relatedSourceId = relatedSourceId;
 		this.relatedSourceContent = relatedSourceContent;
+		this.extraContent = extraContent;
 		this.time = time;
 		this.parentId = parentId;
 	}
 
 	public Message(int receiverId, boolean isChecked, int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent, Date time, int parentId) {
+			String relatedSourceContent, String extraContent, Date time,
+			int parentId) {
 		super();
 		this.receiverId = receiverId;
 		this.isChecked = isChecked;
@@ -285,23 +301,25 @@ public class Message implements Serializable {
 		this.producerName = producerName;
 		this.relatedSourceId = relatedSourceId;
 		this.relatedSourceContent = relatedSourceContent;
+		this.extraContent = extraContent;
 		this.time = time;
 		this.parentId = parentId;
 	}
 
 	public Message(int receiverId, int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent, int parentId) {
+			String relatedSourceContent, String extraContent, int parentId) {
 		this(receiverId, false, type, producerId, producerName,
-				relatedSourceId, relatedSourceContent, new Date(), parentId);
+				relatedSourceId, relatedSourceContent, extraContent,
+				new Date(), parentId);
 	}
 
 	public Message(Message message) {
 		this(message.getId(), message.getReceiverId(), message.isChecked(),
 				message.getType(), message.getProducerId(), message
-						.getProducerName(), message.getRelatedSourceId(), message
-						.getRelatedSourceContent(), message.getTime(), message
-						.getParentId());
+						.getProducerName(), message.getRelatedSourceId(),
+				message.getRelatedSourceContent(), message.getExtraContent(),
+				message.getTime(), message.getParentId());
 	}
 
 	public Message() {
@@ -315,8 +333,9 @@ public class Message implements Serializable {
 				+ ", isChecked=" + isChecked + ", type=" + type
 				+ ", producerId=" + producerId + ", producerName="
 				+ producerName + ", relatedSourceId=" + relatedSourceId
-				+ ", relatedSourceContent=" + relatedSourceContent + ", time="
-				+ time + ", parentId=" + parentId + "]";
+				+ ", relatedSourceContent=" + relatedSourceContent
+				+ ", extraContent=" + extraContent + ", time=" + time
+				+ ", parentId=" + parentId + "]";
 	}
 
 }

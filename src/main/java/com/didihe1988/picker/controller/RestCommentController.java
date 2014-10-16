@@ -77,26 +77,32 @@ public class RestCommentController {
 			/*
 			 * XXX赞了您的评论 两个函数都查询了comemnt 有待优化
 			 */
+			/*
+			 * extraContent暂时为空
+			 */
 			Comment comment = commentService.getCommentById(id);
 			String relatedSourceContent = StringUtils.confineStringLength(
 					comment.getContent(), Constant.MESSAGE_LENGTH);
 			messageService.addMessageByRecerver(comment.getProducerId(),
 					Message.MESSAGE_YOUR_COMMENT_FAVORITED, userId, userName,
-					id, relatedSourceContent, Message.NULL_parentId);
+					id, relatedSourceContent, Message.NULL_ExtraContent,
+					Message.NULL_parentId);
 
 			/*
 			 * 通知关注者 小明 (被关注者)赞了XXX的评论
 			 */
 			messageService.addMessageByFollowedUser(
 					Message.MESSAGE_FOLLOWED_FAVORITE_COMMENT, userId,
-					userName, id, relatedSourceContent, Message.NULL_parentId);
+					userName, id, relatedSourceContent,
+					Message.NULL_ExtraContent, Message.NULL_parentId);
 
 			/*
 			 * 用户动态
 			 */
 			messageService.addMessageByRecerver(Message.NULL_receiverId,
 					Message.MESSAGE_USER_FAVORITE_COMMENT, userId, userName,
-					id, relatedSourceContent, Message.NULL_parentId);
+					id, relatedSourceContent, Message.NULL_ExtraContent,
+					Message.NULL_parentId);
 		}
 
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -145,7 +151,8 @@ public class RestCommentController {
 			messageService.addMessageByRecerver(feed.getUserId(),
 					Message.MESSAGE_YOUR_QUESTION_COMMENTED,
 					comment.getProducerId(), userName, commentId,
-					relatedSourceContent, Message.NULL_parentId);
+					relatedSourceContent, Message.NULL_ExtraContent,
+					Message.NULL_parentId);
 		}
 
 		/*
@@ -156,7 +163,8 @@ public class RestCommentController {
 					.getCommentedId());
 			messageService.addMessageByRecerver(answer.getReplierId(),
 					Message.MESSAGE_YOUR_ANSWER_COMMENTED, userId, userName,
-					commentId, relatedSourceContent, Message.NULL_parentId);
+					commentId, relatedSourceContent, Message.NULL_ExtraContent,
+					Message.NULL_parentId);
 		}
 
 		/*

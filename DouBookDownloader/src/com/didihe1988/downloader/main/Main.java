@@ -14,7 +14,7 @@ import com.google.gson.GsonBuilder;
 
 public class Main {
 	public static void main(String[] args) {
-		TagTraverser traverser = new TagTraverser("±‡≥Ã",21, 30);
+		TagTraverser traverser = new TagTraverser("»’±æ",1,10);
 		try {
 			HashSet<Integer> idSet = traverser.getIds();
 			System.out.println(idSet);
@@ -26,7 +26,7 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO: handle exception
+			// TODO: handle exceptio
 			e.printStackTrace();
 		}
 	}

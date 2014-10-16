@@ -51,20 +51,21 @@ public class MessageServiceImpl implements MessageService {
 
 	@Autowired
 	private CircleDao circleDao;
-
+	
 	/*
 	 * 用户关注的人产生的消息
 	 */
 	@Override
 	public void addMessageByFollowedUser(int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent, int parentId) {
+			String relatedSourceContent, String extraContent, int parentId) {
+		// TODO Auto-generated method stub
 		final List<Follow> followList = followDao
 				.queryFollowListByFollowedUserId(producerId);
 		for (Follow follow : followList) {
 			Message message = new Message(follow.getFollowerId(), type,
 					producerId, producerName, relatedSourceId,
-					relatedSourceContent, parentId);
+					relatedSourceContent, extraContent, parentId);
 			messageDao.addMessage(message);
 		}
 	}
@@ -75,13 +76,14 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public void addMessageByFollowedQuestion(int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent, int parentId) {
+			String relatedSourceContent, String extraContent, int parentId) {
+		// TODO Auto-generated method stub
 		final List<Follow> followList = followDao
 				.queryFollowListByQuestionId(producerId);
 		for (Follow follow : followList) {
 			Message message = new Message(follow.getFollowerId(), type,
 					producerId, producerName, relatedSourceId,
-					relatedSourceContent, parentId);
+					relatedSourceContent, extraContent, parentId);
 			messageDao.addMessage(message);
 		}
 	}
@@ -92,9 +94,10 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public void addMessageByRecerver(int receiverId, int type, int producerId,
 			String producerName, int relatedSourceId,
-			String relatedSourceContent, int parentId) {
+			String relatedSourceContent, String extraContent, int parentId) {
 		Message message = new Message(receiverId, type, producerId,
-				producerName, relatedSourceId, relatedSourceContent, parentId);
+				producerName, relatedSourceId, relatedSourceContent,
+				extraContent, parentId);
 		messageDao.addMessage(message);
 
 	}

@@ -16,7 +16,6 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
-import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.service.AnswerService;
@@ -123,9 +122,11 @@ public class RestAnswerController {
 		Answer answer = answerService.getAnswerById(answerId);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				answer.getContent(), Constant.MESSAGE_LENGTH);
+		String extraContent = feedService.getFeedById(answer.getQuestionId())
+				.getTitle();
 		messageService.addMessageByRecerver(answer.getReplierId(),
 				Message.MESSAGE_YOUR_ANSWER_FAVORITED, curUserId, curUserName,
-				answer.getQuestionId(), relatedSourceContent,
+				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
 
 		/*
@@ -134,7 +135,7 @@ public class RestAnswerController {
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, curUserId,
 				curUserName, answer.getQuestionId(), relatedSourceContent,
-				answer.getQuestionId());
+				extraContent, answer.getQuestionId());
 		/*
 		 * 通知关注该问题的人 xxx回答了该问题
 		 */
@@ -143,7 +144,7 @@ public class RestAnswerController {
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_FAVORITE_ANSWER, curUserId, curUserName,
-				answer.getQuestionId(), relatedSourceContent,
+				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
 	}
 
@@ -209,30 +210,35 @@ public class RestAnswerController {
 
 		String relatedSourceContent = StringUtils.confineStringLength(
 				answer.getContent(), Constant.MESSAGE_LENGTH);
+		String extraContent = feedService.getFeedById(answer.getQuestionId())
+				.getTitle();
 		/*
 		 * 通知提问者XXX回答了您的问题
 		 */
 		messageService.addMessageByRecerver(askerId,
 				Message.MESSAGE_YOUR_QUESTION_UPDATE, userId, userName,
-				answerId, relatedSourceContent, answer.getQuestionId());
+				answerId, relatedSourceContent, extraContent,
+				answer.getQuestionId());
 		/*
 		 * 通知关注该问题的人 问题有了新的回答
 		 */
 		messageService.addMessageByFollowedQuestion(
 				Message.MESSAGE_QUESTION_NEWANSWER, userId, userName, answerId,
-				relatedSourceContent, answer.getQuestionId());
+				relatedSourceContent, extraContent, answer.getQuestionId());
 		/*
 		 * 通知关注者 小明 (被关注者)回答了一个问题
 		 */
+
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ANSWER_QUESTION, userId, userName,
-				answerId, relatedSourceContent, answer.getQuestionId());
+				answerId, relatedSourceContent, extraContent,
+				answer.getQuestionId());
 		/*
 		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDANSWER, userId, userName, answerId,
-				relatedSourceContent, answer.getQuestionId());
+				relatedSourceContent, extraContent, answer.getQuestionId());
 	}
 
 	private void addAnserImage(Answer answer) {

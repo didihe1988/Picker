@@ -114,25 +114,26 @@ public class RestNoteController {
 		Feed feed = feedService.getFeedById(feedId);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getContent(), Constant.MESSAGE_LENGTH);
+		String extraContent = feed.getTitle();
 		/*
 		 * 与我相关
 		 */
 		messageService.addMessageByRecerver(feed.getUserId(),
 				Message.MESSAGE_YOUR_NOTE_FAVORITED, curUserId, curUserName,
-				feedId, relatedSourceContent, feed.getBookId());
+				feedId, relatedSourceContent, extraContent, feed.getBookId());
 		/*
 		 * 通知关注者 小明 (被关注者)赞了XXX的问题
 		 */
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_FAVORITE_NOTE, curUserId, curUserName,
-				feedId, relatedSourceContent, feed.getBookId());
+				feedId, relatedSourceContent, extraContent, feed.getBookId());
 		/*
 		 * 用户动态
 		 */
 
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_FAVORITE_NOTE, curUserId, curUserName,
-				feedId, relatedSourceContent, feed.getBookId());
+				feedId, relatedSourceContent, extraContent, feed.getBookId());
 	}
 
 	/**
@@ -192,16 +193,17 @@ public class RestNoteController {
 				feed.getTitle(), Constant.MESSAGE_LENGTH);
 		int noteId = feedService.getLatestFeedByBookId(feed.getBookId(),
 				Feed.TYPE_NOTE);
+		String extraContent = feedService.getFeedById(noteId).getTitle();
 		messageService.addMessageByFollowedUser(
 				Message.MESSAGE_FOLLOWED_ADDNOTE, userId, userName, noteId,
-				relatedSourceContent, feed.getBookId());
+				relatedSourceContent, extraContent, feed.getBookId());
 
 		/*
 		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDNOTE, userId, userName, noteId,
-				relatedSourceContent, feed.getBookId());
+				relatedSourceContent, extraContent, feed.getBookId());
 	}
 
 	private void addNoteImage(Feed feed) {
