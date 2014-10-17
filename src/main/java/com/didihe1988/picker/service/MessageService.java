@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.dp.Dynamic;
-import com.didihe1988.picker.model.dp.FullMessage;
+import com.didihe1988.picker.model.dp.Footprint;
 import com.didihe1988.picker.model.dp.MessageDp;
 
 public interface MessageService {
@@ -31,7 +31,7 @@ public interface MessageService {
 	public List<MessageDp> getMessageDpByUserIdAndFilter(int userId,
 			Message.Filter filter);
 
-	public List<FullMessage> getFullMessageByUserIdAndFilter(int userId,
+	public List<Footprint> getFootprintByUserIdAndFilter(int userId,
 			Message.Filter filter);
 
 	public List<Dynamic> getDynamicByUserId(int userId);
@@ -44,7 +44,7 @@ public interface MessageService {
 
 	public MessageDp getMessageDpFromMessage(Message message);
 
-	public FullMessage getFullMessageFromMessage(Message message);
+	public Footprint getFootprintFromMessage(Message message);
 
 	public int setMessageChecked(int id);
 

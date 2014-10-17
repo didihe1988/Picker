@@ -263,71 +263,12 @@
 					<c:out value='${question.answerNum}' />
 					回答
 				</div>
-				<!--  
-				<div class="portion">
-					<div class="col-96">
-						<div class="user_id">韩寒, 小四快来关注我</div>
-						<div class="detail_approve">
-							<span>6赞同来自</span> <span>韩寒、</span> <span>王明明、</span> <span>欧文</span>
-							<span class="detail_approve_more">等人</span>
-						</div>
-					</div>
-					<div class="col-4">
-						<img style="max-width: 100%"
-							src="/static/images/photo/2.jpg">
-					</div>
-					<div style="clear: both"></div>
-					<div class="detail_info">
-					
-						布拉弗斯，无面者的神。<br />
-						神有千面，这个比光之王的一神论还要牛逼啊，不管你们怎么信别的神，所有神都是千面神的一面，归根结底还是信了我千面神。<br />
-						哟西。<br />
-					</div>
 
-					<div class="feeds clear_fix">
-						<div class="feed_tool_bar clear_fix">
-							<div class="up" data-action="up" data-passage-id="123"
-								onclick="tool_bar_action($(this))">
-								<span class="up_icon"><i class="icon-thumbs-up"></i>赞</span> <span
-									class="cnt up_cnt">31</span>
-							</div>
-							<div style="display: none" class="line cancel_up"
-								data-action="cancel_up" data-passage-id="123"
-								onclick="tool_bar_action($(this))">
-								<i class="icon-ok"></i>取消赞<span class="cnt">32</span>
-							</div>
-							<div class="line show_comment" data-action="get_comment"
-								data-passage-id="123" onclick="tool_bar_action($(this))">
-								<i class="icon-comments-alt"></i>32条评论
-							</div>
-							<div style="display: none" class="line hide_comment"
-								data-action="hide_comment" data-passage-id="123"
-								onclick="tool_bar_action($(this))">
-								<i class="icon-double-angle-up"></i>收起评论
-							</div>
-							<span class="time">47分钟前</span>
-						</div>
-						<div class="comments clear_fix">
-							<div class="waiting">
-								<i class="icon-spinner icon-spin"></i>
-							</div>
-							<div class="comments_list"></div>
-
-							<div class="do_comment">
-								<div class="comment clear_fix">
-									<input type="text">
-									<button class="btn btn-success">提交</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>-->
 				<c:forEach var="answer" items="${answerList}">
 					<div class="portion">
 						<div class="col-96">
 							<div class="user_id">
-								<c:out value='${answer.replierName}' />
-								, 小四快来关注我
+								<c:out value='${answer.replierName},${answer.replierSignature}' />
 							</div>
 							<div class="detail_approve">
 								<span><c:out value='${answer.favoriteNum}' />赞同来自</span> <span>韩寒、</span>
@@ -368,7 +309,7 @@
 									onclick="tool_bar_action($(this))">
 									<i class="icon-double-angle-up"></i>收起评论
 								</div>
-								<span class="time"><c:out value='${answer.date}' /></span>
+								<span class="time"><c:out value='${answer.strDate}' /></span>
 							</div>
 							<div class="comments clear_fix">
 								<div class="waiting">

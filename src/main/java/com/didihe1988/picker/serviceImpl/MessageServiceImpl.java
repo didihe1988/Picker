@@ -21,7 +21,7 @@ import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.dp.Dynamic;
-import com.didihe1988.picker.model.dp.FullMessage;
+import com.didihe1988.picker.model.dp.Footprint;
 import com.didihe1988.picker.model.dp.MessageDp;
 import com.didihe1988.picker.service.MessageService;
 
@@ -195,7 +195,7 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public FullMessage getFullMessageFromMessage(Message message) {
+	public Footprint getFootprintFromMessage(Message message) {
 		// TODO Auto-generated method stub
 		String avatarUrl = userDao.queryUserById(message.getProducerId())
 				.getAvatarUrl();
@@ -210,7 +210,7 @@ public class MessageServiceImpl implements MessageService {
 		} else if ((type == Message.MESSAGE_USER_ADDANSWER)
 				|| (type == Message.MESSAGE_USER_FAVORITE_ANSWER)) {
 		}
-		return new FullMessage(message, avatarUrl, parentName);
+		return new Footprint(message, avatarUrl, parentName);
 	}
 
 	private Dynamic getDynamicFromMessage(Message message) {
@@ -252,10 +252,10 @@ public class MessageServiceImpl implements MessageService {
 		return list;
 	}
 
-	private List<FullMessage> getFullMessageList(List<Message> messages) {
-		List<FullMessage> list = new ArrayList<FullMessage>();
+	private List<Footprint> getFootprintList(List<Message> messages) {
+		List<Footprint> list = new ArrayList<Footprint>();
 		for (Message message : messages) {
-			FullMessage fullMessage = getFullMessageFromMessage(message);
+			Footprint fullMessage = getFootprintFromMessage(message);
 			list.add(fullMessage);
 		}
 		return list;
@@ -276,10 +276,10 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<FullMessage> getFullMessageByUserIdAndFilter(int userId,
+	public List<Footprint> getFootprintByUserIdAndFilter(int userId,
 			Filter filter) {
 		// TODO Auto-generated method stub
-		return getFullMessageList(getMessageByUserIdAndFilter(userId, filter));
+		return getFootprintList(getMessageByUserIdAndFilter(userId, filter));
 	}
 
 	@Override

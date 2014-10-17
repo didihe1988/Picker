@@ -20,7 +20,7 @@ public class AnswerJson extends BaseJson {
 
 	}
 
-	public AnswerJson(String title, String picture, String link, Date time,
+	public AnswerJson(String title, String picture, String link, String time,
 			String brief) {
 		super(title, picture, link, time);
 		this.brief = brief;
@@ -35,7 +35,7 @@ public class AnswerJson extends BaseJson {
 			}
 			String link = "/picker/question/" + answerDp.getQuestionId();
 			return new AnswerJson(answerDp.getQuestionName(), imageUrl, link,
-					answerDp.getDate(), answerDp.getBrief());
+					answerDp.getStrDate(), answerDp.getBrief());
 		} else {
 			return new AnswerJson();
 		}

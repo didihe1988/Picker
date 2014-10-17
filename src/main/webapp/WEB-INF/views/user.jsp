@@ -262,7 +262,7 @@
 							class="signature">, <c:out value='${user.signature}' /></span>
 					</div>
 					<div class="joined_day">
-						<span>Joined on <c:out value='${user.registerTime}' /></span>
+						<span>Joined on <c:out value='${user.strDate}' /></span>
 					</div>
 				</div>
 
@@ -293,7 +293,7 @@
 										<span class="user_feed_label">提出了问题 @ </span> <span
 											class="user_feed_book"><a
 											href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a></span>
-										<span class="time">1天前</span>
+										<span class="time">${message.strDate}</span>
 									</div>
 									<div style="margin-top: 5px">
 										<div class="feed_question_title">
@@ -320,7 +320,7 @@
 										<span class="user_feed_label">回答了问题 @ </span> <span
 											class="user_feed_book"><a
 											href="<c:url value="/detail/${message.parentId}"/>">${message.extraContent}</a></span>
-										<span class="time">1天前</span>
+										<span class="time">${message.strDate}</span>
 									</div>
 									<div style="margin-top: 5px">
 										<div class="user_feed_brief"
@@ -343,7 +343,7 @@
 										<span class="user_feed_label">添加了笔记 @ </span> <span
 											class="user_feed_book"><a
 											href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a></span>
-										<span class="time">1天前</span>
+										<span class="time">${message.strDate}</span>
 									</div>
 									<div style="margin-top: 5px">
 										<div class="feed_question_title">
@@ -369,7 +369,7 @@
 									<div>
 										<span class="user_feed_label">关注了用户 </span> <span
 											class="user_feed_book">${message.parentName}</span> <span
-											class="time">1天前</span>
+											class="time">${message.strDate}</span>
 									</div>
 									<div style="margin-top: 5px">
 										<div class="user_feed_brief"
@@ -392,7 +392,7 @@
 										<span class="user_feed_label">赞了问题@ </span> <span
 											class="user_feed_book"><a
 											href="<c:url value="/detail/${message.parentId}"/>">《${message.parentName}》</a></span>
-										<span class="time">1天前</span>
+										<span class="time">${message.strDate}</span>
 									</div>
 									<div style="margin-top: 5px">
 										<div class="feed_question_title">
@@ -419,7 +419,7 @@
 										<span class="user_feed_label">赞了笔记@ </span> <span
 											class="user_feed_book"><a
 											href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a></span>
-										<span class="time">1天前</span>
+										<span class="time">${message.strDate}</span>
 									</div>
 									<div style="margin-top: 5px">
 										<div class="feed_question_title">
@@ -446,7 +446,7 @@
 										<span class="user_feed_label">赞了回答@ </span> <span
 											class="user_feed_book"><a
 											href="<c:url value="/detail/${message.parentId}"/>">${message.extraContent}</a></span>
-										<span class="time">1天前</span>
+										<span class="time">${message.strDate}</span>
 									</div>
 									<div style="margin-top: 5px">
 										<div class="user_feed_brief"
@@ -469,7 +469,7 @@
 										<span class="user_feed_label">创建圈子@ </span> <span
 											class="user_feed_book"><a
 											href="<c:url value="/group/${message.relatedSourceId}"/>">${message.relatedSourceContent}</a></span>
-										<span class="time">1天前</span>
+										<span class="time">${message.strDate}</span>
 									</div>
 									<div style="margin-top: 5px">
 										<div class="user_feed_brief"
@@ -492,7 +492,7 @@
 										<span class="user_feed_label">加入圈子@ </span> <span
 											class="user_feed_book"><a
 											href="<c:url value="/group/${message.relatedSourceId}"/>">${message.relatedSourceContent}</a></span>
-										<span class="time">1天前</span>
+										<span class="time">${message.strDate}</span>
 									</div>
 									<div style="margin-top: 5px">
 										<div class="user_feed_brief"

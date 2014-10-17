@@ -18,6 +18,7 @@ import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.CircleWebDp;
 import com.didihe1988.picker.service.CircleMemberService;
+import com.didihe1988.picker.utils.DateUtils;
 
 @Service
 @Transactional
@@ -163,7 +164,7 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 			Circle circle = circleDao.queryCircleById(circleMember
 					.getCircleId());
 			CircleWebDp circleWebDp = new CircleWebDp(circle,
-					circleMember.getJoinTime());
+					DateUtils.getDate(circleMember.getJoinTime()));
 			list.add(circleWebDp);
 		}
 		return list;

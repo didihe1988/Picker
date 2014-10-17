@@ -47,15 +47,7 @@ public class QuestionJson extends BaseJson {
 		this.link = link;
 	}
 
-	public Date getTime() {
-		return time;
-	}
-
-	public void setTime(Date time) {
-		this.time = time;
-	}
-
-	public QuestionJson(String title, String picture, String link, Date time,
+	public QuestionJson(String title, String picture, String link, String time,
 			int comment_cnt, int answers_cnt) {
 		super(title, picture, link, time);
 		this.comment_cnt = comment_cnt;

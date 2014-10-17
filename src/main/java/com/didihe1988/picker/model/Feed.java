@@ -304,12 +304,9 @@ public class Feed implements Serializable, Search {
 		}
 		return Type.Note;
 	}
-
+	/*
 	public QuestionJson toQuestionJson() {
-		/*
-		 * if(this.type!=TYPE_QUESTION) { throw new Exception("type not match");
-		 * }
-		 */
+		
 		return new QuestionJson(this.title, null, "/detail/" + this.id,
 				this.date, this.commentNum, this.answerNum);
 	}
@@ -317,6 +314,6 @@ public class Feed implements Serializable, Search {
 	public NoteJson toNoteJson() {
 		return new NoteJson(this.title, null, "/detail/" + this.id, this.date,
 				this.content);
-	}
+	}*/
 
 }

@@ -152,7 +152,7 @@
 											data-passage-id="123">
 											<i class="icon-lightbulb" onclick="tool_bar_action($(this))"></i>${feed.answerNum}个回答
 										</div>
-										<span class="time">${feed.date}</span>
+										<span class="time">${feed.strDate}</span>
 									</div>
 									<div style="clear: both"></div>
 									<div class="comments clear_fix">
@@ -211,7 +211,7 @@
 											onclick="tool_bar_action($(this))">
 											<i class="icon-double-angle-up"></i>收起评论
 										</div>
-										<span class="time">${feed.date}</span>
+										<span class="time">${feed.strDate}</span>
 									</div>
 									<div style="clear: both"></div>
 									<div class="comments clear_fix">

@@ -23,6 +23,7 @@ import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.model.json.QuestionJson;
 import com.didihe1988.picker.service.FeedService;
+import com.didihe1988.picker.utils.DateUtils;
 
 @Service
 @Transactional
@@ -251,8 +252,8 @@ public class FeedServiceImpl implements FeedService {
 			String imageUrl = relatedImageDao.queryFirstImageUrlByKey(
 					feed.getId(), RelatedImage.FEED_IMAGE);
 			NoteJson noteJson = new NoteJson(feed.getTitle(), imageUrl,
-					"/detail/" + feed.getId(), feed.getDate(),
-					feed.getContent());
+					"/detail/" + feed.getId(),
+					DateUtils.getDate(feed.getDate()), feed.getContent());
 			list.add(noteJson);
 		}
 		return list;
@@ -268,8 +269,9 @@ public class FeedServiceImpl implements FeedService {
 			String imageUrl = relatedImageDao.queryFirstImageUrlByKey(
 					feed.getId(), RelatedImage.FEED_IMAGE);
 			QuestionJson questionJson = new QuestionJson(feed.getTitle(),
-					imageUrl, "/detail/" + feed.getId(), feed.getDate(),
-					feed.getCommentNum(), feed.getAnswerNum());
+					imageUrl, "/detail/" + feed.getId(), DateUtils.getDate(feed
+							.getDate()), feed.getCommentNum(),
+					feed.getAnswerNum());
 			list.add(questionJson);
 		}
 		return list;

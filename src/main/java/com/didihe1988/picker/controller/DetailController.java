@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.UserDp;
+import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.UserService;
@@ -27,15 +28,25 @@ public class DetailController {
 	@Autowired
 	private BookService bookService;
 
+	@Autowired
+	private AnswerService answerService;
+
 	@RequestMapping(value = "/detail/{id}")
 	public String question(@PathVariable int id, Model model,
 			HttpServletRequest request) {
+		if (!HttpUtils.isSessionUserIdExists(request)) {
+			return "error";
+		}
 		if (feedService.isFeedExistsById(id)) {
 			Feed feed = feedService.getFeedById(id);
 			UserDp userDp = userService.getUserDpByUserId(feed.getUserId(),
 					HttpUtils.getSessionUserId(request));
 			model.addAttribute("user", userDp);
 			model.addAttribute("question", feed);
+			model.addAttribute(
+					"answerList",
+					answerService.getAnswerDpListByQuestionId(id,
+							HttpUtils.getSessionUserId(request)));
 			return "detail";
 		} else {
 			return "error";

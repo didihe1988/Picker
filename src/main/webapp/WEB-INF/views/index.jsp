@@ -119,7 +119,7 @@
 												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.extraContent}</a>
 										</div>
 									</div>
-									<div class="feed_time">${message.time}</div>
+									<div class="feed_time">${message.strDate}</div>
 								</div>
 								<div class="feed_brief clear_fix">
 									<div class="feed_text_wrap">
@@ -177,7 +177,7 @@
 												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.extraContent}</a>
 										</div>
 									</div>
-									<div class="feed_time">${message.time}</div>
+									<div class="feed_time">${message.strDate}</div>
 								</div>
 								<div class="feed_brief clear_fix">
 									<div class="feed_text_wrap">
@@ -235,7 +235,7 @@
 												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.extraContent}</a>
 										</div>
 									</div>
-									<div class="feed_time">${message.time}</div>
+									<div class="feed_time">${message.strDate}</div>
 								</div>
 								<div class="feed_brief clear_fix">
 									<div class="feed_text_wrap">
@@ -289,7 +289,7 @@
 											<a href="<c:url value="/detail/${message.parentId}"/>">${message.extraContent}</a>
 										</div>
 									</div>
-									<div class="feed_time">${message.time}</div>
+									<div class="feed_time">${message.strDate}</div>
 								</div>
 								<div class="feed_brief clear_fix">
 									<div class="feed_text_wrap">
@@ -347,7 +347,7 @@
 												href="<c:url value="/detail/${message.parentId}"/>">${message.extraContent}</a>
 										</div>
 									</div>
-									<div class="feed_time">${message.time}</div>
+									<div class="feed_time">${message.strDate}</div>
 								</div>
 								<div class="feed_brief clear_fix">
 									<div class="feed_text_wrap">
@@ -403,7 +403,7 @@
 										</div>
 										
 									</div>
-									<div class="feed_time">${message.time}</div>
+									<div class="feed_time">${message.strDate}</div>
 								</div>
 								<div class="feed_brief clear_fix">
 									<div class="feed_text_wrap">
@@ -465,7 +465,7 @@
 										</div>
 
 									</div>
-									<div class="feed_time">${message.time}</div>
+									<div class="feed_time">${message.strDate}</div>
 								</div>
 								<div class="feed_brief clear_fix">
 									<div class="feed_text_wrap">
@@ -528,7 +528,7 @@
 										</div>
 
 									</div>
-									<div class="feed_time">${message.time}</div>
+									<div class="feed_time">${message.strDate}</div>
 								</div>
 								<div class="feed_brief clear_fix">
 									<div class="feed_text_wrap">
@@ -642,7 +642,7 @@
 												href="<c:url value="/detail/${message.parentId}"/>">${message.extraContent}</a>
 										</div>
 									</div>
-									<div class="feed_time">${message.time}</div>
+									<div class="feed_time">${message.strDate}</div>
 								</div>
 								<div class="feed_brief clear_fix">
 									<div class="feed_text_wrap">
@@ -830,7 +830,7 @@
 						<c:if test="${status.count%3==1 }">
 							<div class="row">
 								<div class="col-30">
-									<a data-pjax href="/browse/126/0"><img
+									<a data-pjax href="<c:url value="/browse/${book.id}/0"/>"><img
 										src="<c:url value="${book.imageUrl}"/>"
 										style="max-width: 100%"></a>
 								</div>
@@ -838,14 +838,14 @@
 						</c:if>
 						<c:if test="${status.count%3==2 }">
 							<div class="col-30">
-								<a data-pjax href="/browse/127/0"><img
+								<a data-pjax href="<c:url value="/browse/${book.id}/0"/>"><img
 									src="<c:url value="${book.imageUrl}"/>" style="max-width: 100%"></a>
 							</div>
 							<div class="col-5"></div>
 						</c:if>
 						<c:if test="${status.count%3==0 }">
 							<div class="col-30">
-								<a data-pjax href="/browse/128/0"><img
+								<a data-pjax href="<c:url value="/browse/${book.id}/0"/>"><img
 									src="<c:url value="${book.imageUrl}"/>" style="max-width: 100%"></a>
 							</div>
 				</div>

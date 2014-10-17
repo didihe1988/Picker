@@ -2,6 +2,7 @@ package com.didihe1988.picker.model.dp;
 
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.interfaces.IsFollow;
+import com.didihe1988.picker.utils.DateUtils;
 
 public class UserDp extends User implements IsFollow {
 
@@ -11,6 +12,8 @@ public class UserDp extends User implements IsFollow {
 	private static final long serialVersionUID = 1L;
 
 	protected boolean isFollow;
+
+	public String strDate;
 
 	@Override
 	public boolean isFollow() {
@@ -28,6 +31,14 @@ public class UserDp extends User implements IsFollow {
 		return isFollow;
 	}
 
+	public String getStrDate() {
+		return strDate;
+	}
+
+	public void setStrDate(String strDate) {
+		this.strDate = strDate;
+	}
+
 	public UserDp() {
 
 	}
@@ -43,6 +54,7 @@ public class UserDp extends User implements IsFollow {
 						.getNoteNum(), user.getCircleNum(), user.getBookNum(),
 				user.getAvatarUrl(), user.getSignature());
 		this.isFollow = isFollow;
+		this.strDate = DateUtils.getDate(user.getRegisterTime());
 	}
 
 	public UserDp(UserDp userDp) {

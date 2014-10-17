@@ -1,8 +1,9 @@
 package com.didihe1988.picker.model.dp;
 
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.utils.DateUtils;
 
-public class FullMessage extends Message {
+public class Footprint extends Message {
 	/**
 	 * 
 	 */
@@ -11,6 +12,8 @@ public class FullMessage extends Message {
 	private String producerAvatarUrl;
 
 	private String parentName;
+
+	private String strDate;
 
 	// private String title;
 
@@ -30,13 +33,22 @@ public class FullMessage extends Message {
 		this.parentName = parentName;
 	}
 
-	public FullMessage() {
+	public String getStrDate() {
+		return strDate;
+	}
+
+	public void setStrDate(String strDate) {
+		this.strDate = strDate;
+	}
+
+	public Footprint() {
 
 	}
 
-	public FullMessage(Message message, String producerAvatarUrl,
+	public Footprint(Message message, String producerAvatarUrl,
 			String parentName) {
 		super(message);
+		this.strDate = DateUtils.getDate(message.getTime());
 		this.producerAvatarUrl = producerAvatarUrl;
 		this.parentName = parentName;
 	}

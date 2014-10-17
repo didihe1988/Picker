@@ -168,7 +168,7 @@
 							<span class="left"><c:out value='${circle.memberNum}' />位成员</span>
 							<span class="left"><c:out value='${circle.memberJoinTime}' />加入</span>
 							<span class="time">创建于<c:out
-									value='${circle.establishTime}' /></span>
+									value='${circle.strDate}' /></span>
 						</div>
 					</div>
 				</c:forEach>

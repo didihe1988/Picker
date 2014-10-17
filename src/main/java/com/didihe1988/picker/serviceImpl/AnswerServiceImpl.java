@@ -22,6 +22,7 @@ import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.json.AnswerJson;
 import com.didihe1988.picker.service.AnswerService;
+import com.didihe1988.picker.utils.DateUtils;
 
 @Service
 @Transactional
@@ -173,13 +174,15 @@ public class AnswerServiceImpl implements AnswerService {
 				.getTitle();
 		User user = userDao.queryUserById(answer.getReplierId());
 		return new AnswerDp(answer, questionName, user.getUsername(),
-				user.getAvatarUrl(), favoriteDao.isFavoriteExistsByKey(userId,
-						answer.getId(), Favorite.FAVORITE_ANSWER),
+				user.getSignature(), user.getAvatarUrl(),
+				favoriteDao.isFavoriteExistsByKey(userId, answer.getId(),
+						Favorite.FAVORITE_ANSWER),
 				getImageUrlsFromAnswer(answer));
 	}
 
 	private List<String> getImageUrlsFromAnswer(Answer answer) {
-		return relatedImageDao.queryImageUrlsByKey(answer.getId(), RelatedImage.ANSWER_IMAGE);
+		return relatedImageDao.queryImageUrlsByKey(answer.getId(),
+				RelatedImage.ANSWER_IMAGE);
 	}
 
 	private List<AnswerDp> getAnswerDpListFormAnswerList(
@@ -205,11 +208,12 @@ public class AnswerServiceImpl implements AnswerService {
 				.queryAnswerByReplierId(userId, page);
 		List<AnswerJson> list = new ArrayList<AnswerJson>();
 		for (Answer answer : answerList) {
-			String imageUrl=relatedImageDao.queryFirstImageUrlByKey(answer.getId(), RelatedImage.ANSWER_IMAGE);
+			String imageUrl = relatedImageDao.queryFirstImageUrlByKey(
+					answer.getId(), RelatedImage.ANSWER_IMAGE);
 			Feed feed = feedDao.queryFeedById(answer.getQuestionId());
 			AnswerJson answerJson = new AnswerJson(feed.getTitle(), imageUrl,
-					"/detail/" + answer.getQuestionId(), answer.getDate(),
-					answer.getContent());
+					"/detail/" + answer.getQuestionId(),
+					DateUtils.getDate(answer.getDate()), answer.getContent());
 			list.add(answerJson);
 		}
 		return list;

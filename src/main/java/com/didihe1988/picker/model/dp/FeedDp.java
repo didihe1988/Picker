@@ -5,6 +5,7 @@ import java.util.List;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.interfaces.IsFavorite;
 import com.didihe1988.picker.model.interfaces.IsFollow;
+import com.didihe1988.picker.utils.DateUtils;
 
 public class FeedDp extends Feed implements IsFavorite, IsFollow {
 	/**
@@ -23,6 +24,8 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 	private boolean isFavorite;
 
 	private List<String> imageUrls;
+
+	private String strDate;
 
 	@Override
 	public boolean isFollow() {
@@ -80,6 +83,14 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 		this.bookName = bookName;
 	}
 
+	public String getStrDate() {
+		return strDate;
+	}
+
+	public void setStrDate(String strDate) {
+		this.strDate = strDate;
+	}
+
 	public FeedDp() {
 
 	}
@@ -88,6 +99,7 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 			String userAvatarUrl, boolean isFollow, boolean isFavorite,
 			List<String> imageUrls) {
 		super(feed);
+		this.strDate = DateUtils.getDate(feed.getDate());
 		this.bookName = bookName;
 		this.userName = userName;
 		this.userAvatarUrl = userAvatarUrl;

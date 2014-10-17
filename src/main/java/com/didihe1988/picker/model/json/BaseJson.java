@@ -10,7 +10,7 @@ public class BaseJson {
 
 	protected String link;
 
-	protected Date time;
+	protected String time;
 
 	public String getTitle() {
 		return title;
@@ -28,11 +28,11 @@ public class BaseJson {
 		this.link = link;
 	}
 
-	public Date getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
@@ -48,7 +48,7 @@ public class BaseJson {
 
 	}
 
-	public BaseJson(String title, String picture, String link, Date time) {
+	public BaseJson(String title, String picture, String link, String time) {
 		this.title = title;
 		this.picture = picture;
 		this.link = link;

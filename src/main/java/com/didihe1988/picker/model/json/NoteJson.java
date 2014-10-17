@@ -20,7 +20,7 @@ public class NoteJson extends BaseJson {
 
 	}
 
-	public NoteJson(String title, String picture, String link, Date time,
+	public NoteJson(String title, String picture, String link, String time,
 			String brief) {
 		super(title, picture, link, time);
 		this.brief = brief;
@@ -35,7 +35,7 @@ public class NoteJson extends BaseJson {
 			}
 			String link = "/picker/note/" + feedDp.getId();
 			return new NoteJson(feedDp.getTitle(), imageUrl, link,
-					feedDp.getDate(), feedDp.getBrief());
+					feedDp.getStrDate(), feedDp.getBrief());
 		} else {
 			return new NoteJson();
 		}
