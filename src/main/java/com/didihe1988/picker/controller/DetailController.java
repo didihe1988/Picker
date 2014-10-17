@@ -34,7 +34,7 @@ public class DetailController {
 	@RequestMapping(value = "/detail/{id}")
 	public String question(@PathVariable int id, Model model,
 			HttpServletRequest request) {
-		if (!HttpUtils.isSessionUserIdExists(request)) {
+		if ((id < 1) || (!HttpUtils.isSessionUserIdExists(request))) {
 			return "error";
 		}
 		if (feedService.isFeedExistsById(id)) {
@@ -59,6 +59,9 @@ public class DetailController {
 	@RequestMapping(value = "/detail/{bookId}/{page}/new")
 	public String newFeed(@PathVariable int bookId, @PathVariable int page,
 			Model model, HttpServletRequest request) {
+		if ((bookId < 1) || (page < 0)) {
+			return "error";
+		}
 		if (bookService.isBookExistsById(bookId)) {
 			Book book = bookService.getBookById(bookId);
 			model.addAttribute("book", book);

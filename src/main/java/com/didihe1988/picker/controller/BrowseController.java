@@ -34,6 +34,9 @@ public class BrowseController {
 	@RequestMapping(value = "/browse/{id}/{page}")
 	public String browse(@PathVariable int id, @PathVariable int page,
 			Model model, HttpServletRequest request) {
+		if ((id < 1) || (page < 0)) {
+			return "error";
+		}
 		if (bookService.isBookExistsById(id)) {
 			Book book = bookService.getBookById(id);
 			List<FeedDp> feedList = feedService.getFeedDpListForBrowse(id,
@@ -47,5 +50,5 @@ public class BrowseController {
 		}
 
 	}
-	
+
 }

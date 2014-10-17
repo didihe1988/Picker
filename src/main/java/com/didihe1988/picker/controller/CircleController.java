@@ -42,11 +42,10 @@ public class CircleController {
 	@RequestMapping(value = "/group/{id}")
 	public String getGroupDetail(@PathVariable int id, Model model,
 			HttpServletRequest request) {
+		if (id < 1) {
+			return "error";
+		}
 		model.addAttribute("circle", circleService.getCircleById(id));
-		/*
-		 * model.addAttribute("userList",
-		 * circleMemberService.getCircleWebDpListByCircleId(id));
-		 */
 		model.addAttribute("userList",
 				getUserList(id, HttpUtils.getSessionUserId(request)));
 		return "group";
@@ -68,6 +67,5 @@ public class CircleController {
 		}
 		return list;
 	}
-
 
 }

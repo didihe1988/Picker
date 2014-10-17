@@ -1,5 +1,6 @@
 package com.didihe1988.picker.controller;
 
+import java.awt.print.Pageable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -111,6 +112,9 @@ public class UserController {
 	@RequestMapping(value = "/user/{id}")
 	public String getUserProfile(@PathVariable int id, Model model,
 			HttpServletRequest request) {
+		if (id < 1) {
+			return "error";
+		}
 		if (userService.isUserExistsById(id)) {
 			int curUserId = HttpUtils.getSessionUserId(request);
 			addBaseAttribute(id, model, curUserId);
@@ -141,8 +145,11 @@ public class UserController {
 	 * @condition request用于isFavorite
 	 */
 	@RequestMapping(value = "/user/{id}/answers/{page}")
-	public String getAnswers(@PathVariable int id, Model model,
-			HttpServletRequest request) {
+	public String getAnswers(@PathVariable int id, @PathVariable int page,
+			Model model, HttpServletRequest request) {
+		if ((id < 1) || (page <0 )) {
+			return "error";
+		}
 		if (userService.isUserExistsById(id)) {
 			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
 			List<AnswerDp> list = answerService.getAnswerDpListByReplierId(id,
@@ -160,8 +167,11 @@ public class UserController {
 	 * @condition request用于isFollow
 	 */
 	@RequestMapping(value = "/user/{id}/questions/{page}")
-	public String getQuestions(@PathVariable int id, Model model,
-			HttpServletRequest request) {
+	public String getQuestions(@PathVariable int id, @PathVariable int page,
+			Model model, HttpServletRequest request) {
+		if ((id < 1) || (page < 0)) {
+			return "error";
+		}
 		if (userService.isUserExistsById(id)) {
 			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
 			List<FeedDp> list = feedService.getFeedDpListByUserId(id,
@@ -179,8 +189,11 @@ public class UserController {
 	 * @condition request用于isFollow
 	 */
 	@RequestMapping(value = "/user/{id}/notes/{page}")
-	public String getNotes(@PathVariable int id, Model model,
-			HttpServletRequest request) {
+	public String getNotes(@PathVariable int id, @PathVariable int page,
+			Model model, HttpServletRequest request) {
+		if ((id < 1) || (page < 0)) {
+			return "error";
+		}
 		if (userService.isUserExistsById(id)) {
 			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
 			List<FeedDp> list = feedService.getFeedDpListByUserId(id,

@@ -14,7 +14,7 @@ import com.google.gson.GsonBuilder;
 
 public class Main {
 	public static void main(String[] args) {
-		TagTraverser traverser = new TagTraverser("近代史 ",1,10);
+		TagTraverser traverser = new TagTraverser("教育",1,10);
 		try {
 			HashSet<Integer> idSet = traverser.getIds();
 			System.out.println(idSet);
