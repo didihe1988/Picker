@@ -14,8 +14,6 @@ public class Dynamic extends Message {
 
 	private String parentName;
 
-	private String title;
-
 	private String imageUrl;
 
 	public String getProducerAvatarUrl() {
@@ -34,14 +32,6 @@ public class Dynamic extends Message {
 		this.parentName = parentName;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
 	public String getImageUrl() {
 		return imageUrl;
 	}
@@ -51,11 +41,10 @@ public class Dynamic extends Message {
 	}
 
 	public Dynamic(Message message, String producerAvatarUrl,
-			String parentName, String title, String imageUrl) {
+			String parentName, String imageUrl) {
 		super(message);
 		this.producerAvatarUrl = producerAvatarUrl;
 		this.parentName = parentName;
-		this.title = title;
 		this.imageUrl = imageUrl;
 	}
 }

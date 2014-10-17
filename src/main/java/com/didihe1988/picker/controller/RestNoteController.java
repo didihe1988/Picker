@@ -203,7 +203,7 @@ public class RestNoteController {
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDNOTE, userId, userName, noteId,
-				relatedSourceContent, extraContent, feed.getBookId());
+				relatedSourceContent, extraContent,- feed.getBookId());
 	}
 
 	private void addNoteImage(Feed feed) {

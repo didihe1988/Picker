@@ -14,11 +14,12 @@ import com.google.gson.GsonBuilder;
 
 public class Main {
 	public static void main(String[] args) {
-		TagTraverser traverser = new TagTraverser("»’±æ",1,10);
+		TagTraverser traverser = new TagTraverser("À„∑®",1,10);
 		try {
 			HashSet<Integer> idSet = traverser.getIds();
 			System.out.println(idSet);
 			Iterator<Integer> iterator = idSet.iterator();
+			
 			while (iterator.hasNext()) {
 				downloadNewBook(iterator.next());
 			}

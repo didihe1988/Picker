@@ -93,10 +93,9 @@ public class DouBook {
 		this.image = image;
 	}
 
-	public void resetField()
-	{
-		image=image.replaceAll("mpic", "lpic");
-		pages=pages.replaceAll("ҳ", "");
+	public void resetField() {
+		image = image.replaceAll("mpic", "lpic");
+		pages = pages.replaceAll("ҳ", "").trim();
 	}
 
 	public DouBook() {

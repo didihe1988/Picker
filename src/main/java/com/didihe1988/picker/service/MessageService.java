@@ -2,7 +2,6 @@ package com.didihe1988.picker.service;
 
 import java.util.List;
 
-import com.didihe1988.picker.model.FollowedMessage;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.dp.Dynamic;
 import com.didihe1988.picker.model.dp.FullMessage;

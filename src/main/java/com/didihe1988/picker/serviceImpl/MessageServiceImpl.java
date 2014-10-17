@@ -51,7 +51,7 @@ public class MessageServiceImpl implements MessageService {
 
 	@Autowired
 	private CircleDao circleDao;
-	
+
 	/*
 	 * 用户关注的人产生的消息
 	 */
@@ -200,32 +200,24 @@ public class MessageServiceImpl implements MessageService {
 		String avatarUrl = userDao.queryUserById(message.getProducerId())
 				.getAvatarUrl();
 		int type = message.getType();
-		String parentName = "", title = "";
+		String parentName = "";
 		if ((type == Message.MESSAGE_USER_ADDQUESTION)
 				|| (type == Message.MESSAGE_USER_ADDNOTE)
 				|| (type == Message.MESSAGE_USER_FAVORITE_QUESTION)
 				|| (type == Message.MESSAGE_USER_FAVORITE_NOTE)) {
 			parentName = bookDao.queryBookById(message.getParentId())
 					.getBookName();
-			title = feedDao.queryFeedById(message.getRelatedSourceId())
-					.getTitle();
 		} else if ((type == Message.MESSAGE_USER_ADDANSWER)
 				|| (type == Message.MESSAGE_USER_FAVORITE_ANSWER)) {
-			parentName = feedDao.queryFeedById(message.getParentId())
-					.getTitle();
-		} else if ((type == Message.MESSAGE_USER_ADDCIRCLE)
-				|| (type == Message.MESSAGE_USER_JOINCIRCLE)) {
-			title = circleDao.queryCircleById(message.getRelatedSourceId())
-					.getDescribe();
 		}
-		return new FullMessage(message, avatarUrl, parentName, title);
+		return new FullMessage(message, avatarUrl, parentName);
 	}
 
 	private Dynamic getDynamicFromMessage(Message message) {
 		String avatarUrl = userDao.queryUserById(message.getProducerId())
 				.getAvatarUrl();
 		int type = message.getType();
-		String parentName = "", title = "", imageUrl = "";
+		String parentName = "", imageUrl = "";
 		if ((type == Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION)
 				|| (type == Message.MESSAGE_FOLLOWED_ANSWER_QUESTION)
 				|| (type == Message.MESSAGE_FOLLOWED_ASKQUESTION)
@@ -233,24 +225,13 @@ public class MessageServiceImpl implements MessageService {
 				|| (type == Message.MESSAGE_FOLLOWED_ADDNOTE)) {
 			parentName = bookDao.queryBookById(message.getParentId())
 					.getBookName();
-			title = feedDao.queryFeedById(message.getRelatedSourceId())
-					.getTitle();
 			imageUrl = relatedImageDao.queryFirstImageUrlByKey(
 					message.getRelatedSourceId(), RelatedImage.FEED_IMAGE);
 		} else if (type == Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER) {
-			parentName = feedDao.queryFeedById(message.getParentId())
-					.getTitle();
 			imageUrl = relatedImageDao.queryFirstImageUrlByKey(
 					message.getRelatedSourceId(), RelatedImage.ANSWER_IMAGE);
-		} else if ((type == Message.MESSAGE_FOLLOWED_ADDCIRCLE)
-				|| (type == Message.MESSAGE_FOLLOWED_JOINCIRCLE)) {
-			title = circleDao.queryCircleById(message.getRelatedSourceId())
-					.getDescribe();
-		} else if (type == Message.MESSAGE_FOLLOWED_ADDBOUGHT) {
-			title = bookDao.queryBookById(message.getRelatedSourceId())
-					.getWriter();
 		}
-		return new Dynamic(message, avatarUrl, parentName, title, imageUrl);
+		return new Dynamic(message, avatarUrl, parentName, imageUrl);
 	}
 
 	private List<Dynamic> getDynamicList(List<Message> messages) {

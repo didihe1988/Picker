@@ -100,10 +100,11 @@
 						<i class="icon-bookmark-empty"></i>最新动态
 					</div>
 
-					<div class="feeds">
-						<c:forEach var="message" items="${messageList}">
-							<!--   MESSAGE_FOLLOWED_ASKQUESTION  -->
-							<c:if test="${message.type==1 }">
+
+					<c:forEach var="message" items="${messageList}">
+						<!--   MESSAGE_FOLLOWED_ASKQUESTION  -->
+						<c:if test="${message.type==1 }">
+							<div class="feeds">
 								<div class="feed_meta clear_fix">
 									<div class="feed_user_photo">
 										<img src="<c:url value="${message.producerAvatarUrl}"/>">
@@ -115,7 +116,7 @@
 										</div>
 										<div class="feed_title">
 											<a data-pjax
-												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.extraContent}</a>
 										</div>
 									</div>
 									<div class="feed_time">${message.time}</div>
@@ -157,9 +158,11 @@
 									</div>
 								</div>
 								<div style="clear: both"></div>
-							</c:if>
-							<!--   MESSAGE_FOLLOWED_ANSWER_QUESTION  -->
-							<c:if test="${message.type==2 }">
+							</div>
+						</c:if>
+						<!--   MESSAGE_FOLLOWED_ANSWER_QUESTION  -->
+						<c:if test="${message.type==2 }">
+							<div class="feeds">
 								<div class="feed_meta clear_fix">
 									<div class="feed_user_photo">
 										<img src="<c:url value="${message.producerAvatarUrl}"/>">
@@ -171,7 +174,7 @@
 										</div>
 										<div class="feed_title">
 											<a data-pjax
-												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.extraContent}</a>
 										</div>
 									</div>
 									<div class="feed_time">${message.time}</div>
@@ -213,9 +216,11 @@
 									</div>
 								</div>
 								<div style="clear: both"></div>
-							</c:if>
-							<!--   MESSAGE_FOLLOWED_FAVORITE_QEUSTION  -->
-							<c:if test="${message.type==3 }">
+							</div>
+						</c:if>
+						<!--   MESSAGE_FOLLOWED_FAVORITE_QEUSTION  -->
+						<c:if test="${message.type==3 }">
+							<div class="feeds">
 								<div class="feed_meta clear_fix">
 									<div class="feed_user_photo">
 										<img src="<c:url value="${message.producerAvatarUrl}"/>">
@@ -227,7 +232,7 @@
 										</div>
 										<div class="feed_title">
 											<a data-pjax
-												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.title}</a>
+												href="<c:url value="/detail/${message.relatedSourceId}"/>">${message.extraContent}</a>
 										</div>
 									</div>
 									<div class="feed_time">${message.time}</div>
@@ -269,9 +274,11 @@
 									</div>
 								</div>
 								<div style="clear: both"></div>
-							</c:if>
-							<!--   MESSAGE_FOLLOWED_FAVORITE_ANSWER  -->
-							<c:if test="${message.type==4 }">
+							</div>
+						</c:if>
+						<!--   MESSAGE_FOLLOWED_FAVORITE_ANSWER  -->
+						<c:if test="${message.type==4}">
+							<div class="feeds">
 								<div class="feed_meta clear_fix">
 									<div class="feed_user_photo">
 										<img src="<c:url value="${message.producerAvatarUrl}"/>">
@@ -279,11 +286,7 @@
 									<div class="feed_meta_word">
 										<div class="feed_approve">
 											<span class="feed_user">${message.producerName}</span> 赞同回答@
-											<a href="<c:url value="/detail/${message.parentId}"/>">${message.parentName}</a>
-										</div>
-										<div class="feed_title">
-											<a data-pjax
-												href="<c:url value="/detail/${message.parentId}"/>">${message.title}</a>
+											<a href="<c:url value="/detail/${message.parentId}"/>">${message.extraContent}</a>
 										</div>
 									</div>
 									<div class="feed_time">${message.time}</div>
@@ -325,9 +328,11 @@
 									</div>
 								</div>
 								<div style="clear: both"></div>
-							</c:if>
-							<!--   MESSAGE_FOLLOWED_FAVORITE_NOTE  -->
-							<c:if test="${message.type==5 }">
+							</div>
+						</c:if>
+						<!--   MESSAGE_FOLLOWED_FAVORITE_NOTE  -->
+						<c:if test="${message.type==5 }">
+							<div class="feeds">
 								<div class="feed_meta clear_fix">
 									<div class="feed_user_photo">
 										<img src="<c:url value="${message.producerAvatarUrl}"/>">
@@ -339,7 +344,7 @@
 										</div>
 										<div class="feed_title">
 											<a data-pjax
-												href="<c:url value="/detail/${message.parentId}"/>">${message.title}</a>
+												href="<c:url value="/detail/${message.parentId}"/>">${message.extraContent}</a>
 										</div>
 									</div>
 									<div class="feed_time">${message.time}</div>
@@ -381,9 +386,11 @@
 									</div>
 								</div>
 								<div style="clear: both"></div>
-							</c:if>
-							<!--   MESSAGE_FOLLOWED_ADDBOUGHT  -->
-							<c:if test="${message.type==8 }">
+							</div>
+						</c:if>
+						<!--   MESSAGE_FOLLOWED_ADDBOUGHT  -->
+						<c:if test="${message.type==8}">
+							<div class="feeds">
 								<div class="feed_meta clear_fix">
 									<div class="feed_user_photo">
 										<img src="<c:url value="${message.producerAvatarUrl}"/>">
@@ -391,14 +398,10 @@
 									<div class="feed_meta_word">
 										<div class="feed_approve">
 											<span class="feed_user">${message.producerName}</span> 添加书籍@
-											<a href="<c:url value="/browse/${message.relatedSourceId}/0"/>">《${message.relatedSourceContent}》</a>
+											<a
+												href="<c:url value="/browse/${message.relatedSourceId}/0"/>">《${message.relatedSourceContent}》</a>
 										</div>
-										<!-- 
-										<div class="feed_title">
-											<a data-pjax
-												href="<c:url value="/detail/${message.parentId}"/>">${message.title}</a>
-										</div>
-										 -->
+										
 									</div>
 									<div class="feed_time">${message.time}</div>
 								</div>
@@ -406,7 +409,7 @@
 									<div class="feed_text_wrap">
 										<div class="feed_text" data-passage-id="123"
 											onclick="show_full($(this))">
-											${message.title} 著<span class="feed_show_full">完整显示</span>
+											${message.extraContent} 著<span class="feed_show_full">完整显示</span>
 										</div>
 										<div class="feed_tool_bar">
 											<div class="line watch" data-action="watch"
@@ -439,24 +442,28 @@
 									</div>
 								</div>
 								<div style="clear: both"></div>
-							</c:if>
-							<!--   MESSAGE_FOLLOWED_ADDCIRCLE  -->
-							<c:if test="${message.type==12 }">
+							</div>
+						</c:if>
+						<!--   MESSAGE_FOLLOWED_ADDCIRCLE  -->
+						<c:if test="${message.type==12 }">
+							<div class="feeds">
 								<div class="feed_meta clear_fix">
 									<div class="feed_user_photo">
 										<img src="<c:url value="${message.producerAvatarUrl}"/>">
 									</div>
 									<div class="feed_meta_word">
 										<div class="feed_approve">
-											<span class="feed_user">${message.producerName}</span> 创建圈子@
+											<span class="feed_user">${message.producerName}</span> 创建圈子
+											<!-- 
 											<a href="<c:url value="/group/${message.relatedSourceId}"/>">${message.relatedSourceContent}</a>
+											 -->
 										</div>
-										<!-- 
+
 										<div class="feed_title">
 											<a data-pjax
 												href="<c:url value="/group/${message.relatedSourceId}"/>">${message.relatedSourceContent}</a>
 										</div>
-										 -->
+
 									</div>
 									<div class="feed_time">${message.time}</div>
 								</div>
@@ -464,7 +471,7 @@
 									<div class="feed_text_wrap">
 										<div class="feed_text" data-passage-id="123"
 											onclick="show_full($(this))">
-											${message.title} <span class="feed_show_full">完整显示</span>
+											${message.extraContent} <span class="feed_show_full">完整显示</span>
 										</div>
 										<div class="feed_tool_bar">
 											<div class="line watch" data-action="watch"
@@ -497,24 +504,29 @@
 									</div>
 								</div>
 								<div style="clear: both"></div>
-							</c:if>
-							<!--  MESSAGE_FOLLOWED_JOINCIRCLE  -->
-							<c:if test="${message.type==13 }">
+							</div>
+						</c:if>
+						<!--  MESSAGE_FOLLOWED_JOINCIRCLE  -->
+						<c:if test="${message.type==13 }">
+							<div class="feeds">
 								<div class="feed_meta clear_fix">
 									<div class="feed_user_photo">
 										<img src="<c:url value="${message.producerAvatarUrl}"/>">
 									</div>
 									<div class="feed_meta_word">
 										<div class="feed_approve">
-											<span class="feed_user">${message.producerName}</span> 加入圈子@
+											<span class="feed_user">${message.producerName}</span>
+											加入圈子&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<!-- 
 											<a href="<c:url value="/group/${message.relatedSourceId}"/>">${message.relatedSourceContent}</a>
+											 -->
 										</div>
-										<!-- 
+
 										<div class="feed_title">
 											<a data-pjax
 												href="<c:url value="/group/${message.relatedSourceId}"/>">${message.relatedSourceContent}</a>
 										</div>
-										 -->
+
 									</div>
 									<div class="feed_time">${message.time}</div>
 								</div>
@@ -522,7 +534,7 @@
 									<div class="feed_text_wrap">
 										<div class="feed_text" data-passage-id="123"
 											onclick="show_full($(this))">
-											${message.title} <span class="feed_show_full">完整显示</span>
+											${message.extraContent} <span class="feed_show_full">完整显示</span>
 										</div>
 										<div class="feed_tool_bar">
 											<div class="line watch" data-action="watch"
@@ -555,9 +567,67 @@
 									</div>
 								</div>
 								<div style="clear: both"></div>
-							</c:if>
-							<!--   MESSAGE_FOLLOWED_ADDNOTE  -->
-							<c:if test="${message.type==14 }">
+								<div class="feed_full clear_fix">
+									<div class="feed_full_text"></div>
+									<div style="width: 100%">
+										<div class="feed_tool_bar">
+											<div class="up" data-action="up" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<span class="up_icon"><i class="icon-thumbs-up"></i>赞</span>
+												<span class="cnt up_cnt">31</span>
+											</div>
+											<div style="display: none" class="line cancel_up"
+												data-action="cancel_up" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-ok"></i>取消赞<span class="cnt">32</span>
+											</div>
+											<div class="line watch" data-action="watch"
+												data-passage-id="123" onclick="tool_bar_action($(this))">
+												<i class="icon-plus"></i>关注问题
+											</div>
+											<div style="display: none" class="line cancel_watch"
+												data-action="cancel_watch" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-ok"></i>取消关注
+											</div>
+											<div class="line show_comment" data-action="get_comment"
+												data-passage-id="123" onclick="tool_bar_action($(this))">
+												<i class="icon-comments-alt"></i>32条评论
+											</div>
+											<div style="display: none" class="line hide_comment"
+												data-action="hide_comment" data-passage-id="123"
+												onclick="tool_bar_action($(this))">
+												<i class="icon-double-angle-up"></i>收起评论
+											</div>
+											<div class="line link" data-action="show_all_answer"
+												data-passage-id="123">
+												<a href="/detail/11"><i class="icon-lightbulb"></i>2条其他回答</a>
+											</div>
+										</div>
+										<div class="feed_pack_up" onclick="show_brief($(this))">
+											<i class="icon-arrow-up"></i>收起
+										</div>
+									</div>
+								</div>
+
+								<div class="comments clear_fix">
+									<div class="waiting">
+										<i class="icon-spinner icon-spin"></i>
+									</div>
+									<div class="comments_list"></div>
+
+									<div class="do_comment">
+										<div class="comment clear_fix">
+											<input type="text">
+											<button class="btn btn-success">提交</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</c:if>
+						<!--   MESSAGE_FOLLOWED_ADDNOTE  -->
+						<c:if test="${message.type==14 }">
+							<div class="feeds">
 								<div class="feed_meta clear_fix">
 									<div class="feed_user_photo">
 										<img src="<c:url value="${message.producerAvatarUrl}"/>">
@@ -569,7 +639,7 @@
 										</div>
 										<div class="feed_title">
 											<a data-pjax
-												href="<c:url value="/detail/${message.parentId}"/>">${message.title}</a>
+												href="<c:url value="/detail/${message.parentId}"/>">${message.extraContent}</a>
 										</div>
 									</div>
 									<div class="feed_time">${message.time}</div>
@@ -611,10 +681,11 @@
 									</div>
 								</div>
 								<div style="clear: both"></div>
-							</c:if>
+							</div>
+						</c:if>
 
-						</c:forEach>
-						<!-- 
+					</c:forEach>
+					<!-- 
 						<div class="feed_meta clear_fix">
 							<div class="feed_user_photo">
 								<img src="/static/images/photo/1.jpg">
@@ -727,8 +798,6 @@
 							</div>
 						</div>
 						 -->
-						<!-- feeds div end -->
-					</div>
 
 
 					<div style="text-align: center">
