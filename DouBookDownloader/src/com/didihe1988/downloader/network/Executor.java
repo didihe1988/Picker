@@ -33,8 +33,8 @@ public class Executor {
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setUseCaches(false);
-			connection.setReadTimeout(8000);
-			connection.setConnectTimeout(8000);
+			connection.setReadTimeout(20000);
+			connection.setConnectTimeout(20000);
 			return getResponse(connection.getInputStream());
 		} catch (ProtocolException e) {
 			e.printStackTrace();

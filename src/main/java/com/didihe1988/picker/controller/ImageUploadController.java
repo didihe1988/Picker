@@ -19,13 +19,6 @@ import com.didihe1988.picker.utils.JsonUtils;
 
 @RestController
 public class ImageUploadController {
-	@RequestMapping(value="/json/file_upload",method=RequestMethod.POST)
-	public String Test(@RequestParam("image") MultipartFile file)
-	{
-		System.out.println(file.getOriginalFilename());
-		return "success";
-	}
-	
 	@RequestMapping(value = "/json/image_upload", method = RequestMethod.POST, headers = "Accept=application/json")
 	public String imageUpload(@RequestParam("image") MultipartFile file) {
 		// System.out.println(file.getContentType());
@@ -37,7 +30,7 @@ public class ImageUploadController {
 				return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 						Status.INVALID_FORMAT);
 			} else {
-				String dir = Constant.TMPDIR;
+				String dir = Constant.TMPIMAGEDIR;
 				int imageCount = 0;
 				File dirFile = new File(dir);
 				if (!dirFile.exists()) {

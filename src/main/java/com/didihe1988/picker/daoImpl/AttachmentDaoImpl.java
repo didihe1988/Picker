@@ -62,7 +62,21 @@ public class AttachmentDaoImpl implements AttachmentDao {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Attachment as a where a.id =?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setLong(0, id);
+		query.setInteger(0, id);
+		Long count = (Long) query.uniqueResult();
+		if (count > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isAttachmentExistsInCircle(String fileName, int circleId) {
+		// TODO Auto-generated method stub
+		String hql = "select count(*) from Attachment as a where a.name =? and a.circleId=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setString(0, fileName);
+		query.setInteger(1, circleId);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;

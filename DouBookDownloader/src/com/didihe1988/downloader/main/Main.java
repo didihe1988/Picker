@@ -8,18 +8,20 @@ import java.util.Iterator;
 import com.didihe1988.downloader.dao.DouBookDao;
 import com.didihe1988.downloader.model.DouBook;
 import com.didihe1988.downloader.network.Executor;
+import com.didihe1988.downloader.network.SeriesTraverser;
 import com.didihe1988.downloader.network.TagTraverser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class Main {
 	public static void main(String[] args) {
-		TagTraverser traverser = new TagTraverser("½ÌÓý",1,10);
+		TagTraverser traverser = new TagTraverser("ÐÄÁé",1,10);
+		//SeriesTraverser traverser = new SeriesTraverser(773, 1, 8);
 		try {
 			HashSet<Integer> idSet = traverser.getIds();
 			System.out.println(idSet);
 			Iterator<Integer> iterator = idSet.iterator();
-			
+
 			while (iterator.hasNext()) {
 				downloadNewBook(iterator.next());
 			}

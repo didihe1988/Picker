@@ -129,4 +129,10 @@ public class CircleServiceImpl implements CircleService {
 		return circleDao.search(name);
 	}
 
+	@Override
+	public boolean isEstablisherOfCircle(int userId, int circleId) {
+		// TODO Auto-generated method stub
+		return circleDao.isEstablisherOfCircle(userId, circleId);
+	}
+
 }

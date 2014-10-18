@@ -15,6 +15,8 @@ public interface AttachmentDao {
 
 	public boolean isAttachmentExistsById(int id);
 
+	public boolean isAttachmentExistsInCircle(String fileName, int circleId);
+
 	public List<Attachment> queryAttachmentsByCircleId(int circleId);
 
 	public int getLatestAttachmentByCircleId(int circleId);

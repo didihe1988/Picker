@@ -34,7 +34,7 @@ public class DouBookDao extends BaseDao {
 			statement.setInt(1, douBook.getId());
 			statement.setString(2, douBook.getPublisher());
 			statement.setString(3, douBook.getTitle());
-			statement.setInt(4, Integer.parseInt(douBook.getPages()));
+			statement.setInt(4, toInteger(douBook.getPages()));
 			statement.setString(5, getAuthorString(douBook.getAuthor()));
 			statement.setString(6, douBook.getPubdate());
 			statement.setString(7, douBook.getIsbn13());
@@ -52,6 +52,13 @@ public class DouBookDao extends BaseDao {
 			}
 		}
 		return false;
+	}
+
+	private int toInteger(String pages) {
+		if ((pages == null) || (pages.equals(""))) {
+			return 0;
+		}
+		return Integer.parseInt(pages);
 	}
 
 	public int queryLatestBookId() throws SQLException {

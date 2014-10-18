@@ -3,25 +3,40 @@ package com.didihe1988.picker.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "attachment")
 public class Attachment implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	@Id
+	@GeneratedValue
+	@Column(name = "attachment_id")
 	private int id;
 
-	private int circieId;
+	@Column(name = "attachment_circleid")
+	private int circleId;
 
 	/*
 	 * 提交人的id
 	 */
+	@Column(name = "attachment_userid")
 	private int userId;
 
+	@Column(name = "attachment_name")
 	private String name;
 
+	@Column(name = "attachment_path")
 	private String path;
 
+	@Column(name = "attachment_date")
 	private Date date;
 
 	public int getId() {
@@ -56,12 +71,12 @@ public class Attachment implements Serializable {
 		this.date = date;
 	}
 
-	public int getCircieId() {
-		return circieId;
+	public int getCircleId() {
+		return circleId;
 	}
 
-	public void setCircieId(int circieId) {
-		this.circieId = circieId;
+	public void setCircleId(int circleId) {
+		this.circleId = circleId;
 	}
 
 	public int getUserId() {
@@ -76,21 +91,21 @@ public class Attachment implements Serializable {
 
 	}
 
-	public Attachment(int id, int circieId, int userId, String name,
+	public Attachment(int id, int circleId, int userId, String name,
 			String path, Date date) {
 		super();
 		this.id = id;
-		this.circieId = circieId;
+		this.circleId = circleId;
 		this.userId = userId;
 		this.name = name;
 		this.path = path;
 		this.date = date;
 	}
 
-	public Attachment(int circieId, int userId, String name, String path,
+	public Attachment(int circleId, int userId, String name, String path,
 			Date date) {
 		super();
-		this.circieId = circieId;
+		this.circleId = circleId;
 		this.userId = userId;
 		this.name = name;
 		this.path = path;

@@ -14,6 +14,8 @@ public interface AttachmentService {
 	public int updateAttachment(Attachment attachment);
 
 	public boolean isAttachmentExistsById(int id);
+	
+	public boolean isAttachmentExistsInCircle(String fileName, int circleId);
 
 	public List<Attachment> getAttachmentsByCircleId(int circleId);
 

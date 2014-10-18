@@ -3,6 +3,8 @@ package com.didihe1988.picker.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AttachmentDao;
@@ -11,6 +13,8 @@ import com.didihe1988.picker.dao.CircleMemberDao;
 import com.didihe1988.picker.model.Attachment;
 import com.didihe1988.picker.service.AttachmentService;
 
+@Service
+@Transactional
 public class AttachmentServiceImpl implements AttachmentService {
 	@Autowired
 	private AttachmentDao attachmentDao;
@@ -36,10 +40,10 @@ public class AttachmentServiceImpl implements AttachmentService {
 		/*
 		 * check validation 后续加上pull request
 		 */
-		if (!circleDao.isEstablisherOfCircle(attachment.getUserId(),
-				attachment.getCircieId())) {
-			return Status.INVALID;
-		}
+		/*
+		 * if (!circleDao.isEstablisherOfCircle(attachment.getUserId(),
+		 * attachment.getCircleId())) { return Status.INVALID; }
+		 */
 		int status = attachmentDao.addAttachment(attachment);
 		if (status == -1) {
 			return Status.EXISTS;
@@ -64,7 +68,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 			return Status.NULLPOINTER;
 		}
 		if (!circleDao.isEstablisherOfCircle(attachment.getUserId(),
-				attachment.getCircieId())) {
+				attachment.getCircleId())) {
 			return Status.INVALID;
 		}
 		int status = attachmentDao.updateAttachment(attachment);
@@ -90,6 +94,12 @@ public class AttachmentServiceImpl implements AttachmentService {
 	public int getLatestAttachmentByCircleId(int circleId) {
 		// TODO Auto-generated method stub
 		return attachmentDao.getLatestAttachmentByCircleId(circleId);
+	}
+
+	@Override
+	public boolean isAttachmentExistsInCircle(String fileName, int circleId) {
+		// TODO Auto-generated method stub
+		return attachmentDao.isAttachmentExistsInCircle(fileName, circleId);
 	}
 
 }

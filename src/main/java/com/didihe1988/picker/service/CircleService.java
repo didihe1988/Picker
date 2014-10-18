@@ -28,4 +28,6 @@ public interface CircleService {
 
 	public List<Circle> search(String name);
 
+	public boolean isEstablisherOfCircle(int userId, int circleId);
+
 }

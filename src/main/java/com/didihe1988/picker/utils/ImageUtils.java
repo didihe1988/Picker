@@ -68,7 +68,7 @@ public class ImageUtils {
 		}
 		for (int index = 0; index < imageUrls.size(); index++) {
 			String filename = getFileNameFromTmpUrl(imageUrls.get(index));
-			String tmpDirString = Constant.TMPDIR + filename;
+			String tmpDirString = Constant.TMPIMAGEDIR + filename;
 			// System.out.println(tmpDirString);
 			// System.out.println(dstDirString);
 			// /question/1/0.png
