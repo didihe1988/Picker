@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.AttachmentDao;
 import com.didihe1988.picker.dao.CircleDao;
 import com.didihe1988.picker.dao.CircleMemberDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.dp.CircleDp;
+import com.didihe1988.picker.service.AttachmentService;
 import com.didihe1988.picker.service.CircleService;
 
 @Service
@@ -26,6 +28,9 @@ public class CircleServiceImpl implements CircleService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private AttachmentDao attachmentDao;
 
 	@Override
 	public int addCircle(Circle circle) {
@@ -102,7 +107,8 @@ public class CircleServiceImpl implements CircleService {
 		String establisherName = userDao.queryUserById(
 				circle.getEstablisherId()).getUsername();
 		return new CircleDp(circle, circleMemberDao.isUserInCircle(curUserId,
-				id), establisherName);
+				id), establisherName,
+				attachmentDao.queryAttachmentsByCircleId(id));
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package com.didihe1988.picker.controller;
 
-import java.awt.print.Pageable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,18 +13,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.didihe1988.picker.common.Constant;
-import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
-import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.dp.FeedDp;
@@ -42,7 +37,6 @@ import com.didihe1988.picker.service.FollowService;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
-import com.didihe1988.picker.utils.JsonUtils;
 
 @Controller
 public class UserController {
@@ -94,8 +88,8 @@ public class UserController {
 			HttpUtils.setSessionUserId(request, user.getId());
 
 			try {
-				response.sendRedirect("/user/" + user.getId());
-				// response.sendRedirect("/picker/test");
+				//response.sendRedirect("/user/" + user.getId());
+				response.sendRedirect("");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -230,18 +224,6 @@ public class UserController {
 		return "group_index";
 	}
 
-	/**
-	 * @description 显示我的动态 暂时
-	 */
-	@RequestMapping(value = "/dynamic")
-	public String dynamic(Model model, HttpServletRequest request) {
-		int curUserId = HttpUtils.getSessionUserId(request);
-		model.addAttribute("messageList",
-				messageService.getDynamicByUserId(curUserId));
-		model.addAttribute("bookList", getBooks(curUserId));
-		return "index";
-	}
-
 	private List<UserDp> getFollowers(int userId, int curUserId) {
 		final List<Follow> followList = followService
 				.getFollowListByFollowedUserId(userId);
@@ -265,7 +247,7 @@ public class UserController {
 		}
 		return userList;
 	}
-
+	
 	private List<Book> getBooks(int userId) {
 		final List<Bought> boughtList = boughtService.getBoughtByUserId(userId);
 		List<Book> bookList = new ArrayList<Book>();
@@ -275,5 +257,6 @@ public class UserController {
 		}
 		return bookList;
 	}
+	
 
 }

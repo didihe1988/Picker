@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import com.didihe1988.picker.model.dp.SearchResult;
 import com.didihe1988.picker.model.dp.SearchResult.Type;
+import com.didihe1988.picker.model.form.FeedForm;
 import com.didihe1988.picker.model.interfaces.Search;
 import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.model.json.QuestionJson;
@@ -225,6 +226,7 @@ public class Feed implements Serializable, Search {
 		this.date = date;
 		this.page = page;
 		this.type = type;
+		this.brief = brief;
 		this.isPublic = isPublic;
 	}
 
@@ -237,6 +239,7 @@ public class Feed implements Serializable, Search {
 		this.date = new Date();
 		this.page = page;
 		this.type = type;
+		this.brief = brief;
 		this.isPublic = isPublic;
 	}
 
@@ -249,7 +252,22 @@ public class Feed implements Serializable, Search {
 		this.date = new Date();
 		this.page = page;
 		this.type = type;
+		this.brief = brief;
 		this.isPublic = true;
+	}
+
+	public Feed(FeedForm feedForm, int bookId, int userId) {
+		this(bookId, userId, feedForm.getTitle(), feedForm.getRaw(),
+				MarkdownUtils.removeTags(feedForm.getRaw()),
+				feedForm.getPage(), getType(feedForm.getType()));
+	}
+
+	private static int getType(String formType) {
+		int type = Feed.TYPE_NOTE;
+		if (formType.equals("question")) {
+			type = Feed.TYPE_QUESTION;
+		}
+		return type;
 	}
 
 	/*
@@ -305,15 +323,13 @@ public class Feed implements Serializable, Search {
 		return Type.Note;
 	}
 	/*
-	public QuestionJson toQuestionJson() {
-		
-		return new QuestionJson(this.title, null, "/detail/" + this.id,
-				this.date, this.commentNum, this.answerNum);
-	}
-
-	public NoteJson toNoteJson() {
-		return new NoteJson(this.title, null, "/detail/" + this.id, this.date,
-				this.content);
-	}*/
+	 * public QuestionJson toQuestionJson() {
+	 * 
+	 * return new QuestionJson(this.title, null, "/detail/" + this.id,
+	 * this.date, this.commentNum, this.answerNum); }
+	 * 
+	 * public NoteJson toNoteJson() { return new NoteJson(this.title, null,
+	 * "/detail/" + this.id, this.date, this.content); }
+	 */
 
 }

@@ -8,7 +8,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.didihe1988.picker.utils.HttpUtils;
 
-@Component
 public class SessionInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
@@ -20,7 +19,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		System.out.println(uri);
 		if (!uri.endsWith("enter") && !uri.endsWith("login")) {
 			if (!HttpUtils.isSessionUserIdExists(request)) {
-				response.sendRedirect("enter");
+				response.sendRedirect("/enter");
 				return false;
 			}
 		}

@@ -40,8 +40,12 @@ public class TagTraverser {
 	private HashSet<Integer> getIdsByPage(int page) throws IOException {
 		StringBuilder urlBuilder = new StringBuilder();
 		// http://book.douban.com/tag/ÃûÖø?start=0&type=T
+		
 		urlBuilder.append("http://book.douban.com/tag/").append(this.tag)
 				.append("?start=").append((page - 1) * 20).append("&type=S");
+		//http://book.douban.com/top250?start=25
+		/*urlBuilder.append("http://book.douban.com/top250")
+		.append("?start=").append((page - 1) * 25);*/
 		System.out.println(urlBuilder.toString());
 		HashSet<Integer> set = new HashSet<Integer>();
 		Document doc = Jsoup.connect(urlBuilder.toString()).get();

@@ -7,10 +7,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
@@ -22,6 +24,7 @@ import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.dp.UserDp;
+import com.didihe1988.picker.model.form.FeedForm;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -207,10 +210,6 @@ public class RestQuestionController {
 
 	@RequestMapping(value = "/json/question/add", method = RequestMethod.POST)
 	public String add(@RequestBody Feed feed, HttpServletRequest request) {
-		if (!HttpUtils.isSessionUserIdExists(request)) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.NULLSESSION);
-		}
 		if (!feed.checkFieldValidation()) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID_FIELD);
@@ -222,6 +221,27 @@ public class RestQuestionController {
 			addQuestionImage(feed);
 		}
 
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	// localhost:5000/detail/112/12/create
+	@RequestMapping(value = "/detail/{bookId}/{urlPage}/create")
+	public String createFeed(@PathVariable int bookId,
+			@PathVariable int urlPage, @ModelAttribute FeedForm feedForm,
+			HttpServletRequest request) {
+		if ((bookId < 1) || (urlPage < 0) || (!feedForm.checkValidation())) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
+		int curUserId = HttpUtils.getSessionUserId(request);
+		System.out.println(feedForm.toString());
+		Feed feed = new Feed(feedForm, bookId, curUserId);
+		int status = feedService.addFeed(feed);
+		/*
+		if (status == Status.SUCCESS) {
+			produceQuestionMessage(feed, request);
+			addQuestionImage(feed);
+		}*/
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
@@ -324,7 +344,6 @@ public class RestQuestionController {
 					RelatedImage.FEED_IMAGE, newImageUrl);
 			relatedImageService.addRelatedImage(relatedImage);
 		}
-
 	}
 
 }

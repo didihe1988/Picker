@@ -51,6 +51,7 @@ public class BookDaoTest {
 	@Test
 	public void test04() {
 		Book book = bookDao.queryBookById(5);
+		System.out.println(book.toString());
 		assertNotNull(book);
 	}
 
@@ -87,9 +88,20 @@ public class BookDaoTest {
 	// testUpdateBook
 	@Test
 	public void test09() {
-		Book book = bookDao.queryBookById(10);
-		book.setPress("press02");
-		bookDao.updateBook(book);
+
+		try {
+			for (int id = 9135; id <=9293; id++) {
+				Book book = bookDao.queryBookById(id);
+				if (book != null) {
+					book.setImageUrl("/resources/image/book/" + id
+							+ "/lpic.jpg");
+					bookDao.updateBook(book);
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 
 	// testUpdateBook update will execute even no changes

@@ -48,6 +48,13 @@
 		</beans:property>
 	</beans:bean>
 
+	<interceptors>
+		<interceptor>
+			<mapping path="/**" />
+			<beans:bean class="com.didihe1988.picker.interceptor.SessionInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
+
 
 	<context:component-scan base-package="com.didihe1988.picker.mapper" />
 	<context:component-scan base-package="com.didihe1988.picker.serviceImpl" />

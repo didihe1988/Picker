@@ -324,7 +324,7 @@
 									<a href="#">${book.bookName}</a>
 								</div>
 								<div class="book_info">[英] ${book.writer}</div>
-								<div class="book_info">2007-3</div>
+								<div class="book_info">${book.date}</div>
 							</div>
 						</div>
 						<div class="col-50">

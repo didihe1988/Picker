@@ -27,7 +27,7 @@ public class DouBookDao extends BaseDao {
 	public boolean insert(DouBook douBook) throws SQLException {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		String insertSql = "insert into doubook (doubook_id,doubook_publisher,doubook_title,doubook_pages,doubook_author,doubook_pubdate,doubook_isbn13,doubook_image) values (?,?,?,?,?,?,?,?)";
+		String insertSql = "insert into book (book_douid,book_press,book_name,book_pages,book_writer,book_date,book_isbn,book_douimage,book_follownum,book_questionnum,book_notenum) values (?,?,?,?,?,?,?,?,?,?,?)";
 		try {
 			connection = getConnection();
 			statement = connection.prepareStatement(insertSql);
@@ -39,6 +39,9 @@ public class DouBookDao extends BaseDao {
 			statement.setString(6, douBook.getPubdate());
 			statement.setString(7, douBook.getIsbn13());
 			statement.setString(8, douBook.getImage());
+			statement.setInt(9, 0);
+			statement.setInt(10, 0);
+			statement.setInt(11, 0);
 			int row = statement.executeUpdate();
 			if (row == 1) {
 				return true;
@@ -64,7 +67,7 @@ public class DouBookDao extends BaseDao {
 	public int queryLatestBookId() throws SQLException {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		String querySql = "select max(doubook_innerid) from doubook";
+		String querySql = "select max(book_id) from book";
 		try {
 			connection = getConnection();
 			statement = connection.prepareStatement(querySql);
@@ -86,7 +89,7 @@ public class DouBookDao extends BaseDao {
 	public boolean isExistsByDouId(int id) throws SQLException {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		String querySql = "select * from doubook where doubook_id =?";
+		String querySql = "select * from book where book_douid =?";
 		try {
 			connection = getConnection();
 			statement = connection.prepareStatement(querySql);
