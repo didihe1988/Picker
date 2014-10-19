@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.didihe1988.picker.model.form.AnswerForm;
+import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.MarkdownUtils;
 
 @Entity
@@ -83,6 +85,11 @@ public class Answer implements Serializable {
 						.getDate());
 	}
 
+	public Answer(AnswerForm answerForm, int userId) {
+		this(answerForm.getQuestionId(), userId, answerForm.getRaw(),
+				MarkdownUtils.removeTags(answerForm.getRaw()), new Date());
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -146,11 +153,10 @@ public class Answer implements Serializable {
 	public void setBrief(String brief) {
 		this.brief = brief;
 	}
-	
+
 	public void setBriefByContent() {
 		this.brief = MarkdownUtils.removeTags(this.content);
 	}
-
 
 	@Override
 	public String toString() {
@@ -159,11 +165,10 @@ public class Answer implements Serializable {
 				+ ", brief=" + brief + ", favoriteNum=" + favoriteNum
 				+ ", commentNum=" + commentNum + ", date=" + date + "]";
 	}
-	
-	public boolean checkFieldValidation()
-	{
-		if((this.questionId!=0)&&(this.content!=null)&&(!this.content.equals("")))
-		{
+
+	public boolean checkFieldValidation() {
+		if ((this.questionId != 0) && (this.content != null)
+				&& (!this.content.equals(""))) {
 			return true;
 		}
 		return false;

@@ -437,6 +437,11 @@ function panel_action(t) {
         }
     };
 
+    if(typeof(t) == 'string'){
+        handles[t]();
+        return ;
+    }
+
     if(t.data('tab')){
         handles[t.data('tab')]();
     }
@@ -885,4 +890,24 @@ function go_to_page(page) {
         p = p.substr(0, p.length-1)
     }
     $.pjax({url: p.substr(0, p.lastIndexOf('/')+1)+page, container: '#main'})
+}
+
+//--------------------------------submit part--------------------------------------
+
+function submit_answer() {
+    var raw = $(editor.editor).html();
+
+    //服务端检查, 标签可能引起安全问题
+    var rendered = $(editor.previewer).html();
+
+    if (!(raw.trim())) {
+        alert('内容不能为空。');
+        return false;
+    }
+
+    $('input[name=raw]').val(raw);
+    $('input[name=rendered]').val(rendered);
+
+    //提交前删除草稿
+    return true;
 }

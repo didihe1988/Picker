@@ -224,27 +224,6 @@ public class RestQuestionController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
-	// localhost:5000/detail/112/12/create
-	@RequestMapping(value = "/detail/{bookId}/{urlPage}/create")
-	public String createFeed(@PathVariable int bookId,
-			@PathVariable int urlPage, @ModelAttribute FeedForm feedForm,
-			HttpServletRequest request) {
-		if ((bookId < 1) || (urlPage < 0) || (!feedForm.checkValidation())) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
-		}
-		int curUserId = HttpUtils.getSessionUserId(request);
-		System.out.println(feedForm.toString());
-		Feed feed = new Feed(feedForm, bookId, curUserId);
-		int status = feedService.addFeed(feed);
-		/*
-		if (status == Status.SUCCESS) {
-			produceQuestionMessage(feed, request);
-			addQuestionImage(feed);
-		}*/
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
-	}
-
 	private void setQuestion(Feed feed, HttpServletRequest request) {
 		feed.setType(Feed.TYPE_QUESTION);
 		feed.setUserId(HttpUtils.getSessionUserId(request));

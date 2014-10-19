@@ -15,7 +15,7 @@ import com.google.gson.GsonBuilder;
 
 public class Main {
 	public static void main(String[] args) {
-		TagTraverser traverser = new TagTraverser("²ßÂÔ",1,10);
+		TagTraverser traverser = new TagTraverser("java",1,10);
 		//SeriesTraverser traverser = new SeriesTraverser(773, 1, 8);
 		try {
 			HashSet<Integer> idSet = traverser.getIds();

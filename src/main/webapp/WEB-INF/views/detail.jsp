@@ -244,20 +244,24 @@
 						</div>
 					</div>
 				</div>
-
 				<!--编辑器-->
-				<div class="portion">
-					<div class="editor_label">
-						<i class="icon-pencil"></i>添加答案
+				<form method="POST" action=<c:url value="/answer/add/${question.id}"/>
+					onsubmit="return submit_answer();">
+					<input type="hidden" name="raw" value="" /> <input type="hidden"
+						name="rendered" value="" />
+					<div class="portion">
+						<div class="editor_label">
+							<i class="icon-pencil"></i>添加答案
+						</div>
+						<div id="epiceditor"></div>
+						<div>
+							<span style="float: right;">
+								<button type="submit" class="commit_button">提交回答</button>
+							</span>
+							<div style="clear: both"></div>
+						</div>
 					</div>
-					<div id="epiceditor"></div>
-					<div>
-						<span style="float: right;">
-							<button type="button" class="commit_button">提交回答</button>
-						</span>
-						<div style="clear: both"></div>
-					</div>
-				</div>
+				</form>
 
 				<div class="portion ans_split">
 					<c:out value='${question.answerNum}' />

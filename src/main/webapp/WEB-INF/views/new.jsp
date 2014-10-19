@@ -89,9 +89,9 @@
 
 	<div id="main">
 		<!--**xx-->
-		<div id="book_id" data-value="1234" style="display: none"></div>
-		<div id="book_name" data-value="人生的枷锁" style="display: none"></div>
-		<div class="detail_title" style="display: none">《人生的枷锁》第12页的笔记</div>
+		<div id="book_id" data-value="${book.id}" style="display: none"></div>
+		<div id="book_name" data-value="${book.name}" style="display: none"></div>
+		<div class="detail_title" style="display: none">${book.name}第12页的草稿</div>
 
 		<!--图片上传功能 开始-->
 		<div id="image_insert_panel" class="shadow">
@@ -129,8 +129,9 @@
 		<div id="cancel_page_change" class="cancel_panel"
 			onclick="hide_panel(null, $(this))"></div>
 		<!--图片上传 结束-->
-
-		<form method="post" action="/detail/112/12/create"
+		<!--  /detail/112/12/create-->
+		<form method="post"
+			action=<c:url value="/detail/${book.id}/12/create"/>
 			onsubmit="return submit_check();">
 			<input type="hidden" name="page" value="" /> <input type="hidden"
 				name="raw" value="" /> <input type="hidden" name="rendered"
