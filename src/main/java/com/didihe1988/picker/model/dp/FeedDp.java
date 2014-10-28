@@ -4,14 +4,11 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.interfaces.IsFavorite;
 import com.didihe1988.picker.model.interfaces.IsFollow;
 import com.didihe1988.picker.utils.DateUtils;
-
 public class FeedDp extends Feed implements IsFavorite, IsFollow {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	//private String bookName;
 	
 	private String userName;
 

@@ -57,19 +57,19 @@
 	
 
 	<context:component-scan base-package="com.didihe1988.picker.mapper" />
-	<context:component-scan base-package="com.didihe1988.picker.serviceImpl" />
+	<context:component-scan base-package="com.didihe1988.picker.service.impl" />
 	<context:component-scan base-package="com.didihe1988.picker.service" />
 	<context:component-scan base-package="com.didihe1988.picker.controller" />
-	<context:component-scan base-package="com.didihe1988.picker.daoImpl" />
+	<context:component-scan base-package="com.didihe1988.picker.dao.impl" />
 	<context:component-scan base-package="com.didihe1988.picker.interceptor" />
-	<context:component-scan base-package="com.didihe1988.picker.model.support" />
+	<context:component-scan base-package="com.didihe1988.picker.service.support" />
 	<tx:annotation-driven />
 	
-	<beans:bean class="com.didihe1988.picker.model.support.QuestoinDpGenerator">
+	<beans:bean class="com.didihe1988.picker.service.support.QuestoinDpGenerator">
 		<beans:qualifier value="questionDpGenerator"></beans:qualifier>
 	</beans:bean>
 	
-	<beans:bean class="com.didihe1988.picker.model.support.NoteDpGenerator">
+	<beans:bean class="com.didihe1988.picker.service.support.NoteDpGenerator">
 		<beans:qualifier value="noteDpGenerator"></beans:qualifier>
 	</beans:bean>
 </beans:beans>
