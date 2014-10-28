@@ -38,12 +38,16 @@ public class RestBookDpController {
 	@RequestMapping(value = "/json/book/{id}/questiondps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestionDps(@PathVariable int id,
 			HttpServletRequest request) {
+		
 		if (id < 1) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
+		long startTime=System.currentTimeMillis();
 		List<FeedDp> list = feedService.getFeedDpListByBookId(id,
 				Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request));
+		long endTime=System.currentTimeMillis();
+		System.out.println("spend: "+(endTime-startTime));
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 

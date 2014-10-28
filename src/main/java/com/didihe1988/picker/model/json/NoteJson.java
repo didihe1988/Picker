@@ -25,8 +25,11 @@ public class NoteJson extends BaseJson {
 		super(title, picture, link, time);
 		this.brief = brief;
 	}
-
+	/*
+	 * tmp
+	 */
 	public static NoteJson getNoteJsonFromNote(FeedDp feedDp) {
+		/*
 		if (feedDp != null) {
 			String imageUrl = "";
 			List<String> imageUrls = feedDp.getImageUrls();
@@ -38,7 +41,8 @@ public class NoteJson extends BaseJson {
 					feedDp.getStrDate(), feedDp.getBrief());
 		} else {
 			return new NoteJson();
-		}
+		}*/
+		return new NoteJson();
 	}
 
 	@Override

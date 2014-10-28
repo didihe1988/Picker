@@ -22,7 +22,7 @@ public class AnswerDp extends Answer implements IsFavorite {
 
 	private boolean isFavorite;
 
-	private List<String> imageUrls;
+	//private List<String> imageUrls;
 
 	private String strDate;
 
@@ -62,14 +62,6 @@ public class AnswerDp extends Answer implements IsFavorite {
 		this.replierAvatarUrl = replierAvatarUrl;
 	}
 
-	public List<String> getImageUrls() {
-		return imageUrls;
-	}
-
-	public void setImageUrls(List<String> imageUrls) {
-		this.imageUrls = imageUrls;
-	}
-
 	public String getReplierSignature() {
 		return replierSignature;
 	}
@@ -92,7 +84,7 @@ public class AnswerDp extends Answer implements IsFavorite {
 
 	public AnswerDp(Answer answer, String questionName, String replierName,
 			String replierSignature, String replierAvatarUrl,
-			boolean isFavorite, List<String> imageUrls) {
+			boolean isFavorite) {
 		super(answer);
 		this.strDate = DateUtils.getDate(answer.getDate());
 		this.questionName = questionName;
@@ -100,6 +92,5 @@ public class AnswerDp extends Answer implements IsFavorite {
 		this.replierSignature = replierSignature;
 		this.replierAvatarUrl = replierAvatarUrl;
 		this.isFavorite = isFavorite;
-		this.imageUrls = imageUrls;
 	}
 }

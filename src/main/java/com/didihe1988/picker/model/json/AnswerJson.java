@@ -27,6 +27,7 @@ public class AnswerJson extends BaseJson {
 	}
 
 	public AnswerJson getAnswerJsonFromAnswer(AnswerDp answerDp) {
+		/*
 		if (answerDp != null) {
 			String imageUrl = "";
 			List<String> imageUrls = answerDp.getImageUrls();
@@ -38,6 +39,7 @@ public class AnswerJson extends BaseJson {
 					answerDp.getStrDate(), answerDp.getBrief());
 		} else {
 			return new AnswerJson();
-		}
+		}*/
+		return new AnswerJson();
 	}
 }

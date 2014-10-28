@@ -13,7 +13,7 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String bookName;
+	//private String bookName;
 
 	private String userName;
 
@@ -22,8 +22,6 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 	private boolean isFollow;
 
 	private boolean isFavorite;
-
-	private List<String> imageUrls;
 
 	private String strDate;
 
@@ -67,22 +65,6 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 		this.userAvatarUrl = userAvatarUrl;
 	}
 
-	public List<String> getImageUrls() {
-		return imageUrls;
-	}
-
-	public void setImageUrls(List<String> imageUrls) {
-		this.imageUrls = imageUrls;
-	}
-
-	public String getBookName() {
-		return bookName;
-	}
-
-	public void setBookName(String bookName) {
-		this.bookName = bookName;
-	}
-
 	public String getStrDate() {
 		return strDate;
 	}
@@ -95,17 +77,14 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 
 	}
 
-	public FeedDp(Feed feed, String bookName, String userName,
-			String userAvatarUrl, boolean isFollow, boolean isFavorite,
-			List<String> imageUrls) {
+	public FeedDp(Feed feed,String userName,
+			String userAvatarUrl, boolean isFollow, boolean isFavorite) {
 		super(feed);
 		this.strDate = DateUtils.getDate(feed.getDate());
-		this.bookName = bookName;
 		this.userName = userName;
 		this.userAvatarUrl = userAvatarUrl;
 		this.isFollow = isFollow;
 		this.isFavorite = isFavorite;
-		this.imageUrls = imageUrls;
 	}
 
 }

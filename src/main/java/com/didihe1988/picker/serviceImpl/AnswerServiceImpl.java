@@ -176,14 +176,13 @@ public class AnswerServiceImpl implements AnswerService {
 		return new AnswerDp(answer, questionName, user.getUsername(),
 				user.getSignature(), user.getAvatarUrl(),
 				favoriteDao.isFavoriteExistsByKey(userId, answer.getId(),
-						Favorite.FAVORITE_ANSWER),
-				getImageUrlsFromAnswer(answer));
+						Favorite.FAVORITE_ANSWER));
 	}
-
+	/*	
 	private List<String> getImageUrlsFromAnswer(Answer answer) {
 		return relatedImageDao.queryImageUrlsByKey(answer.getId(),
 				RelatedImage.ANSWER_IMAGE);
-	}
+	}*/
 
 	private List<AnswerDp> getAnswerDpListFormAnswerList(
 			List<Answer> answerList, int userId) {

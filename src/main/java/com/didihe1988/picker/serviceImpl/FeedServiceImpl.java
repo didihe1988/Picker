@@ -165,10 +165,9 @@ public class FeedServiceImpl implements FeedService {
 			break;
 		}
 
-		String bookName = bookDao.queryBookById(feed.getBookId()).getBookName();
-		FeedDp feedDp = new FeedDp(feed, bookName, user.getUsername(),
-				user.getAvatarUrl(), isFollow, isFavorite,
-				getImageUrlsFromFeed(feed));
+		//String bookName = bookDao.queryBookById(feed.getBookId()).getBookName();
+		FeedDp feedDp = new FeedDp(feed, user.getUsername(),
+				user.getAvatarUrl(), isFollow, isFavorite);
 		return feedDp;
 	}
 
@@ -180,11 +179,11 @@ public class FeedServiceImpl implements FeedService {
 		}
 		return list;
 	}
-
+	/*
 	private List<String> getImageUrlsFromFeed(Feed feed) {
 		return relatedImageDao.queryImageUrlsByKey(feed.getId(),
 				RelatedImage.FEED_IMAGE);
-	}
+	}*/
 
 	@Override
 	public List<FeedDp> getFeedDpListByUserId(int userId, int type,
