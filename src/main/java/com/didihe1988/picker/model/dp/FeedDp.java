@@ -1,7 +1,5 @@
 package com.didihe1988.picker.model.dp;
 
-import java.util.List;
-
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.interfaces.IsFavorite;
 import com.didihe1988.picker.model.interfaces.IsFollow;
@@ -14,7 +12,7 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 	private static final long serialVersionUID = 1L;
 
 	//private String bookName;
-
+	
 	private String userName;
 
 	private String userAvatarUrl;

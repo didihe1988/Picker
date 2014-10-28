@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,14 +15,14 @@ import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.RelatedImageDao;
 import com.didihe1988.picker.dao.UserDao;
-import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
-import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.RelatedImage;
-import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.model.json.QuestionJson;
+import com.didihe1988.picker.model.support.FeedDpGenerator;
+import com.didihe1988.picker.model.support.NoteDpGenerator;
+import com.didihe1988.picker.model.support.QuestoinDpGenerator;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.utils.DateUtils;
 
@@ -45,7 +46,12 @@ public class FeedServiceImpl implements FeedService {
 	private RelatedImageDao relatedImageDao;
 
 	@Autowired
-	private BookDao bookDao;
+	@Qualifier("questionDpGenerator")
+	private FeedDpGenerator questionDpGenerator;
+
+	@Autowired
+	@Qualifier("noteDpGenerator")
+	private FeedDpGenerator noteDpGenerator;
 
 	@Override
 	public boolean checkOperateValidation(int userId, int feedId) {
@@ -144,46 +150,43 @@ public class FeedServiceImpl implements FeedService {
 	public FeedDp getFeedDpByFeedId(int id, int curUserId) {
 		// TODO Auto-generated method stub
 		Feed feed = getFeedById(id);
-		return getFeedDpByFeed(feed, curUserId);
+		return getFeedDpByFeed(getGeneratorByType(feed), feed, curUserId);
 	}
 
-	private FeedDp getFeedDpByFeed(Feed feed, int curUserId) {
-		User user = userDao.queryUserById(feed.getUserId());
-		boolean isFavorite, isFollow;
-		switch (feed.getType()) {
-		case Feed.TYPE_NOTE:
-			isFavorite = favoriteDao.isFavoriteExistsByKey(curUserId,
-					feed.getId(), Favorite.FAVORITE_NOTE);
-			isFollow = false;
-			break;
-		case Feed.TYPE_QUESTION:
-		default:
-			isFavorite = favoriteDao.isFavoriteExistsByKey(curUserId,
-					feed.getId(), Favorite.FAVORITE_QUESTION);
-			isFollow = followDao.isFollowExistsByKey(Follow.FOLLOW_QUESTION,
-					curUserId, feed.getId());
-			break;
-		}
+	/*
+	 * 整个list已经确定了类型、不应该在FeedDp中switch 因此把FeedDp生成的过程抽成一个类
+	 */
+	private FeedDp getFeedDpByFeed(FeedDpGenerator generator, Feed feed,
+			int curUserId) {
+		return generator.getFeedDpfromFeed(feed, curUserId);
+	}
 
-		//String bookName = bookDao.queryBookById(feed.getBookId()).getBookName();
-		FeedDp feedDp = new FeedDp(feed, user.getUsername(),
-				user.getAvatarUrl(), isFollow, isFavorite);
-		return feedDp;
+	private FeedDpGenerator getGeneratorByType(Feed feed) {
+		if (feed.getType() == Feed.TYPE_QUESTION) {
+			return this.questionDpGenerator;
+		} else {
+			return this.noteDpGenerator;
+		}
 	}
 
 	private List<FeedDp> getFeedDpList(List<Feed> feedList, int curUserId) {
 		List<FeedDp> list = new ArrayList<FeedDp>();
+		FeedDpGenerator generator = null;
+		if (feedList.size() > 0) {
+			generator = getGeneratorByType(feedList.get(0));
+		}
 		for (Feed feed : feedList) {
-			FeedDp feedDp = getFeedDpByFeed(feed, curUserId);
+			FeedDp feedDp = getFeedDpByFeed(generator, feed, curUserId);
 			list.add(feedDp);
 		}
 		return list;
 	}
+
 	/*
-	private List<String> getImageUrlsFromFeed(Feed feed) {
-		return relatedImageDao.queryImageUrlsByKey(feed.getId(),
-				RelatedImage.FEED_IMAGE);
-	}*/
+	 * private List<String> getImageUrlsFromFeed(Feed feed) { return
+	 * relatedImageDao.queryImageUrlsByKey(feed.getId(),
+	 * RelatedImage.FEED_IMAGE); }
+	 */
 
 	@Override
 	public List<FeedDp> getFeedDpListByUserId(int userId, int type,
@@ -191,8 +194,12 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		final List<Feed> feedList = getFeedListByUserId(userId, type);
 		List<FeedDp> list = new ArrayList<FeedDp>();
+		FeedDpGenerator generator = null;
+		if (feedList.size() > 0) {
+			generator = getGeneratorByType(feedList.get(0));
+		}
 		for (Feed feed : feedList) {
-			FeedDp feedDp = getFeedDpByFeed(feed, curUserId);
+			FeedDp feedDp = getFeedDpByFeed(generator, feed, curUserId);
 			list.add(feedDp);
 		}
 		return list;
@@ -204,8 +211,12 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		final List<Feed> feedList = getFeedListByBookId(bookId, type);
 		List<FeedDp> list = new ArrayList<FeedDp>();
+		FeedDpGenerator generator = null;
+		if (feedList.size() > 0) {
+			generator = getGeneratorByType(feedList.get(0));
+		}
 		for (Feed feed : feedList) {
-			FeedDp feedDp = getFeedDpByFeed(feed, curUserId);
+			FeedDp feedDp = getFeedDpByFeed(generator, feed, curUserId);
 			list.add(feedDp);
 		}
 		return list;
@@ -222,8 +233,12 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		final List<Feed> feedList = getFeedListForBrowse(bookId);
 		List<FeedDp> list = new ArrayList<FeedDp>();
+		FeedDpGenerator generator = null;
+		if (feedList.size() > 0) {
+			generator = getGeneratorByType(feedList.get(0));
+		}
 		for (Feed feed : feedList) {
-			FeedDp feedDp = getFeedDpByFeed(feed, curUserId);
+			FeedDp feedDp = getFeedDpByFeed(generator, feed, curUserId);
 			list.add(feedDp);
 		}
 		return list;

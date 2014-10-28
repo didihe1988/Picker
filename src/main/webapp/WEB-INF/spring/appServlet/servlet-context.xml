@@ -54,7 +54,7 @@
 			<beans:bean class="com.didihe1988.picker.interceptor.SessionInterceptor"></beans:bean>
 		</interceptor>
 	</interceptors>
-
+	
 
 	<context:component-scan base-package="com.didihe1988.picker.mapper" />
 	<context:component-scan base-package="com.didihe1988.picker.serviceImpl" />
@@ -62,6 +62,14 @@
 	<context:component-scan base-package="com.didihe1988.picker.controller" />
 	<context:component-scan base-package="com.didihe1988.picker.daoImpl" />
 	<context:component-scan base-package="com.didihe1988.picker.interceptor" />
-
+	<context:component-scan base-package="com.didihe1988.picker.model.support" />
 	<tx:annotation-driven />
+	
+	<beans:bean class="com.didihe1988.picker.model.support.QuestoinDpGenerator">
+		<beans:qualifier value="questionDpGenerator"></beans:qualifier>
+	</beans:bean>
+	
+	<beans:bean class="com.didihe1988.picker.model.support.NoteDpGenerator">
+		<beans:qualifier value="noteDpGenerator"></beans:qualifier>
+	</beans:bean>
 </beans:beans>
