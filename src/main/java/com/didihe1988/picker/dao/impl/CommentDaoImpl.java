@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.CommentDao;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.dp.CommentDp;
 
 @Repository
 @Transactional
@@ -93,6 +94,18 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public List<Comment> queryCommentListByCommentedId(int commentedId, int type) {
 		String hql = "from Comment as c where c.commentedId=? and c.type=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, commentedId);
+		query.setInteger(1, type);
+		return query.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CommentDp> queryCommentDpListByCommentedId(int commentedId,
+			int type) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.dp.CommentDp(c,u.username,u.avatarUrl) from Comment c,User u where c.commentedId=? and c.type=? and u.id= c.producerId";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, commentedId);
 		query.setInteger(1, type);

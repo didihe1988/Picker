@@ -158,10 +158,6 @@ public class AnswerServiceImpl implements AnswerService {
 	@Override
 	public List<AnswerDp> getAnswerDpListByQuestionId(int id, int userId) {
 		// TODO Auto-generated method stub
-		/*
-		 * return getAnswerDpListFormAnswerList(getAnswerListByQuestionId(id),
-		 * userId);
-		 */
 		List<AnswerDp> list = answerDao.queryAnswerDpByQuestionId(id);
 		for (AnswerDp answerDp : list) {
 			completeAnswerDp(answerDp, userId);
@@ -169,16 +165,16 @@ public class AnswerServiceImpl implements AnswerService {
 		return list;
 	}
 
+	/*
+	 * list中的replier已经固定了 只需查询一次
+	 */
 	@Override
 	public List<AnswerDp> getAnswerDpListByReplierId(int id, int userId) {
 		// TODO Auto-generated method stub
-		/*
-		 * return getAnswerDpListFormAnswerList(getAnswerListByReplierId(id),
-		 * userId);
-		 */
 		List<AnswerDp> list = answerDao.queryAnswerDpByReplierId(id);
+		User replier = userDao.queryUserById(id);
 		for (AnswerDp answerDp : list) {
-			completeAnswerDp(answerDp, userId);
+			completeAnswerDp(answerDp, userId, replier);
 		}
 		return list;
 	}
@@ -186,6 +182,14 @@ public class AnswerServiceImpl implements AnswerService {
 	private void completeAnswerDp(AnswerDp answerDp, int userId) {
 		answerDp.setFavorite(favoriteDao.isFavoriteExistsByKey(userId,
 				answerDp.getId(), Favorite.FAVORITE_ANSWER));
+	}
+
+	private void completeAnswerDp(AnswerDp answerDp, int curUserId, User replier) {
+		answerDp.setFavorite(favoriteDao.isFavoriteExistsByKey(curUserId,
+				answerDp.getId(), Favorite.FAVORITE_ANSWER));
+		answerDp.setReplierAvatarUrl(replier.getAvatarUrl());
+		answerDp.setReplierName(replier.getUsername());
+		answerDp.setReplierSignature(replier.getSignature());
 	}
 
 	private AnswerDp getAnswerDpByAnswer(Answer answer, int userId) {

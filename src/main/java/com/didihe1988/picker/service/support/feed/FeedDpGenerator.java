@@ -1,4 +1,4 @@
-package com.didihe1988.picker.service.support;
+package com.didihe1988.picker.service.support.feed;
 
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.FeedDp;

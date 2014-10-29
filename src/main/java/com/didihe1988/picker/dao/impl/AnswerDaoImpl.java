@@ -106,25 +106,25 @@ public class AnswerDaoImpl implements AnswerDao {
 		query.setInteger(0, id);
 		return query.list();
 	}
-	
-	/*
-	 * 不知道会不会变慢
-	 * 需要改进 replierName avatar只需一遍查询
-	 */
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Answer> queryAnswerByReplierId(int id) {
 		// TODO Auto-generated method stub
-		String hql = "select new com.didihe1988.picker.model.dp.AnswerDp(a,q.title,u.username,u.signature,u.avatarUrl) from Answer a ,Feed q,User u where a.replierId=? and a.questionId = q.id and a.replierId = u.id";
+		String hql = "from Answer as a where a.replierId=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<AnswerDp> queryAnswerDpByReplierId(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		String hql = "select new com.didihe1988.picker.model.dp.AnswerDp(a,q.title) from Answer a ,Feed q where a.replierId=? and a.questionId = q.id";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.list();
 	}
 
 	@SuppressWarnings("unchecked")

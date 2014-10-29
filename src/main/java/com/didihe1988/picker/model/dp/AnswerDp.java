@@ -102,6 +102,13 @@ public class AnswerDp extends Answer implements IsFavorite {
 		this.isFavorite = false;
 	}
 
+	public AnswerDp(Answer answer, String questionName) {
+		super(answer);
+		this.strDate = DateUtils.getDate(answer.getDate());
+		this.questionName = questionName;
+		this.isFavorite = false;
+	}
+
 	@Override
 	public String toString() {
 		return "AnswerDp [questionName=" + questionName + ", replierName="

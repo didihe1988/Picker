@@ -5,6 +5,8 @@ import static org.junit.Assert.assertSame;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.didihe1988.picker.dao.CommentDao;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.dp.CommentDp;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:servlet-context.xml",
@@ -88,10 +91,10 @@ public class CommentDaoTest {
 		}
 	}
 
-	// testincrementFavoriteNum
 	@Test
-	public void test09() {
-		int result = commentDao.incrementFavoriteNum(1);
+	public void test09()
+	{
+		List<CommentDp> list=commentDao.queryCommentDpListByCommentedId(1, 0);
+		assertNotNull(list);
 	}
-
 }

@@ -2,6 +2,7 @@ package com.didihe1988.picker.model.dp;
 
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.interfaces.IsFavorite;
+import com.didihe1988.picker.utils.DateUtils;
 
 public class CommentDp extends Comment implements IsFavorite {
 
@@ -17,6 +18,8 @@ public class CommentDp extends Comment implements IsFavorite {
 	private String userAvatarUrl;
 
 	private boolean isFavorite;
+
+	private String strDate;
 
 	@Override
 	public boolean isFavorite() {
@@ -54,6 +57,14 @@ public class CommentDp extends Comment implements IsFavorite {
 		this.userAvatarUrl = userAvatarUrl;
 	}
 
+	public String getStrDate() {
+		return strDate;
+	}
+
+	public void setStrDate(String strDate) {
+		this.strDate = strDate;
+	}
+
 	public CommentDp() {
 
 	}
@@ -61,10 +72,19 @@ public class CommentDp extends Comment implements IsFavorite {
 	public CommentDp(Comment comment, String producerName,
 			String commentedName, String userAvatarUrl, boolean isFavorite) {
 		super(comment);
+		this.strDate = DateUtils.getDate(comment.getDate());
 		this.producerName = producerName;
 		this.commentedName = commentedName;
 		this.userAvatarUrl = userAvatarUrl;
 		this.isFavorite = isFavorite;
+	}
+
+	public CommentDp(Comment comment, String commentedName, String userAvatarUrl) {
+		super(comment);
+		this.strDate = DateUtils.getDate(comment.getDate());
+		this.commentedName = commentedName;
+		this.userAvatarUrl = userAvatarUrl;
+		this.isFavorite = false;
 	}
 
 }

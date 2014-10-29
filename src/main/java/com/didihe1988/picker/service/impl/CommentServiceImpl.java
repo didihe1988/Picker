@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,8 @@ import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.CommentDp;
 import com.didihe1988.picker.service.CommentService;
+import com.didihe1988.picker.service.support.comment.AnCommentDpGenerator;
+import com.didihe1988.picker.service.support.comment.CommentDpGenerator;
 
 @Service
 @Transactional
@@ -40,6 +43,14 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	private FavoriteDao favoriteDao;
+
+	@Autowired
+	@Qualifier("anCommentDpGenerator")
+	private CommentDpGenerator anCommentDpGenerator;
+
+	@Autowired
+	@Qualifier("feCommentDpGenerator")
+	private CommentDpGenerator feCommentDpGenerator;
 
 	@Override
 	public int addComment(Comment comment) {
@@ -167,22 +178,28 @@ public class CommentServiceImpl implements CommentService {
 						comment.getId(), Favorite.FAVORITE_COMMENT));
 	}
 
-	private List<CommentDp> getCommentDpListFromCommetList(
-			List<Comment> commentList, int userId) {
-		List<CommentDp> list = new ArrayList<CommentDp>();
-		for (Comment comment : commentList) {
-			CommentDp commentDp = getCommentDpByComment(comment, userId);
-			list.add(commentDp);
-		}
-		return list;
-	}
-
 	@Override
 	public List<CommentDp> getCommentDpListByCommentedId(int commentedId,
 			int type, int userId) {
 		// TODO Auto-generated method stub
-		return getCommentDpListFromCommetList(
-				getCommentListByCommentedId(commentedId, type), userId);
+		List<CommentDp> list = commentDao.queryCommentDpListByCommentedId(
+				commentedId, type);
+		CommentDpGenerator generator = null;
+		if (list.size() > 0) {
+			generator = getCommentDpGeneratorByType(list.get(0).getType());
+		}
+		for (CommentDp commentDp : list) {
+			generator.completeCommentDp(commentDp, userId);
+		}
+		return list;
+	}
+
+	private CommentDpGenerator getCommentDpGeneratorByType(int type) {
+		if (type == Comment.COMMENT_ANSWER) {
+			return this.anCommentDpGenerator;
+		} else {
+			return this.feCommentDpGenerator;
+		}
 	}
 
 }

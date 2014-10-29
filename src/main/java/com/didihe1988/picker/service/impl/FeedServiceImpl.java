@@ -21,9 +21,9 @@ import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.model.json.QuestionJson;
 import com.didihe1988.picker.service.FeedService;
-import com.didihe1988.picker.service.support.FeedDpGenerator;
-import com.didihe1988.picker.service.support.NoteDpGenerator;
-import com.didihe1988.picker.service.support.QuestoinDpGenerator;
+import com.didihe1988.picker.service.support.feed.FeedDpGenerator;
+import com.didihe1988.picker.service.support.feed.NoteDpGenerator;
+import com.didihe1988.picker.service.support.feed.QuestoinDpGenerator;
 import com.didihe1988.picker.utils.DateUtils;
 
 @Service

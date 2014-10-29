@@ -2,9 +2,10 @@ package com.didihe1988.picker.dao;
 
 import java.util.List;
 
-import com.didihe1988.picker.dao.daoInterface.OperateValidation;
 import com.didihe1988.picker.dao.daoInterface.NumOperation;
+import com.didihe1988.picker.dao.daoInterface.OperateValidation;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.dp.CommentDp;
 
 public interface CommentDao extends NumOperation, OperateValidation {
 	public Comment queryCommentById(int id);
@@ -21,6 +22,9 @@ public interface CommentDao extends NumOperation, OperateValidation {
 			int type);
 
 	public List<Comment> queryCommentListByCommentedId(int commentedId, int type);
+
+	public List<CommentDp> queryCommentDpListByCommentedId(int commentedId,
+			int type);
 
 	public int getLatestCommentIdByUserId(int id);
 

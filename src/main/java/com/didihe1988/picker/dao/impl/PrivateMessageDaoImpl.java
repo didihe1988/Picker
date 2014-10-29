@@ -104,18 +104,6 @@ public class PrivateMessageDaoImpl implements PrivateMessageDao {
 	@Override
 	public List<PrivateMessage> queryPrivateMessageByUserId(int userId) {
 		// TODO Auto-generated method stub
-		/*
-		 * from PrivateMessage as p where p.senderId=? or p.receiverId =?"
-		 */
-		/*
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(
-				PrivateMessage.class);
-		LogicalExpression expression = Restrictions.or(
-				Restrictions.eq("senderId", userId),
-				Restrictions.eq("receiverId", userId));
-		criteria.add(expression);
-		criteria.setProjection(Projections.distinct(Projections
-				.property("dialogId")));*/
 		String hql="from PrivateMessage as p where p.senderId=? or p.receiverId =? order by p.time desc";
 		Query query=getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);

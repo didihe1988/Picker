@@ -1,4 +1,4 @@
-package com.didihe1988.picker.service.support;
+package com.didihe1988.picker.service.support.feed;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -6,21 +6,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.FavoriteDao;
+import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.FeedDp;
 
 @Service
 @Transactional
-public class NoteDpGenerator implements FeedDpGenerator {
-	public NoteDpGenerator() {
-
+public class QuestoinDpGenerator implements FeedDpGenerator {
+	public QuestoinDpGenerator() {
+		// TODO Auto-generated constructor stub
 	}
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private FollowDao followDao;
 
 	@Autowired
 	private FavoriteDao favoriteDao;
@@ -29,11 +34,12 @@ public class NoteDpGenerator implements FeedDpGenerator {
 	public FeedDp getFeedDpfromFeed(Feed feed, int curUserId) {
 		// TODO Auto-generated method stub
 		User user = userDao.queryUserById(feed.getUserId());
-
 		boolean isFavorite = favoriteDao.isFavoriteExistsByKey(curUserId,
-				feed.getId(), Favorite.FAVORITE_NOTE);
+				feed.getId(), Favorite.FAVORITE_QUESTION);
+		boolean isFollow = followDao.isFollowExistsByKey(
+				Follow.FOLLOW_QUESTION, curUserId, feed.getId());
 		FeedDp feedDp = new FeedDp(feed, user.getUsername(),
-				user.getAvatarUrl(), false, isFavorite);
+				user.getAvatarUrl(), isFollow, isFavorite);
 		return feedDp;
 	}
 
@@ -41,9 +47,11 @@ public class NoteDpGenerator implements FeedDpGenerator {
 	public void completeFeedDp(FeedDp feedDp, int curUserId) {
 		// TODO Auto-generated method stub
 		boolean isFavorite = favoriteDao.isFavoriteExistsByKey(curUserId,
-				feedDp.getId(), Favorite.FAVORITE_NOTE);
+				feedDp.getId(), Favorite.FAVORITE_QUESTION);
+		boolean isFollow = followDao.isFollowExistsByKey(
+				Follow.FOLLOW_QUESTION, curUserId, feedDp.getId());
+		feedDp.setFollow(isFollow);
 		feedDp.setFavorite(isFavorite);
-		feedDp.setFollow(false);
 	}
 
 }
