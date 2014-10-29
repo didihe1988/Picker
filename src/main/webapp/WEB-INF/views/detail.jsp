@@ -207,15 +207,30 @@
 					<!--toolbar 区域-->
 					<div class="feeds clear_fix">
 						<div class="feed_tool_bar clear_fix">
-							<div class="line watch" data-action="watch" data-passage-id="123"
-								onclick="tool_bar_action($(this))">
-								<i class="icon-plus"></i>关注问题
-							</div>
-							<div style="display: none" class="line cancel_watch"
-								data-action="cancel_watch" data-passage-id="123"
-								onclick="tool_bar_action($(this))">
-								<i class="icon-ok"></i>取消关注
-							</div>
+							<c:choose>
+								<c:when test="${question.follow }">
+									<div style="display: none" class="line watch"
+										data-action="watch" data-passage-id="123"
+										onclick="tool_bar_action($(this))">
+										<i class="icon-plus"></i>关注问题
+									</div>
+									<div class="line cancel_watch" data-action="cancel_watch"
+										data-passage-id="123" onclick="tool_bar_action($(this))">
+										<i class="icon-ok"></i>取消关注
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div class="line watch" data-action="watch"
+										data-passage-id="123" onclick="tool_bar_action($(this))">
+										<i class="icon-plus"></i>关注问题
+									</div>
+									<div style="display: none" class="line cancel_watch"
+										data-action="cancel_watch" data-passage-id="123"
+										onclick="tool_bar_action($(this))">
+										<i class="icon-ok"></i>取消关注
+									</div>
+								</c:otherwise>
+							</c:choose>
 							<div class="line show_comment" data-action="get_comment"
 								data-passage-id="123" onclick="tool_bar_action($(this))">
 								<i class="icon-comments-alt"></i>
@@ -245,7 +260,8 @@
 					</div>
 				</div>
 				<!--编辑器-->
-				<form method="POST" action=<c:url value="/answer/add/${question.id}"/>
+				<form method="POST"
+					action=<c:url value="/answer/add/${question.id}"/>
 					onsubmit="return submit_answer();">
 					<input type="hidden" name="raw" value="" /> <input type="hidden"
 						name="rendered" value="" />

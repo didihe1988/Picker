@@ -72,7 +72,7 @@ public class BoughtController {
 				extraContent, Message.NULL_parentId);
 	}
 
-	@RequestMapping(value = "/json/book/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/book/{id}/delete",headers = "Accept=application/json")
 	public String delete(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,

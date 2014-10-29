@@ -142,7 +142,7 @@ public class FeedDaoImpl implements FeedDao {
 		// TODO Auto-generated method stub
 		String hql = "select new com.didihe1988.picker.model.dp.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.userId=? and f.type=? and f.userId = u.id ";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0,userId);
+		query.setInteger(0, userId);
 		query.setInteger(1, type);
 		return query.list();
 	}
@@ -195,6 +195,16 @@ public class FeedDaoImpl implements FeedDao {
 	public List<Feed> queryFeedListForBrowse(int bookId) {
 		// TODO Auto-generated method stub
 		String hql = "from Feed as f where f.bookId=? order by f.page ,f.date asc";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FeedDp> queryFeedDpListForBrowse(int bookId) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.dp.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.userId = u.id order by f.page ,f.date asc";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		return query.list();

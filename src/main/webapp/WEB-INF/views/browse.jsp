@@ -130,15 +130,31 @@
 										</div>
 									</div>
 									<div class="feed_tool_bar">
-										<div class="line watch" data-action="watch"
-											data-passage-id="123" onclick="tool_bar_action($(this))">
-											<i class="icon-plus"></i>关注问题
-										</div>
-										<div style="display: none" class="line cancel_watch"
-											data-action="cancel_watch" data-passage-id="123"
-											onclick="tool_bar_action($(this))">
-											<i class="icon-ok"></i>取消关注
-										</div>
+										<c:choose>
+											<c:when test="${feed.follow}">
+												<div style="display: none" class="line watch"
+													data-action="watch" data-passage-id="123"
+													onclick="tool_bar_action($(this))">
+													<i class="icon-plus"></i>关注问题
+												</div>
+												<div class="line cancel_watch" data-action="cancel_watch"
+													data-passage-id="123" onclick="tool_bar_action($(this))">
+													<i class="icon-ok"></i>取消关注
+												</div>
+											</c:when>
+											<c:otherwise>
+												<div class="line watch" data-action="watch"
+													data-passage-id="123" onclick="tool_bar_action($(this))">
+													<i class="icon-plus"></i>关注问题
+												</div>
+												<div style="display: none" class="line cancel_watch"
+													data-action="cancel_watch" data-passage-id="123"
+													onclick="tool_bar_action($(this))">
+													<i class="icon-ok"></i>取消关注
+												</div>
+											</c:otherwise>
+										</c:choose>
+
 										<div class="line show_comment" data-action="get_comment"
 											data-passage-id="123" onclick="tool_bar_action($(this))">
 											<i class="icon-comments-alt"></i>${feed.commentNum}条评论

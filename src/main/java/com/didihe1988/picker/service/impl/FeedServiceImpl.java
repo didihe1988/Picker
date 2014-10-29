@@ -15,7 +15,9 @@ import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.RelatedImageDao;
 import com.didihe1988.picker.dao.UserDao;
+import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
@@ -228,17 +230,27 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public List<FeedDp> getFeedDpListForBrowse(int bookId, int curUserId) {
 		// TODO Auto-generated method stub
-		final List<Feed> feedList = getFeedListForBrowse(bookId);
-		List<FeedDp> list = new ArrayList<FeedDp>();
-		FeedDpGenerator generator = null;
-		if (feedList.size() > 0) {
-			generator = getGeneratorByType(feedList.get(0).getType());
-		}
-		for (Feed feed : feedList) {
-			FeedDp feedDp = getFeedDpByFeed(generator, feed, curUserId);
-			list.add(feedDp);
+		List<FeedDp> list = feedDao.queryFeedDpListForBrowse(bookId);
+		for (FeedDp feedDp : list) {
+			completeFeedDp(feedDp, curUserId);
 		}
 		return list;
+	}
+
+	private void completeFeedDp(FeedDp feedDp, int curUserId) {
+		boolean isFollow = false, isFavorite = false;
+		if (feedDp.getType() == Feed.TYPE_QUESTION) {
+			isFavorite = favoriteDao.isFavoriteExistsByKey(curUserId,
+					feedDp.getId(), Favorite.FAVORITE_QUESTION);
+			isFollow = followDao.isFollowExistsByKey(Follow.FOLLOW_QUESTION,
+					curUserId, feedDp.getId());
+
+		} else {
+			isFavorite = favoriteDao.isFavoriteExistsByKey(curUserId,
+					feedDp.getId(), Favorite.FAVORITE_NOTE);
+		}
+		feedDp.setFollow(isFollow);
+		feedDp.setFavorite(isFavorite);
 	}
 
 	@Override

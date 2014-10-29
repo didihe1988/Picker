@@ -47,4 +47,13 @@ public class FeedDaoTest {
 			System.out.println(feed.toString());
 		}
 	}
+
+	@Test
+	public void test3() {
+		List<FeedDp> list = feedDao.queryFeedDpListForBrowse(1);
+		assertNotNull(list);
+		for (FeedDp feed : list) {
+			System.out.println(feed.toString());
+		}
+	}
 }

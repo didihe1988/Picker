@@ -40,12 +40,24 @@
 		/> </context:component-scan> -->
 	<tx:annotation-driven />
 
-	<beans:bean class="com.didihe1988.picker.service.support.QuestoinDpGenerator">
+	<beans:bean
+		class="com.didihe1988.picker.service.support.feed.QuestoinDpGenerator">
 		<beans:qualifier value="questionDpGenerator"></beans:qualifier>
 	</beans:bean>
 
-	<beans:bean class="com.didihe1988.picker.service.support.NoteDpGenerator">
+	<beans:bean
+		class="com.didihe1988.picker.service.support.feed.NoteDpGenerator">
 		<beans:qualifier value="noteDpGenerator"></beans:qualifier>
+	</beans:bean>
+
+	<beans:bean
+		class="com.didihe1988.picker.service.support.comment.AnCommentDpGenerator">
+		<beans:qualifier value="anCommentDpGenerator"></beans:qualifier>
+	</beans:bean>
+
+	<beans:bean
+		class="com.didihe1988.picker.service.support.comment.FeCommentDpGenerator">
+		<beans:qualifier value="feCommentDpGenerator"></beans:qualifier>
 	</beans:bean>
 
 
