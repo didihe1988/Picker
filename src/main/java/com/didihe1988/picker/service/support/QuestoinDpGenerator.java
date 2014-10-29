@@ -43,4 +43,15 @@ public class QuestoinDpGenerator implements FeedDpGenerator {
 		return feedDp;
 	}
 
+	@Override
+	public void completeFeedDp(FeedDp feedDp, int curUserId) {
+		// TODO Auto-generated method stub
+		boolean isFavorite = favoriteDao.isFavoriteExistsByKey(curUserId,
+				feedDp.getId(), Favorite.FAVORITE_QUESTION);
+		boolean isFollow = followDao.isFollowExistsByKey(
+				Follow.FOLLOW_QUESTION, curUserId, feedDp.getId());
+		feedDp.setFollow(isFollow);
+		feedDp.setFavorite(isFavorite);
+	}
+
 }

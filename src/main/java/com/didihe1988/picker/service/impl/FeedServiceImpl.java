@@ -150,7 +150,8 @@ public class FeedServiceImpl implements FeedService {
 	public FeedDp getFeedDpByFeedId(int id, int curUserId) {
 		// TODO Auto-generated method stub
 		Feed feed = getFeedById(id);
-		return getFeedDpByFeed(getGeneratorByType(feed), feed, curUserId);
+		return getFeedDpByFeed(getGeneratorByType(feed.getType()), feed,
+				curUserId);
 	}
 
 	/*
@@ -161,8 +162,8 @@ public class FeedServiceImpl implements FeedService {
 		return generator.getFeedDpfromFeed(feed, curUserId);
 	}
 
-	private FeedDpGenerator getGeneratorByType(Feed feed) {
-		if (feed.getType() == Feed.TYPE_QUESTION) {
+	private FeedDpGenerator getGeneratorByType(int type) {
+		if (type == Feed.TYPE_QUESTION) {
 			return this.questionDpGenerator;
 		} else {
 			return this.noteDpGenerator;
@@ -173,7 +174,7 @@ public class FeedServiceImpl implements FeedService {
 		List<FeedDp> list = new ArrayList<FeedDp>();
 		FeedDpGenerator generator = null;
 		if (feedList.size() > 0) {
-			generator = getGeneratorByType(feedList.get(0));
+			generator = getGeneratorByType(feedList.get(0).getType());
 		}
 		for (Feed feed : feedList) {
 			FeedDp feedDp = getFeedDpByFeed(generator, feed, curUserId);
@@ -192,15 +193,13 @@ public class FeedServiceImpl implements FeedService {
 	public List<FeedDp> getFeedDpListByUserId(int userId, int type,
 			int curUserId) {
 		// TODO Auto-generated method stub
-		final List<Feed> feedList = getFeedListByUserId(userId, type);
-		List<FeedDp> list = new ArrayList<FeedDp>();
+		List<FeedDp> list = feedDao.queryFeedDpListByUserId(userId, type);
 		FeedDpGenerator generator = null;
-		if (feedList.size() > 0) {
-			generator = getGeneratorByType(feedList.get(0));
+		if (list.size() > 0) {
+			generator = getGeneratorByType(list.get(0).getType());
 		}
-		for (Feed feed : feedList) {
-			FeedDp feedDp = getFeedDpByFeed(generator, feed, curUserId);
-			list.add(feedDp);
+		for (FeedDp feedDp : list) {
+			generator.completeFeedDp(feedDp, curUserId);
 		}
 		return list;
 	}
@@ -209,15 +208,13 @@ public class FeedServiceImpl implements FeedService {
 	public List<FeedDp> getFeedDpListByBookId(int bookId, int type,
 			int curUserId) {
 		// TODO Auto-generated method stub
-		final List<Feed> feedList = getFeedListByBookId(bookId, type);
-		List<FeedDp> list = new ArrayList<FeedDp>();
+		List<FeedDp> list = feedDao.queryFeedDpListByBookId(bookId, type);
 		FeedDpGenerator generator = null;
-		if (feedList.size() > 0) {
-			generator = getGeneratorByType(feedList.get(0));
+		if (list.size() > 0) {
+			generator = getGeneratorByType(list.get(0).getType());
 		}
-		for (Feed feed : feedList) {
-			FeedDp feedDp = getFeedDpByFeed(generator, feed, curUserId);
-			list.add(feedDp);
+		for (FeedDp feedDp : list) {
+			generator.completeFeedDp(feedDp, curUserId);
 		}
 		return list;
 	}
@@ -235,7 +232,7 @@ public class FeedServiceImpl implements FeedService {
 		List<FeedDp> list = new ArrayList<FeedDp>();
 		FeedDpGenerator generator = null;
 		if (feedList.size() > 0) {
-			generator = getGeneratorByType(feedList.get(0));
+			generator = getGeneratorByType(feedList.get(0).getType());
 		}
 		for (Feed feed : feedList) {
 			FeedDp feedDp = getFeedDpByFeed(generator, feed, curUserId);

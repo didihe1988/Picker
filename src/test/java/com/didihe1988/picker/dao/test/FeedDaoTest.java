@@ -1,5 +1,6 @@
 package com.didihe1988.picker.dao.test;
 
+import static org.junit.Assert.assertNotNull;
 import java.util.List;
 
 import org.junit.FixMethodOrder;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.dp.FeedDp;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:servlet-context.xml",
@@ -31,5 +33,18 @@ public class FeedDaoTest {
 	public void test1() {
 		List<Feed> list = feedDao.queryFeedListByUserId(1, Feed.TYPE_NOTE);
 		System.out.println(list.size());
+	}
+
+	/*
+	 * ≤‚ ‘∂‡±Ì≤È—Ø
+	 */
+	@Test
+	public void test2() {
+		List<FeedDp> list = feedDao.queryFeedDpListByBookId(1,
+				Feed.TYPE_QUESTION);
+		assertNotNull(list);
+		for (FeedDp feed : list) {
+			System.out.println(feed.toString());
+		}
 	}
 }

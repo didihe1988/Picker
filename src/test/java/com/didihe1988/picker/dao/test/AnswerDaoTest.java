@@ -3,6 +3,8 @@ package com.didihe1988.picker.dao.test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
+import java.util.List;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.model.Answer;
+import com.didihe1988.picker.model.dp.AnswerDp;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:servlet-context.xml",
@@ -34,5 +37,19 @@ public class AnswerDaoTest {
 	public void test02() {
 		int num=answerDao.queryLatestAnswerIdByQuestionId(2);
 		assertSame(3, num);
+	}
+	
+	/*
+	 * test queryAnswerDp
+	 */
+	@Test
+	public void test03()
+	{
+		List<AnswerDp> list=answerDao.queryAnswerDpByQuestionId(2);
+		assertNotNull(list);
+		for(AnswerDp answerDp:list)
+		{
+			System.out.println(answerDp);
+		}
 	}
 }

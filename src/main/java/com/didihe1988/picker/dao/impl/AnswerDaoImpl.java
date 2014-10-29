@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.model.Answer;
+import com.didihe1988.picker.model.dp.AnswerDp;
 
 @Repository
 @Transactional
@@ -98,12 +99,32 @@ public class AnswerDaoImpl implements AnswerDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Answer> queryAnswerByReplierId(int id) {
+	public List<AnswerDp> queryAnswerDpByQuestionId(int id) {
 		// TODO Auto-generated method stub
-		String hql = "from Answer as a where a.replierId=?";
+		String hql = "select new com.didihe1988.picker.model.dp.AnswerDp(a,q.title,u.username,u.signature,u.avatarUrl) from Answer a ,Feed q,User u where a.questionId=? and a.questionId = q.id and a.replierId = u.id";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.list();
+	}
+	
+	/*
+	 * 不知道会不会变慢
+	 * 需要改进 replierName avatar只需一遍查询
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Answer> queryAnswerByReplierId(int id) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.dp.AnswerDp(a,q.title,u.username,u.signature,u.avatarUrl) from Answer a ,Feed q,User u where a.replierId=? and a.questionId = q.id and a.replierId = u.id";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.list();
+	}
+
+	@Override
+	public List<AnswerDp> queryAnswerDpByReplierId(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")

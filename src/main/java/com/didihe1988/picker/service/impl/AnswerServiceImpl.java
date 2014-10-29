@@ -158,15 +158,34 @@ public class AnswerServiceImpl implements AnswerService {
 	@Override
 	public List<AnswerDp> getAnswerDpListByQuestionId(int id, int userId) {
 		// TODO Auto-generated method stub
-		return getAnswerDpListFormAnswerList(getAnswerListByQuestionId(id),
-				userId);
+		/*
+		 * return getAnswerDpListFormAnswerList(getAnswerListByQuestionId(id),
+		 * userId);
+		 */
+		List<AnswerDp> list = answerDao.queryAnswerDpByQuestionId(id);
+		for (AnswerDp answerDp : list) {
+			completeAnswerDp(answerDp, userId);
+		}
+		return list;
 	}
 
 	@Override
 	public List<AnswerDp> getAnswerDpListByReplierId(int id, int userId) {
 		// TODO Auto-generated method stub
-		return getAnswerDpListFormAnswerList(getAnswerListByReplierId(id),
-				userId);
+		/*
+		 * return getAnswerDpListFormAnswerList(getAnswerListByReplierId(id),
+		 * userId);
+		 */
+		List<AnswerDp> list = answerDao.queryAnswerDpByReplierId(id);
+		for (AnswerDp answerDp : list) {
+			completeAnswerDp(answerDp, userId);
+		}
+		return list;
+	}
+
+	private void completeAnswerDp(AnswerDp answerDp, int userId) {
+		answerDp.setFavorite(favoriteDao.isFavoriteExistsByKey(userId,
+				answerDp.getId(), Favorite.FAVORITE_ANSWER));
 	}
 
 	private AnswerDp getAnswerDpByAnswer(Answer answer, int userId) {
@@ -178,11 +197,12 @@ public class AnswerServiceImpl implements AnswerService {
 				favoriteDao.isFavoriteExistsByKey(userId, answer.getId(),
 						Favorite.FAVORITE_ANSWER));
 	}
-	/*	
-	private List<String> getImageUrlsFromAnswer(Answer answer) {
-		return relatedImageDao.queryImageUrlsByKey(answer.getId(),
-				RelatedImage.ANSWER_IMAGE);
-	}*/
+
+	/*
+	 * private List<String> getImageUrlsFromAnswer(Answer answer) { return
+	 * relatedImageDao.queryImageUrlsByKey(answer.getId(),
+	 * RelatedImage.ANSWER_IMAGE); }
+	 */
 
 	private List<AnswerDp> getAnswerDpListFormAnswerList(
 			List<Answer> answerList, int userId) {

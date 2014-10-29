@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.dp.FeedDp;
 
 @Repository
 @Transactional
@@ -106,9 +107,21 @@ public class FeedDaoImpl implements FeedDao {
 	public List<Feed> queryFeedListByBookId(int bookId, int type) {
 		// TODO Auto-generated method stub
 		String hql = "from Feed as f where f.bookId=?";
-		hql=addTypeConstrain(hql, type);
+		hql = addTypeConstrain(hql, type);
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FeedDp> queryFeedDpListByBookId(int bookId, int type) {
+		// TODO Auto-generated method stub?"
+		String hql = "select new com.didihe1988.picker.model.dp.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id ";
+		// hql = addTypeConstrain(hql, type);
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		query.setInteger(1, type);
 		return query.list();
 	}
 
@@ -117,9 +130,20 @@ public class FeedDaoImpl implements FeedDao {
 	public List<Feed> queryFeedListByUserId(int userId, int type) {
 		// TODO Auto-generated method stub
 		String hql = "from Feed as f where f.userId=?";
-		hql=addTypeConstrain(hql, type);
+		hql = addTypeConstrain(hql, type);
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FeedDp> queryFeedDpListByUserId(int userId, int type) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.dp.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.userId=? and f.type=? and f.userId = u.id ";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0,userId);
+		query.setInteger(1, type);
 		return query.list();
 	}
 
@@ -128,7 +152,7 @@ public class FeedDaoImpl implements FeedDao {
 	public List<Feed> queryFeedListByUserId(int userId, int type, int page) {
 		// TODO Auto-generated method stub
 		String hql = "from Feed as f where f.userId=?";
-		hql=addTypeConstrain(hql, type);
+		hql = addTypeConstrain(hql, type);
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
 		query.setFirstResult(Constant.MAX_QUERYRESULT * (page - 1));
@@ -140,7 +164,7 @@ public class FeedDaoImpl implements FeedDao {
 	public int getLatestFeedByBookId(int bookId, int type) {
 		// TODO Auto-generated method stub
 		String hql = "select max(f.id) from Feed as f where f.bookId=?";
-		hql=addTypeConstrain(hql, type);
+		hql = addTypeConstrain(hql, type);
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		return (Integer) query.uniqueResult();

@@ -34,11 +34,19 @@
 	<context:component-scan base-package="com.didihe1988.picker.daoImpl" />
 	<context:component-scan base-package="com.didihe1988.picker.dao" />
 	<context:component-scan base-package="com.didihe1988.picker.factory" />
-
+	<context:component-scan base-package="com.didihe1988.picker.service.support" />
 	<!-- <context:component-scan base-package="com.didihe1988.picker" use-default-filters="false"> 
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" 
 		/> </context:component-scan> -->
 	<tx:annotation-driven />
+
+	<beans:bean class="com.didihe1988.picker.service.support.QuestoinDpGenerator">
+		<beans:qualifier value="questionDpGenerator"></beans:qualifier>
+	</beans:bean>
+
+	<beans:bean class="com.didihe1988.picker.service.support.NoteDpGenerator">
+		<beans:qualifier value="noteDpGenerator"></beans:qualifier>
+	</beans:bean>
 
 
 </beans:beans>

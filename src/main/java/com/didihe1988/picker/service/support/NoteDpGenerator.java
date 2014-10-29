@@ -37,4 +37,13 @@ public class NoteDpGenerator implements FeedDpGenerator {
 		return feedDp;
 	}
 
+	@Override
+	public void completeFeedDp(FeedDp feedDp, int curUserId) {
+		// TODO Auto-generated method stub
+		boolean isFavorite = favoriteDao.isFavoriteExistsByKey(curUserId,
+				feedDp.getId(), Favorite.FAVORITE_NOTE);
+		feedDp.setFavorite(isFavorite);
+		feedDp.setFollow(false);
+	}
+
 }

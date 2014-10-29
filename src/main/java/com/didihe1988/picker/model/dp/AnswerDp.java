@@ -1,7 +1,5 @@
 package com.didihe1988.picker.model.dp;
 
-import java.util.List;
-
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.interfaces.IsFavorite;
 import com.didihe1988.picker.utils.DateUtils;
@@ -22,7 +20,7 @@ public class AnswerDp extends Answer implements IsFavorite {
 
 	private boolean isFavorite;
 
-	//private List<String> imageUrls;
+	// private List<String> imageUrls;
 
 	private String strDate;
 
@@ -83,8 +81,7 @@ public class AnswerDp extends Answer implements IsFavorite {
 	}
 
 	public AnswerDp(Answer answer, String questionName, String replierName,
-			String replierSignature, String replierAvatarUrl,
-			boolean isFavorite) {
+			String replierSignature, String replierAvatarUrl, boolean isFavorite) {
 		super(answer);
 		this.strDate = DateUtils.getDate(answer.getDate());
 		this.questionName = questionName;
@@ -93,4 +90,28 @@ public class AnswerDp extends Answer implements IsFavorite {
 		this.replierAvatarUrl = replierAvatarUrl;
 		this.isFavorite = isFavorite;
 	}
+
+	public AnswerDp(Answer answer, String questionName, String replierName,
+			String replierSignature, String replierAvatarUrl) {
+		super(answer);
+		this.strDate = DateUtils.getDate(answer.getDate());
+		this.questionName = questionName;
+		this.replierName = replierName;
+		this.replierSignature = replierSignature;
+		this.replierAvatarUrl = replierAvatarUrl;
+		this.isFavorite = false;
+	}
+
+	@Override
+	public String toString() {
+		return "AnswerDp [questionName=" + questionName + ", replierName="
+				+ replierName + ", replierSignature=" + replierSignature
+				+ ", replierAvatarUrl=" + replierAvatarUrl + ", isFavorite="
+				+ isFavorite + ", strDate=" + strDate + ", id=" + id
+				+ ", questionId=" + questionId + ", replierId=" + replierId
+				+ ", content=" + content + ", brief=" + brief
+				+ ", favoriteNum=" + favoriteNum + ", commentNum=" + commentNum
+				+ ", date=" + date + "]";
+	}
+
 }
