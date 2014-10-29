@@ -27,7 +27,7 @@ public class AnCommentDpGenerator implements CommentDpGenerator {
 		int commentedId = commentDp.getCommentedId();
 		String commentedName = answerDao.queryAnswerById(commentedId)
 				.getContent();
-		commentDp.setCommentedName(commentedName);
+		//commentDp.setCommentedName(commentedName);
 		commentDp.setFavorite(favoriteDao.isFavoriteExistsByKey(curUserId,
 				commentDp.getId(), Favorite.FAVORITE_COMMENT));
 	}

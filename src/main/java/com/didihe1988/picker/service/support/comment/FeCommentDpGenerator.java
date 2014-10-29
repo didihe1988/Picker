@@ -23,7 +23,7 @@ public class FeCommentDpGenerator implements CommentDpGenerator {
 		// TODO Auto-generated method stub
 		int commentedId = commentDp.getCommentedId();
 		String commentedName = feedDao.queryFeedById(commentedId).getTitle();
-		commentDp.setCommentedName(commentedName);
+		//commentDp.setCommentedName(commentedName);
 		commentDp.setFavorite(favoriteDao.isFavoriteExistsByKey(curUserId,
 				commentDp.getId(), Favorite.FAVORITE_COMMENT));
 

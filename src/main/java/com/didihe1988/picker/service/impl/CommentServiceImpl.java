@@ -165,17 +165,17 @@ public class CommentServiceImpl implements CommentService {
 	private CommentDp getCommentDpByComment(Comment comment, int userId) {
 		// TODO Auto-generated method stub
 		User user = userDao.queryUserById(comment.getProducerId());
-		int commentedId = comment.getCommentedId();
-		String commentedName = "";
-		if (comment.getType() == Comment.COMMENT_ANSWER) {
-			commentedName = answerDao.queryAnswerById(commentedId).getContent();
-		} else if ((comment.getType() == Comment.COMMENT_QUESTION)
-				|| (comment.getType() == Comment.COMMENT_NOTE)) {
-			commentedName = feedDao.queryFeedById(commentedId).getTitle();
-		}
-		return new CommentDp(comment, user.getUsername(), commentedName,
-				user.getAvatarUrl(), favoriteDao.isFavoriteExistsByKey(userId,
-						comment.getId(), Favorite.FAVORITE_COMMENT));
+		/*
+		 * int commentedId = comment.getCommentedId(); String commentedName =
+		 * ""; if (comment.getType() == Comment.COMMENT_ANSWER) { commentedName
+		 * = answerDao.queryAnswerById(commentedId).getContent(); } else if
+		 * ((comment.getType() == Comment.COMMENT_QUESTION) ||
+		 * (comment.getType() == Comment.COMMENT_NOTE)) { commentedName =
+		 * feedDao.queryFeedById(commentedId).getTitle(); }
+		 */
+		return new CommentDp(comment, user.getUsername(), user.getAvatarUrl(),
+				favoriteDao.isFavoriteExistsByKey(userId, comment.getId(),
+						Favorite.FAVORITE_COMMENT));
 	}
 
 	@Override
@@ -184,12 +184,14 @@ public class CommentServiceImpl implements CommentService {
 		// TODO Auto-generated method stub
 		List<CommentDp> list = commentDao.queryCommentDpListByCommentedId(
 				commentedId, type);
-		CommentDpGenerator generator = null;
+		/*CommentDpGenerator generator = null;
 		if (list.size() > 0) {
 			generator = getCommentDpGeneratorByType(list.get(0).getType());
-		}
+		}*/
 		for (CommentDp commentDp : list) {
-			generator.completeCommentDp(commentDp, userId);
+			//generator.completeCommentDp(commentDp, userId);
+			commentDp.setFavorite(favoriteDao.isFavoriteExistsByKey(userId,
+				commentDp.getId(), Favorite.FAVORITE_COMMENT));
 		}
 		return list;
 	}

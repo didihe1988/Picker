@@ -12,8 +12,10 @@ public class CommentDp extends Comment implements IsFavorite {
 	private static final long serialVersionUID = 1L;
 
 	private String producerName;
-
-	private String commentedName;
+	/*
+	 * 目测好像不需要
+	 */
+	// private String commentedName;
 
 	private String userAvatarUrl;
 
@@ -41,14 +43,6 @@ public class CommentDp extends Comment implements IsFavorite {
 		this.producerName = producerName;
 	}
 
-	public String getCommentedName() {
-		return commentedName;
-	}
-
-	public void setCommentedName(String commentedName) {
-		this.commentedName = commentedName;
-	}
-
 	public String getUserAvatarUrl() {
 		return userAvatarUrl;
 	}
@@ -68,21 +62,20 @@ public class CommentDp extends Comment implements IsFavorite {
 	public CommentDp() {
 
 	}
-
+	
 	public CommentDp(Comment comment, String producerName,
-			String commentedName, String userAvatarUrl, boolean isFavorite) {
+			String userAvatarUrl, boolean isFavorite) {
+		super(comment);
+		this.producerName = producerName;
+		this.userAvatarUrl = userAvatarUrl;
+		this.isFavorite = isFavorite;
+		this.strDate = DateUtils.getDate(comment.getDate());
+	}
+
+	public CommentDp(Comment comment, String producerName, String userAvatarUrl) {
 		super(comment);
 		this.strDate = DateUtils.getDate(comment.getDate());
 		this.producerName = producerName;
-		this.commentedName = commentedName;
-		this.userAvatarUrl = userAvatarUrl;
-		this.isFavorite = isFavorite;
-	}
-
-	public CommentDp(Comment comment, String commentedName, String userAvatarUrl) {
-		super(comment);
-		this.strDate = DateUtils.getDate(comment.getDate());
-		this.commentedName = commentedName;
 		this.userAvatarUrl = userAvatarUrl;
 		this.isFavorite = false;
 	}
