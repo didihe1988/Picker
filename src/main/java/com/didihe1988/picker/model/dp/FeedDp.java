@@ -1,5 +1,7 @@
 package com.didihe1988.picker.model.dp;
 
+import java.util.Date;
+
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.interfaces.IsFavorite;
 import com.didihe1988.picker.model.interfaces.IsFollow;
@@ -11,15 +13,15 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String userName;
+	protected String userName;
 
-	private String userAvatarUrl;
+	protected String userAvatarUrl;
 
-	private boolean isFollow;
+	protected boolean isFollow;
 
-	private boolean isFavorite;
+	protected boolean isFavorite;
 
-	private String strDate;
+	protected String strDate;
 
 	@Override
 	public boolean isFollow() {
@@ -90,6 +92,21 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 		this.userAvatarUrl = userAvatarUrl;
 		this.isFollow = false;
 		this.isFavorite = false;
+	}
+
+	public FeedDp(int id, int bookId, int userId, String title, String content,
+			String brief, Date date, int page, int type, boolean isPublic,
+			int favoriteNum, int answerNum, int commentNum, int followNum,
+			String userName, String userAvatarUrl, boolean isFollow,
+			boolean isFavorite, String strDate) {
+		super(id, bookId, userId, title, content, brief, date, page, type,
+				isPublic, favoriteNum, answerNum, commentNum, followNum);
+		// TODO Auto-generated constructor stub
+		this.userName = userName;
+		this.userAvatarUrl = userAvatarUrl;
+		this.isFollow = isFollow;
+		this.isFavorite = isFavorite;
+		this.strDate = strDate;
 	}
 
 	@Override

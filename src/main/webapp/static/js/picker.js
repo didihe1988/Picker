@@ -125,7 +125,7 @@ function show_brief(feed_pack_up) {
 function tool_bar_action(tool_div) {
     var action = {
         up: function (pid, feeds) {
-            $.ajax({url: '/up/'+pid, success: function (req) {
+            $.ajax({url: '/json/answer/'+pid+'/subscribe', success: function (req) {
                 if(req.status == 'success'){
                     feeds.find('.up').hide();
                     feeds.find('.cancel_up').fadeIn();
@@ -133,7 +133,7 @@ function tool_bar_action(tool_div) {
             }});
         },
         cancel_up: function (pid, feeds) {
-            $.ajax({url: '/cancel_up/'+pid, success: function (req) {
+            $.ajax({url: '/json/answer/'+pid+'/withdraw_subscribe', success: function (req) {
                 if(req.status == 'success'){
                     feeds.find('.cancel_up').hide();
                     feeds.find('.up').fadeIn();
@@ -141,7 +141,7 @@ function tool_bar_action(tool_div) {
             }});
         },
         watch: function (pid, feeds) {
-            $.ajax({url: '/watch/' + pid, success: function (req) {
+            $.ajax({url: '/json/question/' + pid + '/follow', success: function (req) {
                 if (req.status == 'success') {
                     feeds.find('.watch').hide();
                     feeds.find('.cancel_watch').fadeIn();
@@ -149,14 +149,14 @@ function tool_bar_action(tool_div) {
             }});
         },
         cancel_watch: function (pid, feeds) {
-            $.ajax({url: '/cancel_watch/'+pid, success: function (req) {
+            $.ajax({url: '/json/question/' + pid + '/withdraw_follow', success: function (req) {
                 if(req.status == 'success') {
                     feeds.find('.cancel_watch').hide();
                     feeds.find('.watch').fadeIn();
                 }
             }})
         },
-        get_comment: function (pid, feeds) {
+        get_comment: function (pid, feeds, url) {
             var comments_dom = feeds.find('.comments');
             feeds.find('.show_comment').hide();
             feeds.find('.hide_comment').show();
@@ -168,7 +168,7 @@ function tool_bar_action(tool_div) {
                     NProgress.done();
                     comments_dom.find('.waiting').hide();
                 };
-                $.ajax({url: '/comment/'+pid, success: function (req) {
+                $.ajax({url: url, success: function (req) {
                     if(req.status == 'success'){
                         $.each(req.comments, function (i, comment) {
                             var new_comment_dom =
@@ -193,7 +193,11 @@ function tool_bar_action(tool_div) {
         }
     };
 
-    action[tool_div.data('action')](tool_div.data('passage-id'), tool_div.parents('.feeds'));
+    var url = tool_div.data('url');
+    if(url)
+        url = url.replace('{}', tool_div.data('passage-id'));
+    action[tool_div.data('action')](tool_div.data('passage-id'),
+                                    tool_div.parents('.feeds'), url);
 }
 
 //-------------------------------------message part---------------------------------

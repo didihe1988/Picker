@@ -65,7 +65,7 @@ public class BrowseController {
 	 * }
 	 */
 	// http://localhost:8090/page/123/0?filter=all&direction=up
-	@RequestMapping(value = "/page/{id}/0")
+	@RequestMapping(value = "/page/{id}/0", produces = "application/json")
 	public @ResponseBody String bookDetail(@PathVariable int id) {
 		if (id < 1) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
@@ -82,8 +82,8 @@ public class BrowseController {
 	}
 
 	private BookJson getBookJson(Book book) {
-		return new BookJson(book.getImageUrl(), book.getWriter(),
-				book.getPress(), book.getDate(), "这个真没有");
+		return new BookJson(book.getBookName(), book.getImageUrl(),
+				book.getWriter(), book.getPress(), book.getDate(), "这个真没有");
 	}
 
 }

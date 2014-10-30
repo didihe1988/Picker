@@ -1,8 +1,8 @@
 package com.didihe1988.picker.model.json;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
-
 public class BookJson {
+	private String name;
+
 	private String cover_image_path;
 
 	private String author;
@@ -12,6 +12,14 @@ public class BookJson {
 	private String date;
 
 	private String brief;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getCover_image_path() {
 		return cover_image_path;
@@ -57,9 +65,10 @@ public class BookJson {
 
 	}
 
-	public BookJson(String cover_image_path, String author, String publisher,
-			String date, String brief) {
+	public BookJson(String name, String cover_image_path, String author,
+			String publisher, String date, String brief) {
 		super();
+		this.name = name;
 		this.cover_image_path = cover_image_path;
 		this.author = author;
 		this.publisher = publisher;

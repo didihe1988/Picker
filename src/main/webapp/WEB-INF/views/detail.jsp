@@ -210,29 +210,29 @@
 							<c:choose>
 								<c:when test="${question.follow }">
 									<div style="display: none" class="line watch"
-										data-action="watch" data-passage-id="123"
+										data-action="watch" data-passage-id="${question.id }"
 										onclick="tool_bar_action($(this))">
 										<i class="icon-plus"></i>关注问题
 									</div>
 									<div class="line cancel_watch" data-action="cancel_watch"
-										data-passage-id="123" onclick="tool_bar_action($(this))">
+										data-passage-id="${question.id }" onclick="tool_bar_action($(this))">
 										<i class="icon-ok"></i>取消关注
 									</div>
 								</c:when>
 								<c:otherwise>
 									<div class="line watch" data-action="watch"
-										data-passage-id="123" onclick="tool_bar_action($(this))">
+										data-passage-id="${question.id }" onclick="tool_bar_action($(this))">
 										<i class="icon-plus"></i>关注问题
 									</div>
 									<div style="display: none" class="line cancel_watch"
-										data-action="cancel_watch" data-passage-id="123"
+										data-action="cancel_watch" data-passage-id="${question.id }"
 										onclick="tool_bar_action($(this))">
 										<i class="icon-ok"></i>取消关注
 									</div>
 								</c:otherwise>
 							</c:choose>
-							<div class="line show_comment" data-action="get_comment"
-								data-passage-id="123" onclick="tool_bar_action($(this))">
+							<div class="line show_comment" data-action="get_comment" data-url="<c:url value="/question/${question.id}/comments"/>"
+								data-passage-id="${question.id}" onclick="tool_bar_action($(this))">
 								<i class="icon-comments-alt"></i>
 								<c:out value='${question.commentNum}' />
 								条评论
@@ -318,7 +318,7 @@
 									<i class="icon-ok"></i>取消赞<span class="cnt"><c:out
 											value='${answer.favoriteNum+1}' /></span>
 								</div>
-								<div class="line show_comment" data-action="get_comment"
+								<div class="line show_comment" data-action="get_comment" data-url="<c:url value="/answer/${answer.id}/comments"/>"
 									data-passage-id="123" onclick="tool_bar_action($(this))">
 									<i class="icon-comments-alt"></i>
 									<c:out value='${answer.commentNum}' />

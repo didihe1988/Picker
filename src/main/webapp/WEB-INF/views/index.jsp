@@ -26,7 +26,13 @@
 
 <!--TODO: AJAX取消息-->
 <body>
-
+	<!-- set curUserId -->
+	<%
+		int curUserId = (Integer) request.getSession().getAttribute(
+				"picker_userId");
+	%>
+	<c:set var="curUserId" scope="session" value="<%=curUserId%>" />
+	<!--set curUserId end-->
 	<div id="nav" class="row">
 		<div id="nav_content">
 			<div class="col-13">
@@ -401,7 +407,7 @@
 											<a
 												href="<c:url value="/browse/${message.relatedSourceId}/0"/>">《${message.relatedSourceContent}》</a>
 										</div>
-										
+
 									</div>
 									<div class="feed_time">${message.strDate}</div>
 								</div>

@@ -31,7 +31,7 @@ public class CommentController {
 	@Autowired
 	private FeedService feedService;
 
-	@RequestMapping(value = "/note/{id}/comments")
+	@RequestMapping(value = "/note/{id}/comments", produces = "application/json")
 	public @ResponseBody String noteComments(@PathVariable int id,
 			HttpServletRequest request) {
 		List<CommentDp> commentDps = commentService
@@ -40,7 +40,7 @@ public class CommentController {
 		return getJsonString(commentDps);
 	}
 
-	@RequestMapping(value = "/question/{id}/comments")
+	@RequestMapping(value = "/question/{id}/comments", produces = "application/json")
 	public @ResponseBody String questionComments(@PathVariable int id,
 			HttpServletRequest request) {
 		List<CommentDp> commentDps = commentService
@@ -49,7 +49,7 @@ public class CommentController {
 		return getJsonString(commentDps);
 	}
 
-	@RequestMapping(value = "/feed/{id}/comments")
+	@RequestMapping(value = "/feed/{id}/comments", produces = "application/json")
 	public @ResponseBody String feedComments(@PathVariable int id,
 			HttpServletRequest request) {
 		Feed feed = feedService.getFeedById(id);
@@ -64,7 +64,7 @@ public class CommentController {
 		}
 	}
 
-	@RequestMapping(value = "/answer/{id}/comments")
+	@RequestMapping(value = "/answer/{id}/comments", produces = "application/json")
 	public @ResponseBody String answerComments(@PathVariable int id,
 			HttpServletRequest request) {
 		List<CommentDp> commentDps = commentService

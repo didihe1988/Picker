@@ -29,6 +29,7 @@ public class RelatedImageDaoImpl implements RelatedImageDao {
 		return (Integer) getCurrentSession().save(relatedImage);
 	}
 
+	@SuppressWarnings("unchecked")
 	private List<RelatedImage> queryRelatedImagesByKey(int relatedId, int type) {
 		// TODO Auto-generated method stub
 		String hql = "from RelatedImage as r where r.relatedId=? and r.type=?";
