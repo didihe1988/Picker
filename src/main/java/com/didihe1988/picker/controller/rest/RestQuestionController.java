@@ -188,8 +188,9 @@ public class RestQuestionController {
 		if (status == Status.SUCCESS) {
 			produceSubscribeMessage(id, userId);
 		}
-
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		int favoriteNum = feedService.getFeedById(id).getFavoriteNum();
+		return JsonUtils.getJsonObjectString(Constant.KEY_FAVORITENUM,
+				favoriteNum);
 	}
 
 	/**
@@ -205,7 +206,10 @@ public class RestQuestionController {
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.decrementQuestionFavorite(id, userId);
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		int favoriteNum = feedService.getFeedById(id).getFavoriteNum();
+		return JsonUtils.getJsonObjectString(Constant.KEY_FAVORITENUM,
+				favoriteNum);
 	}
 
 	@RequestMapping(value = "/json/question/add", method = RequestMethod.POST)

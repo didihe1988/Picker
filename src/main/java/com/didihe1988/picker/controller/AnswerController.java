@@ -115,7 +115,10 @@ public class AnswerController {
 		if (status == Status.SUCCESS) {
 			produceSubscribeMessage(id, userId);
 		}
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		int favoriteNum = answerService.getAnswerById(id).getFavoriteNum();
+		return JsonUtils.getJsonObjectString(Constant.KEY_FAVORITENUM,
+				favoriteNum);
 	}
 
 	private void produceSubscribeMessage(int answerId, int curUserId) {
@@ -164,7 +167,10 @@ public class AnswerController {
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.decrementAnswerFavorite(id, userId);
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		int favoriteNum = answerService.getAnswerById(id).getFavoriteNum();
+		return JsonUtils.getJsonObjectString(Constant.KEY_FAVORITENUM,
+				favoriteNum);
 	}
 
 	@RequestMapping(value = "/json/answer/add", method = RequestMethod.POST)
@@ -287,7 +293,7 @@ public class AnswerController {
 	 */
 	@RequestMapping(value = "/answer/add/{questionId}", method = RequestMethod.POST)
 	public String webAdd(@ModelAttribute AnswerForm answerForm,
-			HttpServletRequest request,HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) {
 		if (!answerForm.checkFieldValidation()) {
 			return "error";
 		}
@@ -295,8 +301,8 @@ public class AnswerController {
 				HttpUtils.getSessionUserId(request));
 		int status = answerService.addAnswer(answer);
 		if (status == Status.SUCCESS) {
-			//addAnserImage(answer);
-			//produceAnswerMessage(answer, request);
+			// addAnserImage(answer);
+			// produceAnswerMessage(answer, request);
 		}
 		try {
 			response.sendRedirect("/detail/" + answer.getQuestionId());

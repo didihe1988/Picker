@@ -105,7 +105,10 @@ public class RestCommentController {
 					Message.NULL_parentId);
 		}
 
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		int favoriteNum = commentService.getCommentById(id).getFavoriteNum();
+		return JsonUtils.getJsonObjectString(Constant.KEY_FAVORITENUM,
+				favoriteNum);
 	}
 
 	/**
@@ -121,7 +124,10 @@ public class RestCommentController {
 		}
 		int userId = HttpUtils.getSessionUser(request).getId();
 		int status = favoriteService.decrementCommentFavorite(id, userId);
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		int favoriteNum = commentService.getCommentById(id).getFavoriteNum();
+		return JsonUtils.getJsonObjectString(Constant.KEY_FAVORITENUM,
+				favoriteNum);
 	}
 
 	@RequestMapping(value = "/json/comment", method = RequestMethod.POST)

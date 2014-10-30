@@ -103,7 +103,10 @@ public class RestNoteController {
 		if (status == Status.SUCCESS) {
 			produceSubscribeMessage(id, userId);
 		}
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		int favoriteNum = feedService.getFeedById(id).getFavoriteNum();
+		return JsonUtils.getJsonObjectString(Constant.KEY_FAVORITENUM,
+				favoriteNum);
 	}
 
 	private void produceSubscribeMessage(int feedId, int curUserId) {
@@ -149,7 +152,10 @@ public class RestNoteController {
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.decrementNoteFavorite(id, userId);
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		int favoriteNum = feedService.getFeedById(id).getFavoriteNum();
+		return JsonUtils.getJsonObjectString(Constant.KEY_FAVORITENUM,
+				favoriteNum);
 	}
 
 	@RequestMapping(value = "/json/note/add", method = RequestMethod.POST, headers = "Accept=application/json")
@@ -203,7 +209,7 @@ public class RestNoteController {
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
 				Message.MESSAGE_USER_ADDNOTE, userId, userName, noteId,
-				relatedSourceContent, extraContent,- feed.getBookId());
+				relatedSourceContent, extraContent, -feed.getBookId());
 	}
 
 	private void addNoteImage(Feed feed) {

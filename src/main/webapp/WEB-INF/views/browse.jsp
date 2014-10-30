@@ -20,6 +20,7 @@
 <script src="/static/lib/jquery.pjax.js"></script>
 <script src="/static/js/picker.js"></script>
 <script src="/static/js/epiceditor/js/epiceditor.min.js"></script>
+<script src="/static/js/ajaxfileupload.js"></script>
 
 </head>
 
@@ -87,6 +88,28 @@
 
 	<div id="main">
 		<!--**xx-->
+		<div id="go_to_page_panel" class="shadow">
+			<div class="title clear_fix">
+				<div style="float: left">页数跳转</div>
+				<div class="point_cursor"
+					onclick="hide_panel($('#go_to_page_panel'), $('#cancel_page_jump'))"
+					style="float: right">
+					<i class="icon-remove"></i>
+				</div>
+			</div>
+
+			<div class="content">
+				当前在<span
+					style="margin: 0 5px; font-family: 'georgia'; color: #99CCCC; font-size: 2rem;"
+					id="current_page"></span>页，跳转至 <input type="text" name="to_page"
+					id="to_page" style="width: 40px" /> <input type="button"
+					value="Go"
+					onclick="go_to_page($(this).parent().find('input[type=text]').val())" />
+			</div>
+		</div>
+		<div id="cancel_page_jump" class="cancel_panel"
+			onclick="hide_panel($('#go_to_page_panel'), $(this))"></div>
+
 		<div class="row">
 			<div class="col-70">
 				<div id="load_previous_flag" data-start-page="0" data-end="false"
@@ -335,11 +358,11 @@
 						</div>
 						<div class="col-4"></div>
 						<div class="col-25">
-							<div id="book_meta" data-book-id="123">
+							<div id="book_meta" data-book-id="${book.id}">
 								<div class="book_info">
 									<a href="#">${book.bookName}</a>
 								</div>
-								<div class="book_info">[英] ${book.writer}</div>
+								<div class="book_info">${book.writer}</div>
 								<div class="book_info">${book.date}</div>
 							</div>
 						</div>

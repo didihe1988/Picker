@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.didihe1988.picker.common.Constant;
+import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.CommentDp;
 import com.didihe1988.picker.model.json.CommentJson;
 import com.didihe1988.picker.service.CommentService;
+import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 
@@ -24,6 +27,9 @@ import com.didihe1988.picker.utils.JsonUtils;
 public class CommentController {
 	@Autowired
 	private CommentService commentService;
+
+	@Autowired
+	private FeedService feedService;
 
 	@RequestMapping(value = "/note/{id}/comments")
 	public @ResponseBody String noteComments(@PathVariable int id,
@@ -41,6 +47,21 @@ public class CommentController {
 				.getCommentDpListByCommentedId(id, Comment.COMMENT_QUESTION,
 						HttpUtils.getSessionUserId(request));
 		return getJsonString(commentDps);
+	}
+
+	@RequestMapping(value = "/feed/{id}/comments")
+	public @ResponseBody String feedComments(@PathVariable int id,
+			HttpServletRequest request) {
+		Feed feed = feedService.getFeedById(id);
+		if (feed == null) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
+		if (feed.getType() == Feed.TYPE_QUESTION) {
+			return questionComments(id, request);
+		} else {
+			return noteComments(id, request);
+		}
 	}
 
 	@RequestMapping(value = "/answer/{id}/comments")
