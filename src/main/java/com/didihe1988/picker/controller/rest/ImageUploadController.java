@@ -1,4 +1,4 @@
-package com.didihe1988.picker.controller;
+package com.didihe1988.picker.controller.rest;
 
 import java.io.BufferedOutputStream;
 import java.io.File;

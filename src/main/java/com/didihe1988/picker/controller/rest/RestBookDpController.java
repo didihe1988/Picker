@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.dp.AttachmentDp;
 import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.service.AttachmentService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
 import com.didihe1988.picker.service.FeedService;
@@ -31,6 +33,9 @@ public class RestBookDpController {
 	@Autowired
 	private FeedService feedService;
 
+	@Autowired
+	private AttachmentService attachmentService;
+
 	/**
 	 * @description 本书下提出的问题
 	 * @condition request userId
@@ -38,16 +43,16 @@ public class RestBookDpController {
 	@RequestMapping(value = "/json/book/{id}/questiondps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestionDps(@PathVariable int id,
 			HttpServletRequest request) {
-		
+
 		if (id < 1) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		long startTime=System.currentTimeMillis();
+		long startTime = System.currentTimeMillis();
 		List<FeedDp> list = feedService.getFeedDpListByBookId(id,
 				Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request));
-		long endTime=System.currentTimeMillis();
-		System.out.println("spend: "+(endTime-startTime));
+		long endTime = System.currentTimeMillis();
+		System.out.println("spend: " + (endTime - startTime));
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 
@@ -63,5 +68,18 @@ public class RestBookDpController {
 		List<FeedDp> list = feedService.getFeedDpListByBookId(id,
 				Feed.TYPE_NOTE, HttpUtils.getSessionUserId(request));
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
+	}
+
+	/**
+	 * @description 本书附件
+	 */
+	@RequestMapping(value = "/json/book/{id}/attachmentdps", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getAttachments(@PathVariable int id, HttpServletRequest request) {
+		if (id < 1) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
+		List<AttachmentDp> list=attachmentService.getAttachmentDpsByBookId(id);
+		return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENT_LIST, list);
 	}
 }

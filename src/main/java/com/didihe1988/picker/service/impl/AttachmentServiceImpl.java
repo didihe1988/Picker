@@ -8,9 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AttachmentDao;
-import com.didihe1988.picker.dao.CircleDao;
-import com.didihe1988.picker.dao.CircleMemberDao;
 import com.didihe1988.picker.model.Attachment;
+import com.didihe1988.picker.model.dp.AttachmentDp;
 import com.didihe1988.picker.service.AttachmentService;
 
 @Service
@@ -18,12 +17,6 @@ import com.didihe1988.picker.service.AttachmentService;
 public class AttachmentServiceImpl implements AttachmentService {
 	@Autowired
 	private AttachmentDao attachmentDao;
-
-	@Autowired
-	private CircleMemberDao circleMemberDao;
-
-	@Autowired
-	private CircleDao circleDao;
 
 	@Override
 	public Attachment getAttachmentById(int id) {
@@ -67,8 +60,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 		if (attachment == null) {
 			return Status.NULLPOINTER;
 		}
-		if (!circleDao.isEstablisherOfCircle(attachment.getUserId(),
-				attachment.getCircleId())) {
+		if (!attachmentDao.isAttachmentExistsById(attachment.getId())) {
 			return Status.INVALID;
 		}
 		int status = attachmentDao.updateAttachment(attachment);
@@ -85,21 +77,27 @@ public class AttachmentServiceImpl implements AttachmentService {
 	}
 
 	@Override
-	public List<Attachment> getAttachmentsByCircleId(int circleId) {
+	public boolean isAttachmentExistsByName(String fileName, int bookId) {
 		// TODO Auto-generated method stub
-		return attachmentDao.queryAttachmentsByCircleId(circleId);
+		return attachmentDao.isAttachmentExistsByName(fileName, bookId);
 	}
 
 	@Override
-	public int getLatestAttachmentByCircleId(int circleId) {
+	public List<Attachment> getAttachmentsByBookId(int bookId) {
 		// TODO Auto-generated method stub
-		return attachmentDao.getLatestAttachmentByCircleId(circleId);
+		return attachmentDao.queryAttachmentsByBookId(bookId);
 	}
 
 	@Override
-	public boolean isAttachmentExistsInCircle(String fileName, int circleId) {
+	public int getLatestAttachmentByBookId(int bookId) {
 		// TODO Auto-generated method stub
-		return attachmentDao.isAttachmentExistsInCircle(fileName, circleId);
+		return attachmentDao.getLatestAttachmentByBookId(bookId);
+	}
+
+	@Override
+	public List<AttachmentDp> getAttachmentDpsByBookId(int bookId) {
+		// TODO Auto-generated method stub
+		return attachmentDao.queryAttachmentDpsByBookId(bookId);
 	}
 
 }

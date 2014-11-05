@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.AttachmentDao;
 import com.didihe1988.picker.model.Attachment;
+import com.didihe1988.picker.model.dp.AttachmentDp;
 
 @Repository
 @Transactional
@@ -71,12 +72,12 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	}
 
 	@Override
-	public boolean isAttachmentExistsInCircle(String fileName, int circleId) {
+	public boolean isAttachmentExistsByName(String fileName, int bookId) {
 		// TODO Auto-generated method stub
-		String hql = "select count(*) from Attachment as a where a.name =? and a.circleId=?";
+		String hql = "select count(*) from Attachment as a where a.name =? and a.bookId=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setString(0, fileName);
-		query.setInteger(1, circleId);
+		query.setInteger(1, bookId);
 		Long count = (Long) query.uniqueResult();
 		if (count > 0) {
 			return true;
@@ -86,20 +87,30 @@ public class AttachmentDaoImpl implements AttachmentDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Attachment> queryAttachmentsByCircleId(int circleId) {
+	public List<Attachment> queryAttachmentsByBookId(int bookId) {
 		// TODO Auto-generated method stub
-		String hql = "from Attachment as a where a.circleId =?";
+		String hql = "from Attachment as a where a.bookId =?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, circleId);
+		query.setInteger(0, bookId);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AttachmentDp> queryAttachmentDpsByBookId(int bookId) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.dp.AttachmentDp(a,u.username,u.avatarUrl) from Attachment a ,User u where a.bookId=? and a.userId = u.id ";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
 		return query.list();
 	}
 
 	@Override
-	public int getLatestAttachmentByCircleId(int circleId) {
+	public int getLatestAttachmentByBookId(int bookId) {
 		// TODO Auto-generated method stub
-		String hql = "select max(a.id) from Attachment as a where a.circleId= ?";
+		String hql = "select max(a.id) from Attachment as a where a.bookId= ?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, circleId);
+		query.setInteger(0, bookId);
 		return (Integer) query.uniqueResult();
 	}
 

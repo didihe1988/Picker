@@ -16,8 +16,6 @@ public class CircleDp extends Circle {
 
 	private boolean isJoin;
 
-	private List<Attachment> attachmentList;
-
 	public boolean isJoin() {
 		return isJoin;
 	}
@@ -34,20 +32,10 @@ public class CircleDp extends Circle {
 		this.establisherName = establisherName;
 	}
 
-	public List<Attachment> getAttachmentList() {
-		return attachmentList;
-	}
-
-	public void setAttachmentList(List<Attachment> attachmentList) {
-		this.attachmentList = attachmentList;
-	}
-
-	public CircleDp(Circle circle, boolean isJoin, String establisherName,
-			List<Attachment> attachmentList) {
+	public CircleDp(Circle circle, boolean isJoin, String establisherName) {
 		super(circle);
 		this.isJoin = isJoin;
 		this.establisherName = establisherName;
-		this.attachmentList = attachmentList;
 	}
 
 	public CircleDp() {

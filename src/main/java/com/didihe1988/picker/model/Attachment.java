@@ -19,25 +19,22 @@ public class Attachment implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "attachment_id")
-	private int id;
+	protected int id;
 
-	@Column(name = "attachment_circleid")
-	private int circleId;
+	@Column(name = "attachment_bookid")
+	protected int bookId;
 
-	/*
-	 * 提交人的id
-	 */
 	@Column(name = "attachment_userid")
-	private int userId;
+	protected int userId;
 
 	@Column(name = "attachment_name")
-	private String name;
+	protected String name;
 
 	@Column(name = "attachment_path")
-	private String path;
+	protected String path;
 
 	@Column(name = "attachment_date")
-	private Date date;
+	protected Date date;
 
 	public int getId() {
 		return id;
@@ -71,12 +68,12 @@ public class Attachment implements Serializable {
 		this.date = date;
 	}
 
-	public int getCircleId() {
-		return circleId;
+	public int getBookId() {
+		return bookId;
 	}
 
-	public void setCircleId(int circleId) {
-		this.circleId = circleId;
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
 	}
 
 	public int getUserId() {
@@ -91,25 +88,46 @@ public class Attachment implements Serializable {
 
 	}
 
-	public Attachment(int id, int circleId, int userId, String name,
-			String path, Date date) {
-		super();
-		this.id = id;
-		this.circleId = circleId;
-		this.userId = userId;
-		this.name = name;
-		this.path = path;
-		this.date = date;
+	@Override
+	public String toString() {
+		return "Attachment [id=" + id + ", bookId=" + bookId + ", userId="
+				+ userId + ", name=" + name + ", path=" + path + ", date="
+				+ date + "]";
 	}
 
-	public Attachment(int circleId, int userId, String name, String path,
+	public Attachment(int id, int bookId, int userId, String name, String path,
 			Date date) {
 		super();
-		this.circleId = circleId;
+		this.id = id;
+		this.bookId = bookId;
 		this.userId = userId;
 		this.name = name;
 		this.path = path;
 		this.date = date;
 	}
 
+	public Attachment(int bookId, int userId, String name, String path) {
+		super();
+		this.bookId = bookId;
+		this.userId = userId;
+		this.name = name;
+		this.path = path;
+		this.date = new Date();
+	}
+
+	public boolean checkFieldValidation() {
+		/*
+		 * if ((this.bookId >0) && (this.title != null) &&
+		 * (!this.title.equals("")) && (this.content != null) &&
+		 * (!this.content.equals("")) && (this.page >= 0)) { return true; }
+		 * return false;
+		 */
+		return true;
+	}
+
+	public Attachment(Attachment attachment) {
+		this(attachment.getId(), attachment.getBookId(),
+				attachment.getUserId(), attachment.getName(), attachment
+						.getPath(), attachment.getDate());
+	}
 }

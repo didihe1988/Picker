@@ -107,8 +107,7 @@ public class CircleServiceImpl implements CircleService {
 		String establisherName = userDao.queryUserById(
 				circle.getEstablisherId()).getUsername();
 		return new CircleDp(circle, circleMemberDao.isUserInCircle(curUserId,
-				id), establisherName,
-				attachmentDao.queryAttachmentsByCircleId(id));
+				id), establisherName);
 	}
 
 	@Override
