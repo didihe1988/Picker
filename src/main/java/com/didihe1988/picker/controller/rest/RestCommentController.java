@@ -122,7 +122,8 @@ public class RestCommentController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		int userId = HttpUtils.getSessionUser(request).getId();
+		// int userId = HttpUtils.getSessionUser(request).getId();
+		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.decrementCommentFavorite(id, userId);
 		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 		int favoriteNum = commentService.getCommentById(id).getFavoriteNum();

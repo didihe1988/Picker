@@ -299,7 +299,7 @@ public class Feed implements Serializable, Search {
 		/*
 		 * ËãÉÏÁËpage==0
 		 */
-		if ((this.bookId != 0) && (this.title != null)
+		if ((this.bookId >0) && (this.title != null)
 				&& (!this.title.equals("")) && (this.content != null)
 				&& (!this.content.equals("")) && (this.page >= 0)) {
 			return true;

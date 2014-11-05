@@ -94,5 +94,14 @@ public class CommentController {
 				commentDp.getProducerName(), commentDp.getContent(),
 				commentDp.getUserAvatarUrl(), commentDp.getStrDate());
 	}
+	/*
+	@RequestMapping(value = "/answer/{id}/comments", produces = "application/json")
+	public @ResponseBody String answerComments(@PathVariable int id,
+			HttpServletRequest request) {
+		List<CommentDp> commentDps = commentService
+				.getCommentDpListByCommentedId(id, Comment.COMMENT_ANSWER,
+						HttpUtils.getSessionUserId(request));
+		return getJsonString(commentDps);
+	}*/
 
 }

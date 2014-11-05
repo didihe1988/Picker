@@ -167,7 +167,7 @@ public class Answer implements Serializable {
 	}
 
 	public boolean checkFieldValidation() {
-		if ((this.questionId != 0) && (this.content != null)
+		if ((this.questionId >0) && (this.content != null)
 				&& (!this.content.equals(""))) {
 			return true;
 		}
