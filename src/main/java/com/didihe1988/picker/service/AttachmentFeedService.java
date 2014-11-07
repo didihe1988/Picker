@@ -3,6 +3,7 @@ package com.didihe1988.picker.service;
 import java.util.List;
 
 import com.didihe1988.picker.model.AttachmentFeed;
+import com.didihe1988.picker.model.dp.AttachmentFeedDp;
 
 public interface AttachmentFeedService {
 	public AttachmentFeed getAttachmentFeedById(int id);
@@ -19,7 +20,7 @@ public interface AttachmentFeedService {
 
 	public List<AttachmentFeed> getAttachmentFeedsByBookId(int bookId);
 
-	// public List<AttachmentDp> getAttachmentDpsByBookId(int bookId);
+	public List<AttachmentFeedDp> getAttachmentFeedDpsByBookId(int bookId);
 
 	public int getLatestAttachmentFeedByBookId(int bookId);
 }

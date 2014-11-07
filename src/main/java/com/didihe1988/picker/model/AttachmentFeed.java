@@ -44,7 +44,7 @@ public class AttachmentFeed implements Serializable {
 	protected Date date;
 
 	@OneToMany(fetch = FetchType.EAGER)
-	//目测是Hibernate自动在Attachment一端加上外加、有待探究
+	// 目测是Hibernate自动在Attachment一端加上外加、有待探究
 	@JoinColumn(name = "attachment_afeedid")
 	protected List<Attachment> attachments;
 
@@ -112,17 +112,6 @@ public class AttachmentFeed implements Serializable {
 
 	}
 
-	public AttachmentFeed(int id, int bookId, int page, int userId,
-			String describe, Date date) {
-		super();
-		this.id = id;
-		this.bookId = bookId;
-		this.page = page;
-		this.userId = userId;
-		this.describe = describe;
-		this.date = date;
-	}
-
 	public AttachmentFeed(int bookId, int page, int userId, String describe,
 			Date date) {
 		super();
@@ -143,6 +132,12 @@ public class AttachmentFeed implements Serializable {
 		this.describe = describe;
 		this.date = date;
 		this.attachments = attachments;
+	}
+
+	public AttachmentFeed(AttachmentFeed aFeed) {
+		this(aFeed.getId(), aFeed.getBookId(), aFeed.getPage(), aFeed
+				.getUserId(), aFeed.getDescribe(), aFeed.getDate(), aFeed
+				.getAttachments());
 	}
 
 	@Override

@@ -1,9 +1,14 @@
 package com.didihe1988.picker.model.dp;
 
-import com.didihe1988.picker.model.Attachment;
+import com.didihe1988.picker.model.AttachmentFeed;
 import com.didihe1988.picker.utils.DateUtils;
 
-public class AttachmentDp extends Attachment {
+public class AttachmentFeedDp extends AttachmentFeed {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private String userName;
 
@@ -35,22 +40,18 @@ public class AttachmentDp extends Attachment {
 		this.strDate = strDate;
 	}
 
-	public AttachmentDp(Attachment attachment, String userName,
+	public AttachmentFeedDp(AttachmentFeed attachmentFeed, String userName,
 			String userAvatarUrl) {
-		//super(attachment);
+		super(attachmentFeed);
 		this.userAvatarUrl = userAvatarUrl;
 		this.userName = userName;
-		this.strDate = DateUtils.getDate(attachment.getDate());
+		this.strDate = DateUtils.getDate(attachmentFeed.getDate());
 	}
 
 	@Override
 	public String toString() {
-		return "AttachmentDp [userName=" + userName + ", userAvatarUrl="
-				+ userAvatarUrl + ", strDate=" + strDate + ", id=" + id
-				+ ", bookId=" + bookId + ", userId=" + userId + ", name="
-				+ name + ", path=" + path + ", date=" + date + "]";
+		return "AttachmentFeedDp [userName=" + userName + ", userAvatarUrl="
+				+ userAvatarUrl + ", strDate=" + strDate + "]";
 	}
-
-
 
 }

@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.didihe1988.picker.dao.AttachmentFeedDao;
 import com.didihe1988.picker.model.AttachmentFeed;
-import com.didihe1988.picker.model.dp.AttachmentDp;
+import com.didihe1988.picker.model.dp.AttachmentFeedDp;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:servlet-context.xml",
@@ -28,6 +28,14 @@ public class AttachmentDaoTest {
 	public void test0()
 	{
 		List<AttachmentFeed> list=attachmentFeedDao.queryAttachmentFeedsByBookId(3);
+		assertNotNull(list);
+		System.out.println(list);
+	}
+	
+	@Test
+	public void test1()
+	{
+		List<AttachmentFeedDp> list=attachmentFeedDao.queryAttachmentFeedDpsByBookId(3);
 		assertNotNull(list);
 		System.out.println(list);
 	}

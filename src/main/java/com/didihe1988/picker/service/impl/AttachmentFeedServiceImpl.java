@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AttachmentFeedDao;
 import com.didihe1988.picker.model.AttachmentFeed;
+import com.didihe1988.picker.model.dp.AttachmentFeedDp;
 import com.didihe1988.picker.service.AttachmentFeedService;
 
 @Service
@@ -52,7 +53,8 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 		if (attachmentFeed == null) {
 			return Status.NULLPOINTER;
 		}
-		if (!attachmentFeedDao.isAttachmentFeedExistsById(attachmentFeed.getId())) {
+		if (!attachmentFeedDao.isAttachmentFeedExistsById(attachmentFeed
+				.getId())) {
 			return Status.INVALID;
 		}
 		int status = attachmentFeedDao.updateAttachmentFeed(attachmentFeed);
@@ -78,6 +80,12 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 	public int getLatestAttachmentFeedByBookId(int bookId) {
 		// TODO Auto-generated method stub
 		return attachmentFeedDao.getLatestAttachmentFeedByBookId(bookId);
+	}
+
+	@Override
+	public List<AttachmentFeedDp> getAttachmentFeedDpsByBookId(int bookId) {
+		// TODO Auto-generated method stub
+		return attachmentFeedDao.queryAttachmentFeedDpsByBookId(bookId);
 	}
 
 }

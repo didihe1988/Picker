@@ -29,7 +29,7 @@ public class Constant {
 	public static final String KEY_QUESTION_LIST = "questionList";
 	public static final String KEY_COMMENT_LIST = "commentList";
 	public static final String KEY_ANSWER_LIST = "answerList";
-	public static final String KEY_ATTACHMENT_LIST = "attachmentList";
+	public static final String KEY_ATTACHMENTFEED_LIST = "attachmentFeedList";
 	public static final String KEY_CIRCLE_LIST = "circleList";
 	public static final String KEY_FOLLOW_LIST = "followList";
 	public static final String KEY_NOTE_LIST = "noteList";

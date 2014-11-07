@@ -3,6 +3,7 @@ package com.didihe1988.picker.dao;
 import java.util.List;
 
 import com.didihe1988.picker.model.AttachmentFeed;
+import com.didihe1988.picker.model.dp.AttachmentFeedDp;
 
 public interface AttachmentFeedDao {
 	public AttachmentFeed queryAttachmentFeedById(int id);
@@ -19,7 +20,7 @@ public interface AttachmentFeedDao {
 
 	public List<AttachmentFeed> queryAttachmentFeedsByBookId(int bookId);
 	
-	//public List<AttachmentDp> queryAttachmentFeedDpsByBookId(int bookId);
+	public List<AttachmentFeedDp> queryAttachmentFeedDpsByBookId(int bookId);
 
 	public int getLatestAttachmentFeedByBookId(int bookId);
 

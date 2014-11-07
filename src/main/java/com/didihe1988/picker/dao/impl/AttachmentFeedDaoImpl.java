@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.AttachmentFeedDao;
 import com.didihe1988.picker.model.AttachmentFeed;
+import com.didihe1988.picker.model.dp.AttachmentFeedDp;
 
 @Repository
 @Transactional
@@ -81,19 +82,14 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 		return query.list();
 	}
 
-	/*
-	 * @SuppressWarnings("unchecked")
-	 * 
-	 * @Override public List<AttachmentDp> queryAttachmentFeedDpsByBookId(int
-	 * bookId) { // TODO Auto-generated method stub
-	 * 
-	 * String hql =
-	 * "select new com.didihe1988.picker.model.dp.AttachmentDp(a,u.username,u.avatarUrl) from Attachment a ,User u where a.bookId=? and a.userId = u.id "
-	 * ; Query query = getCurrentSession().createQuery(hql); query.setInteger(0,
-	 * bookId); return query.list();
-	 * 
-	 * return null; }
-	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AttachmentFeedDp> queryAttachmentFeedDpsByBookId(int bookId) { 
+		String hql = "select new com.didihe1988.picker.model.dp.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id ";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		return query.list();
+	}
 
 	@Override
 	public int getLatestAttachmentFeedByBookId(int bookId) {

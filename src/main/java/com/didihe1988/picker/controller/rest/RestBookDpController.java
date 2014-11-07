@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Feed;
-import com.didihe1988.picker.model.dp.AttachmentDp;
+import com.didihe1988.picker.model.dp.AttachmentFeedDp;
 import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.service.AttachmentFeedService;
 import com.didihe1988.picker.service.BookService;
@@ -34,7 +34,7 @@ public class RestBookDpController {
 	private FeedService feedService;
 
 	@Autowired
-	private AttachmentFeedService attachmentService;
+	private AttachmentFeedService attachmentFeedService;
 
 	/**
 	 * @description 本书下提出的问题
@@ -74,12 +74,15 @@ public class RestBookDpController {
 	 * @description 本书附件
 	 */
 	@RequestMapping(value = "/json/book/{id}/attachmentdps", method = RequestMethod.GET, headers = "Accept=application/json")
-	public String getAttachments(@PathVariable int id, HttpServletRequest request) {
+	public String getAttachments(@PathVariable int id,
+			HttpServletRequest request) {
 		if (id < 1) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		List<AttachmentDp> list=attachmentService.getAttachmentDpsByBookId(id);
-		return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENT_LIST, list);
+		List<AttachmentFeedDp> list = attachmentFeedService
+				.getAttachmentFeedDpsByBookId(id);
+		return JsonUtils
+				.getJsonObjectString(Constant.KEY_ATTACHMENTFEED_LIST, list);
 	}
 }
