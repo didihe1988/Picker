@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.weaver.patterns.IfPointcut.IfFalsePointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,12 +33,13 @@ public class RestAttachmentFeedController {
 	private AttachmentService attachmentService;
 
 	@RequestMapping(value = "/json/attachment_feed/add", method = RequestMethod.POST, headers = "Accept=application/json")
-	public String addAttachmentFeed(@RequestParam AttachmentFeedForm form,
+	public String addAttachmentFeed(@RequestBody AttachmentFeedForm form,
 			HttpServletRequest request) {
 		if (!form.chechValidation()) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.ERROR);
 		}
+		System.out.println(form);
 		AttachmentFeed aFeed = AttachmentFeed.getAttachmentFeed(form,
 				HttpUtils.getSessionUserId(request));
 		int status = aFeedService.addAttachmentFeed(aFeed);
@@ -60,8 +62,8 @@ public class RestAttachmentFeedController {
 			 * uplate
 			 */
 			attachment.setaFeedId(aFeedId);
-			attachment.setPath("/resources/attachment/" + form.getBookId()
-					+ "/");
+			attachment.setPath("/resources/attachment/book/" + form.getBookId()
+					+ "/"+attachment.getName());
 			attachmentService.updateAttachment(attachment);
 			/*
 			 * move file
@@ -72,7 +74,7 @@ public class RestAttachmentFeedController {
 	}
 
 	private void moveAttachmentFile(int bookId, String fileName) {
-		String dirString = Constant.ROOTDIR + "attachment/" + bookId + "/";
+		String dirString = Constant.ROOTDIR + "attachment/book/" + bookId + "/";
 		File dir = new File(dirString);
 		if (!dir.exists()) {
 			dir.mkdirs();

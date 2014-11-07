@@ -36,7 +36,7 @@ public class AttachmentUploadController {
 		 * return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 		 * Status.EXISTS); }
 		 */
-		String dir = Constant.ROOTDIR + "tmp/attachment";
+		String dir = Constant.ROOTDIR + "tmp/attachment/";
 		File dirFile = new File(dir);
 		if (!dirFile.exists()) {
 			dirFile.mkdirs();

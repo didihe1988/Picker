@@ -5,10 +5,10 @@ public class Constant {
 
 	}
 
-	 //public static final String ROOTDIR = "F:/sts_workspace/Picker/src/main/webapp/resources/";
+	public static final String ROOTDIR = "F:/sts_workspace/Picker/src/main/webapp/resources/";
 	// public static final String ROOTDIR =
 	// "F:/apache-tomcat-7.0.55/webapps/ROOT/resources/";
-	public static final String ROOTDIR = "/usr/share/tomcat7/webapps/ROOT/resources/";
+	//public static final String ROOTDIR = "/usr/share/tomcat7/webapps/ROOT/resources/";
 	public static final String TMPIMAGEDIR = ROOTDIR + "/tmp/image/";
 
 	public static final String USER = "picker_user";
