@@ -4,12 +4,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,39 +16,35 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Attachment;
 import com.didihe1988.picker.service.AttachmentService;
-import com.didihe1988.picker.service.CircleService;
-import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 
 @RestController
-public class RestAttachmentController {
+public class AttachmentUploadController {
 	@Autowired
 	private AttachmentService attachmentService;
 
-	@RequestMapping(value = "/json/attachment/{bookId}/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/attachment_upload", method = RequestMethod.POST, headers = "Accept=application/json")
 	public String attachmentUpload(
-			@RequestParam("attachment") MultipartFile file,
-			@PathVariable int bookId, HttpServletRequest request) {
-		if ((bookId < 1) || (!HttpUtils.isSessionUserIdExists(request))
-				|| (file.isEmpty())) {
+			@RequestParam("attachment") MultipartFile file) {
+		if (file.isEmpty()) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
-		}
-		if(file.isEmpty())
-		{
-			return  JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.EMPTY);
 		}
 		String name = file.getOriginalFilename();
-		if (attachmentService.isAttachmentExistsByName(name, bookId)) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.EXISTS);
-		}
-		String dir = Constant.ROOTDIR + "attachment/book/" + bookId + "/";
+		/*
+		 * if (attachmentService.isAttachmentExistsByName(name, bookId)) {
+		 * return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+		 * Status.EXISTS); }
+		 */
+		String dir = Constant.ROOTDIR + "tmp/attachment";
 		File dirFile = new File(dir);
 		if (!dirFile.exists()) {
 			dirFile.mkdirs();
 		}
+		/*
+		 * 如果上传的资料重名怎么办
+		 * 绑定具体AttachmentFeed后立即迁移到具体/attachment/book下
+		 */
 		byte[] bytes;
 		try {
 			bytes = file.getBytes();
@@ -68,10 +60,13 @@ public class RestAttachmentController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.ERROR);
 		}
-		String webRoot="/resources/attachment/book/" + bookId + "/";
-		Attachment attachment = new Attachment(bookId,
-				HttpUtils.getSessionUserId(request), name, webRoot + name);
+		// String webRoot = "/resources/attachment/book/" + bookId + "/";
+		Attachment attachment = new Attachment(name);
 		int status = attachmentService.addAttachment(attachment);
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		if (status == Status.SUCCESS) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENT_ID,
+					attachmentService.getLatestAttachmentId());
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, Status.ERROR);
 	}
 }

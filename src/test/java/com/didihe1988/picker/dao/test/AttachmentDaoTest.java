@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.didihe1988.picker.dao.AttachmentDao;
+import com.didihe1988.picker.dao.AttachmentFeedDao;
 import com.didihe1988.picker.model.dp.AttachmentDp;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,7 +21,7 @@ import com.didihe1988.picker.model.dp.AttachmentDp;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AttachmentDaoTest {
 	@Autowired
-	private AttachmentDao attachmentDao;
+	private AttachmentFeedDao attachmentDao;
 	
 	@Test
 	public void test0()

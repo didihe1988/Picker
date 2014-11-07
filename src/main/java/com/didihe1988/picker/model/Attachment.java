@@ -16,25 +16,20 @@ public class Attachment implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	@Column(name = "attachment_id")
 	protected int id;
 
-	@Column(name = "attachment_bookid")
-	protected int bookId;
-
-	@Column(name = "attachment_userid")
-	protected int userId;
+	@Column(name = "attachment_afeedid")
+	protected int aFeedId;
 
 	@Column(name = "attachment_name")
 	protected String name;
 
 	@Column(name = "attachment_path")
 	protected String path;
-
-	@Column(name = "attachment_date")
-	protected Date date;
 
 	public int getId() {
 		return id;
@@ -60,28 +55,12 @@ public class Attachment implements Serializable {
 		this.path = path;
 	}
 
-	public Date getDate() {
-		return date;
+	public int getaFeedId() {
+		return aFeedId;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	public int getBookId() {
-		return bookId;
-	}
-
-	public void setBookId(int bookId) {
-		this.bookId = bookId;
-	}
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setaFeedId(int aFeedId) {
+		this.aFeedId = aFeedId;
 	}
 
 	public Attachment() {
@@ -90,29 +69,21 @@ public class Attachment implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Attachment [id=" + id + ", bookId=" + bookId + ", userId="
-				+ userId + ", name=" + name + ", path=" + path + ", date="
-				+ date + "]";
+		return "Attachment [id=" + id + ", aFeedId=" + aFeedId + ", name="
+				+ name + ", path=" + path + "]";
 	}
 
-	public Attachment(int id, int bookId, int userId, String name, String path,
-			Date date) {
+	public Attachment(int id, int aFeedId, String name, String path) {
 		super();
 		this.id = id;
-		this.bookId = bookId;
-		this.userId = userId;
+		this.aFeedId = aFeedId;
 		this.name = name;
 		this.path = path;
-		this.date = date;
 	}
 
-	public Attachment(int bookId, int userId, String name, String path) {
+	public Attachment(String name) {
 		super();
-		this.bookId = bookId;
-		this.userId = userId;
 		this.name = name;
-		this.path = path;
-		this.date = new Date();
 	}
 
 	public boolean checkFieldValidation() {
@@ -125,9 +96,9 @@ public class Attachment implements Serializable {
 		return true;
 	}
 
-	public Attachment(Attachment attachment) {
-		this(attachment.getId(), attachment.getBookId(),
-				attachment.getUserId(), attachment.getName(), attachment
-						.getPath(), attachment.getDate());
-	}
+	/*
+	 * public Attachment(Attachment attachment) { this(attachment.getId(),
+	 * attachment.getBookId(), attachment.getUserId(), attachment.getName(),
+	 * attachment .getPath(), attachment.getDate()); }
+	 */
 }

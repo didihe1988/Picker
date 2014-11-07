@@ -15,7 +15,7 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.AttachmentDp;
 import com.didihe1988.picker.model.dp.FeedDp;
-import com.didihe1988.picker.service.AttachmentService;
+import com.didihe1988.picker.service.AttachmentFeedService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
 import com.didihe1988.picker.service.FeedService;
@@ -34,7 +34,7 @@ public class RestBookDpController {
 	private FeedService feedService;
 
 	@Autowired
-	private AttachmentService attachmentService;
+	private AttachmentFeedService attachmentService;
 
 	/**
 	 * @description 本书下提出的问题

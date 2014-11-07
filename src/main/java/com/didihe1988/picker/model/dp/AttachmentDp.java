@@ -37,7 +37,7 @@ public class AttachmentDp extends Attachment {
 
 	public AttachmentDp(Attachment attachment, String userName,
 			String userAvatarUrl) {
-		super(attachment);
+		//super(attachment);
 		this.userAvatarUrl = userAvatarUrl;
 		this.userName = userName;
 		this.strDate = DateUtils.getDate(attachment.getDate());
