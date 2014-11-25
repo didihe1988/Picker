@@ -30,6 +30,7 @@ public class AttachmentUploadController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.EMPTY);
 		}
+		System.out.println("file name: "+file.getName());
 		String name = file.getOriginalFilename();
 		/*
 		 * if (attachmentService.isAttachmentExistsByName(name, bookId)) {
@@ -41,6 +42,7 @@ public class AttachmentUploadController {
 		if (!dirFile.exists()) {
 			dirFile.mkdirs();
 		}
+		System.out.println("dirFile: "+dirFile.toString());
 		/*
 		 * 如果上传的资料重名怎么办
 		 * 绑定具体AttachmentFeed后立即迁移到具体/attachment/book下
@@ -60,6 +62,7 @@ public class AttachmentUploadController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.ERROR);
 		}
+		System.out.println("OutputStream finish");
 		// String webRoot = "/resources/attachment/book/" + bookId + "/";
 		Attachment attachment = new Attachment(name);
 		int status = attachmentService.addAttachment(attachment);
@@ -67,6 +70,7 @@ public class AttachmentUploadController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENT_ID,
 					attachmentService.getLatestAttachmentId());
 		}
+		System.out.println("Add Attachment Status: "+status);
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, Status.ERROR);
 	}
 }

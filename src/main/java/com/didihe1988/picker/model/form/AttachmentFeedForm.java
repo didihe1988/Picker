@@ -7,9 +7,19 @@ public class AttachmentFeedForm {
 
 	private int page;
 
+	private String title;
+
 	private String describe;
 
 	private List<Integer> attachmentIds;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
 	public int getBookId() {
 		return bookId;
@@ -47,11 +57,12 @@ public class AttachmentFeedForm {
 
 	}
 
-	public AttachmentFeedForm(int bookId, int page, String describe,
-			List<Integer> attachmentIds) {
+	public AttachmentFeedForm(int bookId, int page, String title,
+			String describe, List<Integer> attachmentIds) {
 		super();
 		this.bookId = bookId;
 		this.page = page;
+		this.title = title;
 		this.describe = describe;
 		this.attachmentIds = attachmentIds;
 	}
@@ -59,13 +70,14 @@ public class AttachmentFeedForm {
 	@Override
 	public String toString() {
 		return "AttachmentFeedForm [bookId=" + bookId + ", page=" + page
-				+ ", describe=" + describe + ", attachmentIds=" + attachmentIds
-				+ "]";
+				+ ", title=" + title + ", describe=" + describe
+				+ ", attachmentIds=" + attachmentIds + "]";
 	}
 
 	public boolean chechValidation() {
 		if ((this.bookId > 0) && (this.page >= 0) && (this.describe != null)
-				&& (!this.describe.equals("")) && (this.attachmentIds != null)) {
+				&& (!this.describe.equals("")) && (this.attachmentIds != null)
+				&& (this.title != null) && (!this.title.equals(""))) {
 			return true;
 		}
 		return false;

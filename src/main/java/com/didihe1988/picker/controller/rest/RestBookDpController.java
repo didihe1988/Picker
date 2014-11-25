@@ -71,7 +71,7 @@ public class RestBookDpController {
 	}
 
 	/**
-	 * @description 本书附件
+	 * @description 本书附件帖
 	 */
 	@RequestMapping(value = "/json/book/{id}/attachmentdps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAttachments(@PathVariable int id,

@@ -178,7 +178,7 @@ public class RestNoteController {
 	}
 
 	private void setNote(Feed feed, HttpServletRequest request) {
-		feed.setType(Feed.TYPE_QUESTION);
+		feed.setType(Feed.TYPE_NOTE);
 		feed.setUserId(HttpUtils.getSessionUserId(request));
 		feed.setBriefByContent();
 		feed.setDate(new Date());

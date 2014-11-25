@@ -5,10 +5,10 @@ public class Constant {
 
 	}
 
-	public static final String ROOTDIR = "F:/sts_workspace/Picker/src/main/webapp/resources/";
+	//public static final String ROOTDIR = "F:/sts_workspace/Picker/src/main/webapp/resources/";
 	// public static final String ROOTDIR =
 	// "F:/apache-tomcat-7.0.55/webapps/ROOT/resources/";
-	//public static final String ROOTDIR = "/usr/share/tomcat7/webapps/ROOT/resources/";
+	public static final String ROOTDIR = "/usr/share/tomcat7/webapps/ROOT/resources/";
 	public static final String TMPIMAGEDIR = ROOTDIR + "/tmp/image/";
 
 	public static final String USER = "picker_user";
@@ -52,6 +52,7 @@ public class Constant {
 	public static final String KEY_IMAGEURL = "imageUrl";
 	public static final String KEY_FAVORITENUM = "favoriteNum";
 	public static final String KEY_ATTACHMENT_ID= "attachmentId";
+	public static final String KEY_ATTACHMENTFEED= "attachmentFeed";
 
 	public static final int MESSAGE_LENGTH = 20;
 	public static final int MAX_PASSWORD_LENGTH = 20;

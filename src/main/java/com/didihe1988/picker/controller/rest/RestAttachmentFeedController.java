@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.weaver.patterns.IfPointcut.IfFalsePointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,6 +50,23 @@ public class RestAttachmentFeedController {
 							.getBookId()));
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+	
+	@RequestMapping(value="/json/attachment_feed/{id}",method=RequestMethod.GET, headers = "Accept=application/json")
+	public String afeed(@PathVariable int id)
+	{
+		if(id<1)
+		{
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.ERROR);
+		}
+		AttachmentFeed aFeed=aFeedService.getAttachmentFeedById(id);
+		if(aFeed!=null)
+		{
+			return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_ATTACHMENTFEED,aFeed);
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+				Status.ERROR);
 	}
 
 	private void refreshAttachment(AttachmentFeedForm form, int aFeedId) {

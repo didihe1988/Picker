@@ -37,6 +37,9 @@ public class AttachmentFeed implements Serializable {
 	@Column(name = "afeed_userid")
 	protected int userId;
 
+	@Column(name = "afeed_title")
+	protected String title;
+
 	@Column(name = "afeed_describe")
 	protected String describe;
 
@@ -100,6 +103,14 @@ public class AttachmentFeed implements Serializable {
 		this.date = date;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public List<Attachment> getAttachments() {
 		return attachments;
 	}
@@ -112,23 +123,26 @@ public class AttachmentFeed implements Serializable {
 
 	}
 
-	public AttachmentFeed(int bookId, int page, int userId, String describe,
-			Date date) {
+	public AttachmentFeed(int bookId, int page, int userId, String title,
+			String describe, Date date) {
 		super();
 		this.bookId = bookId;
 		this.page = page;
 		this.userId = userId;
+		this.title = title;
 		this.describe = describe;
 		this.date = date;
 	}
 
 	public AttachmentFeed(int id, int bookId, int page, int userId,
-			String describe, Date date, List<Attachment> attachments) {
+			String title, String describe, Date date,
+			List<Attachment> attachments) {
 		super();
 		this.id = id;
 		this.bookId = bookId;
 		this.page = page;
 		this.userId = userId;
+		this.title = title;
 		this.describe = describe;
 		this.date = date;
 		this.attachments = attachments;
@@ -136,8 +150,8 @@ public class AttachmentFeed implements Serializable {
 
 	public AttachmentFeed(AttachmentFeed aFeed) {
 		this(aFeed.getId(), aFeed.getBookId(), aFeed.getPage(), aFeed
-				.getUserId(), aFeed.getDescribe(), aFeed.getDate(), aFeed
-				.getAttachments());
+				.getUserId(), aFeed.getTitle(), aFeed.getDescribe(), aFeed
+				.getDate(), aFeed.getAttachments());
 	}
 
 	@Override
@@ -150,7 +164,7 @@ public class AttachmentFeed implements Serializable {
 	public static AttachmentFeed getAttachmentFeed(AttachmentFeedForm form,
 			int userId) {
 		return new AttachmentFeed(form.getBookId(), form.getPage(), userId,
-				form.getDescribe(), new Date());
+				form.getTitle(), form.getDescribe(), new Date());
 	}
 
 }
