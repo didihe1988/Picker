@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.didihe1988.picker.model.dp.SearchResult;
-import com.didihe1988.picker.model.dp.SearchResult.Type;
 import com.didihe1988.picker.model.interfaces.Search;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.DateSerializer;
@@ -290,7 +289,7 @@ public class User implements Serializable, Search {
 		content.append("关注: ").append(this.followNum).append(" 问题: ")
 				.append(this.questionNum).append(" 笔记: ").append(this.noteNum)
 				.append(" 回答: ").append(this.answerNum);
-		return new SearchResult(this.id, Type.User,
+		return new SearchResult(this.id,SearchResult.RESULT_USER,
 				this.username, content.toString(), this.avatarUrl);
 	}
 }

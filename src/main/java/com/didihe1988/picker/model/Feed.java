@@ -10,11 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.didihe1988.picker.model.dp.SearchResult;
-import com.didihe1988.picker.model.dp.SearchResult.Type;
 import com.didihe1988.picker.model.form.FeedForm;
 import com.didihe1988.picker.model.interfaces.Search;
-import com.didihe1988.picker.model.json.NoteJson;
-import com.didihe1988.picker.model.json.QuestionJson;
 import com.didihe1988.picker.utils.MarkdownUtils;
 
 @Entity
@@ -316,11 +313,11 @@ public class Feed implements Serializable, Search {
 				this.brief);
 	}
 
-	private Type getSearchResultType() {
+	private int getSearchResultType() {
 		if (this.type == TYPE_QUESTION) {
-			return Type.Question;
+			return SearchResult.RESULT_QUESTION;
 		}
-		return Type.Note;
+		return SearchResult.RESULT_NOTE;
 	}
 	/*
 	 * public QuestionJson toQuestionJson() {

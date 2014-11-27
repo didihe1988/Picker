@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.didihe1988.picker.model.dp.SearchResult;
-import com.didihe1988.picker.model.dp.SearchResult.Type;
 import com.didihe1988.picker.model.interfaces.Search;
 
 @Entity
@@ -195,8 +194,8 @@ public class Book implements Serializable, Search {
 		 * return new SearchResult(this.id, Type.Book, this.bookName, "作者: " +
 		 * this.writer, this.imageUrl);
 		 */
-		return new SearchResult(this.id, Type.Book, this.bookName, "作者: "
-				+ this.writer, "");
+		return new SearchResult(this.id,SearchResult.RESULT_BOOK, this.bookName, "作者: "
+				+ this.writer,this.imageUrl);
 	}
 	
 }

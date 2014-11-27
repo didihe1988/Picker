@@ -2,15 +2,17 @@ package com.didihe1988.picker.model.dp;
 
 public class SearchResult {
 
-	public enum Type {
-		User, Circle, Book, Question, Note;
-	}
+	public static final int RESULT_USER = 0;
+	public static final int RESULT_CIRCLE = 1;
+	public static final int RESULT_BOOK = 2;
+	public static final int RESULT_QUESTION = 3;
+	public static final int RESULT_NOTE = 4;
 
 	private int id;
 	private String imageUrl;
 	private String name;
 	private String content;
-	private Type type;
+	private int type;
 
 	public int getId() {
 		return id;
@@ -44,11 +46,11 @@ public class SearchResult {
 		this.content = content;
 	}
 
-	public Type getType() {
+	public int getType() {
 		return type;
 	}
 
-	public void setType(Type type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 
@@ -56,7 +58,7 @@ public class SearchResult {
 
 	}
 
-	public SearchResult(int id, Type type, String name, String content,
+	public SearchResult(int id, int type, String name, String content,
 			String imageUrl) {
 		super();
 		this.id = id;
@@ -66,7 +68,7 @@ public class SearchResult {
 		this.imageUrl = imageUrl;
 	}
 
-	public SearchResult(int id, Type type, String name, String content) {
+	public SearchResult(int id, int type, String name, String content) {
 		super();
 		this.id = id;
 		this.type = type;

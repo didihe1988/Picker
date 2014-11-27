@@ -110,7 +110,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<Book> search(String bookName) {
 		// TODO Auto-generated method stub
-		return null;
+		return bookDao.search(bookName);
 	}
 
 }
