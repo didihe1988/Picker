@@ -23,6 +23,16 @@ public class AnswerDaoImpl implements AnswerDao {
 	private Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
+	
+	
+
+	@Override
+	public boolean isModelExistsById(int id) {
+		// TODO Auto-generated method stub
+		return isAnswerExistsById(id);
+	}
+
+
 
 	@Override
 	public Answer queryAnswerById(int id) {

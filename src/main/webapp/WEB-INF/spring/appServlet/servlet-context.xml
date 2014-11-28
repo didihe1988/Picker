@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 			 http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+			 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
@@ -84,4 +86,9 @@
 		class="com.didihe1988.picker.service.support.comment.FeCommentDpGenerator">
 		<beans:qualifier value="feCommentDpGenerator"></beans:qualifier>
 	</beans:bean>
+	<!-- <beans:bean class="com.didihe1988.picker.dao.CommentDao"> <beans:property 
+		name="commentDao"></beans:property> </beans:bean> <util:map id="targetDaos" 
+		scope="prototype" map-class="java.util.HashMap" key-type="java.lang.Integer" 
+		value-type="com.didihe1988.picker.dao.interfaces.NumOperationDao"> <beans:entry 
+		key="0" value-ref="commentDao"></beans:entry> </util:map> -->
 </beans:beans>

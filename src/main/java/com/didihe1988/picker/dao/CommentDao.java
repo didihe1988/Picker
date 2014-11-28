@@ -2,12 +2,12 @@ package com.didihe1988.picker.dao;
 
 import java.util.List;
 
-import com.didihe1988.picker.dao.daoInterface.NumOperation;
-import com.didihe1988.picker.dao.daoInterface.OperateValidation;
+import com.didihe1988.picker.dao.interfaces.NumOperationDao;
+import com.didihe1988.picker.dao.interfaces.OperateValidation;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.dp.CommentDp;
 
-public interface CommentDao extends NumOperation, OperateValidation {
+public interface CommentDao extends NumOperationDao, OperateValidation {
 	public Comment queryCommentById(int id);
 
 	public int addComment(Comment comment);

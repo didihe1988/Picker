@@ -2,12 +2,12 @@ package com.didihe1988.picker.dao;
 
 import java.util.List;
 
-import com.didihe1988.picker.dao.daoInterface.OperateValidation;
-import com.didihe1988.picker.dao.daoInterface.NumOperation;
-import com.didihe1988.picker.dao.daoInterface.SearchOperation;
+import com.didihe1988.picker.dao.interfaces.NumOperationDao;
+import com.didihe1988.picker.dao.interfaces.OperateValidation;
+import com.didihe1988.picker.dao.interfaces.SearchOperation;
 import com.didihe1988.picker.model.Circle;
 
-public interface CircleDao extends OperateValidation, NumOperation,SearchOperation<Circle>{
+public interface CircleDao extends NumOperationDao,OperateValidation,SearchOperation<Circle>{
 	public Circle queryCircleById(int id);
 
 	public int addCircle(Circle circle);

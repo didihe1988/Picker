@@ -72,7 +72,7 @@ public class RestCommentController {
 		int userId = HttpUtils.getSessionUserId(request);
 		String userName = HttpUtils.getSessionUserName(request);
 		int status = favoriteService.incrementCommentFavorite(id, userId);
-
+		System.out.println(status);
 		if (status == Status.SUCCESS) {
 			/*
 			 * XXX赞了您的评论 两个函数都查询了comemnt 有待优化

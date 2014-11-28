@@ -1,6 +1,6 @@
 package com.didihe1988.picker.dao;
 
-import com.didihe1988.picker.dao.daoInterface.SearchOperation;
+import com.didihe1988.picker.dao.interfaces.SearchOperation;
 import com.didihe1988.picker.model.Book;
 
 public interface BookDao extends SearchOperation<Book> {

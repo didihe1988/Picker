@@ -25,6 +25,12 @@ public class CommentDaoImpl implements CommentDao {
 	}
 
 	@Override
+	public boolean isModelExistsById(int id) {
+		// TODO Auto-generated method stub
+		return isCommentExistsById(id);
+	}
+
+	@Override
 	public Comment queryCommentById(int id) {
 		// TODO Auto-generated method stub
 		return (Comment) getCurrentSession().get(Comment.class, id);
@@ -64,7 +70,7 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public boolean isCommentExistsById(int id) {
 		// TODO Auto-generated method stub
-		String hql = "select count(*) from Comment c where c.id = ?";
+		String hql = "select count(*) from Comment c where c.id =?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		Long count = (Long) query.uniqueResult();
@@ -99,7 +105,7 @@ public class CommentDaoImpl implements CommentDao {
 		query.setInteger(1, type);
 		return query.list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<CommentDp> queryCommentDpListByCommentedId(int commentedId,

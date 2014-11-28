@@ -2,13 +2,13 @@ package com.didihe1988.picker.dao;
 
 import java.util.List;
 
-import com.didihe1988.picker.dao.daoInterface.NumOperation;
-import com.didihe1988.picker.dao.daoInterface.OperateValidation;
-import com.didihe1988.picker.dao.daoInterface.SearchOperation;
+import com.didihe1988.picker.dao.interfaces.NumOperationDao;
+import com.didihe1988.picker.dao.interfaces.OperateValidation;
+import com.didihe1988.picker.dao.interfaces.SearchOperation;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.FeedDp;
 
-public interface FeedDao extends OperateValidation, NumOperation,
+public interface FeedDao extends NumOperationDao, OperateValidation,
 		SearchOperation<Feed> {
 	public Feed queryFeedById(int id);
 

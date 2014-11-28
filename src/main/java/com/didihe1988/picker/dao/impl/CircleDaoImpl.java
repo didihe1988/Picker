@@ -21,6 +21,16 @@ public class CircleDaoImpl implements CircleDao {
 	private Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
+	
+	
+
+	@Override
+	public boolean isModelExistsById(int id) {
+		// TODO Auto-generated method stub
+		return isCircleExistsById(id);
+	}
+
+
 
 	/**
 	 * @description:ownerId为establisherId objectId为id

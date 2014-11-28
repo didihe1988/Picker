@@ -24,6 +24,12 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public boolean isModelExistsById(int id) {
+		// TODO Auto-generated method stub
+		return isUserExistsById(id);
+	}
+
+	@Override
 	public Long getMatchCount(String email, String password) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from User as u where u.email=? and u.password = ?";

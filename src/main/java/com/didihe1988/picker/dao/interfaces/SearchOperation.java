@@ -1,4 +1,4 @@
-package com.didihe1988.picker.dao.daoInterface;
+package com.didihe1988.picker.dao.interfaces;
 
 import java.util.List;
 

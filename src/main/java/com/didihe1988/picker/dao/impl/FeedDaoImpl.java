@@ -25,6 +25,16 @@ public class FeedDaoImpl implements FeedDao {
 	private Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
+	
+	
+
+	@Override
+	public boolean isModelExistsById(int id) {
+		// TODO Auto-generated method stub
+		return isFeedExistsById(id);
+	}
+
+
 
 	@Override
 	public boolean checkOperateValidation(int ownerId, int objectId) {

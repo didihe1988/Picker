@@ -2,7 +2,7 @@ package com.didihe1988.picker.dao;
 
 import java.util.List;
 
-import com.didihe1988.picker.dao.daoInterface.OperateValidation;
+import com.didihe1988.picker.dao.interfaces.OperateValidation;
 import com.didihe1988.picker.model.PrivateMessage;
 
 public interface PrivateMessageDao {
