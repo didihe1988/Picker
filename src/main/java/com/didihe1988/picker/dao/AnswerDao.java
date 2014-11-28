@@ -2,14 +2,15 @@ package com.didihe1988.picker.dao;
 
 import java.util.List;
 
-import com.didihe1988.picker.dao.daoInterface.NumOperation;
-import com.didihe1988.picker.dao.daoInterface.OperateValidation;
-import com.didihe1988.picker.dao.daoInterface.SearchOperation;
+import com.didihe1988.picker.dao.interfaces.NumOperationDao;
+import com.didihe1988.picker.dao.interfaces.OperateValidation;
+import com.didihe1988.picker.dao.interfaces.SearchOperation;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.dp.AnswerDp;
 
-public interface AnswerDao extends OperateValidation, NumOperation,
+public interface AnswerDao extends NumOperationDao,OperateValidation, 
 		SearchOperation<Answer> {
+	
 	public Answer queryAnswerById(int id);
 
 	public int addAnswer(Answer answer);

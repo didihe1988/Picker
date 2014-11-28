@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.controller.interfaces.FavoriteController;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
@@ -39,7 +41,7 @@ import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
 @RestController
-public class RestQuestionController {
+public class RestQuestionController implements FavoriteController {
 
 	@Autowired
 	private FeedService feedService;
@@ -64,6 +66,12 @@ public class RestQuestionController {
 
 	@Autowired
 	private RelatedImageService relatedImageService;
+
+	@Override
+	public int getFavoriteType() {
+		// TODO Auto-generated method stub
+		return Favorite.FAVORITE_QUESTION;
+	}
 
 	@RequestMapping(value = "/json/question/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestion(@PathVariable int id) {
@@ -184,7 +192,8 @@ public class RestQuestionController {
 					Status.INVALID);
 		}
 		int userId = HttpUtils.getSessionUserId(request);
-		int status = favoriteService.incrementQuestionFavorite(id, userId);
+		int status = favoriteService.incModelFavorite(id, userId,
+				getFavoriteType());
 		if (status == Status.SUCCESS) {
 			produceSubscribeMessage(id, userId);
 		}
@@ -205,7 +214,8 @@ public class RestQuestionController {
 					Status.INVALID);
 		}
 		int userId = HttpUtils.getSessionUserId(request);
-		int status = favoriteService.decrementQuestionFavorite(id, userId);
+		int status = favoriteService.decModelFavorite(id, userId,
+				getFavoriteType());
 		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 		int favoriteNum = feedService.getFeedById(id).getFavoriteNum();
 		return JsonUtils.getJsonObjectString(Constant.KEY_FAVORITENUM,

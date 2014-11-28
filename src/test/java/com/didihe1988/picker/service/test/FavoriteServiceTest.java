@@ -1,6 +1,5 @@
 package com.didihe1988.picker.service.test;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
 import org.junit.FixMethodOrder;
@@ -12,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.service.FavoriteService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,7 +27,8 @@ public class FavoriteServiceTest {
 	 */
 	@Test
 	public void test0() {
-		int status = favoriteService.incrementNoteFavorite(1, 1);
+		int status = favoriteService.incModelFavorite(1, 4,
+				Favorite.FAVORITE_NOTE);
 		assertSame(Status.SUCCESS, status);
 	}
 
@@ -36,7 +37,8 @@ public class FavoriteServiceTest {
 	 */
 	@Test
 	public void test1() {
-		int status = favoriteService.decrementNoteFavorite(1, 1);
+		int status = favoriteService.decModelFavorite(1, 4,
+				Favorite.FAVORITE_NOTE);
 		assertSame(Status.SUCCESS, status);
 	}
 
@@ -45,16 +47,18 @@ public class FavoriteServiceTest {
 	 */
 	@Test
 	public void test2() {
-		int status = favoriteService.incrementAnswerFavorite(1, 1);
+		int status = favoriteService.incModelFavorite(1, 4,
+				Favorite.FAVORITE_ANSWER);
 		assertSame(Status.SUCCESS, status);
 	}
 
 	/*
-	 * test incrementQuestionFavorite
+	 * test decrementAnswerFavorite
 	 */
 	@Test
 	public void test3() {
-		int status = favoriteService.incrementQuestionFavorite(1, 1);
+		int status = favoriteService.decModelFavorite(1, 4,
+				Favorite.FAVORITE_ANSWER);
 		assertSame(Status.SUCCESS, status);
 	}
 
@@ -63,7 +67,18 @@ public class FavoriteServiceTest {
 	 */
 	@Test
 	public void test4() {
-		int status = favoriteService.incrementCommentFavorite(1, 1);
+		int status = favoriteService.incModelFavorite(1, 4,
+				Favorite.FAVORITE_COMMENT);
+		assertSame(Status.SUCCESS, status);
+	}
+
+	/*
+	 * test decrementCommentFavorite
+	 */
+	@Test
+	public void test5() {
+		int status = favoriteService.decModelFavorite(1, 4,
+				Favorite.FAVORITE_COMMENT);
 		assertSame(Status.SUCCESS, status);
 	}
 

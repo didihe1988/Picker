@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.controller.interfaces.FavoriteController;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
@@ -30,7 +32,7 @@ import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
 @RestController
-public class RestNoteController {
+public class RestNoteController implements FavoriteController {
 	@Autowired
 	private FeedService feedService;
 
@@ -48,6 +50,12 @@ public class RestNoteController {
 
 	@Autowired
 	private UserService userService;
+
+	@Override
+	public int getFavoriteType() {
+		// TODO Auto-generated method stub
+		return Favorite.FAVORITE_NOTE;
+	}
 
 	@RequestMapping(value = "/json/note/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNote(@PathVariable int id) {
@@ -99,7 +107,8 @@ public class RestNoteController {
 					Status.INVALID);
 		}
 		int userId = HttpUtils.getSessionUserId(request);
-		int status = favoriteService.incrementNoteFavorite(id, userId);
+		int status = favoriteService.incModelFavorite(id, userId,
+				getFavoriteType());
 		if (status == Status.SUCCESS) {
 			produceSubscribeMessage(id, userId);
 		}
@@ -151,7 +160,8 @@ public class RestNoteController {
 					Status.INVALID);
 		}
 		int userId = HttpUtils.getSessionUserId(request);
-		int status = favoriteService.decrementNoteFavorite(id, userId);
+		int status = favoriteService.decModelFavorite(id, userId,
+				getFavoriteType());
 		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 		int favoriteNum = feedService.getFeedById(id).getFavoriteNum();
 		return JsonUtils.getJsonObjectString(Constant.KEY_FAVORITENUM,

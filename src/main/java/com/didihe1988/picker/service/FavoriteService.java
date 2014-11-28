@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.didihe1988.picker.model.Favorite;
 
-public interface FavoriteService {
+ public interface FavoriteService {
+	 /*
 	public int incrementCommentFavorite(int commentId, int userId);
 
 	public int decrementCommentFavorite(int commentId, int userId);
@@ -19,7 +20,11 @@ public interface FavoriteService {
 
 	public int incrementNoteFavorite(int noteId, int userId);
 
-	public int decrementNoteFavorite(int noteId, int userId);
+	public int decrementNoteFavorite(int noteId, int userId);*/
+	
+	public int incModelFavorite(int targetId, int userId, int type);
+	
+	public int decModelFavorite(int targetId, int userId, int type);
 
 	/**
 	 * @description 用于功能:获得用户点过的赞 感觉是用户足迹的一种体现

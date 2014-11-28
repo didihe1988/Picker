@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.controller.interfaces.FavoriteController;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.service.AnswerService;
@@ -25,7 +27,7 @@ import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
 @RestController
-public class RestCommentController {
+public class RestCommentController implements FavoriteController {
 	@Autowired
 	private CommentService commentService;
 
@@ -40,6 +42,12 @@ public class RestCommentController {
 
 	@Autowired
 	private AnswerService answerService;
+
+	@Override
+	public int getFavoriteType() {
+		// TODO Auto-generated method stub
+		return Favorite.FAVORITE_COMMENT;
+	}
 
 	@RequestMapping(value = "/json/comment/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getComment(@PathVariable int id) {
@@ -71,7 +79,8 @@ public class RestCommentController {
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		String userName = HttpUtils.getSessionUserName(request);
-		int status = favoriteService.incrementCommentFavorite(id, userId);
+		int status = favoriteService.incModelFavorite(id, userId,
+				getFavoriteType());
 		System.out.println(status);
 		if (status == Status.SUCCESS) {
 			/*
@@ -124,7 +133,8 @@ public class RestCommentController {
 		}
 		// int userId = HttpUtils.getSessionUser(request).getId();
 		int userId = HttpUtils.getSessionUserId(request);
-		int status = favoriteService.decrementCommentFavorite(id, userId);
+		int status = favoriteService.decModelFavorite(id, userId,
+				getFavoriteType());
 		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 		int favoriteNum = commentService.getCommentById(id).getFavoriteNum();
 		return JsonUtils.getJsonObjectString(Constant.KEY_FAVORITENUM,

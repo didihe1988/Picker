@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.controller.interfaces.FavoriteController;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.Comment;
+import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.form.AnswerForm;
@@ -36,7 +38,7 @@ import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
 @Controller
-public class AnswerController {
+public class AnswerController implements FavoriteController {
 	@Autowired
 	private AnswerService answerService;
 
@@ -57,6 +59,12 @@ public class AnswerController {
 
 	@Autowired
 	private UserService userService;
+
+	@Override
+	public int getFavoriteType() {
+		// TODO Auto-generated method stub
+		return Favorite.FAVORITE_ANSWER;
+	}
 
 	@RequestMapping(value = "/json/answer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody String getAnswer(@PathVariable int id) {
@@ -111,7 +119,8 @@ public class AnswerController {
 					Status.INVALID);
 		}
 		int userId = HttpUtils.getSessionUserId(request);
-		int status = favoriteService.incrementAnswerFavorite(id, userId);
+		int status = favoriteService.incModelFavorite(id, userId,
+				getFavoriteType());
 		if (status == Status.SUCCESS) {
 			produceSubscribeMessage(id, userId);
 		}
@@ -166,7 +175,8 @@ public class AnswerController {
 					Status.INVALID);
 		}
 		int userId = HttpUtils.getSessionUserId(request);
-		int status = favoriteService.decrementAnswerFavorite(id, userId);
+		int status = favoriteService.decModelFavorite(id, userId,
+				getFavoriteType());
 		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 		int favoriteNum = answerService.getAnswerById(id).getFavoriteNum();
 		return JsonUtils.getJsonObjectString(Constant.KEY_FAVORITENUM,
