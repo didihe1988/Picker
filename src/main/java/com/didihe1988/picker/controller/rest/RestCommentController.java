@@ -17,6 +17,7 @@ import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.form.CommentForm;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -54,6 +55,19 @@ public class RestCommentController implements FavoriteController {
 		Comment comment = commentService.getCommentById(id);
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_COMMENT,
 				comment);
+	}
+
+	@RequestMapping(value = "/json/comment/add", method = RequestMethod.POST, headers = "Accept=application/json")
+	public String addComment(@RequestBody CommentForm commentForm,
+			HttpServletRequest request) {
+		if (!commentForm.checkFieldValidation()) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
+		Comment comment = Comment.getComment(commentForm,
+				HttpUtils.getSessionUserId(request));
+		int status = commentService.addComment(comment);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
 
 	/**

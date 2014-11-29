@@ -9,6 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.engine.query.ReturnMetadata;
+
+import com.didihe1988.picker.model.form.CommentForm;
+
 @Entity
 @Table(name = "comment")
 public class Comment implements Serializable {
@@ -142,6 +146,11 @@ public class Comment implements Serializable {
 				+ ", producerId=" + producerId + ", content=" + content
 				+ ", type=" + type + ", favoriteNum=" + favoriteNum + ", date="
 				+ date + "]";
+	}
+
+	public static Comment getComment(CommentForm commentForm, int userId) {
+		return new Comment(commentForm.getCommentedId(), userId,
+				commentForm.getContent(), commentForm.getType(), new Date());
 	}
 
 }

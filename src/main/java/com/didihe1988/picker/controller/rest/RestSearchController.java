@@ -2,8 +2,11 @@ package com.didihe1988.picker.controller.rest;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +28,15 @@ import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.CircleService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.UserService;
+import com.didihe1988.picker.service.interfaces.SearchService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 
 @RestController
 public class RestSearchController {
+	/*
+	 * SearchService
+	 */
 	@Autowired
 	private UserService userService;
 
@@ -48,7 +55,6 @@ public class RestSearchController {
 	@RequestMapping(value = "/json/search/user/{username}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String searchUser(@PathVariable String username,
 			HttpServletRequest request) {
-		System.out.println(username);
 		if (!HttpUtils.isSessionUserIdExists(request)) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.NULLSESSION);

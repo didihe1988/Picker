@@ -6,8 +6,9 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.model.json.QuestionJson;
+import com.didihe1988.picker.service.interfaces.SearchService;
 
-public interface FeedService {
+public interface FeedService{
 	public boolean checkOperateValidation(int userId, int feedId);
 
 	public Feed getFeedById(int id);

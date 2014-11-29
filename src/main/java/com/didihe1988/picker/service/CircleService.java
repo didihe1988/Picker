@@ -4,8 +4,9 @@ import java.util.List;
 
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.dp.CircleDp;
+import com.didihe1988.picker.service.interfaces.SearchService;
 
-public interface CircleService {
+public interface CircleService{
 	public int addCircle(Circle circle);
 
 	public int deleteCirvle(Circle circle);

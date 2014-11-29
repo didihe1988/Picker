@@ -5,8 +5,9 @@ import java.util.List;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.UserDp;
+import com.didihe1988.picker.service.interfaces.SearchService;
 
-public interface UserService {
+public interface UserService{
 	public boolean hasMatchUser(String email, String password);
 
 	public User getUserByEmail(String email);

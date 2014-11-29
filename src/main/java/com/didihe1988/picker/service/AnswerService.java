@@ -5,6 +5,7 @@ import java.util.List;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.dp.AnswerDp;
 import com.didihe1988.picker.model.json.AnswerJson;
+import com.didihe1988.picker.service.interfaces.SearchService;
 
 public interface AnswerService {
 	public int addAnswer(Answer answer);
