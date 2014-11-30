@@ -9,11 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.didihe1988.picker.model.dp.SearchResult;
-import com.didihe1988.picker.model.interfaces.Search;
+import com.didihe1988.picker.model.interfaces.SearchModel;
 
 @Entity
 @Table(name = "book")
-public class Book implements Serializable, Search {
+public class Book implements Serializable, SearchModel {
 
 	/**
 	 * 

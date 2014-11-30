@@ -372,27 +372,26 @@ public class RestUserController {
 		int followerId = follow.getFollowerId();
 		String followerName = userService.getUserById(followerId).getUsername();
 		String followedName = userService.getUserById(followedId).getUsername();
+		// 发起关注动作的人是producer
+		User producer = userService.getUserById(followerId);
 		/*
 		 * 与我相关
 		 */
 		messageService.addMessageByRecerver(followedId,
-				Message.MESSAGE_OTHERS_FOLLOW_YOU, followerId, followerName,
-				followedId, followedName, Message.NULL_ExtraContent,
-				Message.NULL_parentId);
+				Message.MESSAGE_OTHERS_FOLLOW_YOU, producer, followedId,
+				followedName, Message.NULL_ExtraContent, Message.NULL_parentId);
 		/*
 		 * 通知关注者 小明(被关注者)关注了xxx
 		 */
 		messageService.addMessageByFollowedUser(
-				Message.MESSAGE_FOLLOWEDUSER_FOLLOW, followerId, followerName,
-				followedId, followedName, Message.NULL_ExtraContent,
-				Message.NULL_parentId);
+				Message.MESSAGE_FOLLOWEDUSER_FOLLOW, producer, followedId,
+				followedName, Message.NULL_ExtraContent, Message.NULL_parentId);
 		/*
 		 * 用户动态
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
-				Message.MESSAGE_USER_FOLLOW_OTHER, followerId, followerName,
-				followedId, followedName, Message.NULL_ExtraContent,
-				Message.NULL_parentId);
+				Message.MESSAGE_USER_FOLLOW_OTHER, producer, followedId,
+				followedName, Message.NULL_ExtraContent, Message.NULL_parentId);
 	}
 
 	/**

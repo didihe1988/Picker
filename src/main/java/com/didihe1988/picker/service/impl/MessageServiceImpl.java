@@ -20,6 +20,7 @@ import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.RelatedImage;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.Dynamic;
 import com.didihe1988.picker.model.dp.Footprint;
 import com.didihe1988.picker.model.dp.MessageDp;
@@ -56,17 +57,16 @@ public class MessageServiceImpl implements MessageService {
 	 * 用户关注的人产生的消息
 	 */
 	@Override
-	public void addMessageByFollowedUser(int type, int producerId,
-			String producerName, int relatedSourceId,
-			String relatedSourceContent, String extraContent, int parentId) {
+	public void addMessageByFollowedUser(int type, User producer,
+			int relatedSourceId, String relatedSourceContent,
+			String extraContent, int parentId) {
 		// TODO Auto-generated method stub
 		final List<Follow> followList = followDao
-				.queryFollowListByFollowedUserId(producerId);
+				.queryFollowListByFollowedUserId(producer.getId());
 		for (Follow follow : followList) {
-			Message message = new Message(follow.getFollowerId(), type,
-					producerId, producerName, relatedSourceId,
-					relatedSourceContent, extraContent, parentId);
-			messageDao.addMessage(message);
+			addMessageByRecerver(follow.getFollowerId(), type, producer,
+					relatedSourceId, relatedSourceContent, extraContent,
+					parentId);
 		}
 	}
 
@@ -74,17 +74,16 @@ public class MessageServiceImpl implements MessageService {
 	 * 用户关注的问题产生的消息
 	 */
 	@Override
-	public void addMessageByFollowedQuestion(int type, int producerId,
-			String producerName, int relatedSourceId,
-			String relatedSourceContent, String extraContent, int parentId) {
+	public void addMessageByFollowedQuestion(int type, User producer,
+			int relatedSourceId, String relatedSourceContent,
+			String extraContent, int parentId) {
 		// TODO Auto-generated method stub
 		final List<Follow> followList = followDao
-				.queryFollowListByQuestionId(producerId);
+				.queryFollowListByQuestionId(producer.getId());
 		for (Follow follow : followList) {
-			Message message = new Message(follow.getFollowerId(), type,
-					producerId, producerName, relatedSourceId,
-					relatedSourceContent, extraContent, parentId);
-			messageDao.addMessage(message);
+			addMessageByRecerver(follow.getFollowerId(), type, producer,
+					relatedSourceId, relatedSourceContent, extraContent,
+					parentId);
 		}
 	}
 
@@ -92,14 +91,22 @@ public class MessageServiceImpl implements MessageService {
 	 * xxx赞了/关注了 您的XXX
 	 */
 	@Override
-	public void addMessageByRecerver(int receiverId, int type, int producerId,
+	public void addMessageByRecerver(int receiverId, int type, User producer,
+			int relatedSourceId, String relatedSourceContent,
+			String extraContent, int parentId) {
+		// TODO Auto-generated method stub
+		addMessageByRecerver(receiverId, type, producer.getId(),
+				producer.getUsername(), relatedSourceId, relatedSourceContent,
+				extraContent, parentId);
+	}
+
+	private void addMessageByRecerver(int receiverId, int type, int producerId,
 			String producerName, int relatedSourceId,
 			String relatedSourceContent, String extraContent, int parentId) {
 		Message message = new Message(receiverId, type, producerId,
 				producerName, relatedSourceId, relatedSourceContent,
 				extraContent, parentId);
 		messageDao.addMessage(message);
-
 	}
 
 	@Override

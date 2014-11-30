@@ -300,4 +300,10 @@ public class FeedServiceImpl implements FeedService {
 		return list;
 	}
 
+	@Override
+	public List<Feed> getFeedListByPage(int bookId, int page) {
+		// TODO Auto-generated method stub
+		return feedDao.queryModelListByPage(bookId, page);
+	}
+
 }

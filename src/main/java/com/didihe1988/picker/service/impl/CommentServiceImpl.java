@@ -1,6 +1,5 @@
 package com.didihe1988.picker.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.CommentDp;
 import com.didihe1988.picker.service.CommentService;
-import com.didihe1988.picker.service.support.comment.AnCommentDpGenerator;
 import com.didihe1988.picker.service.support.comment.CommentDpGenerator;
 
 @Service

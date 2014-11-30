@@ -10,12 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.didihe1988.picker.model.dp.SearchResult;
-import com.didihe1988.picker.model.interfaces.Search;
+import com.didihe1988.picker.model.interfaces.SearchModel;
 import com.didihe1988.picker.model.json.CircleJson;
 
 @Entity
 @Table(name = "circle")
-public class Circle implements Serializable, Search {
+public class Circle implements Serializable, SearchModel {
 	/**
 	 * 
 	 */

@@ -10,13 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.didihe1988.picker.model.dp.SearchResult;
-import com.didihe1988.picker.model.interfaces.Search;
+import com.didihe1988.picker.model.interfaces.SearchModel;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable, Search {
+public class User implements Serializable, SearchModel {
 	/**
 	 * 
 	 */

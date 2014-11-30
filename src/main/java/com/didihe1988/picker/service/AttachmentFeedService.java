@@ -23,4 +23,6 @@ public interface AttachmentFeedService {
 	public List<AttachmentFeedDp> getAttachmentFeedDpsByBookId(int bookId);
 
 	public int getLatestAttachmentFeedByBookId(int bookId);
+
+	public List<AttachmentFeed> getAttachmentFeedListByPage(int bookId, int page);
 }

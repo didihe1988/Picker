@@ -20,6 +20,7 @@ import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.FeedService;
@@ -122,7 +123,9 @@ public class RestNoteController implements FavoriteController {
 		/*
 		 * XXX赞了您的问题
 		 */
-		String curUserName = userService.getUserById(curUserId).getUsername();
+		// String curUserName =
+		// userService.getUserById(curUserId).getUsername();
+		User producer = userService.getUserById(curUserId);
 		Feed feed = feedService.getFeedById(feedId);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getContent(), Constant.MESSAGE_LENGTH);
@@ -131,21 +134,21 @@ public class RestNoteController implements FavoriteController {
 		 * 与我相关
 		 */
 		messageService.addMessageByRecerver(feed.getUserId(),
-				Message.MESSAGE_YOUR_NOTE_FAVORITED, curUserId, curUserName,
-				feedId, relatedSourceContent, extraContent, feed.getBookId());
+				Message.MESSAGE_YOUR_NOTE_FAVORITED, producer, feedId,
+				relatedSourceContent, extraContent, feed.getBookId());
 		/*
 		 * 通知关注者 小明 (被关注者)赞了XXX的问题
 		 */
 		messageService.addMessageByFollowedUser(
-				Message.MESSAGE_FOLLOWED_FAVORITE_NOTE, curUserId, curUserName,
-				feedId, relatedSourceContent, extraContent, feed.getBookId());
+				Message.MESSAGE_FOLLOWED_FAVORITE_NOTE, producer, feedId,
+				relatedSourceContent, extraContent, feed.getBookId());
 		/*
 		 * 用户动态
 		 */
 
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
-				Message.MESSAGE_USER_FAVORITE_NOTE, curUserId, curUserName,
-				feedId, relatedSourceContent, extraContent, feed.getBookId());
+				Message.MESSAGE_USER_FAVORITE_NOTE, producer, feedId,
+				relatedSourceContent, extraContent, feed.getBookId());
 	}
 
 	/**
@@ -204,21 +207,21 @@ public class RestNoteController implements FavoriteController {
 	private void produceNoteMessage(Feed feed, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		// String userName = HttpUtils.getSessionUserName(request);
-		String userName = userService.getUserById(userId).getUsername();
+		User producer = userService.getUserById(userId);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getTitle(), Constant.MESSAGE_LENGTH);
 		int noteId = feedService.getLatestFeedByBookId(feed.getBookId(),
 				Feed.TYPE_NOTE);
 		String extraContent = feedService.getFeedById(noteId).getTitle();
 		messageService.addMessageByFollowedUser(
-				Message.MESSAGE_FOLLOWED_ADDNOTE, userId, userName, noteId,
+				Message.MESSAGE_FOLLOWED_ADDNOTE, producer, noteId,
 				relatedSourceContent, extraContent, feed.getBookId());
 
 		/*
 		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
-				Message.MESSAGE_USER_ADDNOTE, userId, userName, noteId,
+				Message.MESSAGE_USER_ADDNOTE, producer, noteId,
 				relatedSourceContent, extraContent, -feed.getBookId());
 	}
 

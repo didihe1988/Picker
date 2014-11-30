@@ -17,12 +17,14 @@ import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.form.CommentForm;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.MessageService;
+import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
@@ -43,6 +45,9 @@ public class RestCommentController implements FavoriteController {
 
 	@Autowired
 	private AnswerService answerService;
+
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public int getFavoriteType() {
@@ -92,7 +97,8 @@ public class RestCommentController implements FavoriteController {
 					Status.INVALID);
 		}
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = HttpUtils.getSessionUserName(request);
+		// String userName = HttpUtils.getSessionUserName(request);
+		User producer = userService.getUserById(userId);
 		int status = favoriteService.incModelFavorite(id, userId,
 				getFavoriteType());
 		System.out.println(status);
@@ -107,24 +113,24 @@ public class RestCommentController implements FavoriteController {
 			String relatedSourceContent = StringUtils.confineStringLength(
 					comment.getContent(), Constant.MESSAGE_LENGTH);
 			messageService.addMessageByRecerver(comment.getProducerId(),
-					Message.MESSAGE_YOUR_COMMENT_FAVORITED, userId, userName,
-					id, relatedSourceContent, Message.NULL_ExtraContent,
+					Message.MESSAGE_YOUR_COMMENT_FAVORITED, producer, id,
+					relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
 
 			/*
 			 * 通知关注者 小明 (被关注者)赞了XXX的评论
 			 */
 			messageService.addMessageByFollowedUser(
-					Message.MESSAGE_FOLLOWED_FAVORITE_COMMENT, userId,
-					userName, id, relatedSourceContent,
-					Message.NULL_ExtraContent, Message.NULL_parentId);
+					Message.MESSAGE_FOLLOWED_FAVORITE_COMMENT, producer, id,
+					relatedSourceContent, Message.NULL_ExtraContent,
+					Message.NULL_parentId);
 
 			/*
 			 * 用户动态
 			 */
 			messageService.addMessageByRecerver(Message.NULL_receiverId,
-					Message.MESSAGE_USER_FAVORITE_COMMENT, userId, userName,
-					id, relatedSourceContent, Message.NULL_ExtraContent,
+					Message.MESSAGE_USER_FAVORITE_COMMENT, producer, id,
+					relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
 		}
 
@@ -170,7 +176,8 @@ public class RestCommentController implements FavoriteController {
 	private void addCommentMessage(Comment comment, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		int commentId = commentService.getLatestCommentIdByUserId(userId);
-		String userName = HttpUtils.getSessionUserName(request);
+		// 评论时的producer就是当前user
+		User producer = userService.getUserById(userId);
 		// relatedSourceContent-评论内容
 		String relatedSourceContent = StringUtils.confineStringLength(
 				comment.getContent(), Constant.MESSAGE_LENGTH);
@@ -180,9 +187,8 @@ public class RestCommentController implements FavoriteController {
 		if (comment.getType() == Comment.COMMENT_QUESTION) {
 			Feed feed = feedService.getFeedById(comment.getCommentedId());
 			messageService.addMessageByRecerver(feed.getUserId(),
-					Message.MESSAGE_YOUR_QUESTION_COMMENTED,
-					comment.getProducerId(), userName, commentId,
-					relatedSourceContent, Message.NULL_ExtraContent,
+					Message.MESSAGE_YOUR_QUESTION_COMMENTED, producer,
+					commentId, relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
 		}
 
@@ -193,8 +199,8 @@ public class RestCommentController implements FavoriteController {
 			Answer answer = answerService.getAnswerById(comment
 					.getCommentedId());
 			messageService.addMessageByRecerver(answer.getReplierId(),
-					Message.MESSAGE_YOUR_ANSWER_COMMENTED, userId, userName,
-					commentId, relatedSourceContent, Message.NULL_ExtraContent,
+					Message.MESSAGE_YOUR_ANSWER_COMMENTED, producer, commentId,
+					relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
 		}
 

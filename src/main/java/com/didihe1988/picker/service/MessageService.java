@@ -3,6 +3,7 @@ package com.didihe1988.picker.service;
 import java.util.List;
 
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.Dynamic;
 import com.didihe1988.picker.model.dp.Footprint;
 import com.didihe1988.picker.model.dp.MessageDp;
@@ -52,9 +53,14 @@ public interface MessageService {
 	 * 用户关注的人产生的消息
 	 */
 
-	public void addMessageByFollowedUser(int type, int producerId,
-			String producerName, int relatedSourceId,
-			String relatedSourceContent, String extraContent, int parentId);
+	/*
+	 * public void addMessageByFollowedUser(int type, int producerId, String
+	 * producerName, int relatedSourceId, String relatedSourceContent, String
+	 * extraContent, int parentId);
+	 */
+	public void addMessageByFollowedUser(int type, User producer,
+			int relatedSourceId, String relatedSourceContent,
+			String extraContent, int parentId);
 
 	// public void addMessageByFollowedUser(FollowedMessage foMessage);
 
@@ -62,17 +68,21 @@ public interface MessageService {
 	 * 用户关注的问题产生的消息
 	 */
 
-	public void addMessageByFollowedQuestion(int type, int producerId,
-			String producerName, int relatedSourceId,
-			String relatedSourceContent, String extraContent, int parentId);
+	public void addMessageByFollowedQuestion(int type, User producer,
+			int relatedSourceId, String relatedSourceContent,
+			String extraContent, int parentId);
 
 	// public void addMessageByFollowedQuestion(FollowedMessage foMessage);
 
 	/*
 	 * xxx赞了/关注了 您的XXX
 	 */
-	public void addMessageByRecerver(int receiverId, int type, int producerId,
-			String producerName, int relatedSourceId,
-			String relatedSourceContent, String extraContent, int parentId);
-
+	/*
+	 * public void addMessageByRecerver(int receiverId, int type, int
+	 * producerId, String producerName, int relatedSourceId, String
+	 * relatedSourceContent, String extraContent, int parentId);
+	 */
+	public void addMessageByRecerver(int receiverId, int type, User producer,
+			int relatedSourceId, String relatedSourceContent,
+			String extraContent, int parentId);
 }

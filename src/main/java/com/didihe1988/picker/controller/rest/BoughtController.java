@@ -13,6 +13,7 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
 import com.didihe1988.picker.service.MessageService;
@@ -61,18 +62,18 @@ public class BoughtController {
 
 	private void addBoughtMessage(Bought bought) {
 		// TODO Auto-generated method stub
-		String userName = userService.getUserById(bought.getUserId())
-				.getUsername();
+		User producer = userService.getUserById(bought.getUserId());
 		String relatedSourceContent = bookService.getBookById(
 				bought.getBookId()).getBookName();
 		String extraContent = bookService.getBookById(bought.getBookId())
 				.getWriter();
-		messageService.addMessageByFollowedUser(Message.MESSAGE_FOLLOWED_ADDBOUGHT, bought.getUserId(),
-				userName, bought.getBookId(), relatedSourceContent,
-				extraContent, Message.NULL_parentId);
+		messageService.addMessageByFollowedUser(
+				Message.MESSAGE_FOLLOWED_ADDBOUGHT, producer,
+				bought.getBookId(), relatedSourceContent, extraContent,
+				Message.NULL_parentId);
 	}
 
-	@RequestMapping(value = "/json/book/{id}/delete",headers = "Accept=application/json")
+	@RequestMapping(value = "/json/book/{id}/delete", headers = "Accept=application/json")
 	public String delete(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,

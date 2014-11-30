@@ -13,11 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.didihe1988.picker.model.dp.SearchResult;
 import com.didihe1988.picker.model.form.AttachmentFeedForm;
+import com.didihe1988.picker.model.interfaces.SearchModel;
 
 @Entity
 @Table(name = "afeed")
-public class AttachmentFeed implements Serializable {
+public class AttachmentFeed implements Serializable, SearchModel {
 	/**
 	 * 
 	 */
@@ -165,6 +167,13 @@ public class AttachmentFeed implements Serializable {
 			int userId) {
 		return new AttachmentFeed(form.getBookId(), form.getPage(), userId,
 				form.getTitle(), form.getDescribe(), new Date());
+	}
+
+	@Override
+	public SearchResult toSearchResult() {
+		// TODO Auto-generated method stub
+		return new SearchResult(this.id, SearchResult.RESULT_AFEED, this.title,
+				this.describe);
 	}
 
 }

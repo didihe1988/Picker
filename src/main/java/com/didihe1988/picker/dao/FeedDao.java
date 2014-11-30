@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.didihe1988.picker.dao.interfaces.NumOperationDao;
 import com.didihe1988.picker.dao.interfaces.OperateValidation;
+import com.didihe1988.picker.dao.interfaces.PageRelatedOperation;
 import com.didihe1988.picker.dao.interfaces.SearchOperation;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.FeedDp;
 
 public interface FeedDao extends NumOperationDao, OperateValidation,
-		SearchOperation<Feed> {
+		SearchOperation<Feed>, PageRelatedOperation<Feed> {
 	public Feed queryFeedById(int id);
 
 	public int addFeed(Feed feed);
@@ -39,5 +40,5 @@ public interface FeedDao extends NumOperationDao, OperateValidation,
 	public List<FeedDp> queryFeedDpListForBrowse(int bookId);
 
 	public List<Feed> search(String string, int type);
-
+	
 }

@@ -25,16 +25,12 @@ public class FeedDaoImpl implements FeedDao {
 	private Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	
-	
 
 	@Override
 	public boolean isModelExistsById(int id) {
 		// TODO Auto-generated method stub
 		return isFeedExistsById(id);
 	}
-
-
 
 	@Override
 	public boolean checkOperateValidation(int ownerId, int objectId) {
@@ -120,6 +116,17 @@ public class FeedDaoImpl implements FeedDao {
 		hql = addTypeConstrain(hql, type);
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Feed> queryModelListByPage(int bookId, int page) {
+		// TODO Auto-generated method stub
+		String hql = "from Feed as f where f.bookId=? and f.page=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		query.setInteger(1, page);
 		return query.list();
 	}
 

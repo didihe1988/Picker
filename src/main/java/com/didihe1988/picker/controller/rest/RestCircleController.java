@@ -19,6 +19,7 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.CircleDp;
 import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.service.CircleMemberService;
@@ -154,18 +155,20 @@ public class RestCircleController {
 
 	private void addCircleMessage(Circle circle, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = userService.getUserById(userId).getUsername();
+		User producer = userService.getUserById(userId);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				circle.getName(), Constant.MESSAGE_LENGTH);
 		int circleId = circleService.getLatestCircleIdByEstablisherId(circle
 				.getEstablisherId());
 		String extraContent = StringUtils.confineStringLength(
 				circle.getDescribe(), Constant.MESSAGE_LENGTH);
+
 		messageService.addMessageByFollowedUser(
-				Message.MESSAGE_FOLLOWED_ADDCIRCLE, userId, userName, circleId,
+				Message.MESSAGE_FOLLOWED_ADDCIRCLE, producer, circleId,
 				relatedSourceContent, extraContent, Message.NULL_parentId);
+
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
-				Message.MESSAGE_USER_ADDCIRCLE, userId, userName, circleId,
+				Message.MESSAGE_USER_ADDCIRCLE, producer, circleId,
 				relatedSourceContent, extraContent, Message.NULL_parentId);
 	}
 
@@ -206,20 +209,19 @@ public class RestCircleController {
 
 	private void joinCircleMessage(int circleId, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = userService.getUserById(userId).getUsername();
+		User producer = userService.getUserById(userId);
 		Circle circle = circleService.getCircleById(circleId);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				circle.getName(), Constant.MESSAGE_LENGTH);
 		String extraContent = StringUtils.confineStringLength(
 				circle.getDescribe(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(
-				Message.MESSAGE_FOLLOWED_JOINCIRCLE, userId, userName,
-				circleId, relatedSourceContent, extraContent,
-				Message.NULL_parentId);
+				Message.MESSAGE_FOLLOWED_JOINCIRCLE, producer, circleId,
+				relatedSourceContent, extraContent, Message.NULL_parentId);
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
-				Message.MESSAGE_USER_JOINCIRCLE, userId, userName, circleId,
+				Message.MESSAGE_USER_JOINCIRCLE, producer, circleId,
 				relatedSourceContent, extraContent, Message.NULL_parentId);
 
 	}
-	
+
 }

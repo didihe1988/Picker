@@ -11,12 +11,12 @@ import javax.persistence.Table;
 
 import com.didihe1988.picker.model.dp.SearchResult;
 import com.didihe1988.picker.model.form.FeedForm;
-import com.didihe1988.picker.model.interfaces.Search;
+import com.didihe1988.picker.model.interfaces.SearchModel;
 import com.didihe1988.picker.utils.MarkdownUtils;
 
 @Entity
 @Table(name = "feed")
-public class Feed implements Serializable, Search {
+public class Feed implements Serializable, SearchModel {
 
 	/**
 	 * 

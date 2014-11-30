@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
@@ -18,6 +17,7 @@ import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.model.form.FeedForm;
@@ -29,7 +29,6 @@ import com.didihe1988.picker.service.RelatedImageService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.ImageUtils;
-import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
 
 @Controller
@@ -117,7 +116,7 @@ public class DetailController {
 
 	private void addFeedMessage(Feed feed, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = userService.getUserById(userId).getUsername();
+		User producer = userService.getUserById(userId);
 		int feedId = feedService.getLatestFeedByBookId(feed.getBookId(),
 				Feed.TYPE_QUESTION);
 		String relatedSourceContent = StringUtils.confineStringLength(
@@ -125,25 +124,24 @@ public class DetailController {
 		String extraContent = feedService.getFeedById(feedId).getTitle();
 		if (feed.getType() == Feed.TYPE_QUESTION) {
 			messageService.addMessageByFollowedUser(
-					Message.MESSAGE_FOLLOWED_ASKQUESTION, userId, userName,
-					feedId, relatedSourceContent, feed.getTitle(),
-					feed.getBookId());
+					Message.MESSAGE_FOLLOWED_ASKQUESTION, producer, feedId,
+					relatedSourceContent, feed.getTitle(), feed.getBookId());
 			/*
 			 * 用户足迹
 			 */
 			messageService.addMessageByRecerver(Message.NULL_receiverId,
-					Message.MESSAGE_USER_ADDQUESTION, userId, userName, feedId,
+					Message.MESSAGE_USER_ADDQUESTION, producer, feedId,
 					relatedSourceContent, feed.getTitle(), feed.getBookId());
 		} else {
 			messageService.addMessageByFollowedUser(
-					Message.MESSAGE_FOLLOWED_ADDNOTE, userId, userName, feedId,
+					Message.MESSAGE_FOLLOWED_ADDNOTE, producer, feedId,
 					relatedSourceContent, extraContent, feed.getBookId());
 
 			/*
 			 * 用户足迹
 			 */
 			messageService.addMessageByRecerver(Message.NULL_receiverId,
-					Message.MESSAGE_USER_ADDNOTE, userId, userName, feedId,
+					Message.MESSAGE_USER_ADDNOTE, producer, feedId,
 					relatedSourceContent, extraContent, -feed.getBookId());
 		}
 	}

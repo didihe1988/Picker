@@ -1,12 +1,8 @@
 package com.didihe1988.picker.controller.rest;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.model.AttachmentFeed;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.SearchResult;
-import com.didihe1988.picker.model.json.CircleJson;
+import com.didihe1988.picker.model.interfaces.SearchModel;
 import com.didihe1988.picker.service.AnswerService;
+import com.didihe1988.picker.service.AttachmentFeedService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.CircleService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.UserService;
-import com.didihe1988.picker.service.interfaces.SearchService;
-import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
+import com.didihe1988.picker.utils.StringUtils;
 
 @RestController
 public class RestSearchController {
@@ -52,24 +49,21 @@ public class RestSearchController {
 	@Autowired
 	private CircleService circleService;
 
+	@Autowired
+	private AttachmentFeedService aFeedService;
+
+	private SearchModelListGenerator generator = new SearchModelListGenerator();
+
 	@RequestMapping(value = "/json/search/user/{username}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String searchUser(@PathVariable String username,
 			HttpServletRequest request) {
-		if (!HttpUtils.isSessionUserIdExists(request)) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.NULLSESSION);
-		}
 		if (username.equals("")) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		username=toUTF8(username);
+		username = StringUtils.toUTF8(username);
 		List<User> userList = userService.search(username);
-		List<SearchResult> list = new ArrayList<SearchResult>();
-		for (User user : userList) {
-			SearchResult result = user.toSearchResult();
-			list.add(result);
-		}
+		List<SearchResult> list = generator.toSearchResults(userList);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
 				list);
 	}
@@ -77,22 +71,14 @@ public class RestSearchController {
 	@RequestMapping(value = "/json/search/questoin/{string}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String searchQuestion(@PathVariable String string,
 			HttpServletRequest request) {
-		if (!HttpUtils.isSessionUserIdExists(request)) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.NULLSESSION);
-		}
 		if (string.equals("")) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		string=toUTF8(string);
+		string = StringUtils.toUTF8(string);
 		List<Feed> questoinList = feedService
 				.search(string, Feed.TYPE_QUESTION);
-		List<SearchResult> list = new ArrayList<SearchResult>();
-		for (Feed feed : questoinList) {
-			SearchResult result = feed.toSearchResult();
-			list.add(result);
-		}
+		List<SearchResult> list = generator.toSearchResults(questoinList);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
 				list);
 	}
@@ -100,21 +86,13 @@ public class RestSearchController {
 	@RequestMapping(value = "/json/search/note/{string}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String searchNote(@PathVariable String string,
 			HttpServletRequest request) {
-		if (!HttpUtils.isSessionUserIdExists(request)) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.NULLSESSION);
-		}
 		if (string.equals("")) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		string=toUTF8(string);
+		string = StringUtils.toUTF8(string);
 		List<Feed> noteList = feedService.search(string, Feed.TYPE_NOTE);
-		List<SearchResult> list = new ArrayList<SearchResult>();
-		for (Feed feed : noteList) {
-			SearchResult result = feed.toSearchResult();
-			list.add(result);
-		}
+		List<SearchResult> list = generator.toSearchResults(noteList);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
 				list);
 	}
@@ -122,22 +100,14 @@ public class RestSearchController {
 	@RequestMapping(value = "/json/search/book/{string}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String searchBook(@PathVariable String string,
 			HttpServletRequest request) {
-		if (!HttpUtils.isSessionUserIdExists(request)) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.NULLSESSION);
-		}
 		if (string.equals("")) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		string=toUTF8(string);
+		string = StringUtils.toUTF8(string);
 		System.out.println(string);
 		List<Book> bookList = bookService.search(string);
-		List<SearchResult> list = new ArrayList<SearchResult>();
-		for (Book book : bookList) {
-			SearchResult result = book.toSearchResult();
-			list.add(result);
-		}
+		List<SearchResult> list = generator.toSearchResults(bookList);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
 				list);
 	}
@@ -145,51 +115,68 @@ public class RestSearchController {
 	@RequestMapping(value = "/json/search/circle/{string}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String searchCircle(@PathVariable String string,
 			HttpServletRequest request) {
-		if (!HttpUtils.isSessionUserIdExists(request)) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.NULLSESSION);
-		}
 		if (string.equals("")) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		string=toUTF8(string);
+		string = StringUtils.toUTF8(string);
 		List<Circle> circleList = circleService.search(string);
-		List<SearchResult> list = new ArrayList<SearchResult>();
-		for (Circle circle : circleList) {
-			SearchResult result = circle.toSearchResult();
-			list.add(result);
-		}
+		List<SearchResult> list = generator.toSearchResults(circleList);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
 				list);
 	}
 
-	@RequestMapping(value = "/group_search", produces = "application/json", headers = "Accept=application/json")
-	public String groupSearch(HttpServletRequest request) {
+	/*
+	 * @RequestMapping(value = "/group_search", produces = "application/json",
+	 * headers = "Accept=application/json") public String
+	 * groupSearch(HttpServletRequest request) {
+	 * 
+	 * // 如果为""怎么办
+	 * 
+	 * String groupName = (String) request.getParameter("group_name");
+	 * groupName=toUTF8(groupName); List<Circle> circleList =
+	 * circleService.search(groupName);
+	 * 
+	 * List<CircleJson> list = new ArrayList<CircleJson>(); for (Circle circle :
+	 * circleList) { list.add(circle.toCircleJson()); } return
+	 * JsonUtils.getJsonObjectString("groups", list); }
+	 */
 
-		/*
-		 * 如果为""怎么办
-		 */
-		String groupName = (String) request.getParameter("group_name");
-		groupName=toUTF8(groupName);
-		List<Circle> circleList = circleService.search(groupName);
-
-		List<CircleJson> list = new ArrayList<CircleJson>();
-		for (Circle circle : circleList) {
-			list.add(circle.toCircleJson());
+	@RequestMapping(value = "/search/book/{bookId}/{page}")
+	public String pageSearch(@PathVariable int bookId, @PathVariable int page) {
+		if ((bookId < 1) || (page < 0)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
 		}
-		return JsonUtils.getJsonObjectString("groups", list);
+		List<AttachmentFeed> aFeedList = aFeedService
+				.getAttachmentFeedListByPage(bookId, page);
+		List<Feed> feedList = feedService.getFeedListByPage(bookId, page);
+		List<SearchResult> list = generator.toSearchResults(aFeedList);
+		list = generator.addSearchResults(list, feedList);
+		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
+				list);
 	}
-	
-	private String toUTF8(String rawString)
-	{
-		try {
-			rawString =new String(rawString.getBytes("ISO-8859-1"),"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+	private class SearchModelListGenerator {
+
+		public List<SearchResult> toSearchResults(
+				List<? extends SearchModel> rawList) {
+			List<SearchResult> results = new ArrayList<SearchResult>(
+					rawList.size());
+			for (SearchModel model : rawList) {
+				results.add(model.toSearchResult());
+			}
+			return results;
 		}
-		return rawString;
+
+		public List<SearchResult> addSearchResults(List<SearchResult> results,
+				List<? extends SearchModel> rawList) {
+			if (results == null) {
+				results = new ArrayList<SearchResult>();
+			}
+			results.addAll(toSearchResults(rawList));
+			return results;
+		}
 	}
 
 }

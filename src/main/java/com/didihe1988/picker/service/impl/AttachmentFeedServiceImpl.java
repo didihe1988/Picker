@@ -88,4 +88,10 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 		return attachmentFeedDao.queryAttachmentFeedDpsByBookId(bookId);
 	}
 
+	@Override
+	public List<AttachmentFeed> getAttachmentFeedListByPage(int bookId, int page) {
+		// TODO Auto-generated method stub
+		return attachmentFeedDao.queryModelListByPage(bookId, page);
+	}
+
 }

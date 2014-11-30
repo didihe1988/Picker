@@ -25,6 +25,7 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.UserDp;
 import com.didihe1988.picker.model.form.FeedForm;
 import com.didihe1988.picker.service.AnswerService;
@@ -258,19 +259,19 @@ public class RestQuestionController implements FavoriteController {
 		 * 通知关注者 小明 (被关注者)提出了一个问题
 		 */
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = userService.getUserById(userId).getUsername();
+		User producer = userService.getUserById(userId);
 		int feedId = feedService.getLatestFeedByBookId(feed.getBookId(),
 				Feed.TYPE_QUESTION);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getBrief(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(
-				Message.MESSAGE_FOLLOWED_ASKQUESTION, userId, userName, feedId,
+				Message.MESSAGE_FOLLOWED_ASKQUESTION, producer, feedId,
 				relatedSourceContent, feed.getTitle(), feed.getBookId());
 		/*
 		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
-				Message.MESSAGE_USER_ADDQUESTION, userId, userName, feedId,
+				Message.MESSAGE_USER_ADDQUESTION, producer, feedId,
 				relatedSourceContent, feed.getTitle(), feed.getBookId());
 	}
 
@@ -278,7 +279,9 @@ public class RestQuestionController implements FavoriteController {
 		/*
 		 * XXX赞了您的问题
 		 */
-		String curUserName = userService.getUserById(curUserId).getUsername();
+		// String curUserName =
+		// userService.getUserById(curUserId).getUsername();
+		User producer = userService.getUserById(curUserId);
 		Feed feed = feedService.getFeedById(feedId);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getContent(), Constant.MESSAGE_LENGTH);
@@ -286,25 +289,21 @@ public class RestQuestionController implements FavoriteController {
 		 * 与我相关
 		 */
 		messageService.addMessageByRecerver(feed.getUserId(),
-				Message.MESSAGE_YOUR_QUESTION_FAVORITED, curUserId,
-				curUserName, feedId, relatedSourceContent, feed.getTitle(),
-				feed.getBookId());
+				Message.MESSAGE_YOUR_QUESTION_FAVORITED, producer, feedId,
+				relatedSourceContent, feed.getTitle(), feed.getBookId());
 		/*
 		 * 通知关注者 小明 (被关注者)赞了XXX的问题
 		 */
 		messageService.addMessageByFollowedUser(
-				Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, curUserId,
-				curUserName, feedId, relatedSourceContent, feed.getTitle(),
-				feed.getBookId());
+				Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, producer, feedId,
+				relatedSourceContent, feed.getTitle(), feed.getBookId());
 		/*
 		 * 用户动态
 		 */
 
-		messageService
-				.addMessageByRecerver(Message.NULL_receiverId,
-						Message.MESSAGE_USER_FAVORITE_QUESTION, curUserId,
-						curUserName, feedId, relatedSourceContent,
-						feed.getTitle(), feed.getBookId());
+		messageService.addMessageByRecerver(Message.NULL_receiverId,
+				Message.MESSAGE_USER_FAVORITE_QUESTION, producer, feedId,
+				relatedSourceContent, feed.getTitle(), feed.getBookId());
 
 	}
 

@@ -7,6 +7,7 @@ public class SearchResult {
 	public static final int RESULT_BOOK = 2;
 	public static final int RESULT_QUESTION = 3;
 	public static final int RESULT_NOTE = 4;
+	public static final int RESULT_AFEED = 5;
 
 	private int id;
 	private String imageUrl;

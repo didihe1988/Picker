@@ -1,5 +1,6 @@
 package com.didihe1988.picker.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -72,6 +73,16 @@ public class StringUtils {
 
 	public static boolean isEmailFormatValid(String email) {
 		return true;
+	}
+
+	public static String toUTF8(String rawString) {
+		try {
+			rawString = new String(rawString.getBytes("ISO-8859-1"), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rawString;
 	}
 
 }

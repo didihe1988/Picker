@@ -8,7 +8,7 @@ import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.model.json.QuestionJson;
 import com.didihe1988.picker.service.interfaces.SearchService;
 
-public interface FeedService{
+public interface FeedService {
 	public boolean checkOperateValidation(int userId, int feedId);
 
 	public Feed getFeedById(int id);
@@ -48,4 +48,6 @@ public interface FeedService{
 	public List<NoteJson> getNoteJsons(int userId, int page);
 
 	public List<QuestionJson> getQuestoinJsons(int userId, int page);
+
+	public List<Feed> getFeedListByPage(int bookId, int page);
 }

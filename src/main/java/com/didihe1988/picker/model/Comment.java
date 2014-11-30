@@ -24,6 +24,7 @@ public class Comment implements Serializable {
 	public static final int COMMENT_QUESTION = 0;
 	public static final int COMMENT_ANSWER = 1;
 	public static final int COMMENT_NOTE = 2;
+	public static final int COMMENT_AFEED = 3;
 
 	@Id
 	@GeneratedValue

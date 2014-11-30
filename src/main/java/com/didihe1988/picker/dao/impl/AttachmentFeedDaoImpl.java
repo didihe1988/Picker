@@ -84,7 +84,7 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<AttachmentFeedDp> queryAttachmentFeedDpsByBookId(int bookId) { 
+	public List<AttachmentFeedDp> queryAttachmentFeedDpsByBookId(int bookId) {
 		String hql = "select new com.didihe1988.picker.model.dp.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id ";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
@@ -98,6 +98,17 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		return (Integer) query.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AttachmentFeed> queryModelListByPage(int bookId, int page) {
+		// TODO Auto-generated method stub
+		String hql = "from AttachmentFeed as a where a.bookId =? and a.page=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		query.setInteger(1, page);
+		return query.list();
 	}
 
 }

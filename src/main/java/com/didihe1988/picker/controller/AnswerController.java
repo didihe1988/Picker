@@ -24,6 +24,7 @@ import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.form.AnswerForm;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
@@ -137,14 +138,16 @@ public class AnswerController implements FavoriteController {
 		/*
 		 * XXX赞了您的回答
 		 */
-		String curUserName = userService.getUserById(curUserId).getUsername();
+		// String curUserName =
+		// userService.getUserById(curUserId).getUsername();
+		User producer = userService.getUserById(curUserId);
 		Answer answer = answerService.getAnswerById(answerId);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				answer.getContent(), Constant.MESSAGE_LENGTH);
 		String extraContent = feedService.getFeedById(answer.getQuestionId())
 				.getTitle();
 		messageService.addMessageByRecerver(answer.getReplierId(),
-				Message.MESSAGE_YOUR_ANSWER_FAVORITED, curUserId, curUserName,
+				Message.MESSAGE_YOUR_ANSWER_FAVORITED, producer,
 				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
 
@@ -152,9 +155,9 @@ public class AnswerController implements FavoriteController {
 		 * 通知关注者 小明 (被关注者)赞了XXX的
 		 */
 		messageService.addMessageByFollowedUser(
-				Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, curUserId,
-				curUserName, answer.getQuestionId(), relatedSourceContent,
-				extraContent, answer.getQuestionId());
+				Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, producer,
+				answer.getQuestionId(), relatedSourceContent, extraContent,
+				answer.getQuestionId());
 		/*
 		 * 通知关注该问题的人 xxx回答了该问题
 		 */
@@ -162,7 +165,7 @@ public class AnswerController implements FavoriteController {
 		 * 用户动态
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
-				Message.MESSAGE_USER_FAVORITE_ANSWER, curUserId, curUserName,
+				Message.MESSAGE_USER_FAVORITE_ANSWER, producer,
 				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
 	}
@@ -222,7 +225,7 @@ public class AnswerController implements FavoriteController {
 
 	private void produceAnswerMessage(Answer answer, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
-		String userName = userService.getUserById(userId).getUsername();
+		User producer = userService.getUserById(userId);
 		int askerId = feedService.getFeedById(answer.getQuestionId())
 				.getUserId();
 
@@ -241,28 +244,26 @@ public class AnswerController implements FavoriteController {
 		 * 通知提问者XXX回答了您的问题
 		 */
 		messageService.addMessageByRecerver(askerId,
-				Message.MESSAGE_YOUR_QUESTION_UPDATE, userId, userName,
-				answerId, relatedSourceContent, extraContent,
-				answer.getQuestionId());
+				Message.MESSAGE_YOUR_QUESTION_UPDATE, producer, answerId,
+				relatedSourceContent, extraContent, answer.getQuestionId());
 		/*
 		 * 通知关注该问题的人 问题有了新的回答
 		 */
 		messageService.addMessageByFollowedQuestion(
-				Message.MESSAGE_QUESTION_NEWANSWER, userId, userName, answerId,
+				Message.MESSAGE_QUESTION_NEWANSWER, producer, answerId,
 				relatedSourceContent, extraContent, answer.getQuestionId());
 		/*
 		 * 通知关注者 小明 (被关注者)回答了一个问题
 		 */
 
 		messageService.addMessageByFollowedUser(
-				Message.MESSAGE_FOLLOWED_ANSWER_QUESTION, userId, userName,
-				answerId, relatedSourceContent, extraContent,
-				answer.getQuestionId());
+				Message.MESSAGE_FOLLOWED_ANSWER_QUESTION, producer, answerId,
+				relatedSourceContent, extraContent, answer.getQuestionId());
 		/*
 		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId,
-				Message.MESSAGE_USER_ADDANSWER, userId, userName, answerId,
+				Message.MESSAGE_USER_ADDANSWER, producer, answerId,
 				relatedSourceContent, extraContent, answer.getQuestionId());
 	}
 
