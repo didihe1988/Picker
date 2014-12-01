@@ -30,7 +30,7 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 		if (attachmentFeed == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = attachmentFeedDao.addAttachmentFeed(attachmentFeed);
+		int status = attachmentFeedDao.addModel(attachmentFeed);
 		if (status == -1) {
 			return Status.EXISTS;
 		}
@@ -53,11 +53,11 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 		if (attachmentFeed == null) {
 			return Status.NULLPOINTER;
 		}
-		if (!attachmentFeedDao.isAttachmentFeedExistsById(attachmentFeed
+		if (!attachmentFeedDao.isModelExistsById(attachmentFeed
 				.getId())) {
 			return Status.INVALID;
 		}
-		int status = attachmentFeedDao.updateAttachmentFeed(attachmentFeed);
+		int status = attachmentFeedDao.updateModel(attachmentFeed);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}
@@ -67,7 +67,7 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 	@Override
 	public boolean isAttachmentFeedExistsById(int id) {
 		// TODO Auto-generated method stub
-		return attachmentFeedDao.isAttachmentFeedExistsById(id);
+		return attachmentFeedDao.isModelExistsById(id);
 	}
 
 	@Override

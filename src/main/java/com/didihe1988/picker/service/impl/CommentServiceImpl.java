@@ -56,7 +56,7 @@ public class CommentServiceImpl implements CommentService {
 		if (comment == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = commentDao.addComment(comment);
+		int status = commentDao.addModel(comment);
 		if (status == -1) {
 			return Status.EXISTS;
 		}
@@ -109,7 +109,7 @@ public class CommentServiceImpl implements CommentService {
 		if (comment == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = commentDao.updateComment(comment);
+		int status = commentDao.updateModel(comment);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}
@@ -125,7 +125,7 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public boolean isCommentExistsById(int id) {
 		// TODO Auto-generated method stub
-		return commentDao.isCommentExistsById(id);
+		return commentDao.isModelExistsById(id);
 	}
 
 	@Override

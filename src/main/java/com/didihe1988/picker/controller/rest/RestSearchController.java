@@ -142,7 +142,7 @@ public class RestSearchController {
 	 * JsonUtils.getJsonObjectString("groups", list); }
 	 */
 
-	@RequestMapping(value = "/search/book/{bookId}/{page}")
+	@RequestMapping(value = "/json/search/book/{bookId}/{page}")
 	public String pageSearch(@PathVariable int bookId, @PathVariable int page) {
 		if ((bookId < 1) || (page < 0)) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,

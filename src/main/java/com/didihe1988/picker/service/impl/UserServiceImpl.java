@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 		}
 		// String passwordAfterEncrypt = encryptByMD5(user);
 		// user.setPassword(passwordAfterEncrypt);
-		int status = userDao.updateUser(user);
+		int status = userDao.updateModel(user);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 		}
 		String passwordAfterEncrypt = encryptByMD5(user);
 		user.setPassword(passwordAfterEncrypt);
-		int status = userDao.addUser(user);
+		int status = userDao.addModel(user);
 		if (status == -1) {
 			return Status.EXISTS;
 		}
@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean isUserExistsById(int userId) {
 		// TODO Auto-generated method stub
-		return userDao.isUserExistsById(userId);
+		return userDao.isModelExistsById(userId);
 	}
 
 	private String encryptByMD5(User user) {

@@ -38,7 +38,7 @@ public class UserDaoTest {
 				"nanshu", "lalala"),
 				"/resources/image/avatar/test_user_avatar.jpg");*/
 		User user=new User("didihe1988", "fefef", "fefef", "fef");
-		userDao.addUser(user);
+		userDao.addModel(user);
 	}
 
 	// testAddUser id repeat
@@ -49,7 +49,7 @@ public class UserDaoTest {
 		user.setUsername("shaonian");
 		user.setPassword("123456");
 		user.setLastVisit(new Date());
-		int status = userDao.addUser(user);
+		int status = userDao.addModel(user);
 		assertSame(-1, status);
 	}
 
@@ -97,7 +97,7 @@ public class UserDaoTest {
 	public void test08() {
 		User user = new User();
 		user.setId(5);
-		boolean isUserExists = userDao.isUserExists(user);
+		boolean isUserExists = userDao.isCircleMemberExists(user);
 		assertSame(true, isUserExists);
 	}
 
@@ -106,7 +106,7 @@ public class UserDaoTest {
 	public void test09() {
 		User user = new User();
 		user.setId(20);
-		boolean isUserExists = userDao.isUserExists(user);
+		boolean isUserExists = userDao.isCircleMemberExists(user);
 		assertSame(false, isUserExists);
 	}
 
@@ -122,7 +122,7 @@ public class UserDaoTest {
 	public void test11() {
 		User user = userDao.queryUserById(5);
 		user.setPassword("lalala");
-		userDao.updateUser(user);
+		userDao.updateModel(user);
 	}
 
 	// testUpdateBook book not exists
@@ -130,7 +130,7 @@ public class UserDaoTest {
 	public void test12() {
 		User user = new User();
 		user.setId(20);
-		int status = userDao.updateUser(user);
+		int status = userDao.updateModel(user);
 		assertSame(-1, status);
 	}
 

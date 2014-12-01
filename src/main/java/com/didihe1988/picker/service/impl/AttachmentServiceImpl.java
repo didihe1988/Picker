@@ -27,7 +27,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 		if (attachment == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = attachmentDao.addAttachment(attachment);
+		int status = attachmentDao.addModel(attachment);
 		if (status == -1) {
 			return Status.EXISTS;
 		}
@@ -50,10 +50,10 @@ public class AttachmentServiceImpl implements AttachmentService {
 		if (attachment == null) {
 			return Status.NULLPOINTER;
 		}
-		if (!attachmentDao.isAttachmentExistsById(attachment.getId())) {
+		if (!attachmentDao.isModelExistsById(attachment.getId())) {
 			return Status.INVALID;
 		}
-		int status = attachmentDao.updateAttachment(attachment);
+		int status = attachmentDao.updateModel(attachment);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}
@@ -63,7 +63,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 	@Override
 	public boolean isAttachmentExistsById(int id) {
 		// TODO Auto-generated method stub
-		return attachmentDao.isAttachmentExistsById(id);
+		return attachmentDao.isModelExistsById(id);
 	}
 
 	@Override

@@ -7,16 +7,10 @@ import com.didihe1988.picker.dao.interfaces.OperateValidation;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.dp.CommentDp;
 
-public interface CommentDao extends NumOperationDao, OperateValidation {
+public interface CommentDao extends NumOperationDao<Comment>, OperateValidation {
 	public Comment queryCommentById(int id);
 
-	public int addComment(Comment comment);
-
 	public int deleteComment(Comment comment);
-
-	public int updateComment(Comment comment);
-
-	public boolean isCommentExistsById(int id);
 
 	public boolean isCommentExistsByKey(int producerId, int commentedId,
 			int type);

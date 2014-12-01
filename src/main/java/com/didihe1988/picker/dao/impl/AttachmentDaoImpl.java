@@ -27,7 +27,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	}
 
 	@Override
-	public int addAttachment(Attachment attachment) {
+	public int addModel(Attachment attachment) {
 		// TODO Auto-generated method stub
 		getCurrentSession().save(attachment);
 		return 0;
@@ -36,7 +36,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	@Override
 	public int deleteAttachmentById(int id) {
 		// TODO Auto-generated method stub
-		if (!isAttachmentExistsById(id)) {
+		if (!isModelExistsById(id)) {
 			return -1;
 		}
 		String hql = "delete Attachment where id=? ";
@@ -46,9 +46,9 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	}
 
 	@Override
-	public int updateAttachment(Attachment attachment) {
+	public int updateModel(Attachment attachment) {
 		// TODO Auto-generated method stub
-		if (!isAttachmentExistsById(attachment.getId())) {
+		if (!isModelExistsById(attachment.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(attachment);
@@ -56,7 +56,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	}
 
 	@Override
-	public boolean isAttachmentExistsById(int id) {
+	public boolean isModelExistsById(int id) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Attachment as a where a.id =?";
 		Query query = getCurrentSession().createQuery(hql);

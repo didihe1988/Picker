@@ -27,12 +27,6 @@ public class FeedDaoImpl implements FeedDao {
 	}
 
 	@Override
-	public boolean isModelExistsById(int id) {
-		// TODO Auto-generated method stub
-		return isFeedExistsById(id);
-	}
-
-	@Override
 	public boolean checkOperateValidation(int ownerId, int objectId) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Feed as f where f.userId =? and f.id=?";
@@ -74,7 +68,7 @@ public class FeedDaoImpl implements FeedDao {
 	}
 
 	@Override
-	public int addFeed(Feed feed) {
+	public int addModel(Feed feed) {
 		// TODO Auto-generated method stub
 		return (Integer) getCurrentSession().save(feed);
 	}
@@ -82,7 +76,7 @@ public class FeedDaoImpl implements FeedDao {
 	@Override
 	public int deleteFeed(Feed feed) {
 		// TODO Auto-generated method stub
-		if (!isFeedExistsById(feed.getId())) {
+		if (!isModelExistsById(feed.getId())) {
 			return -1;
 		}
 		getCurrentSession().delete(feed);
@@ -99,9 +93,9 @@ public class FeedDaoImpl implements FeedDao {
 	}
 
 	@Override
-	public int updateFeed(Feed feed) {
+	public int updateModel(Feed feed) {
 		// TODO Auto-generated method stub
-		if (!isFeedExistsById(feed.getId())) {
+		if (!isModelExistsById(feed.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(feed);
@@ -195,7 +189,7 @@ public class FeedDaoImpl implements FeedDao {
 	}
 
 	@Override
-	public boolean isFeedExistsById(int id) {
+	public boolean isModelExistsById(int id) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Feed as f where f.id =?";
 		Query query = getCurrentSession().createQuery(hql);

@@ -40,7 +40,7 @@ public class BookServiceImpl implements BookService {
 		if (book == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = bookDao.addBook(book);
+		int status = bookDao.addModel(book);
 		if (status == -1) {
 			return Status.EXISTS;
 		}
@@ -66,7 +66,7 @@ public class BookServiceImpl implements BookService {
 		if (book == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = bookDao.updateBook(book);
+		int status = bookDao.updateModel(book);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}
@@ -76,7 +76,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public boolean isBookExistsById(int id) {
 		// TODO Auto-generated method stub
-		return bookDao.isBookExistsById(id);
+		return bookDao.isModelExistsById(id);
 	}
 
 	@Override

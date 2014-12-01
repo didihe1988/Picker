@@ -21,16 +21,6 @@ public class CircleDaoImpl implements CircleDao {
 	private Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	
-	
-
-	@Override
-	public boolean isModelExistsById(int id) {
-		// TODO Auto-generated method stub
-		return isCircleExistsById(id);
-	}
-
-
 
 	/**
 	 * @description:ownerId为establisherId objectId为id
@@ -76,7 +66,7 @@ public class CircleDaoImpl implements CircleDao {
 	}
 
 	@Override
-	public int addCircle(Circle circle) {
+	public int addModel(Circle circle) {
 		// TODO Auto-generated method stub
 		if (isCircleExistsByName(circle.getName())) {
 			return -1;
@@ -88,7 +78,7 @@ public class CircleDaoImpl implements CircleDao {
 	@Override
 	public int deleteCircle(Circle circle) {
 		// TODO Auto-generated method stub
-		if (!isCircleExistsById(circle.getId())) {
+		if (!isModelExistsById(circle.getId())) {
 			return -1;
 		}
 		getCurrentSession().delete(circle);
@@ -96,9 +86,9 @@ public class CircleDaoImpl implements CircleDao {
 	}
 
 	@Override
-	public int updateCircle(Circle circle) {
+	public int updateModel(Circle circle) {
 		// TODO Auto-generated method stub
-		if (!isCircleExistsById(circle.getId())) {
+		if (!isModelExistsById(circle.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(circle);
@@ -106,7 +96,7 @@ public class CircleDaoImpl implements CircleDao {
 	}
 
 	@Override
-	public boolean isCircleExistsById(int id) {
+	public boolean isModelExistsById(int id) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Circle as c where c.id = ?";
 		Query query = getCurrentSession().createQuery(hql);

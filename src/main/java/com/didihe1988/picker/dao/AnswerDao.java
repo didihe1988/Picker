@@ -6,18 +6,15 @@ import com.didihe1988.picker.dao.interfaces.NumOperationDao;
 import com.didihe1988.picker.dao.interfaces.OperateValidation;
 import com.didihe1988.picker.dao.interfaces.SearchOperation;
 import com.didihe1988.picker.model.Answer;
+import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.dp.AnswerDp;
 
-public interface AnswerDao extends NumOperationDao,OperateValidation, 
+public interface AnswerDao extends NumOperationDao<Answer>, OperateValidation,
 		SearchOperation<Answer> {
-	
+
 	public Answer queryAnswerById(int id);
 
-	public int addAnswer(Answer answer);
-
 	public int deleteAnswer(Answer answer);
-
-	public int updateAnswer(Answer answer);
 
 	public boolean isAnswerExistsById(int id);
 

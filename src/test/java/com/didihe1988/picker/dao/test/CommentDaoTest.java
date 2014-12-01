@@ -34,7 +34,7 @@ public class CommentDaoTest {
 	@Test
 	public void test01() {
 		Comment comment = new Comment(1, 1, "henhao", Comment.COMMENT_ANSWER);
-		int status = commentDao.addComment(comment);
+		int status = commentDao.addModel(comment);
 		assertSame(1, status);
 	}
 
@@ -67,7 +67,7 @@ public class CommentDaoTest {
 	public void test05() {
 		Comment comment = commentDao.queryCommentById(4);
 		comment.setContent("lalala");
-		int status = commentDao.updateComment(comment);
+		int status = commentDao.updateModel(comment);
 		assertSame(1, status);
 	}
 

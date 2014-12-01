@@ -38,7 +38,7 @@ public class FollowServiceImpl implements FollowService {
 		if (follow == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = followDao.addFollow(follow);
+		int status = followDao.addModel(follow);
 		if (status == -1) {
 			return Status.EXISTS;
 		}
@@ -84,7 +84,7 @@ public class FollowServiceImpl implements FollowService {
 		if (follow == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = followDao.updateFollow(follow);
+		int status = followDao.updateModel(follow);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}
@@ -94,7 +94,7 @@ public class FollowServiceImpl implements FollowService {
 	@Override
 	public boolean isFollowExistsById(int id) {
 		// TODO Auto-generated method stub
-		return followDao.isFollowExistsById(id);
+		return followDao.isModelExistsById(id);
 	}
 
 	@Override

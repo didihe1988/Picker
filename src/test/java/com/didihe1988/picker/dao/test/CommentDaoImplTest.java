@@ -22,7 +22,7 @@ public class CommentDaoImplTest {
 	@Test
 	public void test01() {
 		Comment comment = new Comment(1, 2, "lalala", Comment.COMMENT_ANSWER);
-		commentDao.addComment(comment);
+		commentDao.addModel(comment);
 	}
 
 }

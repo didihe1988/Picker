@@ -38,7 +38,7 @@ public class CircleMemberDaoImpl implements CircleMemberDao {
 	 */
 
 	@Override
-	public int addCircleMember(CircleMember circleMember) {
+	public int addModel(CircleMember circleMember) {
 		// TODO Auto-generated method stub
 		if (isCircleMemberExists(circleMember)) {
 			return -1;
@@ -59,9 +59,9 @@ public class CircleMemberDaoImpl implements CircleMemberDao {
 	}
 
 	@Override
-	public int updateCircleMember(CircleMember circleMember) {
+	public int updateModel(CircleMember circleMember) {
 		// TODO Auto-generated method stub
-		if (!isCircleMemberExistsById(circleMember.getId())) {
+		if (!isModelExistsById(circleMember.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(circleMember);
@@ -89,7 +89,7 @@ public class CircleMemberDaoImpl implements CircleMemberDao {
 	}
 
 	@Override
-	public boolean isCircleMemberExistsById(int id) {
+	public boolean isModelExistsById(int id) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from CircleMember as c where c.id = ?";
 		Query query = getCurrentSession().createQuery(hql);

@@ -73,7 +73,7 @@ public class FeedServiceImpl implements FeedService {
 		if (feed == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = feedDao.addFeed(feed);
+		int status = feedDao.addModel(feed);
 		if (status == -1) {
 			return Status.EXISTS;
 		}
@@ -117,7 +117,7 @@ public class FeedServiceImpl implements FeedService {
 		if (!feedDao.checkOperateValidation(userId, feed.getId())) {
 			return Status.INVALID;
 		}
-		int status = feedDao.updateFeed(feed);
+		int status = feedDao.updateModel(feed);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}
@@ -145,7 +145,7 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public boolean isFeedExistsById(int id) {
 		// TODO Auto-generated method stub
-		return feedDao.isFeedExistsById(id);
+		return feedDao.isModelExistsById(id);
 	}
 
 	@Override

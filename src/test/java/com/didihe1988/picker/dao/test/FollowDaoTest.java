@@ -30,7 +30,7 @@ public class FollowDaoTest {
 		follow.setFollowerId(1);
 		follow.setSourceType(Follow.FOLLOW_USER);
 		follow.setSourceId(2);
-		int status = followDao.addFollow(follow);
+		int status = followDao.addModel(follow);
 		assertSame(1, status);
 	}
 
@@ -44,7 +44,7 @@ public class FollowDaoTest {
 	@Test
 	public void test03() {
 		Follow follow = followDao.queryFollowById(1);
-		followDao.updateFollow(follow);
+		followDao.updateModel(follow);
 	}
 
 	@Test

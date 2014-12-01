@@ -47,7 +47,7 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public int addBook(Book book) {
+	public int addModel(Book book) {
 		// TODO Auto-generated method stub
 		// book exists
 		if (isBookExistsByKey(book.getIsbn())) {
@@ -61,7 +61,7 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public int deleteBook(Book book) {
 		// TODO Auto-generated method stub
-		if (!isBookExistsById(book.getId())) {
+		if (!isModelExistsById(book.getId())) {
 			return -1;
 		}
 		getCurrentSession().delete(book);
@@ -69,9 +69,9 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public int updateBook(Book book) {
+	public int updateModel(Book book) {
 		// TODO Auto-generated method stub
-		if (!isBookExistsById(book.getId())) {
+		if (!isModelExistsById(book.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(book);
@@ -79,7 +79,7 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public boolean isBookExistsById(int id) {
+	public boolean isModelExistsById(int id) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Book b where b.id = ?";
 		Query query = getCurrentSession().createQuery(hql);

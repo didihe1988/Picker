@@ -38,7 +38,7 @@ public class CircleServiceImpl implements CircleService {
 		if (circle == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = circleDao.addCircle(circle);
+		int status = circleDao.addModel(circle);
 		if (status == -1) {
 			return Status.EXISTS;
 		}
@@ -50,7 +50,7 @@ public class CircleServiceImpl implements CircleService {
 				.getEstablisherId());
 		CircleMember circleMember = new CircleMember(circleId,
 				circle.getEstablisherId());
-		circleMemberDao.addCircleMember(circleMember);
+		circleMemberDao.addModel(circleMember);
 		return Status.SUCCESS;
 	}
 
@@ -75,7 +75,7 @@ public class CircleServiceImpl implements CircleService {
 		if (circle == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = circleDao.updateCircle(circle);
+		int status = circleDao.updateModel(circle);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}
@@ -85,7 +85,7 @@ public class CircleServiceImpl implements CircleService {
 	@Override
 	public boolean isCircleExistsById(int id) {
 		// TODO Auto-generated method stub
-		return circleDao.isCircleExistsById(id);
+		return circleDao.isModelExistsById(id);
 	}
 
 	@Override

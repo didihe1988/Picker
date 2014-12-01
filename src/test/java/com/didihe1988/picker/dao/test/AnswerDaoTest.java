@@ -28,7 +28,7 @@ public class AnswerDaoTest {
 	@Test
 	public void test01() {
 		Answer answer = new Answer(1, 5, "View -> Active Editor -> Use Soft Wraps");
-		int status = answerDao.addAnswer(answer);
+		int status = answerDao.addModel(answer);
 		assertSame(1, status);
 	}
 

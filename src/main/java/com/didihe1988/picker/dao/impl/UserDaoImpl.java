@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.dp.UserDp;
 
 @Repository
 @Transactional
@@ -21,12 +20,6 @@ public class UserDaoImpl implements UserDao {
 
 	private Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
-	}
-
-	@Override
-	public boolean isModelExistsById(int id) {
-		// TODO Auto-generated method stub
-		return isUserExistsById(id);
 	}
 
 	@Override
@@ -54,7 +47,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public int updateUser(User user) {
+	public int updateModel(User user) {
 		// TODO Auto-generated method stub
 		if (!isUserExists(user)) {
 			return -1;
@@ -64,7 +57,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public int addUser(User user) {
+	public int addModel(User user) {
 		// TODO Auto-generated method stub
 		if (isUserExists(user)) {
 			return -1;
@@ -107,7 +100,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean isUserExistsById(int userId) {
+	public boolean isModelExistsById(int userId) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from User u where u.id =?";
 		Query query = getCurrentSession().createQuery(hql);

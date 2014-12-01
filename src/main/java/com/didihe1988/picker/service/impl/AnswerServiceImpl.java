@@ -48,7 +48,7 @@ public class AnswerServiceImpl implements AnswerService {
 		if (answer == null) {
 			return Status.NULLPOINTER;
 		}
-		int status = answerDao.addAnswer(answer);
+		int status = answerDao.addModel(answer);
 		if (status == -1) {
 			return Status.EXISTS;
 		}
@@ -93,7 +93,7 @@ public class AnswerServiceImpl implements AnswerService {
 		if (!answerDao.checkOperateValidation(userId, answer.getId())) {
 			return Status.INVALID;
 		}
-		int status = answerDao.updateAnswer(answer);
+		int status = answerDao.updateModel(answer);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}

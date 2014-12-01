@@ -23,8 +23,6 @@ public class AnswerDaoImpl implements AnswerDao {
 	private Session getCurrentSession() {
 		return sessionFactory.getCurrentSession();
 	}
-	
-	
 
 	@Override
 	public boolean isModelExistsById(int id) {
@@ -41,7 +39,7 @@ public class AnswerDaoImpl implements AnswerDao {
 	}
 
 	@Override
-	public int addAnswer(Answer answer) {
+	public int addModel(Answer answer) {
 		// TODO Auto-generated method stub
 		if (isAnswerExsitsByKey(answer.getQuestionId(), answer.getReplierId())) {
 			return -1;
@@ -61,7 +59,7 @@ public class AnswerDaoImpl implements AnswerDao {
 	}
 
 	@Override
-	public int updateAnswer(Answer answer) {
+	public int updateModel(Answer answer) {
 		// TODO Auto-generated method stub
 		if (!isAnswerExistsById(answer.getId())) {
 			return -1;

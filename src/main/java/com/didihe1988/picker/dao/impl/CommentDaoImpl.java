@@ -25,19 +25,13 @@ public class CommentDaoImpl implements CommentDao {
 	}
 
 	@Override
-	public boolean isModelExistsById(int id) {
-		// TODO Auto-generated method stub
-		return isCommentExistsById(id);
-	}
-
-	@Override
 	public Comment queryCommentById(int id) {
 		// TODO Auto-generated method stub
 		return (Comment) getCurrentSession().get(Comment.class, id);
 	}
 
 	@Override
-	public int addComment(Comment comment) {
+	public int addModel(Comment comment) {
 		// TODO Auto-generated method stub
 		if (isCommentExistsByKey(comment.getProducerId(),
 				comment.getCommentedId(), comment.getType())) {
@@ -50,7 +44,7 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public int deleteComment(Comment comment) {
 		// TODO Auto-generated method stub
-		if (!isCommentExistsById(comment.getId())) {
+		if (!isModelExistsById(comment.getId())) {
 			return -1;
 		}
 		getCurrentSession().delete(comment);
@@ -58,9 +52,9 @@ public class CommentDaoImpl implements CommentDao {
 	}
 
 	@Override
-	public int updateComment(Comment comment) {
+	public int updateModel(Comment comment) {
 		// TODO Auto-generated method stub
-		if (!isCommentExistsById(comment.getId())) {
+		if (!isModelExistsById(comment.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(comment);
@@ -68,7 +62,7 @@ public class CommentDaoImpl implements CommentDao {
 	}
 
 	@Override
-	public boolean isCommentExistsById(int id) {
+	public boolean isModelExistsById(int id) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Comment c where c.id =?";
 		Query query = getCurrentSession().createQuery(hql);

@@ -31,7 +31,7 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 	}
 
 	@Override
-	public int addAttachmentFeed(AttachmentFeed attachmentFeed) {
+	public int addModel(AttachmentFeed attachmentFeed) {
 		// TODO Auto-generated method stub
 		getCurrentSession().save(attachmentFeed);
 		return 0;
@@ -40,7 +40,7 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 	@Override
 	public int deleteAttachmentFeedById(int id) {
 		// TODO Auto-generated method stub
-		if (!isAttachmentFeedExistsById(id)) {
+		if (!isModelExistsById(id)) {
 			return -1;
 		}
 		String hql = "delete AttachmentFeed where id=? ";
@@ -50,9 +50,9 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 	}
 
 	@Override
-	public int updateAttachmentFeed(AttachmentFeed attachmentFeed) {
+	public int updateModel(AttachmentFeed attachmentFeed) {
 		// TODO Auto-generated method stub
-		if (!isAttachmentFeedExistsById(attachmentFeed.getId())) {
+		if (!isModelExistsById(attachmentFeed.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(attachmentFeed);
@@ -60,7 +60,7 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 	}
 
 	@Override
-	public boolean isAttachmentFeedExistsById(int id) {
+	public boolean isModelExistsById(int id) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from AttachmentFeed as a where a.id =?";
 		Query query = getCurrentSession().createQuery(hql);

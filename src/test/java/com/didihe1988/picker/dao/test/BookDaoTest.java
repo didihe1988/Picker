@@ -27,7 +27,7 @@ public class BookDaoTest {
 	public void test01() {
 		Book book = new Book("x86", "9787121187995", "Li Zhong",
 				"Electronics Industry", "/resources/image/book/book_image5.jpg");
-		int status = bookDao.addBook(book);
+		int status = bookDao.addModel(book);
 		assertSame(1, status);
 	}
 
@@ -36,7 +36,7 @@ public class BookDaoTest {
 	public void test02() {
 		Book book = new Book("lalala", "9787532734191", "dota", "press1988",
 				"/resources/image/book/test_book_image.jpg");
-		int status = bookDao.addBook(book);
+		int status = bookDao.addModel(book);
 		assertSame(1, status);
 	}
 
@@ -95,7 +95,7 @@ public class BookDaoTest {
 				if (book != null) {
 					book.setImageUrl("/resources/image/book/" + id
 							+ "/lpic.jpg");
-					bookDao.updateBook(book);
+					bookDao.updateModel(book);
 				}
 			}
 		} catch (Exception e) {
@@ -108,7 +108,7 @@ public class BookDaoTest {
 	@Test
 	public void test10() {
 		Book book = bookDao.queryBookById(11);
-		bookDao.updateBook(book);
+		bookDao.updateModel(book);
 	}
 
 	// testUpdateBook update book which not exists
@@ -116,7 +116,7 @@ public class BookDaoTest {
 	public void test11() {
 		Book book = bookDao.queryBookById(11);
 		book.setId(20);
-		int status = bookDao.updateBook(book);
+		int status = bookDao.updateModel(book);
 		assertSame(-1, status);
 	}
 

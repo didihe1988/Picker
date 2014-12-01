@@ -29,7 +29,7 @@ public class FollowDaoImpl implements FollowDao {
 	}
 
 	@Override
-	public int addFollow(Follow follow) {
+	public int addModel(Follow follow) {
 		// TODO Auto-generated method stub
 		if (isFollowExistsByKey(follow.getSourceType(), follow.getFollowerId(),
 				follow.getSourceId())) {
@@ -51,9 +51,9 @@ public class FollowDaoImpl implements FollowDao {
 	}
 
 	@Override
-	public int updateFollow(Follow follow) {
+	public int updateModel(Follow follow) {
 		// TODO Auto-generated method stub
-		if (!isFollowExistsById(follow.getId())) {
+		if (!isModelExistsById(follow.getId())) {
 			return -1;
 		}
 		getCurrentSession().update(follow);
@@ -61,7 +61,7 @@ public class FollowDaoImpl implements FollowDao {
 	}
 
 	@Override
-	public boolean isFollowExistsById(int id) {
+	public boolean isModelExistsById(int id) {
 		// TODO Auto-generated method stub
 		String hql = "select count(*) from Follow f where f.id =?";
 		Query query = getCurrentSession().createQuery(hql);
