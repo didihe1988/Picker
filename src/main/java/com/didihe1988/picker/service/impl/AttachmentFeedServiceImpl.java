@@ -53,8 +53,7 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 		if (attachmentFeed == null) {
 			return Status.NULLPOINTER;
 		}
-		if (!attachmentFeedDao.isModelExistsById(attachmentFeed
-				.getId())) {
+		if (!attachmentFeedDao.isModelExistsById(attachmentFeed.getId())) {
 			return Status.INVALID;
 		}
 		int status = attachmentFeedDao.updateModel(attachmentFeed);
@@ -86,6 +85,13 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 	public List<AttachmentFeedDp> getAttachmentFeedDpsByBookId(int bookId) {
 		// TODO Auto-generated method stub
 		return attachmentFeedDao.queryAttachmentFeedDpsByBookId(bookId);
+	}
+
+	@Override
+	public List<AttachmentFeedDp> getLimitedAttachmentFeedDpsByBookId(
+			int bookId, int limit) {
+		// TODO Auto-generated method stub
+		return attachmentFeedDao.queryLimitedAttachmentFeedDpsByBookId(bookId, limit);
 	}
 
 	@Override

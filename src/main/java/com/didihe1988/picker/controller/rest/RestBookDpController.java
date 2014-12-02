@@ -43,16 +43,24 @@ public class RestBookDpController {
 	@RequestMapping(value = "/json/book/{id}/questiondps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestionDps(@PathVariable int id,
 			HttpServletRequest request) {
-
 		if (id < 1) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		long startTime = System.currentTimeMillis();
 		List<FeedDp> list = feedService.getFeedDpListByBookId(id,
 				Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request));
-		long endTime = System.currentTimeMillis();
-		System.out.println("spend: " + (endTime - startTime));
+		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
+	}
+
+	@RequestMapping(value = "/json/book/{id}/questiondps/{limit}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getLimitedQuestionDps(@PathVariable int id,
+			@PathVariable int limit, HttpServletRequest request) {
+		if ((id < 1) || (limit < 0)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
+		List<FeedDp> list = feedService.getLimitedFeedDpListByBookId(id,
+				Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request), limit);
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 
@@ -70,6 +78,18 @@ public class RestBookDpController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
 	}
 
+	@RequestMapping(value = "/json/book/{id}/notedps/{limit}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getLimitedNoteDps(@PathVariable int id,
+			@PathVariable int limit, HttpServletRequest request) {
+		if ((id < 1) || (limit < 0)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
+		List<FeedDp> list = feedService.getLimitedFeedDpListByBookId(id,
+				Feed.TYPE_NOTE, HttpUtils.getSessionUserId(request), limit);
+		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
+	}
+
 	/**
 	 * @description ±¾Êé¸½¼þÌû
 	 */
@@ -82,7 +102,20 @@ public class RestBookDpController {
 		}
 		List<AttachmentFeedDp> list = attachmentFeedService
 				.getAttachmentFeedDpsByBookId(id);
-		return JsonUtils
-				.getJsonObjectString(Constant.KEY_ATTACHMENTFEED_LIST, list);
+		return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENTFEED_LIST,
+				list);
+	}
+
+	@RequestMapping(value = "/json/book/{id}/attachmentdps/{limit}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getLimitedAttachments(@PathVariable int id,
+			@PathVariable int limit, HttpServletRequest request) {
+		if ((id < 1) || (limit < 0)) {
+			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+					Status.INVALID);
+		}
+		List<AttachmentFeedDp> list = attachmentFeedService
+				.getLimitedAttachmentFeedDpsByBookId(id, limit);
+		return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENTFEED_LIST,
+				list);
 	}
 }

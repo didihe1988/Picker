@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.AttachmentFeedDao;
 import com.didihe1988.picker.model.AttachmentFeed;
 import com.didihe1988.picker.model.dp.AttachmentFeedDp;
@@ -88,6 +89,19 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 		String hql = "select new com.didihe1988.picker.model.dp.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id ";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AttachmentFeedDp> queryLimitedAttachmentFeedDpsByBookId(
+			int bookId, int limit) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.dp.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id ";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		query.setFirstResult(Constant.MAX_QUERYRESULT * limit);
+		query.setMaxResults(Constant.MAX_QUERYRESULT);
 		return query.list();
 	}
 

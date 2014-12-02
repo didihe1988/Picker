@@ -19,6 +19,9 @@ public interface AttachmentFeedDao extends BaseDao<AttachmentFeed>,
 
 	public List<AttachmentFeedDp> queryAttachmentFeedDpsByBookId(int bookId);
 
+	public List<AttachmentFeedDp> queryLimitedAttachmentFeedDpsByBookId(
+			int bookId, int limit);
+
 	public int getLatestAttachmentFeedByBookId(int bookId);
 
 }

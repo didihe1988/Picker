@@ -222,6 +222,28 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
+	public List<FeedDp> getLimitedFeedDpListByBookId(int bookId, int type,
+			int curUserId, int limit) {
+		// TODO Auto-generated method stub
+		List<FeedDp> list = feedDao.queryLimitedFeedDpListByBookId(bookId,
+				type, limit);
+		FeedDpGenerator generator = null;
+		if (list.size() > 0) {
+			generator = getGeneratorByType(list.get(0).getType());
+		}
+		for (FeedDp feedDp : list) {
+			generator.completeFeedDp(feedDp, curUserId);
+		}
+		return list;
+	}
+
+	@Override
+	public List<Feed> getLimitedFeedListByBookId(int bookId, int type, int limit) {
+		// TODO Auto-generated method stub
+		return feedDao.queryLimitedFeedListByBookId(bookId, type, limit);
+	}
+
+	@Override
 	public List<Feed> getFeedListForBrowse(int bookId) {
 		// TODO Auto-generated method stub
 		return feedDao.queryFeedListForBrowse(bookId);
