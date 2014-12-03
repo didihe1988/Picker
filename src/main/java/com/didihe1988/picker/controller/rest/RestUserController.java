@@ -511,6 +511,6 @@ public class RestUserController {
 	}
 
 	private int getTotalPage(int num) {
-		return num / Constant.MAX_QUERYRESULT + 1;
+		return num / Constant.DEFAULT_QUERYRESULT + 1;
 	}
 }

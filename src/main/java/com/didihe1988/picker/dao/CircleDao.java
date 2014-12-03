@@ -9,7 +9,7 @@ import com.didihe1988.picker.model.Circle;
 
 public interface CircleDao extends NumOperationDao<Circle>, OperateValidation,
 		SearchOperation<Circle> {
-	public Circle queryCircleById(int id);
+	public Circle queryModelById(int id);
 
 	public int deleteCircle(Circle circle);
 

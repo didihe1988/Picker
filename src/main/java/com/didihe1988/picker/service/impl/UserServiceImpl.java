@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserById(int id) {
 		// TODO Auto-generated method stub
-		return userDao.queryUserById(id);
+		return userDao.queryModelById(id);
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDp getUserDpByUserId(int userId, int curUserId) {
 		// TODO Auto-generated method stub
-		User user = userDao.queryUserById(userId);
+		User user = userDao.queryModelById(userId);
 		return getUserDpByUser(user, followDao.isFollowExistsByKey(
 				Follow.FOLLOW_USER, curUserId, userId));
 	}

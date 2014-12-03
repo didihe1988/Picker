@@ -23,7 +23,7 @@ public class FollowDaoImpl implements FollowDao {
 	}
 
 	@Override
-	public Follow queryFollowById(int id) {
+	public Follow queryModelById(int id) {
 		// TODO Auto-generated method stub
 		return (Follow) getCurrentSession().get(Follow.class, id);
 	}
@@ -47,6 +47,15 @@ public class FollowDaoImpl implements FollowDao {
 		query.setInteger(0, sourceType);
 		query.setInteger(1, followerId);
 		query.setInteger(2, sourceId);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public int deleteModelById(int id) {
+		// TODO Auto-generated method stub
+		String hql = "delete Follow where id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
 		return query.executeUpdate();
 	}
 

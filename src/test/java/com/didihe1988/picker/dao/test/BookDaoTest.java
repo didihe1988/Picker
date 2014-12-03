@@ -43,7 +43,7 @@ public class BookDaoTest {
 	// testQueryBookById book not exists
 	@Test
 	public void test03() {
-		Book book = bookDao.queryBookById(20);
+		//Book book = bookDao.
 		assertSame(null, book);
 	}
 

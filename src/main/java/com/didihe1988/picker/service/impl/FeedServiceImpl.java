@@ -64,7 +64,7 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public Feed getFeedById(int id) {
 		// TODO Auto-generated method stub
-		return feedDao.queryFeedById(id);
+		return feedDao.queryModelById(id);
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class FeedServiceImpl implements FeedService {
 		if (!feedDao.checkOperateValidation(userId, feedId)) {
 			return Status.INVALID;
 		}
-		feedDao.deleteFeedById(feedId);
+		feedDao.deleteModelById(feedId);
 		return Status.SUCCESS;
 	}
 

@@ -29,7 +29,7 @@ public class FollowServiceImpl implements FollowService {
 	@Override
 	public Follow getFollowById(int id) {
 		// TODO Auto-generated method stub
-		return followDao.queryFollowById(id);
+		return followDao.queryModelById(id);
 	}
 
 	@Override

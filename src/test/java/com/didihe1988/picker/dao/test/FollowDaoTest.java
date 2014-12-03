@@ -36,14 +36,14 @@ public class FollowDaoTest {
 
 	@Test
 	public void test02() {
-		Follow follow = followDao.queryFollowById(1);
+		Follow follow = followDao.queryModelById(1);
 		System.out.println(follow.toString());
 		assertNotNull(follow);
 	}
 
 	@Test
 	public void test03() {
-		Follow follow = followDao.queryFollowById(1);
+		Follow follow = followDao.queryModelById(1);
 		followDao.updateModel(follow);
 	}
 

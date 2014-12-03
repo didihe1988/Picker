@@ -100,7 +100,7 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public int deleteCommentById(int id, int userId) {
 		// TODO Auto-generated method stub
-		return deleteComment(commentDao.queryCommentById(id), userId);
+		return deleteComment(commentDao.queryModelById(id), userId);
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public Comment getCommentById(int id) {
 		// TODO Auto-generated method stub
-		return commentDao.queryCommentById(id);
+		return commentDao.queryModelById(id);
 	}
 
 	@Override
@@ -156,13 +156,13 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public CommentDp getCommentDpByCommentId(int id, int userId) {
 		// TODO Auto-generated method stub
-		Comment comment = commentDao.queryCommentById(id);
+		Comment comment = commentDao.queryModelById(id);
 		return getCommentDpByComment(comment, userId);
 	}
 
 	private CommentDp getCommentDpByComment(Comment comment, int userId) {
 		// TODO Auto-generated method stub
-		User user = userDao.queryUserById(comment.getProducerId());
+		User user = userDao.queryModelById(comment.getProducerId());
 		/*
 		 * int commentedId = comment.getCommentedId(); String commentedName =
 		 * ""; if (comment.getType() == Comment.COMMENT_ANSWER) { commentedName

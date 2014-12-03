@@ -114,7 +114,7 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 	@Override
 	public CircleMember getCircleMemberById(int id) {
 		// TODO Auto-generated method stub
-		return circleMemberDao.queryCircleMemberById(id);
+		return circleMemberDao.queryModelById(id);
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 		final List<CircleMember> cirMembers = getCircleMemberListByMemberId(id);
 		List<Circle> list = new ArrayList<Circle>();
 		for (CircleMember circleMember : cirMembers) {
-			Circle circle = circleDao.queryCircleById(circleMember
+			Circle circle = circleDao.queryModelById(circleMember
 					.getCircleId());
 			list.add(circle);
 		}
@@ -161,7 +161,7 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 			List<CircleMember> circleMembers) {
 		List<CircleWebDp> list = new ArrayList<CircleWebDp>();
 		for (CircleMember circleMember : circleMembers) {
-			Circle circle = circleDao.queryCircleById(circleMember
+			Circle circle = circleDao.queryModelById(circleMember
 					.getCircleId());
 			CircleWebDp circleWebDp = new CircleWebDp(circle,
 					DateUtils.getDate(circleMember.getJoinTime()));

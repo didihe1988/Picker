@@ -9,9 +9,8 @@ import com.didihe1988.picker.model.dp.AttachmentFeedDp;
 
 public interface AttachmentFeedDao extends BaseDao<AttachmentFeed>,
 		PageRelatedOperation<AttachmentFeed> {
-	public AttachmentFeed queryAttachmentFeedById(int id);
 
-	public int deleteAttachmentFeedById(int id);
+	public int deleteModelById(int id);
 
 	// public boolean isAttachmentFeedExistsByName(String fileName, int bookId);
 

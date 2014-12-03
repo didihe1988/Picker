@@ -11,11 +11,9 @@ import com.didihe1988.picker.model.dp.FeedDp;
 
 public interface FeedDao extends NumOperationDao<Feed>, OperateValidation,
 		SearchOperation<Feed>, PageRelatedOperation<Feed> {
-	public Feed queryFeedById(int id);
+	public Feed queryModelById(int id);
 
 	public int deleteFeed(Feed feed);
-
-	public int deleteFeedById(int id);
 
 	public List<Feed> queryFeedListByBookId(int bookId, int type);
 	

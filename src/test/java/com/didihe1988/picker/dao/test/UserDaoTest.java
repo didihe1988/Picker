@@ -56,14 +56,14 @@ public class UserDaoTest {
 	// testQueryUserById
 	@Test
 	public void test03() {
-		User user = userDao.queryUserById(1);
+		User user = userDao.queryModelById(1);
 		assertNotNull(user);
 	}
 
 	// testQueryUserById id not exists
 	@Test
 	public void test04() {
-		User user = userDao.queryUserById(20);
+		User user = userDao.queryModelById(20);
 		assertSame(null, user);
 	}
 
@@ -79,7 +79,7 @@ public class UserDaoTest {
 	// testDeleteUser
 	@Test
 	public void test06() {
-		User user = userDao.queryUserById(4);
+		User user = userDao.queryModelById(4);
 		int status = userDao.deleteUser(user);
 		assertSame(1, status);
 	}
@@ -120,7 +120,7 @@ public class UserDaoTest {
 	// testUpdateBook
 	@Test
 	public void test11() {
-		User user = userDao.queryUserById(5);
+		User user = userDao.queryModelById(5);
 		user.setPassword("lalala");
 		userDao.updateModel(user);
 	}

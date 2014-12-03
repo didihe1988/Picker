@@ -21,7 +21,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	}
 
 	@Override
-	public Attachment queryAttachmentById(int id) {
+	public Attachment queryModelById(int id) {
 		// TODO Auto-generated method stub
 		return (Attachment) getCurrentSession().get(Attachment.class, id);
 	}
@@ -34,7 +34,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
 	}
 
 	@Override
-	public int deleteAttachmentById(int id) {
+	public int deleteModelById(int id) {
 		// TODO Auto-generated method stub
 		if (!isModelExistsById(id)) {
 			return -1;

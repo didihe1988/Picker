@@ -110,8 +110,8 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
 	@Override
 	public PrivateMessageDp getPrivateMessageDp(PrivateMessage privateMessage) {
 		// TODO Auto-generated method stub
-		User receiver = userDao.queryUserById(privateMessage.getReceiverId());
-		User sender = userDao.queryUserById(privateMessage.getSenderId());
+		User receiver = userDao.queryModelById(privateMessage.getReceiverId());
+		User sender = userDao.queryModelById(privateMessage.getSenderId());
 		return new PrivateMessageDp(privateMessage, sender.getUsername(),
 				sender.getAvatarUrl(), receiver.getUsername(),
 				receiver.getAvatarUrl());
@@ -142,8 +142,8 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
 
 	private PrivateMessageSum getPrivateMessageSum(PrivateMessage privateMessage) {
 		// TODO Auto-generated method stub
-		User receiver = userDao.queryUserById(privateMessage.getReceiverId());
-		User sender = userDao.queryUserById(privateMessage.getSenderId());
+		User receiver = userDao.queryModelById(privateMessage.getReceiverId());
+		User sender = userDao.queryModelById(privateMessage.getSenderId());
 		int count = dialogDao.queryDialogById(privateMessage.getDialogId())
 				.getCount();
 		return new PrivateMessageSum(privateMessage, sender.getUsername(),

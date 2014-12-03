@@ -13,6 +13,7 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.dp.AnswerDp;
+import com.didihe1988.picker.utils.DaoUtils;
 
 @Repository
 @Transactional
@@ -30,10 +31,8 @@ public class AnswerDaoImpl implements AnswerDao {
 		return isAnswerExistsById(id);
 	}
 
-
-
 	@Override
-	public Answer queryAnswerById(int id) {
+	public Answer queryModelById(int id) {
 		// TODO Auto-generated method stub
 		return (Answer) getCurrentSession().get(Answer.class, id);
 	}
@@ -56,6 +55,15 @@ public class AnswerDaoImpl implements AnswerDao {
 		}
 		getCurrentSession().delete(answer);
 		return 1;
+	}
+	
+	@Override
+	public int deleteModelById(int id) {
+		// TODO Auto-generated method stub
+		String hql = "delete Answer where id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
 	}
 
 	@Override
@@ -142,8 +150,7 @@ public class AnswerDaoImpl implements AnswerDao {
 		String hql = "from Answer as a where a.replierId=?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
-		query.setFirstResult(Constant.MAX_QUERYRESULT * (page - 1));
-		query.setMaxResults(Constant.MAX_QUERYRESULT);
+		DaoUtils.setLimit(query, page - 1);
 		return query.list();
 	}
 

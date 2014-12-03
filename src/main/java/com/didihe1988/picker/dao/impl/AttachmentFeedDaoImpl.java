@@ -13,6 +13,7 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.AttachmentFeedDao;
 import com.didihe1988.picker.model.AttachmentFeed;
 import com.didihe1988.picker.model.dp.AttachmentFeedDp;
+import com.didihe1988.picker.utils.DaoUtils;
 
 @Repository
 @Transactional
@@ -25,7 +26,7 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 	}
 
 	@Override
-	public AttachmentFeed queryAttachmentFeedById(int id) {
+	public AttachmentFeed queryModelById(int id) {
 		// TODO Auto-generated method stub
 		return (AttachmentFeed) getCurrentSession().get(AttachmentFeed.class,
 				id);
@@ -39,7 +40,7 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 	}
 
 	@Override
-	public int deleteAttachmentFeedById(int id) {
+	public int deleteModelById(int id) {
 		// TODO Auto-generated method stub
 		if (!isModelExistsById(id)) {
 			return -1;
@@ -100,8 +101,7 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 		String hql = "select new com.didihe1988.picker.model.dp.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id ";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
-		query.setFirstResult(Constant.MAX_QUERYRESULT * limit);
-		query.setMaxResults(Constant.MAX_QUERYRESULT);
+		DaoUtils.setLimit(query, limit);
 		return query.list();
 	}
 

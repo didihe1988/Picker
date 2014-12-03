@@ -21,7 +21,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public Book getBookById(int id) {
 		// TODO Auto-generated method stub
-		return bookDao.queryBookById(id);
+		return bookDao.queryModelById(id);
 	}
 
 	@Override

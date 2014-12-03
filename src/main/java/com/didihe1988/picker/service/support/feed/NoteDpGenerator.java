@@ -28,7 +28,7 @@ public class NoteDpGenerator implements FeedDpGenerator {
 	@Override
 	public FeedDp getFeedDpfromFeed(Feed feed, int curUserId) {
 		// TODO Auto-generated method stub
-		User user = userDao.queryUserById(feed.getUserId());
+		User user = userDao.queryModelById(feed.getUserId());
 
 		boolean isFavorite = favoriteDao.isFavoriteExistsByKey(curUserId,
 				feed.getId(), Favorite.FAVORITE_NOTE);

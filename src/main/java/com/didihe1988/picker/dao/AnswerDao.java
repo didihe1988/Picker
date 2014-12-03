@@ -12,8 +12,6 @@ import com.didihe1988.picker.model.dp.AnswerDp;
 public interface AnswerDao extends NumOperationDao<Answer>, OperateValidation,
 		SearchOperation<Answer> {
 
-	public Answer queryAnswerById(int id);
-
 	public int deleteAnswer(Answer answer);
 
 	public boolean isAnswerExistsById(int id);

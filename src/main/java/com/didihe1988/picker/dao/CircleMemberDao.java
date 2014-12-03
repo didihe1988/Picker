@@ -8,7 +8,7 @@ import com.didihe1988.picker.model.CircleMember;
 
 public interface CircleMemberDao extends BaseDao<CircleMember>,
 		OperateValidation {
-	public CircleMember queryCircleMemberById(int id);
+	public CircleMember queryModelById(int id);
 
 	// public CircleMember queryCircleMemberByKey(int userId, int circleId);
 

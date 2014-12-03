@@ -77,7 +77,16 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User queryUserById(int id) {
+	public int deleteModelById(int id) {
+		// TODO Auto-generated method stub
+		String hql = "delete User where id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public User queryModelById(int id) {
 		// TODO Auto-generated method stub
 		User user = (User) getCurrentSession().get(User.class, id);
 		return user;

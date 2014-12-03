@@ -60,7 +60,7 @@ public class CircleDaoImpl implements CircleDao {
 	}
 
 	@Override
-	public Circle queryCircleById(int id) {
+	public Circle queryModelById(int id) {
 		// TODO Auto-generated method stub
 		return (Circle) getCurrentSession().get(Circle.class, id);
 	}
@@ -83,6 +83,15 @@ public class CircleDaoImpl implements CircleDao {
 		}
 		getCurrentSession().delete(circle);
 		return 1;
+	}
+
+	@Override
+	public int deleteModelById(int id) {
+		// TODO Auto-generated method stub
+		String hql = "delete Circle where id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
 	}
 
 	@Override
@@ -160,10 +169,8 @@ public class CircleDaoImpl implements CircleDao {
 		// TODO Auto-generated method stub
 		String hql = "from Circle as c where c.name like ?";
 		Query query = getCurrentSession().createQuery(hql);
-		query.setString(0, "%"+name+"%");
+		query.setString(0, "%" + name + "%");
 		return query.list();
 	}
-	
-	
 
 }

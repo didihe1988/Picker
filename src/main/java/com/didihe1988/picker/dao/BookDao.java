@@ -5,7 +5,6 @@ import com.didihe1988.picker.dao.interfaces.SearchOperation;
 import com.didihe1988.picker.model.Book;
 
 public interface BookDao extends BaseDao<Book>, SearchOperation<Book> {
-	public Book queryBookById(int id);
 
 	public int queryBookIdByISBN(String isbn);
 

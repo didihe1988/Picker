@@ -8,7 +8,7 @@ import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.dp.CommentDp;
 
 public interface CommentDao extends NumOperationDao<Comment>, OperateValidation {
-	public Comment queryCommentById(int id);
+	public Comment queryModelById(int id);
 
 	public int deleteComment(Comment comment);
 

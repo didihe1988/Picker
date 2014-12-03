@@ -21,7 +21,7 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 	@Override
 	public AttachmentFeed getAttachmentFeedById(int id) {
 		// TODO Auto-generated method stub
-		return attachmentFeedDao.queryAttachmentFeedById(id);
+		return attachmentFeedDao.queryModelById(id);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 	@Override
 	public int deleteAttachmentFeedById(int id) {
 		// TODO Auto-generated method stub
-		int status = attachmentFeedDao.deleteAttachmentFeedById(id);
+		int status = attachmentFeedDao.deleteModelById(id);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}
@@ -91,7 +91,8 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 	public List<AttachmentFeedDp> getLimitedAttachmentFeedDpsByBookId(
 			int bookId, int limit) {
 		// TODO Auto-generated method stub
-		return attachmentFeedDao.queryLimitedAttachmentFeedDpsByBookId(bookId, limit);
+		return attachmentFeedDao.queryLimitedAttachmentFeedDpsByBookId(bookId,
+				limit);
 	}
 
 	@Override

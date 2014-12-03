@@ -14,6 +14,7 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.utils.DaoUtils;
 
 @Repository
 @Transactional
@@ -62,7 +63,7 @@ public class FeedDaoImpl implements FeedDao {
 	}
 
 	@Override
-	public Feed queryFeedById(int id) {
+	public Feed queryModelById(int id) {
 		// TODO Auto-generated method stub
 		return (Feed) getCurrentSession().get(Feed.class, id);
 	}
@@ -84,7 +85,7 @@ public class FeedDaoImpl implements FeedDao {
 	}
 
 	@Override
-	public int deleteFeedById(int id) {
+	public int deleteModelById(int id) {
 		// TODO Auto-generated method stub
 		String hql = "delete Feed where id=?";
 		Query query = getCurrentSession().createQuery(hql);
@@ -122,8 +123,7 @@ public class FeedDaoImpl implements FeedDao {
 		hql = addTypeConstrain(hql, type);
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
-		query.setFirstResult(Constant.MAX_QUERYRESULT * limit);
-		query.setMaxResults(Constant.MAX_QUERYRESULT);
+		DaoUtils.setLimit(query, limit);
 		return query.list();
 	}
 
@@ -159,8 +159,7 @@ public class FeedDaoImpl implements FeedDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		query.setInteger(1, type);
-		query.setFirstResult(Constant.MAX_QUERYRESULT * limit);
-		query.setMaxResults(Constant.MAX_QUERYRESULT);
+		DaoUtils.setLimit(query, limit);
 		return query.list();
 	}
 
@@ -194,8 +193,7 @@ public class FeedDaoImpl implements FeedDao {
 		hql = addTypeConstrain(hql, type);
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
-		query.setFirstResult(Constant.MAX_QUERYRESULT * (page - 1));
-		query.setMaxResults(Constant.MAX_QUERYRESULT);
+		DaoUtils.setLimit(query, page - 1);
 		return query.list();
 	}
 

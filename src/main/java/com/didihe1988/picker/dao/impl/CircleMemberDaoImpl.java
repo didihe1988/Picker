@@ -23,7 +23,7 @@ public class CircleMemberDaoImpl implements CircleMemberDao {
 	}
 
 	@Override
-	public CircleMember queryCircleMemberById(int id) {
+	public CircleMember queryModelById(int id) {
 		// TODO Auto-generated method stub
 		return (CircleMember) getCurrentSession().get(CircleMember.class, id);
 	}
@@ -55,7 +55,15 @@ public class CircleMemberDaoImpl implements CircleMemberDao {
 		query.setInteger(0, userId);
 		query.setInteger(1, circleId);
 		return query.executeUpdate();
+	}
 
+	@Override
+	public int deleteModelById(int id) {
+		// TODO Auto-generated method stub
+		String hql = "delete CircleMember where id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
 	}
 
 	@Override

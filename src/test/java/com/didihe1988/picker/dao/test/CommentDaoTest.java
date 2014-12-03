@@ -41,7 +41,7 @@ public class CommentDaoTest {
 	// testQueryCommentById
 	@Test
 	public void test02() {
-		Comment comment = commentDao.queryCommentById(1);
+		Comment comment = commentDao.queryModelById(1);
 		assertNotNull(comment);
 		System.out.println(comment.toString());
 	}
@@ -49,7 +49,7 @@ public class CommentDaoTest {
 	// testIsCommentExists
 	@Test
 	public void test03() {
-		Comment comment = commentDao.queryCommentById(1);
+		Comment comment = commentDao.queryModelById(1);
 		boolean isCommentExists = commentDao.isCommentExists(comment);
 		assertSame(true, isCommentExists);
 	}
@@ -57,7 +57,7 @@ public class CommentDaoTest {
 	// testIsCommentExists comment not exists
 	@Test
 	public void test04() {
-		Comment comment = commentDao.queryCommentById(20);
+		Comment comment = commentDao.queryModelById(20);
 		boolean isCommentExists = commentDao.isCommentExists(comment);
 		assertSame(false, isCommentExists);
 	}
@@ -65,7 +65,7 @@ public class CommentDaoTest {
 	// testUpdateComment
 	@Test
 	public void test05() {
-		Comment comment = commentDao.queryCommentById(4);
+		Comment comment = commentDao.queryModelById(4);
 		comment.setContent("lalala");
 		int status = commentDao.updateModel(comment);
 		assertSame(1, status);
@@ -74,7 +74,7 @@ public class CommentDaoTest {
 	// testDeleteComment
 	@Test
 	public void test07() {
-		Comment comment = commentDao.queryCommentById(4);
+		Comment comment = commentDao.queryModelById(4);
 		int status = commentDao.deleteComment(comment);
 		assertSame(1, status);
 	}

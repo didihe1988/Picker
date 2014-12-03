@@ -25,7 +25,7 @@ public class AnCommentDpGenerator implements CommentDpGenerator {
 	public void completeCommentDp(CommentDp commentDp, int curUserId) {
 		// TODO Auto-generated method stub
 		int commentedId = commentDp.getCommentedId();
-		String commentedName = answerDao.queryAnswerById(commentedId)
+		String commentedName = answerDao.queryModelById(commentedId)
 				.getContent();
 		//commentDp.setCommentedName(commentedName);
 		commentDp.setFavorite(favoriteDao.isFavoriteExistsByKey(curUserId,

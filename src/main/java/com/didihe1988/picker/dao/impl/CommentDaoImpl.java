@@ -25,7 +25,7 @@ public class CommentDaoImpl implements CommentDao {
 	}
 
 	@Override
-	public Comment queryCommentById(int id) {
+	public Comment queryModelById(int id) {
 		// TODO Auto-generated method stub
 		return (Comment) getCurrentSession().get(Comment.class, id);
 	}
@@ -49,6 +49,15 @@ public class CommentDaoImpl implements CommentDao {
 		}
 		getCurrentSession().delete(comment);
 		return 1;
+	}
+
+	@Override
+	public int deleteModelById(int id) {
+		// TODO Auto-generated method stub
+		String hql = "delete Comment where id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
 	}
 
 	@Override

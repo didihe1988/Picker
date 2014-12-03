@@ -196,7 +196,7 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public MessageDp getMessageDpFromMessage(Message message) {
 		// TODO Auto-generated method stub
-		String avatarUrl = userDao.queryUserById(message.getProducerId())
+		String avatarUrl = userDao.queryModelById(message.getProducerId())
 				.getAvatarUrl();
 		return new MessageDp(message, avatarUrl);
 	}
@@ -204,7 +204,7 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public Footprint getFootprintFromMessage(Message message) {
 		// TODO Auto-generated method stub
-		String avatarUrl = userDao.queryUserById(message.getProducerId())
+		String avatarUrl = userDao.queryModelById(message.getProducerId())
 				.getAvatarUrl();
 		int type = message.getType();
 		String parentName = "";
@@ -212,7 +212,7 @@ public class MessageServiceImpl implements MessageService {
 				|| (type == Message.MESSAGE_USER_ADDNOTE)
 				|| (type == Message.MESSAGE_USER_FAVORITE_QUESTION)
 				|| (type == Message.MESSAGE_USER_FAVORITE_NOTE)) {
-			parentName = bookDao.queryBookById(message.getParentId())
+			parentName = bookDao.queryModelById(message.getParentId())
 					.getBookName();
 		} else if ((type == Message.MESSAGE_USER_ADDANSWER)
 				|| (type == Message.MESSAGE_USER_FAVORITE_ANSWER)) {
@@ -221,7 +221,7 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	private Dynamic getDynamicFromMessage(Message message) {
-		String avatarUrl = userDao.queryUserById(message.getProducerId())
+		String avatarUrl = userDao.queryModelById(message.getProducerId())
 				.getAvatarUrl();
 		int type = message.getType();
 		String parentName = "", imageUrl = "";
@@ -230,7 +230,7 @@ public class MessageServiceImpl implements MessageService {
 				|| (type == Message.MESSAGE_FOLLOWED_ASKQUESTION)
 				|| (type == Message.MESSAGE_FOLLOWED_FAVORITE_NOTE)
 				|| (type == Message.MESSAGE_FOLLOWED_ADDNOTE)) {
-			parentName = bookDao.queryBookById(message.getParentId())
+			parentName = bookDao.queryModelById(message.getParentId())
 					.getBookName();
 			imageUrl = relatedImageDao.queryFirstImageUrlByKey(
 					message.getRelatedSourceId(), RelatedImage.FEED_IMAGE);

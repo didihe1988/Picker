@@ -7,7 +7,7 @@ import com.didihe1988.picker.dao.interfaces.OperateValidation;
 import com.didihe1988.picker.model.Follow;
 
 public interface FollowDao extends BaseDao<Follow>, OperateValidation {
-	public Follow queryFollowById(int id);
+	public Follow queryModelById(int id);
 
 	public int deleteFollow(int sourceType, int followerId, int sourceId);
 

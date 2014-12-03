@@ -23,7 +23,7 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
-	public Book queryBookById(int id) {
+	public Book queryModelById(int id) {
 		// TODO Auto-generated method stub
 		Book book = (Book) getCurrentSession().get(Book.class, id);
 		return book;
@@ -66,6 +66,15 @@ public class BookDaoImpl implements BookDao {
 		}
 		getCurrentSession().delete(book);
 		return 1;
+	}
+
+	@Override
+	public int deleteModelById(int id) {
+		// TODO Auto-generated method stub
+		String hql = "delete Book where id=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
 	}
 
 	@Override

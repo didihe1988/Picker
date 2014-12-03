@@ -97,14 +97,14 @@ public class CircleServiceImpl implements CircleService {
 	@Override
 	public Circle getCircleById(int id) {
 		// TODO Auto-generated method stub
-		return circleDao.queryCircleById(id);
+		return circleDao.queryModelById(id);
 	}
 
 	@Override
 	public CircleDp getCircleDpById(int id, int curUserId) {
 		// TODO Auto-generated method stub
-		Circle circle = circleDao.queryCircleById(id);
-		String establisherName = userDao.queryUserById(
+		Circle circle = circleDao.queryModelById(id);
+		String establisherName = userDao.queryModelById(
 				circle.getEstablisherId()).getUsername();
 		return new CircleDp(circle, circleMemberDao.isUserInCircle(curUserId,
 				id), establisherName);

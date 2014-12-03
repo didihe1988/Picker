@@ -81,7 +81,7 @@ public class AnswerServiceImpl implements AnswerService {
 	@Override
 	public int deleteAnswerById(int id, int userId) {
 		// TODO Auto-generated method stub
-		return deleteAnswer(answerDao.queryAnswerById(id), userId);
+		return deleteAnswer(answerDao.queryModelById(id), userId);
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class AnswerServiceImpl implements AnswerService {
 	@Override
 	public Answer getAnswerById(int id) {
 		// TODO Auto-generated method stub
-		return answerDao.queryAnswerById(id);
+		return answerDao.queryModelById(id);
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class AnswerServiceImpl implements AnswerService {
 	@Override
 	public AnswerDp getAnswerDpByAnswerId(int id, int userId) {
 		// TODO Auto-generated method stub
-		Answer answer = answerDao.queryAnswerById(id);
+		Answer answer = answerDao.queryModelById(id);
 		return getAnswerDpByAnswer(answer, userId);
 	}
 
@@ -172,7 +172,7 @@ public class AnswerServiceImpl implements AnswerService {
 	public List<AnswerDp> getAnswerDpListByReplierId(int id, int userId) {
 		// TODO Auto-generated method stub
 		List<AnswerDp> list = answerDao.queryAnswerDpByReplierId(id);
-		User replier = userDao.queryUserById(id);
+		User replier = userDao.queryModelById(id);
 		for (AnswerDp answerDp : list) {
 			completeAnswerDp(answerDp, userId, replier);
 		}
@@ -193,9 +193,9 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	private AnswerDp getAnswerDpByAnswer(Answer answer, int userId) {
-		String questionName = feedDao.queryFeedById(answer.getQuestionId())
+		String questionName = feedDao.queryModelById(answer.getQuestionId())
 				.getTitle();
-		User user = userDao.queryUserById(answer.getReplierId());
+		User user = userDao.queryModelById(answer.getReplierId());
 		return new AnswerDp(answer, questionName, user.getUsername(),
 				user.getSignature(), user.getAvatarUrl(),
 				favoriteDao.isFavoriteExistsByKey(userId, answer.getId(),
@@ -233,7 +233,7 @@ public class AnswerServiceImpl implements AnswerService {
 		for (Answer answer : answerList) {
 			String imageUrl = relatedImageDao.queryFirstImageUrlByKey(
 					answer.getId(), RelatedImage.ANSWER_IMAGE);
-			Feed feed = feedDao.queryFeedById(answer.getQuestionId());
+			Feed feed = feedDao.queryModelById(answer.getQuestionId());
 			AnswerJson answerJson = new AnswerJson(feed.getTitle(), imageUrl,
 					"/detail/" + answer.getQuestionId(),
 					DateUtils.getDate(answer.getDate()), answer.getContent());

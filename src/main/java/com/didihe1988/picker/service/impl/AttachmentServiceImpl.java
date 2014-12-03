@@ -18,7 +18,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 	@Override
 	public Attachment getAttachmentById(int id) {
 		// TODO Auto-generated method stub
-		return attachmentDao.queryAttachmentById(id);
+		return attachmentDao.queryModelById(id);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 	@Override
 	public int deleteAttachmentById(int id) {
 		// TODO Auto-generated method stub
-		int status = attachmentDao.deleteAttachmentById(id);
+		int status = attachmentDao.deleteModelById(id);
 		if (status == -1) {
 			return Status.NOT_EXISTS;
 		}
