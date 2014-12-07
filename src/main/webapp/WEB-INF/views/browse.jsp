@@ -401,7 +401,7 @@
                             </div>
                             <div class="col-3"></div>
                             <div class="col-64 cover_page">
-                                <div class="name">{book.name}</div>
+								<div class="name"><span>《{book.name}》</span></div>
                                 <div class="info">作者：<span>{book.author}</span></div>
                                 <div class="info">出版：<span>{book.publisher}</span></div>
                                 <div class="info">年份：<span>{book.date}</span></div>

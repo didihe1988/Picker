@@ -1,11 +1,9 @@
 package com.didihe1988.picker.model.form;
 
-public class CommentForm {
+public class SimpleCommentForm {
 	private int commentedId;
 
 	private String content;
-
-	private int type;
 
 	public int getCommentedId() {
 		return commentedId;
@@ -23,40 +21,21 @@ public class CommentForm {
 		this.content = content;
 	}
 
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
-
-	public CommentForm() {
+	public SimpleCommentForm() {
 
 	}
 
-	public CommentForm(int commentedId, String content, int type) {
+	public SimpleCommentForm(int commentedId, String content) {
 		super();
 		this.commentedId = commentedId;
 		this.content = content;
-		this.type = type;
 	}
 
 	public boolean checkFieldValidation() {
-		if ((this.commentedId > 0) && (this.content != null)
-				&& (!this.content.equals("")) && (this.type >= 0)
-				&& (this.type <= 2)) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean checkFieldValidationWithoutType() {
 		if ((this.commentedId > 0) && (this.content != null)
 				&& (!this.content.equals(""))) {
 			return true;
 		}
 		return false;
 	}
-
 }

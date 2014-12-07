@@ -33,10 +33,12 @@ public class CommentDaoImpl implements CommentDao {
 	@Override
 	public int addModel(Comment comment) {
 		// TODO Auto-generated method stub
-		if (isCommentExistsByKey(comment.getProducerId(),
-				comment.getCommentedId(), comment.getType())) {
-			return -1;
-		}
+		/*
+		 * one can comment several times
+		 * 
+		 * if (isCommentExistsByKey(comment.getProducerId(),
+		 * comment.getCommentedId(), comment.getType())) { return -1; }
+		 */
 		getCurrentSession().save(comment);
 		return 1;
 	}

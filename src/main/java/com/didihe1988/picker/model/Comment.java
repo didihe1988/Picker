@@ -154,4 +154,5 @@ public class Comment implements Serializable {
 				commentForm.getContent(), commentForm.getType(), new Date());
 	}
 
+
 }

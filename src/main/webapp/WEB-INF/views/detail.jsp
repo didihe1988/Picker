@@ -352,7 +352,7 @@
 									data-url="<c:url value="/answer/${answer.id}/comments"/>"
 									data-passage-id="123" onclick="tool_bar_action($(this))">
 									<i class="icon-comments-alt"></i>
-									<c:out value='${answer.commentNum}' />
+                                    <span id="comment_num">${answer.commentNum}</span>
 									条评论
 								</div>
 								<div style="display: none" class="line hide_comment"
@@ -370,7 +370,7 @@
 								<div class="do_comment">
 									<div class="comment clear_fix">
 										<input id="content" type="text">
-										<button class="btn btn-success" onclick="add_comment($('#content'),${answer.id},1)">提交</button>
+										<button class="btn btn-success" onclick="add_comment($(this),${answer.id},1)">提交</button>
 									</div>
 								</div>
 							</div>

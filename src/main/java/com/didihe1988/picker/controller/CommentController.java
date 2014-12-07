@@ -20,6 +20,7 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.CommentDp;
 import com.didihe1988.picker.model.form.CommentForm;
 import com.didihe1988.picker.model.json.CommentJson;
+import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.utils.HttpUtils;
@@ -29,6 +30,9 @@ import com.didihe1988.picker.utils.JsonUtils;
 public class CommentController {
 	@Autowired
 	private CommentService commentService;
+
+	@Autowired
+	private AnswerService answerService;
 
 	@Autowired
 	private FeedService feedService;
@@ -75,22 +79,35 @@ public class CommentController {
 		return getJsonString(commentDps);
 	}
 
-	@RequestMapping(value = "/comment/add")
+	@RequestMapping(value = "/comment/add", produces = "application/json")
 	public @ResponseBody String addComment(
 			@ModelAttribute CommentForm commentForm, HttpServletRequest request) {
 		if (!commentForm.checkFieldValidation()) {
-			return "error";
+			JsonUtils.getJsonObjectString(Constant.KEY_STATUS, Status.INVALID);
 		}
 		Comment comment = Comment.getComment(commentForm,
 				HttpUtils.getSessionUserId(request));
 		int status = commentService.addComment(comment);
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+	}
+
+	@RequestMapping(value = "/answer/comment/add", produces = "application/json")
+	public @ResponseBody String addAnswerComment(
+			@ModelAttribute CommentForm commentForm, HttpServletRequest request) {
+		if (!commentForm.checkFieldValidationWithoutType()) {
+			JsonUtils.getJsonObjectString(Constant.KEY_STATUS, Status.INVALID);
+		}
+		commentForm.setType(Comment.COMMENT_ANSWER);
+		Comment comment = Comment.getComment(commentForm,
+				HttpUtils.getSessionUserId(request));
+		int status = commentService.addComment(comment);
 		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
-		/*
-		 * if(commentForm.getType()==Comment.COMMENT_ANSWER) {
-		 * 
-		 * }
-		 */
-		return comment.toString();
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("status", status);
+		jsonObject.put("commentNum",
+				answerService.getAnswerById(comment.getCommentedId())
+						.getCommentNum());
+		return jsonObject.toString();
 	}
 
 	private String getJsonString(List<CommentDp> commentDps) {

@@ -197,7 +197,7 @@ public class FeedDaoImpl implements FeedDao {
 		return query.list();
 	}
 
-	@Override
+	@Override   
 	public int getLatestFeedByBookId(int bookId, int type) {
 		// TODO Auto-generated method stub
 		String hql = "select max(f.id) from Feed as f where f.bookId=? and f.type=?";
