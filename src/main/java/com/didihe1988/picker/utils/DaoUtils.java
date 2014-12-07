@@ -10,7 +10,7 @@ public class DaoUtils {
 		// start from 0 10 20 30...
 		query.setFirstResult(Constant.DEFAULT_QUERYRESULT * limit);
 		// once 10 results
-		query.setFirstResult(Constant.DEFAULT_QUERYRESULT);
+		query.setMaxResults(Constant.DEFAULT_QUERYRESULT);
 	}
 	
 }

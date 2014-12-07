@@ -175,7 +175,7 @@ public class RestCircleController {
 	/*
 	 * 加入一个圈子
 	 */
-	@RequestMapping(value = "/json/circle/{id}/join", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/circle/{id}/join", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public String join(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
@@ -193,7 +193,7 @@ public class RestCircleController {
 	/*
 	 * 离开一个圈子
 	 */
-	@RequestMapping(value = "/json/circle/{id}/withdraw_join", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/circle/{id}/withdraw_join", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public String withdrawJoin(@PathVariable int id, HttpServletRequest request) {
 		/*
 		 * 由于CricleMember对外是透明的，所以不可能获得它的id

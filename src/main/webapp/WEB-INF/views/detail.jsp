@@ -26,6 +26,7 @@
 
 <!--TODO: AJAX取消息-->
 <body>
+
 	<div id="nav" class="row">
 		<div id="nav_content">
 			<div class="col-13">
@@ -215,13 +216,15 @@
 										<i class="icon-plus"></i>关注问题
 									</div>
 									<div class="line cancel_watch" data-action="cancel_watch"
-										data-passage-id="${question.id }" onclick="tool_bar_action($(this))">
+										data-passage-id="${question.id }"
+										onclick="tool_bar_action($(this))">
 										<i class="icon-ok"></i>取消关注
 									</div>
 								</c:when>
 								<c:otherwise>
 									<div class="line watch" data-action="watch"
-										data-passage-id="${question.id }" onclick="tool_bar_action($(this))">
+										data-passage-id="${question.id }"
+										onclick="tool_bar_action($(this))">
 										<i class="icon-plus"></i>关注问题
 									</div>
 									<div style="display: none" class="line cancel_watch"
@@ -231,8 +234,10 @@
 									</div>
 								</c:otherwise>
 							</c:choose>
-							<div class="line show_comment" data-action="get_comment" data-url="<c:url value="/question/${question.id}/comments"/>"
-								data-passage-id="${question.id}" onclick="tool_bar_action($(this))">
+							<div class="line show_comment" data-action="get_comment"
+								data-url="<c:url value="/question/${question.id}/comments"/>"
+								data-passage-id="${question.id}"
+								onclick="tool_bar_action($(this))">
 								<i class="icon-comments-alt"></i>
 								<c:out value='${question.commentNum}' />
 								条评论
@@ -307,18 +312,44 @@
 
 						<div class="feeds clear_fix">
 							<div class="feed_tool_bar clear_fix">
-								<div class="up" data-action="up" data-passage-id="123"
-									onclick="tool_bar_action($(this))">
-									<span class="up_icon"><i class="icon-thumbs-up"></i>赞</span> <span
-										class="cnt up_cnt"><c:out value='${answer.favoriteNum}' /></span>
-								</div>
-								<div style="display: none" class="line cancel_up"
-									data-action="cancel_up" data-passage-id="123"
-									onclick="tool_bar_action($(this))">
-									<i class="icon-ok"></i>取消赞<span class="cnt"><c:out
-											value='${answer.favoriteNum+1}' /></span>
-								</div>
-								<div class="line show_comment" data-action="get_comment" data-url="<c:url value="/answer/${answer.id}/comments"/>"
+								<!-- 取消赞之后favoriteNum-- ，赞之后favoriteNum++，后期改为favoriteNum赋值 -->
+								<c:choose>
+									<c:when test="${answer.favorite }">
+										<div class="line cancel_up" data-action="cancel_up"
+											data-passage-id="${answer.id}"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-ok"></i>取消赞<span class="cnt"><c:out
+													value='${answer.favoriteNum}' /></span>
+										</div>
+										<div class="up" data-action="up"
+											data-passage-id="${answer.id}" style="display: none"
+											onclick="tool_bar_action($(this))">
+											<span class="up_icon"><i class="icon-thumbs-up"></i>赞</span>
+											<span class="cnt up_cnt"><c:out
+													value='${answer.favoriteNum-1}' /></span>
+										</div>
+
+									</c:when>
+									<c:otherwise>
+										<div class="up" data-action="up"
+											data-passage-id="${answer.id}"
+											onclick="tool_bar_action($(this))">
+											<span class="up_icon"><i class="icon-thumbs-up"></i>赞</span>
+											<span class="cnt up_cnt"><c:out
+													value='${answer.favoriteNum}' /></span>
+										</div>
+										<div style="display: none" class="line cancel_up"
+											data-action="cancel_up" data-passage-id="${answer.id}"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-ok"></i>取消赞<span class="cnt"><c:out
+													value='${answer.favoriteNum+1}' /></span>
+										</div>
+
+
+									</c:otherwise>
+								</c:choose>
+								<div class="line show_comment" data-action="get_comment"
+									data-url="<c:url value="/answer/${answer.id}/comments"/>"
 									data-passage-id="123" onclick="tool_bar_action($(this))">
 									<i class="icon-comments-alt"></i>
 									<c:out value='${answer.commentNum}' />
@@ -336,11 +367,10 @@
 									<i class="icon-spinner icon-spin"></i>
 								</div>
 								<div class="comments_list"></div>
-
 								<div class="do_comment">
 									<div class="comment clear_fix">
-										<input type="text">
-										<button class="btn btn-success">提交</button>
+										<input id="content" type="text">
+										<button class="btn btn-success" onclick="add_comment($('#content'),${answer.id},1)">提交</button>
 									</div>
 								</div>
 							</div>

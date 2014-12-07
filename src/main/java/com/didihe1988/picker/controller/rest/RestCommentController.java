@@ -90,7 +90,7 @@ public class RestCommentController implements FavoriteController {
 	 * @description 用户赞了该评论
 	 * @condition session-userId userName
 	 */
-	@RequestMapping(value = "/json/comment/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/comment/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
@@ -144,7 +144,7 @@ public class RestCommentController implements FavoriteController {
 	 * @description 用户取消了赞
 	 * @condition session-userId
 	 */
-	@RequestMapping(value = "/json/comment/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/comment/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {

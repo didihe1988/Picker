@@ -112,7 +112,7 @@ public class AnswerController implements FavoriteController {
 	 * @description 用户赞了该评论
 	 * @condition session-userId
 	 */
-	@RequestMapping(value = "/json/answer/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/answer/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public @ResponseBody String subscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
@@ -170,7 +170,7 @@ public class AnswerController implements FavoriteController {
 				answer.getQuestionId());
 	}
 
-	@RequestMapping(value = "/json/answer/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/answer/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public @ResponseBody String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,7 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.CommentDp;
+import com.didihe1988.picker.model.form.CommentForm;
 import com.didihe1988.picker.model.json.CommentJson;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FeedService;
@@ -73,6 +75,24 @@ public class CommentController {
 		return getJsonString(commentDps);
 	}
 
+	@RequestMapping(value = "/comment/add")
+	public @ResponseBody String addComment(
+			@ModelAttribute CommentForm commentForm, HttpServletRequest request) {
+		if (!commentForm.checkFieldValidation()) {
+			return "error";
+		}
+		Comment comment = Comment.getComment(commentForm,
+				HttpUtils.getSessionUserId(request));
+		int status = commentService.addComment(comment);
+		// return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
+		/*
+		 * if(commentForm.getType()==Comment.COMMENT_ANSWER) {
+		 * 
+		 * }
+		 */
+		return comment.toString();
+	}
+
 	private String getJsonString(List<CommentDp> commentDps) {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("comments", getCommentJsons(commentDps));
@@ -95,13 +115,12 @@ public class CommentController {
 				commentDp.getUserAvatarUrl(), commentDp.getStrDate());
 	}
 	/*
-	@RequestMapping(value = "/answer/{id}/comments", produces = "application/json")
-	public @ResponseBody String answerComments(@PathVariable int id,
-			HttpServletRequest request) {
-		List<CommentDp> commentDps = commentService
-				.getCommentDpListByCommentedId(id, Comment.COMMENT_ANSWER,
-						HttpUtils.getSessionUserId(request));
-		return getJsonString(commentDps);
-	}*/
+	 * @RequestMapping(value = "/answer/{id}/comments", produces =
+	 * "application/json") public @ResponseBody String
+	 * answerComments(@PathVariable int id, HttpServletRequest request) {
+	 * List<CommentDp> commentDps = commentService
+	 * .getCommentDpListByCommentedId(id, Comment.COMMENT_ANSWER,
+	 * HttpUtils.getSessionUserId(request)); return getJsonString(commentDps); }
+	 */
 
 }

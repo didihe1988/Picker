@@ -56,4 +56,19 @@ public class FeedDaoTest {
 			System.out.println(feed.toString());
 		}
 	}
+
+	@Test
+	public void test4() {
+		List<Feed> feeds = feedDao.queryFeedListByBookId(1, Feed.TYPE_NOTE);
+		assertNotNull(feeds);
+		System.out.println(feeds);
+	}
+
+	@Test
+	public void test5() {
+		List<Feed> feeds = feedDao.queryLimitedFeedListByBookId(1,
+				Feed.TYPE_QUESTION, 1);
+		assertNotNull(feeds);
+		System.out.println(feeds);
+	}
 }

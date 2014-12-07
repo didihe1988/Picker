@@ -65,13 +65,13 @@ public class BrowseController {
 	 * }
 	 */
 	// http://localhost:8090/page/123/0?filter=all&direction=up
-	@RequestMapping(value = "/page/{id}/0", produces = "application/json")
-	public @ResponseBody String bookDetail(@PathVariable int id) {
-		if (id < 1) {
+	@RequestMapping(value = "/page/{bookId}/0", produces = "application/json")
+	public @ResponseBody String bookDetail(@PathVariable int bookId) {
+		if (bookId < 1) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		Book book = bookService.getBookById(id);
+		Book book = bookService.getBookById(bookId);
 		Gson gson = new Gson();
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("page", 0);
@@ -82,8 +82,9 @@ public class BrowseController {
 	}
 
 	private BookJson getBookJson(Book book) {
-		return new BookJson(book.getBookName(), book.getImageUrl(),
-				book.getWriter(), book.getPress(), book.getDate(), "这个真没有");
+		return new BookJson(book.getImageUrl(), book.getWriter(),
+				book.getPress(), book.getDate(),
+				"这个真没有\n测试一下加一大段文字行不行呀哈哈哈\n回复@的功能但是没法确定\n这帮班委真是吃屎的我草草草\n喝西北风去吧");
 	}
 
 }

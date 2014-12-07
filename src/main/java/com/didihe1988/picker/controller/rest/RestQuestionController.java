@@ -151,7 +151,7 @@ public class RestQuestionController implements FavoriteController {
 	/**
 	 * @description 关注该问题
 	 */
-	@RequestMapping(value = "/json/question/{id}/follow", method = RequestMethod.GET)
+	@RequestMapping(value = "/json/question/{id}/follow", method = RequestMethod.GET, produces = "application/json")
 	public String follow(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
@@ -169,7 +169,7 @@ public class RestQuestionController implements FavoriteController {
 	/*
 	 * 这个不知道行不行
 	 */
-	@RequestMapping(value = "/json/question/{id}/withdraw_follow", method = RequestMethod.GET)
+	@RequestMapping(value = "/json/question/{id}/withdraw_follow", method = RequestMethod.GET, produces = "application/json")
 	public String withdrawFollow(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
@@ -186,7 +186,7 @@ public class RestQuestionController implements FavoriteController {
 	 * @description 用户赞了该问题
 	 * @condition session-userId userName
 	 */
-	@RequestMapping(value = "/json/question/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/question/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
@@ -207,7 +207,7 @@ public class RestQuestionController implements FavoriteController {
 	 * @description 用户取消了赞
 	 * @condition session-userId
 	 */
-	@RequestMapping(value = "/json/question/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/question/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {

@@ -15,6 +15,8 @@
 <link type="text/css" rel="stylesheet" charset="UTF-8"
 	href="/static/css/picker.css">
 
+
+
 <script src="/static/js/jquery.js"></script>
 <script src="/static/lib/nprogress/nprogress.js"></script>
 <script src="/static/lib/jquery.pjax.js"></script>

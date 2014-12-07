@@ -227,6 +227,7 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		List<FeedDp> list = feedDao.queryLimitedFeedDpListByBookId(bookId,
 				type, limit);
+		System.out.println("list: "+list);
 		FeedDpGenerator generator = null;
 		if (list.size() > 0) {
 			generator = getGeneratorByType(list.get(0).getType());

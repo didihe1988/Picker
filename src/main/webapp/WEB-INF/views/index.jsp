@@ -250,6 +250,8 @@
 											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
 										</div>
 										<div class="feed_tool_bar">
+									
+											
 											<div class="line watch" data-action="watch"
 												data-passage-id="123" onclick="tool_bar_action($(this))">
 												<i class="icon-plus"></i>关注问题
@@ -259,7 +261,9 @@
 												onclick="tool_bar_action($(this))">
 												<i class="icon-ok"></i>取消关注
 											</div>
+									
 											<div class="line show_comment" data-action="get_comment"
+											data-url="<c:url value="/question/${message.relatedSourceId}/comments"/>"
 												data-passage-id="123" onclick="tool_bar_action($(this))">
 												<i class="icon-comments-alt"></i>32条评论
 											</div>
@@ -362,6 +366,7 @@
 											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
 										</div>
 										<div class="feed_tool_bar">
+											<!-- 
 											<div class="line watch" data-action="watch"
 												data-passage-id="123" onclick="tool_bar_action($(this))">
 												<i class="icon-plus"></i>关注问题
@@ -371,6 +376,7 @@
 												onclick="tool_bar_action($(this))">
 												<i class="icon-ok"></i>取消关注
 											</div>
+											 -->
 											<div class="line show_comment" data-action="get_comment"
 												data-passage-id="123" onclick="tool_bar_action($(this))">
 												<i class="icon-comments-alt"></i>32条评论
@@ -420,7 +426,7 @@
 										<div class="feed_tool_bar">
 											<div class="line watch" data-action="watch"
 												data-passage-id="123" onclick="tool_bar_action($(this))">
-												<i class="icon-plus"></i>关注问题
+												<i class="icon-plus"></i>关注书籍
 											</div>
 											<div style="display: none" class="line cancel_watch"
 												data-action="cancel_watch" data-passage-id="123"
@@ -482,12 +488,12 @@
 										<div class="feed_tool_bar">
 											<div class="line watch" data-action="watch"
 												data-passage-id="123" onclick="tool_bar_action($(this))">
-												<i class="icon-plus"></i>关注问题
+												<i class="icon-plus"></i>加入圈子
 											</div>
 											<div style="display: none" class="line cancel_watch"
 												data-action="cancel_watch" data-passage-id="123"
 												onclick="tool_bar_action($(this))">
-												<i class="icon-ok"></i>取消关注
+												<i class="icon-ok"></i>退出圈子
 											</div>
 											<div class="line show_comment" data-action="get_comment"
 												data-passage-id="123" onclick="tool_bar_action($(this))">
@@ -545,12 +551,12 @@
 										<div class="feed_tool_bar">
 											<div class="line watch" data-action="watch"
 												data-passage-id="123" onclick="tool_bar_action($(this))">
-												<i class="icon-plus"></i>关注问题
+												<i class="icon-plus"></i>加入圈子
 											</div>
 											<div style="display: none" class="line cancel_watch"
 												data-action="cancel_watch" data-passage-id="123"
 												onclick="tool_bar_action($(this))">
-												<i class="icon-ok"></i>取消关注
+												<i class="icon-ok"></i>退出圈子
 											</div>
 											<div class="line show_comment" data-action="get_comment"
 												data-passage-id="123" onclick="tool_bar_action($(this))">
@@ -657,6 +663,7 @@
 											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
 										</div>
 										<div class="feed_tool_bar">
+											<!-- 
 											<div class="line watch" data-action="watch"
 												data-passage-id="123" onclick="tool_bar_action($(this))">
 												<i class="icon-plus"></i>关注问题
@@ -666,6 +673,7 @@
 												onclick="tool_bar_action($(this))">
 												<i class="icon-ok"></i>取消关注
 											</div>
+											 -->
 											<div class="line show_comment" data-action="get_comment"
 												data-passage-id="123" onclick="tool_bar_action($(this))">
 												<i class="icon-comments-alt"></i>32条评论
@@ -691,120 +699,6 @@
 						</c:if>
 
 					</c:forEach>
-					<!-- 
-						<div class="feed_meta clear_fix">
-							<div class="feed_user_photo">
-								<img src="/static/images/photo/1.jpg">
-							</div>
-							<div class="feed_meta_word">
-								<div class="feed_approve">
-									<span class="feed_user">五棵松</span>赞同回答
-								</div>
-								<div class="feed_title">
-									<a data-pjax href="/detail/888">我是谁，从哪里来，到哪里去？</a>
-								</div>
-							</div>
-							<div class="feed_time">31分钟前</div>
-						</div>
-						<div class="feed_brief clear_fix">
-							<div class="feed_text_wrap">
-								<div class="feed_text" data-passage-id="123"
-									onclick="show_full($(this))">
-									我前段时间不远万里去塞舌尔参加了叉烧的婚礼（如果你们还记得他），酒过三巡，不，准确的说是酒过好多好多巡，在我的循循善诱下，丫终于透露了心声，最爱的还是朔姑娘。我这次有了经验，没有搂住他，刻意保持了一米的距离，语重心长的套用了一段话：
-
-									那个人永远活在时间里了，你把她拉不出来，自己也回不去，就这样吧，让她安静的留在那里吧。...<span
-										class="feed_show_full">完整显示</span>
-								</div>
-								<div class="feed_tool_bar">
-									<div class="line watch" data-action="watch"
-										data-passage-id="123" onclick="tool_bar_action($(this))">
-										<i class="icon-plus"></i>关注问题
-									</div>
-									<div style="display: none" class="line cancel_watch"
-										data-action="cancel_watch" data-passage-id="123"
-										onclick="tool_bar_action($(this))">
-										<i class="icon-ok"></i>取消关注
-									</div>
-									<div class="line show_comment" data-action="get_comment"
-										data-passage-id="123" onclick="tool_bar_action($(this))">
-										<i class="icon-comments-alt"></i>32条评论
-									</div>
-									<div style="display: none" class="line hide_comment"
-										data-action="hide_comment" data-passage-id="123"
-										onclick="tool_bar_action($(this))">
-										<i class="icon-double-angle-up"></i>收起评论
-									</div>
-									<div class="line link" data-action="show_all_answer"
-										data-passage-id="123">
-										<a data-pjax href="/detail/11"><i class="icon-lightbulb"></i>2个其他回答</a>
-									</div>
-								</div>
-							</div>
-							<div style="width: 2%; height: 1px; float: left"></div>
-							<div class="feed_picture">
-								<img src="/static/images/content/1.png">
-							</div>
-						</div>
-						<div style="clear: both"></div>
-					
-						<div class="feed_full clear_fix">
-							<div class="feed_full_text"></div>
-							<div style="width: 100%">
-								<div class="feed_tool_bar">
-									<div class="up" data-action="up" data-passage-id="123"
-										onclick="tool_bar_action($(this))">
-										<span class="up_icon"><i class="icon-thumbs-up"></i>赞</span> <span
-											class="cnt up_cnt">31</span>
-									</div>
-									<div style="display: none" class="line cancel_up"
-										data-action="cancel_up" data-passage-id="123"
-										onclick="tool_bar_action($(this))">
-										<i class="icon-ok"></i>取消赞<span class="cnt">32</span>
-									</div>
-									<div class="line watch" data-action="watch"
-										data-passage-id="123" onclick="tool_bar_action($(this))">
-										<i class="icon-plus"></i>关注问题
-									</div>
-									<div style="display: none" class="line cancel_watch"
-										data-action="cancel_watch" data-passage-id="123"
-										onclick="tool_bar_action($(this))">
-										<i class="icon-ok"></i>取消关注
-									</div>
-									<div class="line show_comment" data-action="get_comment"
-										data-passage-id="123" onclick="tool_bar_action($(this))">
-										<i class="icon-comments-alt"></i>32条评论
-									</div>
-									<div style="display: none" class="line hide_comment"
-										data-action="hide_comment" data-passage-id="123"
-										onclick="tool_bar_action($(this))">
-										<i class="icon-double-angle-up"></i>收起评论
-									</div>
-									<div class="line link" data-action="show_all_answer"
-										data-passage-id="123">
-										<a href="/detail/11"><i class="icon-lightbulb"></i>2条其他回答</a>
-									</div>
-								</div>
-								<div class="feed_pack_up" onclick="show_brief($(this))">
-									<i class="icon-arrow-up"></i>收起
-								</div>
-							</div>
-						</div>
-
-						<div class="comments clear_fix">
-							<div class="waiting">
-								<i class="icon-spinner icon-spin"></i>
-							</div>
-							<div class="comments_list"></div>
-
-							<div class="do_comment">
-								<div class="comment clear_fix">
-									<input type="text">
-									<button class="btn btn-success">提交</button>
-								</div>
-							</div>
-						</div>
-						 -->
-
 
 					<div style="text-align: center">
 						<ul class="pagination">
