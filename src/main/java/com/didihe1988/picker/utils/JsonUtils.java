@@ -19,6 +19,14 @@ public class JsonUtils {
 		return jsonObject.toString();
 	}
 
+	public static String getJsonObjectString(Entity... entities) {
+		JSONObject jsonObject = new JSONObject();
+		for (Entity entity : entities) {
+			jsonObject.put(entity.getKey(), entity.getValue());
+		}
+		return jsonObject.toString();
+	}
+
 	public static String getJsonObjectStringFromModel(String key, Object value) {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.m")
 				.create();

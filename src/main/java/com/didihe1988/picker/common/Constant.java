@@ -42,6 +42,7 @@ public class Constant {
 	public static final String KEY_FEED_LIST = "feedList";
 	public static final String KEY_QUESTION = "question";
 	public static final String KEY_COMMENT = "comment";
+	public static final String KEY_COMMENTNUM = "commentNum";
 	public static final String KEY_ANSWER = "answer";
 	public static final String KEY_CIRCLE = "circle";
 	public static final String KEY_FOLLOW = "follow";

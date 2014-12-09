@@ -1,6 +1,7 @@
 package com.didihe1988.picker.dao.test;
 
 import static org.junit.Assert.assertNotNull;
+
 import java.util.List;
 
 import org.junit.FixMethodOrder;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.service.FeedService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:servlet-context.xml",
@@ -71,4 +73,5 @@ public class FeedDaoTest {
 		assertNotNull(feeds);
 		System.out.println(feeds);
 	}
+	
 }

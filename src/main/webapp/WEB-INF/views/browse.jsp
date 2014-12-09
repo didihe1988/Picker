@@ -158,22 +158,22 @@
 										<c:choose>
 											<c:when test="${feed.follow}">
 												<div style="display: none" class="line watch"
-													data-action="watch" data-passage-id="123"
+													data-action="watch" data-passage-id="${feed.id}"
 													onclick="tool_bar_action($(this))">
 													<i class="icon-plus"></i>关注问题
 												</div>
 												<div class="line cancel_watch" data-action="cancel_watch"
-													data-passage-id="123" onclick="tool_bar_action($(this))">
+													data-passage-id="${feed.id}" onclick="tool_bar_action($(this))">
 													<i class="icon-ok"></i>取消关注
 												</div>
 											</c:when>
 											<c:otherwise>
 												<div class="line watch" data-action="watch"
-													data-passage-id="123" onclick="tool_bar_action($(this))">
+													data-passage-id="${feed.id}" onclick="tool_bar_action($(this))">
 													<i class="icon-plus"></i>关注问题
 												</div>
 												<div style="display: none" class="line cancel_watch"
-													data-action="cancel_watch" data-passage-id="123"
+													data-action="cancel_watch" data-passage-id="${feed.id}"
 													onclick="tool_bar_action($(this))">
 													<i class="icon-ok"></i>取消关注
 												</div>
@@ -184,7 +184,7 @@
 											data-url="<c:url value="/question/${feed.id}/comments"/>"
 											data-passage-id="${book.id}"
 											onclick="tool_bar_action($(this))">
-											<i class="icon-comments-alt"></i>${feed.commentNum}条评论
+											<i class="icon-comments-alt"></i><span id="comment_num">${feed.commentNum}</span>条评论
 										</div>
 										<div style="display: none" class="line hide_comment"
 											data-action="hide_comment" data-passage-id="123"
@@ -206,8 +206,8 @@
 
 										<div class="do_comment">
 											<div class="comment clear_fix">
-												<input type="text">
-												<button class="btn btn-success">提交</button>
+												<input id="content" type="text">
+												<button class="btn btn-success" onclick="add_comment($(this),${feed.id},'question')">提交</button>
 											</div>
 										</div>
 									</div>
@@ -241,7 +241,7 @@
 											data-url="<c:url value="/note/${feed.id}/comments"/>"
 											data-passage-id="${book.id}"
 											onclick="tool_bar_action($(this))">
-											<i class="icon-comments-alt"></i>${feed.commentNum}条评论
+											<i class="icon-comments-alt"></i><span id="comment_num">${feed.commentNum}</span>条评论
 										</div>
 										<div style="display: none" class="line hide_comment"
 											data-action="hide_comment" data-passage-id="123"
@@ -259,8 +259,8 @@
 
 										<div class="do_comment">
 											<div class="comment clear_fix">
-												<input type="text">
-												<button class="btn btn-success">提交</button>
+												<input id="content" type="text">
+												<button class="btn btn-success" onclick="add_comment($(this),${feed.id},'note')">提交</button>
 											</div>
 										</div>
 									</div>

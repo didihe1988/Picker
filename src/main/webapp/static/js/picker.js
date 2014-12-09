@@ -144,8 +144,6 @@ function show_brief(feed_pack_up) {
 }
 
 function tool_bar_action(tool_div) {
-    console.log("in tool_bar_action");
-    console.log(tool_div);
     var action = {
         // change req.status from 'success' to 0
         up: function (pid, feeds) {
@@ -238,8 +236,6 @@ function tool_bar_action(tool_div) {
     };
 
     var url = tool_div.data('url');
-    console.log("url: ");
-    console.log(url);
     if (url)
         url = url.replace('{}', tool_div.data('passage-id'));
     action[tool_div.data('action')](tool_div.data('passage-id'), tool_div
@@ -1020,66 +1016,27 @@ function submit_answer() {
 }
 
 // ---------------below author lml----------------
-/*
-function add_comment(content, commentedId, type) {
-    // t.hide();
-    $.ajax({
-        url: '/answer/comment/add',
-        type: 'post',
-        data: {
-            commentedId: commentedId,
-            //type: type,
-            content: content.val()
-        },
-        success: function (req) {
-            if (req.status == 0) {
-                // append comment content and inc commentNum
-                //find div.line.show_comment to get_comment
-                console.log(req.commentNum);
-                content.val("");
-                var comments_dom = content.parents('.comments');
-                //comments_dom.find('.comments_list').append(content);
-                comments_dom.find('.comments_list').empty();
-                var feeds_dom = content.parents('.feeds');
-                console.log(feeds_dom);
-                var show_comment = feeds_dom.find('.show_comment');
-                console.log(show_comment);
-                tool_bar_action(show_comment);
-            }
-            console.log(req);
-        },
-        error: function () {
-            console.log('error');
-        }
-    });
-}
-*/
 function add_comment(submit_btn, commentedId, type) {
-    // t.hide();
+    if (!((type == 'answer') || (type == 'question') || (type == 'note'))) {
+        return;
+    }
     var comments_dom = submit_btn.parents('.comments');
-    var content=comments_dom.find('#content');
+    var content = comments_dom.find('#content');
     $.ajax({
-        url: '/answer/comment/add',
+        url: '/' + type + '/comment/add',
         type: 'post',
         data: {
             commentedId: commentedId,
-            //type: type,
             content: content.val()
         },
         success: function (req) {
             if (req.status == 0) {
-                // append comment content and inc commentNum
-                //find div.line.show_comment to get_comment
-               // console.log(req.commentNum);
+                //re get comment content and commentNum
                 content.val("");
-                //var comments_dom = content.parents('.comments');
-                //comments_dom.find('.comments_list').append(content);
                 comments_dom.find('.comments_list').empty();
                 var feeds_dom = comments_dom.parents('.feeds');
                 feeds_dom.find('#comment_num').text(req.commentNum);
-                //console.log(feeds_dom);
                 var show_comment = feeds_dom.find('.show_comment');
-                //console.log(show_comment);
                 tool_bar_action(show_comment);
             }
             console.log(req);

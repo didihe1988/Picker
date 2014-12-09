@@ -191,7 +191,7 @@
 							</div>
 							<div class="detail_info">
 								<!-- Markdown html here -->
-								<!--  
+								<!--
 								布拉弗斯，无面者的神。<br />
 								神有千面，这个比光之王的一神论还要牛逼啊，不管你们怎么信别的神，所有神都是千面神的一面，归根结底还是信了我千面神。<br />
 								哟西。<br />-->
@@ -239,7 +239,7 @@
 								data-passage-id="${question.id}"
 								onclick="tool_bar_action($(this))">
 								<i class="icon-comments-alt"></i>
-								<c:out value='${question.commentNum}' />
+                                <span id="comment_num">${question.commentNum}</span>
 								条评论
 							</div>
 							<div style="display: none" class="line hide_comment"
@@ -257,8 +257,8 @@
 
 							<div class="do_comment">
 								<div class="comment clear_fix">
-									<input type="text">
-									<button class="btn btn-success">提交</button>
+									<input id="content" type="text">
+									<button class="btn btn-success" onclick="add_comment($(this),${question.id},'question')">提交</button>
 								</div>
 							</div>
 						</div>
@@ -370,7 +370,7 @@
 								<div class="do_comment">
 									<div class="comment clear_fix">
 										<input id="content" type="text">
-										<button class="btn btn-success" onclick="add_comment($(this),${answer.id},1)">提交</button>
+										<button class="btn btn-success" onclick="add_comment($(this),${answer.id},'answer')">提交</button>
 									</div>
 								</div>
 							</div>

@@ -138,7 +138,6 @@ public class Message implements Serializable {
 
 	}
 
-	
 	public static final String NULL_RelatedSourceContent = "";
 	public static final String NULL_ExtraContent = "";
 	public static final int NULL_RelatedSourceId = -1;
@@ -158,6 +157,12 @@ public class Message implements Serializable {
 
 	@Column(name = "message_ischecked")
 	private boolean isChecked;
+
+	/*
+	 * 如果是Feed相关的消息，在显示动态消息是会查询书名(parentNam)
+	 */
+	@Column(name = "message_isfeedrelated")
+	private boolean isFeedRelated;
 
 	@Column(name = "message_type")
 	private int type;
@@ -205,6 +210,14 @@ public class Message implements Serializable {
 
 	public void setChecked(boolean isChecked) {
 		this.isChecked = isChecked;
+	}
+
+	public boolean isFeedRelated() {
+		return isFeedRelated;
+	}
+
+	public void setFeedRelated(boolean isFeedRelated) {
+		this.isFeedRelated = isFeedRelated;
 	}
 
 	public int getType() {

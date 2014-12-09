@@ -208,10 +208,13 @@ public class MessageServiceImpl implements MessageService {
 				.getAvatarUrl();
 		int type = message.getType();
 		String parentName = "";
-		if ((type == Message.MESSAGE_USER_ADDQUESTION)
-				|| (type == Message.MESSAGE_USER_ADDNOTE)
-				|| (type == Message.MESSAGE_USER_FAVORITE_QUESTION)
-				|| (type == Message.MESSAGE_USER_FAVORITE_NOTE)) {
+		/*
+		 * if ((type == Message.MESSAGE_USER_ADDQUESTION) || (type ==
+		 * Message.MESSAGE_USER_ADDNOTE) || (type ==
+		 * Message.MESSAGE_USER_FAVORITE_QUESTION) || (type ==
+		 * Message.MESSAGE_USER_FAVORITE_NOTE))
+		 */
+		if (message.isFeedRelated()) {
 			parentName = bookDao.queryModelById(message.getParentId())
 					.getBookName();
 		} else if ((type == Message.MESSAGE_USER_ADDANSWER)
@@ -225,11 +228,13 @@ public class MessageServiceImpl implements MessageService {
 				.getAvatarUrl();
 		int type = message.getType();
 		String parentName = "", imageUrl = "";
-		if ((type == Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION)
-				|| (type == Message.MESSAGE_FOLLOWED_ANSWER_QUESTION)
-				|| (type == Message.MESSAGE_FOLLOWED_ASKQUESTION)
-				|| (type == Message.MESSAGE_FOLLOWED_FAVORITE_NOTE)
-				|| (type == Message.MESSAGE_FOLLOWED_ADDNOTE)) {
+		/*
+		 * if ((type == Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION) || (type ==
+		 * Message.MESSAGE_FOLLOWED_ANSWER_QUESTION) || (type ==
+		 * Message.MESSAGE_FOLLOWED_ASKQUESTION) || (type ==
+		 * Message.MESSAGE_FOLLOWED_FAVORITE_NOTE) || (type ==
+		 * Message.MESSAGE_FOLLOWED_ADDNOTE))
+		 */if (message.isFeedRelated()) {
 			parentName = bookDao.queryModelById(message.getParentId())
 					.getBookName();
 			imageUrl = relatedImageDao.queryFirstImageUrlByKey(

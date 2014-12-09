@@ -1,6 +1,7 @@
 package com.didihe1988.picker.service.test;
 
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -27,24 +28,22 @@ public class FeedServiceTest {
 
 	@Test
 	public void test0() {
-		Feed feed = new Feed(
-				1,
-				3,
-				"testing...",
-				"Provide simple toJson() and fromJson() methods to convert Java objects to JSON and vice-versa",
-				66, Feed.TYPE_QUESTION);
+		int bookId = 2;
+		int userId = 1;
+		int page = 3;
+		Feed feed = new Feed(bookId, userId, "question title",
+				"question content", "question brief", page, Feed.TYPE_QUESTION);
 		int status = feedService.addFeed(feed);
 		assertSame(Status.SUCCESS, status);
 	}
 
 	@Test
 	public void test1() {
-		Feed feed = new Feed(
-				1,
-				3,
-				"Javadocs for the current Gson release",
-				"Support arbitrarily complex objects (with deep inheritance hierarchies and extensive use of generic types",
-				79, Feed.TYPE_NOTE);
+		int bookId = 2;
+		int userId = 1;
+		int page = 3;
+		Feed feed = new Feed(bookId, userId, "note title", "note content",
+				"note brief", page, Feed.TYPE_NOTE);
 		int status = feedService.addFeed(feed);
 		assertSame(Status.SUCCESS, status);
 	}
@@ -52,21 +51,25 @@ public class FeedServiceTest {
 	@Test
 	public void test2() {
 		List<Feed> list = feedService.getFeedListForBrowse(1);
-		System.out.println(list);
+		assertNotNull(list);
 	}
 
 	@Test
 	public void test3() {
 		Feed feed = feedService.getFeedById(8);
-		System.out.print(feed.getContent());
+		assertNotNull(feed);
 	}
-
-	
 
 	@Test
 	public void test4() {
-		List<NoteJson> list=feedService.getNoteJsons(1, 1);
-		System.out.println(list);
+		List<NoteJson> list = feedService.getNoteJsons(1, 1);
+		assertNotNull(list);
+	}
+
+	@Test
+	public void test5() {
+		Feed feed = feedService.getFeedById(4);
+		assertSame(feed.getType(), Feed.TYPE_QUESTION);
 	}
 
 }

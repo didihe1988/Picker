@@ -1,7 +1,5 @@
 package com.didihe1988.picker.model.dp;
 
-import java.util.Date;
-
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.utils.DateUtils;
 
