@@ -308,8 +308,8 @@
 						</div>
 						<div class="col-69 action">
 							<div>
-								<a data-pjax href=<c:url value="/detail/${book.id}/0/new"/>
-									onclick="go_to_create_page()"><i class="icon-pencil"></i>添加问题/笔记</a>
+                                <a data-pjax href="#" onclick="set_create_new_feed_url($(this),${book.id})">
+                                <i class="icon-pencil"></i>添加问题/笔记</a>
 							</div>
 							<div>
 								<a href="#"><i class="icon-hand-right"></i>页数跳转</a>

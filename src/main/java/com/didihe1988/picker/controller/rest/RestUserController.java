@@ -377,19 +377,19 @@ public class RestUserController {
 		/*
 		 * 与我相关
 		 */
-		messageService.addMessageByRecerver(followedId,
+		messageService.addMessageByRecerver(followedId, false,
 				Message.MESSAGE_OTHERS_FOLLOW_YOU, producer, followedId,
 				followedName, Message.NULL_ExtraContent, Message.NULL_parentId);
 		/*
 		 * 通知关注者 小明(被关注者)关注了xxx
 		 */
-		messageService.addMessageByFollowedUser(
+		messageService.addMessageByFollowedUser(false,
 				Message.MESSAGE_FOLLOWEDUSER_FOLLOW, producer, followedId,
 				followedName, Message.NULL_ExtraContent, Message.NULL_parentId);
 		/*
 		 * 用户动态
 		 */
-		messageService.addMessageByRecerver(Message.NULL_receiverId,
+		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
 				Message.MESSAGE_USER_FOLLOW_OTHER, producer, followedId,
 				followedName, Message.NULL_ExtraContent, Message.NULL_parentId);
 	}

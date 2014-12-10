@@ -57,16 +57,16 @@ public class MessageServiceImpl implements MessageService {
 	 * 用户关注的人产生的消息
 	 */
 	@Override
-	public void addMessageByFollowedUser(int type, User producer,
-			int relatedSourceId, String relatedSourceContent,
+	public void addMessageByFollowedUser(boolean isFeedRelated, int type,
+			User producer, int relatedSourceId, String relatedSourceContent,
 			String extraContent, int parentId) {
 		// TODO Auto-generated method stub
 		final List<Follow> followList = followDao
 				.queryFollowListByFollowedUserId(producer.getId());
 		for (Follow follow : followList) {
-			addMessageByRecerver(follow.getFollowerId(), type, producer,
-					relatedSourceId, relatedSourceContent, extraContent,
-					parentId);
+			addMessageByRecerver(follow.getFollowerId(), isFeedRelated, type,
+					producer, relatedSourceId, relatedSourceContent,
+					extraContent, parentId);
 		}
 	}
 
@@ -81,7 +81,7 @@ public class MessageServiceImpl implements MessageService {
 		final List<Follow> followList = followDao
 				.queryFollowListByQuestionId(producer.getId());
 		for (Follow follow : followList) {
-			addMessageByRecerver(follow.getFollowerId(), type, producer,
+			addMessageByRecerver(follow.getFollowerId(), false, type, producer,
 					relatedSourceId, relatedSourceContent, extraContent,
 					parentId);
 		}
@@ -90,22 +90,25 @@ public class MessageServiceImpl implements MessageService {
 	/*
 	 * xxx赞了/关注了 您的XXX
 	 */
+	/*
+	 * producer:producerId producerName
+	 */
 	@Override
-	public void addMessageByRecerver(int receiverId, int type, User producer,
-			int relatedSourceId, String relatedSourceContent,
-			String extraContent, int parentId) {
+	public void addMessageByRecerver(int receiverId, boolean isFeedRelated,
+			int type, User producer, int relatedSourceId,
+			String relatedSourceContent, String extraContent, int parentId) {
 		// TODO Auto-generated method stub
-		addMessageByRecerver(receiverId, type, producer.getId(),
+		addMessageByRecerver(receiverId, isFeedRelated, type, producer.getId(),
 				producer.getUsername(), relatedSourceId, relatedSourceContent,
 				extraContent, parentId);
 	}
 
-	private void addMessageByRecerver(int receiverId, int type, int producerId,
-			String producerName, int relatedSourceId,
+	private void addMessageByRecerver(int receiverId, boolean isFeedRelated,
+			int type, int producerId, String producerName, int relatedSourceId,
 			String relatedSourceContent, String extraContent, int parentId) {
-		Message message = new Message(receiverId, type, producerId,
-				producerName, relatedSourceId, relatedSourceContent,
-				extraContent, parentId);
+		Message message = new Message(receiverId, isFeedRelated, type,
+				producerId, producerName, relatedSourceId,
+				relatedSourceContent, extraContent, parentId);
 		messageDao.addMessage(message);
 	}
 
@@ -191,6 +194,14 @@ public class MessageServiceImpl implements MessageService {
 	public List<Message> getMessageByUserIdAndFilter(int objId, Filter filter) {
 		// TODO Auto-generated method stub
 		return messageDao.queryMessageByUserIdAndFilter(objId, filter);
+	}
+
+	@Override
+	public List<Message> getLimitedMessageByUserIdAndFilter(int userId,
+			Filter filter, int limit) {
+		// TODO Auto-generated method stub
+		return messageDao.queryLimitedMessageByUserIdAndFilter(userId, filter,
+				limit);
 	}
 
 	@Override
@@ -299,6 +310,13 @@ public class MessageServiceImpl implements MessageService {
 		// TODO Auto-generated method stub
 		return getDynamicList(getMessageByUserIdAndFilter(userId,
 				Message.Filter.MESSAGE_DYNAMIC));
+	}
+
+	@Override
+	public List<Dynamic> getLimitedDynamicByUserId(int userId, int limit) {
+		// TODO Auto-generated method stub
+		return getDynamicList(getLimitedMessageByUserIdAndFilter(userId,
+				Message.Filter.MESSAGE_DYNAMIC, limit));
 	}
 
 }

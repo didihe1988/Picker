@@ -133,20 +133,20 @@ public class RestNoteController implements FavoriteController {
 		/*
 		 * 与我相关
 		 */
-		messageService.addMessageByRecerver(feed.getUserId(),
+		messageService.addMessageByRecerver(feed.getUserId(), true,
 				Message.MESSAGE_YOUR_NOTE_FAVORITED, producer, feedId,
 				relatedSourceContent, extraContent, feed.getBookId());
 		/*
 		 * 通知关注者 小明 (被关注者)赞了XXX的问题
 		 */
-		messageService.addMessageByFollowedUser(
+		messageService.addMessageByFollowedUser(true,
 				Message.MESSAGE_FOLLOWED_FAVORITE_NOTE, producer, feedId,
 				relatedSourceContent, extraContent, feed.getBookId());
 		/*
 		 * 用户动态
 		 */
 
-		messageService.addMessageByRecerver(Message.NULL_receiverId,
+		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 				Message.MESSAGE_USER_FAVORITE_NOTE, producer, feedId,
 				relatedSourceContent, extraContent, feed.getBookId());
 	}
@@ -155,7 +155,7 @@ public class RestNoteController implements FavoriteController {
 	 * @description 用户取消的对该笔记的赞
 	 * @condition session-userId
 	 */
-	@RequestMapping(value = "/json/note/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json",produces = "application/json")
+	@RequestMapping(value = "/json/note/{id}/withdraw_subscribe", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
@@ -213,14 +213,14 @@ public class RestNoteController implements FavoriteController {
 		int noteId = feedService.getLatestFeedByBookId(feed.getBookId(),
 				Feed.TYPE_NOTE);
 		String extraContent = feedService.getFeedById(noteId).getTitle();
-		messageService.addMessageByFollowedUser(
+		messageService.addMessageByFollowedUser(true,
 				Message.MESSAGE_FOLLOWED_ADDNOTE, producer, noteId,
 				relatedSourceContent, extraContent, feed.getBookId());
 
 		/*
 		 * 用户足迹
 		 */
-		messageService.addMessageByRecerver(Message.NULL_receiverId,
+		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 				Message.MESSAGE_USER_ADDNOTE, producer, noteId,
 				relatedSourceContent, extraContent, -feed.getBookId());
 	}

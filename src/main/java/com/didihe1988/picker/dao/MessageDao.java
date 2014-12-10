@@ -25,4 +25,6 @@ public interface MessageDao {
 			int type);
 
 	public List<Message> queryMessageByUserIdAndFilter(int objId,Message.Filter filter);
+	
+	public List<Message> queryLimitedMessageByUserIdAndFilter(int objId,Message.Filter filter,int limit);
 }

@@ -116,6 +116,7 @@
 		<!-- *** change end *** -->
 
 		<!--为 提问/回答/笔记 提供url定位-->
+        <!--在上方url框中显示-->
 		<div id="user_home_url" data-value="/user/${user.id}"
 			style="display: none"></div>
 		<div id="notes_url" data-value="/user/${user.id}/notes/1"

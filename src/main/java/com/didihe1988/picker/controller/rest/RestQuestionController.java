@@ -264,13 +264,13 @@ public class RestQuestionController implements FavoriteController {
 				Feed.TYPE_QUESTION);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getBrief(), Constant.MESSAGE_LENGTH);
-		messageService.addMessageByFollowedUser(
+		messageService.addMessageByFollowedUser(true,
 				Message.MESSAGE_FOLLOWED_ASKQUESTION, producer, feedId,
 				relatedSourceContent, feed.getTitle(), feed.getBookId());
 		/*
 		 * 用户足迹
 		 */
-		messageService.addMessageByRecerver(Message.NULL_receiverId,
+		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 				Message.MESSAGE_USER_ADDQUESTION, producer, feedId,
 				relatedSourceContent, feed.getTitle(), feed.getBookId());
 	}
@@ -288,20 +288,20 @@ public class RestQuestionController implements FavoriteController {
 		/*
 		 * 与我相关
 		 */
-		messageService.addMessageByRecerver(feed.getUserId(),
+		messageService.addMessageByRecerver(feed.getUserId(), true,
 				Message.MESSAGE_YOUR_QUESTION_FAVORITED, producer, feedId,
 				relatedSourceContent, feed.getTitle(), feed.getBookId());
 		/*
 		 * 通知关注者 小明 (被关注者)赞了XXX的问题
 		 */
-		messageService.addMessageByFollowedUser(
+		messageService.addMessageByFollowedUser(true,
 				Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, producer, feedId,
 				relatedSourceContent, feed.getTitle(), feed.getBookId());
 		/*
 		 * 用户动态
 		 */
 
-		messageService.addMessageByRecerver(Message.NULL_receiverId,
+		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 				Message.MESSAGE_USER_FAVORITE_QUESTION, producer, feedId,
 				relatedSourceContent, feed.getTitle(), feed.getBookId());
 

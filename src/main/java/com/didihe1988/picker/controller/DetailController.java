@@ -86,6 +86,7 @@ public class DetailController {
 		if (bookService.isBookExistsById(bookId)) {
 			Book book = bookService.getBookById(bookId);
 			model.addAttribute("book", book);
+			model.addAttribute("page", page);
 			return "new";
 		} else {
 			return "error";
@@ -123,24 +124,24 @@ public class DetailController {
 				feed.getBrief(), Constant.MESSAGE_LENGTH);
 		String extraContent = feedService.getFeedById(feedId).getTitle();
 		if (feed.getType() == Feed.TYPE_QUESTION) {
-			messageService.addMessageByFollowedUser(
+			messageService.addMessageByFollowedUser(true,
 					Message.MESSAGE_FOLLOWED_ASKQUESTION, producer, feedId,
 					relatedSourceContent, feed.getTitle(), feed.getBookId());
 			/*
 			 * 用户足迹
 			 */
-			messageService.addMessageByRecerver(Message.NULL_receiverId,
+			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 					Message.MESSAGE_USER_ADDQUESTION, producer, feedId,
 					relatedSourceContent, feed.getTitle(), feed.getBookId());
 		} else {
-			messageService.addMessageByFollowedUser(
+			messageService.addMessageByFollowedUser(true,
 					Message.MESSAGE_FOLLOWED_ADDNOTE, producer, feedId,
 					relatedSourceContent, extraContent, feed.getBookId());
 
 			/*
 			 * 用户足迹
 			 */
-			messageService.addMessageByRecerver(Message.NULL_receiverId,
+			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 					Message.MESSAGE_USER_ADDNOTE, producer, feedId,
 					relatedSourceContent, extraContent, -feed.getBookId());
 		}

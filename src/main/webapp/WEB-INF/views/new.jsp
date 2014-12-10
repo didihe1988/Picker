@@ -90,8 +90,8 @@
 	<div id="main">
 		<!--**xx-->
 		<div id="book_id" data-value="${book.id}" style="display: none"></div>
-		<div id="book_name" data-value="${book.name}" style="display: none"></div>
-		<div class="detail_title" style="display: none">${book.name}第12页的草稿</div>
+		<div id="book_name" data-value="${book.bookName}" style="display: none"></div>
+		<div class="detail_title" style="display: none">${book.bookName}第12页的草稿</div>
 
 		<!--图片上传功能 开始-->
 		<div id="image_insert_panel" class="shadow">
@@ -169,7 +169,7 @@
 						<div class="row">
 							<div id="p_new_book_meta" class="clear_fix">
 								<div class="col-40">
-									<img src="/static/images/books/7.jpg" style="width: 100%">
+									<img src=<c:url value="${book.imageUrl}"/> style="width: 100%">
 								</div>
 								<div class="col-10"></div>
 								<div class="col-50">
@@ -183,7 +183,7 @@
 								</div>
 							</div>
 							<div id="p_new_page" style="z-index: 901">
-								<span>Page. </span> <span class="page" onclick="show_input();">114</span>
+								<span>Page. </span> <span class="page" onclick="show_input();">${page}</span>
 								<span><input type="text" style="width: 40px;"
 									onblur="change_page($(this).val());"></span>
 							</div>

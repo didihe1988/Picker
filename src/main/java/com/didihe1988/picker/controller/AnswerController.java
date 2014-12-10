@@ -146,7 +146,7 @@ public class AnswerController implements FavoriteController {
 				answer.getContent(), Constant.MESSAGE_LENGTH);
 		String extraContent = feedService.getFeedById(answer.getQuestionId())
 				.getTitle();
-		messageService.addMessageByRecerver(answer.getReplierId(),
+		messageService.addMessageByRecerver(answer.getReplierId(), false,
 				Message.MESSAGE_YOUR_ANSWER_FAVORITED, producer,
 				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
@@ -154,7 +154,7 @@ public class AnswerController implements FavoriteController {
 		/*
 		 * 通知关注者 小明 (被关注者)赞了XXX的
 		 */
-		messageService.addMessageByFollowedUser(
+		messageService.addMessageByFollowedUser(false,
 				Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, producer,
 				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
@@ -164,7 +164,7 @@ public class AnswerController implements FavoriteController {
 		/*
 		 * 用户动态
 		 */
-		messageService.addMessageByRecerver(Message.NULL_receiverId,
+		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
 				Message.MESSAGE_USER_FAVORITE_ANSWER, producer,
 				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
@@ -243,7 +243,7 @@ public class AnswerController implements FavoriteController {
 		/*
 		 * 通知提问者XXX回答了您的问题
 		 */
-		messageService.addMessageByRecerver(askerId,
+		messageService.addMessageByRecerver(askerId, false,
 				Message.MESSAGE_YOUR_QUESTION_UPDATE, producer, answerId,
 				relatedSourceContent, extraContent, answer.getQuestionId());
 		/*
@@ -256,13 +256,13 @@ public class AnswerController implements FavoriteController {
 		 * 通知关注者 小明 (被关注者)回答了一个问题
 		 */
 
-		messageService.addMessageByFollowedUser(
+		messageService.addMessageByFollowedUser(false,
 				Message.MESSAGE_FOLLOWED_ANSWER_QUESTION, producer, answerId,
 				relatedSourceContent, extraContent, answer.getQuestionId());
 		/*
 		 * 用户足迹
 		 */
-		messageService.addMessageByRecerver(Message.NULL_receiverId,
+		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
 				Message.MESSAGE_USER_ADDANSWER, producer, answerId,
 				relatedSourceContent, extraContent, answer.getQuestionId());
 	}

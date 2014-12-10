@@ -163,11 +163,11 @@ public class RestCircleController {
 		String extraContent = StringUtils.confineStringLength(
 				circle.getDescribe(), Constant.MESSAGE_LENGTH);
 
-		messageService.addMessageByFollowedUser(
+		messageService.addMessageByFollowedUser(false,
 				Message.MESSAGE_FOLLOWED_ADDCIRCLE, producer, circleId,
 				relatedSourceContent, extraContent, Message.NULL_parentId);
 
-		messageService.addMessageByRecerver(Message.NULL_receiverId,
+		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
 				Message.MESSAGE_USER_ADDCIRCLE, producer, circleId,
 				relatedSourceContent, extraContent, Message.NULL_parentId);
 	}
@@ -215,10 +215,10 @@ public class RestCircleController {
 				circle.getName(), Constant.MESSAGE_LENGTH);
 		String extraContent = StringUtils.confineStringLength(
 				circle.getDescribe(), Constant.MESSAGE_LENGTH);
-		messageService.addMessageByFollowedUser(
+		messageService.addMessageByFollowedUser(false,
 				Message.MESSAGE_FOLLOWED_JOINCIRCLE, producer, circleId,
 				relatedSourceContent, extraContent, Message.NULL_parentId);
-		messageService.addMessageByRecerver(Message.NULL_receiverId,
+		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
 				Message.MESSAGE_USER_JOINCIRCLE, producer, circleId,
 				relatedSourceContent, extraContent, Message.NULL_parentId);
 

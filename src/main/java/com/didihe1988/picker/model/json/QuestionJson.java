@@ -1,12 +1,7 @@
 package com.didihe1988.picker.model.json;
 
-import java.util.Date;
-import java.util.List;
-
-import com.didihe1988.picker.model.dp.FeedDp;
 
 public class QuestionJson extends BaseJson {
-
 	private int comment_cnt;
 
 	private int answers_cnt;

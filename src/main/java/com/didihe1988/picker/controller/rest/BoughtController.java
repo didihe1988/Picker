@@ -68,7 +68,7 @@ public class BoughtController {
 		String extraContent = bookService.getBookById(bought.getBookId())
 				.getWriter();
 		messageService.addMessageByFollowedUser(
-				Message.MESSAGE_FOLLOWED_ADDBOUGHT, producer,
+				false,Message.MESSAGE_FOLLOWED_ADDBOUGHT, producer,
 				bought.getBookId(), relatedSourceContent, extraContent,
 				Message.NULL_parentId);
 	}

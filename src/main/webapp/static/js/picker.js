@@ -339,7 +339,7 @@ function set_init_panel(obj) {
 }
 
 function gen_paging(current_page, total_page, base_url) {
-    // 鐢熸垚鍒嗛〉
+    //生成分页
     if (total_page > 1) {
         var pagination_template = $('#pagination_template').html();
         var handle = {
@@ -418,30 +418,30 @@ function panel_action(t) {
         },
         'questions': function () {
             this.q_a_n_action('questions', $('#questions_url').data('value'),
-                $('#questions_panel'), '鍏ㄩ儴鎻愰棶', $(
+                $('#questions_panel'), '全部提问', $(
                     '#questions_feed_template').html(), $(
                     '#questions_feed_template').html());
         },
         'answers': function () {
             this.q_a_n_action('answers', $('#answers_url').data('value'),
-                $('#answers_panel'), '鍏ㄩ儴鍥炵瓟', $(
+                $('#answers_panel'), '全部回答', $(
                     '#answers_feed_with_picture_template').html(), $(
                     '#answers_feed_with_no_picture_template').html());
         },
         'notes': function () {
-            // 淇敼url
+            //修改url
             this.q_a_n_action('notes', $('#notes_url').data('value'),
-                $('#notes_panel'), '鍏ㄩ儴绗旇', $(
+                $('#notes_panel'), '全部笔记', $(
                     '#notes_feed_with_picture_template').html(), $(
                     '#notes_feed_with_no_picture_template').html());
         },
         // questions, answers, notes action.basic the same
         'q_a_n_action': function (type, show_url, dom, title, with_picture_template, no_picture_template) {
-            // 淇敼url
+            //修改url
             window.history.pushState(null, title, show_url);
             // check
             if (dom.find('.content').data('current_page') == 0) {
-                // 绗竴娆℃洿鏂�
+                //第一次更新
                 $.ajax({
                     // url: /user/1234/notes/1/get
                     url: merge_url('/json', show_url),
@@ -499,7 +499,7 @@ function panel_action(t) {
                 'answers_panel' ];
             for (var i in panel_id_to_change_url) {
                 if (cp.attr('id') == panel_id_to_change_url[i])
-                    window.history.pushState(null, '鐢ㄦ埛涓婚〉',
+                    window.history.pushState(null, '用户主页',
                         $('#user_home_url').data('value'));
             }
             if (e.attr('id') === cp.attr('id'))
@@ -531,7 +531,7 @@ function panel_action(t) {
     }
 }
 
-// 鍔ㄦ�佺畝浠嬩笌璇︾粏淇℃伅鐨勫垏鎹�
+//动态简介与详细信息的切换
 function user_feed_show_full(t) {
     t.hide();
     t.parent().find('.user_feed_all').show();
@@ -1016,7 +1016,7 @@ function submit_answer() {
 }
 
 // ---------------below author lml----------------
-function add_comment(submit_btn, commentedId, type) {
+function add_comment(submit_btn, commented_id, type) {
     if (!((type == 'answer') || (type == 'question') || (type == 'note'))) {
         return;
     }
@@ -1026,7 +1026,7 @@ function add_comment(submit_btn, commentedId, type) {
         url: '/' + type + '/comment/add',
         type: 'post',
         data: {
-            commentedId: commentedId,
+            commentedId: commented_id,
             content: content.val()
         },
         success: function (req) {
@@ -1045,4 +1045,10 @@ function add_comment(submit_btn, commentedId, type) {
             console.log('error');
         }
     });
+}
+
+function set_create_new_feed_url(a_dom,book_id)
+{
+    var page=$('.word').text();
+    a_dom.attr('href','/detail/'+book_id+'/'+page+'/new');
 }

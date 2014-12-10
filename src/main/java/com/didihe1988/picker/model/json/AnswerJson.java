@@ -1,8 +1,5 @@
 package com.didihe1988.picker.model.json;
 
-import java.util.Date;
-import java.util.List;
-
 import com.didihe1988.picker.model.dp.AnswerDp;
 
 public class AnswerJson extends BaseJson {

@@ -112,7 +112,7 @@ public class RestCommentController implements FavoriteController {
 			Comment comment = commentService.getCommentById(id);
 			String relatedSourceContent = StringUtils.confineStringLength(
 					comment.getContent(), Constant.MESSAGE_LENGTH);
-			messageService.addMessageByRecerver(comment.getProducerId(),
+			messageService.addMessageByRecerver(comment.getProducerId(), false,
 					Message.MESSAGE_YOUR_COMMENT_FAVORITED, producer, id,
 					relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
@@ -120,7 +120,7 @@ public class RestCommentController implements FavoriteController {
 			/*
 			 * 通知关注者 小明 (被关注者)赞了XXX的评论
 			 */
-			messageService.addMessageByFollowedUser(
+			messageService.addMessageByFollowedUser(false,
 					Message.MESSAGE_FOLLOWED_FAVORITE_COMMENT, producer, id,
 					relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
@@ -128,7 +128,7 @@ public class RestCommentController implements FavoriteController {
 			/*
 			 * 用户动态
 			 */
-			messageService.addMessageByRecerver(Message.NULL_receiverId,
+			messageService.addMessageByRecerver(Message.NULL_receiverId, false,
 					Message.MESSAGE_USER_FAVORITE_COMMENT, producer, id,
 					relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
@@ -186,7 +186,7 @@ public class RestCommentController implements FavoriteController {
 		 */
 		if (comment.getType() == Comment.COMMENT_QUESTION) {
 			Feed feed = feedService.getFeedById(comment.getCommentedId());
-			messageService.addMessageByRecerver(feed.getUserId(),
+			messageService.addMessageByRecerver(feed.getUserId(), false,
 					Message.MESSAGE_YOUR_QUESTION_COMMENTED, producer,
 					commentId, relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
@@ -198,7 +198,7 @@ public class RestCommentController implements FavoriteController {
 		if (comment.getType() == Comment.COMMENT_ANSWER) {
 			Answer answer = answerService.getAnswerById(comment
 					.getCommentedId());
-			messageService.addMessageByRecerver(answer.getReplierId(),
+			messageService.addMessageByRecerver(answer.getReplierId(), false,
 					Message.MESSAGE_YOUR_ANSWER_COMMENTED, producer, commentId,
 					relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
