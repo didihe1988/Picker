@@ -24,7 +24,8 @@
 </head>
 
 <!--TODO: AJAX取消息-->
-<body>
+<body onload="choose_panel_action(${type},${page})">
+
 	<div id="nav" class="row">
 		<div id="nav_content">
 			<div class="col-13">
@@ -126,7 +127,7 @@
 		<div id="questions_url" data-value="/user/${user.id}/questions/1"
 			style="display: none"></div>
 		<!--end-->
-
+        <button onclick="test_reset()"></button>
 		<div class="row" style="margin-top: 10px">
 			<div class="col-21">
 				<div id="user_photo">
@@ -187,7 +188,7 @@
 						</span> <span class="show_all" data-tab="search_label"
 							onclick="panel_action($(this))"><i class="icon-search"></i></span>
 					</div>
-					<!-- 
+					<!--
 					<span class="label"><a data-pjax href="/group/1234">一个</a></span> <span
 						class="label"><a data-pjax href="/group/1234">电子科技大学</a></span> <span
 						class="label"><a data-pjax href="/group/1234">实验班</a></span> <span
@@ -225,21 +226,21 @@
 					</div>
 				</div>
 				<div id="count" class="row">
-					<div class="col-33 box split" data-tab="questions"
+					<div class="col-33 box split" id="questions" data-tab="questions"
 						onclick="panel_action($(this))">
 						<div class="count_num">
 							<c:out value='${user.questionNum}' />
 						</div>
 						<div class="count_word">提问</div>
 					</div>
-					<div class="col-33 box split" data-tab="answers"
+					<div class="col-33 box split" id="answers" data-tab="answers"
 						onclick="panel_action($(this))">
 						<div class="count_num">
 							<c:out value='${user.answerNum}' />
 						</div>
 						<div class="count_word">回答</div>
 					</div>
-					<div class="col-33 box" data-tab="notes"
+					<div class="col-33 box" id="notes"  data-tab="notes"
 						onclick="panel_action($(this))">
 						<div class="count_num">
 							<c:out value='${user.noteNum}' />
@@ -248,6 +249,7 @@
 					</div>
 				</div>
 			</div>
+            <!--<button onclick="choose_panel_action(${type})"></button>-->
 			<div class="col-2"></div>
 			<div class="col-76" style="overflow: hidden">
 				<div id="user_name">

@@ -135,31 +135,10 @@ public class UserController {
 	}
 
 	/**
-	 * @description 回答过的问题
-	 * @condition request用于isFavorite
-	 */
-	@RequestMapping(value = "/user/{id}/answers/{page}")
-	public String getAnswers(@PathVariable int id, @PathVariable int page,
-			Model model, HttpServletRequest request) {
-		if ((id < 1) || (page <0 )) {
-			return "error";
-		}
-		if (userService.isUserExistsById(id)) {
-			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
-			List<AnswerDp> list = answerService.getAnswerDpListByReplierId(id,
-					HttpUtils.getSessionUserId(request));
-			model.addAttribute("answerList", list);
-			return "user";
-		} else {
-			return "error";
-		}
-
-	}
-
-	/**
 	 * @description 问过的问题
 	 * @condition request用于isFollow
 	 */
+	
 	@RequestMapping(value = "/user/{id}/questions/{page}")
 	public String getQuestions(@PathVariable int id, @PathVariable int page,
 			Model model, HttpServletRequest request) {
@@ -168,9 +147,30 @@ public class UserController {
 		}
 		if (userService.isUserExistsById(id)) {
 			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
-			List<FeedDp> list = feedService.getFeedDpListByUserId(id,
-					Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request));
-			model.addAttribute("questionList", list);
+			model.addAttribute("page", page);
+			model.addAttribute("type","0");
+			return "user";
+		} else {
+			return "error";
+		}
+
+	}
+	
+	/**
+	 * @description 回答过的问题
+	 * @condition request用于isFavorite
+	 */
+	
+	@RequestMapping(value = "/user/{id}/answers/{page}")
+	public String getAnswers(@PathVariable int id, @PathVariable int page,
+			Model model, HttpServletRequest request) {
+		if ((id < 1) || (page <0 )) {
+			return "error";
+		}
+		if (userService.isUserExistsById(id)) {
+			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
+			model.addAttribute("page", page);
+			model.addAttribute("type","1");
 			return "user";
 		} else {
 			return "error";
@@ -182,6 +182,7 @@ public class UserController {
 	 * @description 写过的笔记
 	 * @condition request用于isFollow
 	 */
+	
 	@RequestMapping(value = "/user/{id}/notes/{page}")
 	public String getNotes(@PathVariable int id, @PathVariable int page,
 			Model model, HttpServletRequest request) {
@@ -190,10 +191,8 @@ public class UserController {
 		}
 		if (userService.isUserExistsById(id)) {
 			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
-			List<FeedDp> list = feedService.getFeedDpListByUserId(id,
-					Feed.TYPE_NOTE, HttpUtils.getSessionUserId(request));
-			System.out.println(list);
-			model.addAttribute("noteList", list);
+			model.addAttribute("page", page);
+			model.addAttribute("type","2");
 			return "user";
 		} else {
 			return "error";

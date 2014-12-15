@@ -443,7 +443,7 @@ function panel_action(t) {
             if (dom.find('.content').data('current_page') == 0) {
                 //第一次更新
                 $.ajax({
-                    // url: /user/1234/notes/1/get
+                    // url: /json/user/1234/notes/1
                     url: merge_url('/json', show_url),
                     type: 'get',
                     success: function (req) {
@@ -1052,3 +1052,42 @@ function set_create_new_feed_url(a_dom,book_id)
     var page=$('.word').text();
     a_dom.attr('href','/detail/'+book_id+'/'+page+'/new');
 }
+
+//user.jsp
+function choose_panel_action(type,page)
+{
+    switch(type)
+    {
+        case 0:
+            reset_specific_url_div($('#questions_url'),page);
+            panel_action($('#questions'));
+            break;
+        case 1:
+            reset_specific_url_div($('#answers_url'),page);
+            panel_action($('#answers'));
+            break;
+        case 2:
+            reset_specific_url_div($('#notes_url'),page);
+            panel_action($('#notes'));
+            break;
+        default :
+            break;
+    }
+}
+
+function test_reset()
+{
+    reset_specific_url_div($('#questions_url'),3);
+}
+
+function reset_specific_url_div(url_div,page)
+{
+    var raw_url=url_div.data('value');
+    var root_url=raw_url.substr(0,raw_url.lastIndexOf('/')+1);
+    var reset_url=root_url.concat(page);
+    console.log(reset_url);
+    url_div.data('value',reset_url);
+}
+
+
+
