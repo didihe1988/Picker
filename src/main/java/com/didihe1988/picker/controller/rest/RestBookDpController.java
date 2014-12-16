@@ -1,5 +1,6 @@
 package com.didihe1988.picker.controller.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
+import com.didihe1988.picker.common.DaoConstant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.FeedDao;
+import com.didihe1988.picker.dao.impl.FeedDaoImpl;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.AttachmentFeedDp;
 import com.didihe1988.picker.model.dp.FeedDp;
@@ -47,8 +51,16 @@ public class RestBookDpController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		List<FeedDp> list = feedService.getFeedDpListByBookId(id,
-				Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request));
+		List<FeedDp> list = new ArrayList<FeedDp>();
+		String type = (String) request.getParameter("type");
+		if ((type != null) && (type.equals("page"))) {
+			list = feedService.getFeedDpListByBookId(id, Feed.TYPE_QUESTION,
+					HttpUtils.getSessionUserId(request),
+					DaoConstant.FeedPageOrder);
+		} else {
+			list = feedService.getFeedDpListByBookId(id, Feed.TYPE_QUESTION,
+					HttpUtils.getSessionUserId(request));
+		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 
@@ -59,8 +71,17 @@ public class RestBookDpController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		List<FeedDp> list = feedService.getLimitedFeedDpListByBookId(id,
-				Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request), limit);
+		String type = (String) request.getParameter("type");
+		List<FeedDp> list = new ArrayList<FeedDp>();
+		if ((type != null) && (type.equals("page"))) {
+			list = feedService.getLimitedFeedDpListByBookId(id,
+					Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request),
+					limit, DaoConstant.FeedPageOrder);
+		} else {
+			list = feedService.getLimitedFeedDpListByBookId(id,
+					Feed.TYPE_QUESTION, HttpUtils.getSessionUserId(request),
+					limit);
+		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_QUESTION_LIST, list);
 	}
 
@@ -73,8 +94,16 @@ public class RestBookDpController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		List<FeedDp> list = feedService.getFeedDpListByBookId(id,
-				Feed.TYPE_NOTE, HttpUtils.getSessionUserId(request));
+		List<FeedDp> list = new ArrayList<FeedDp>();
+		String type = (String) request.getParameter("type");
+		if ((type != null) && (type.equals("page"))) {
+			list = feedService.getFeedDpListByBookId(id, Feed.TYPE_NOTE,
+					HttpUtils.getSessionUserId(request),
+					DaoConstant.FeedPageOrder);
+		} else {
+			list = feedService.getFeedDpListByBookId(id, Feed.TYPE_NOTE,
+					HttpUtils.getSessionUserId(request));
+		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
 	}
 
@@ -85,8 +114,16 @@ public class RestBookDpController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		List<FeedDp> list = feedService.getLimitedFeedDpListByBookId(id,
-				Feed.TYPE_NOTE, HttpUtils.getSessionUserId(request), limit);
+		List<FeedDp> list = new ArrayList<FeedDp>();
+		String type = (String) request.getParameter("type");
+		if ((type != null) && (type.equals("page"))) {
+			list = feedService.getLimitedFeedDpListByBookId(id, Feed.TYPE_NOTE,
+					HttpUtils.getSessionUserId(request), limit,
+					DaoConstant.FeedPageOrder);
+		} else {
+			list = feedService.getLimitedFeedDpListByBookId(id, Feed.TYPE_NOTE,
+					HttpUtils.getSessionUserId(request), limit);
+		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
 	}
 
@@ -100,8 +137,14 @@ public class RestBookDpController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		List<AttachmentFeedDp> list = attachmentFeedService
-				.getAttachmentFeedDpsByBookId(id);
+		List<AttachmentFeedDp> list = new ArrayList<AttachmentFeedDp>();
+		String type = (String) request.getParameter("type");
+		if ((type != null) && (type.equals("page"))) {
+			list = attachmentFeedService.getAttachmentFeedDpsByBookId(id,
+					DaoConstant.AfeedPageOrder);
+		} else {
+			list = attachmentFeedService.getAttachmentFeedDpsByBookId(id);
+		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENTFEED_LIST,
 				list);
 	}
@@ -113,8 +156,16 @@ public class RestBookDpController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.INVALID);
 		}
-		List<AttachmentFeedDp> list = attachmentFeedService
-				.getLimitedAttachmentFeedDpsByBookId(id, limit);
+		List<AttachmentFeedDp> list = new ArrayList<AttachmentFeedDp>();
+		String type = (String) request.getParameter("type");
+		if ((type != null) && (type.equals("page"))) {
+			list = attachmentFeedService.getLimitedAttachmentFeedDpsByBookId(
+					id, limit, DaoConstant.AfeedPageOrder);
+
+		} else {
+			list = attachmentFeedService.getLimitedAttachmentFeedDpsByBookId(
+					id, limit);
+		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENTFEED_LIST,
 				list);
 	}

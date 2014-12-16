@@ -18,8 +18,14 @@ public interface AttachmentFeedDao extends BaseDao<AttachmentFeed>,
 
 	public List<AttachmentFeedDp> queryAttachmentFeedDpsByBookId(int bookId);
 
+	public List<AttachmentFeedDp> queryAttachmentFeedDpsByBookId(int bookId,
+			String order);
+
 	public List<AttachmentFeedDp> queryLimitedAttachmentFeedDpsByBookId(
 			int bookId, int limit);
+
+	public List<AttachmentFeedDp> queryLimitedAttachmentFeedDpsByBookId(
+			int bookId, int limit, String order);
 
 	public int getLatestAttachmentFeedByBookId(int bookId);
 

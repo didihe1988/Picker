@@ -222,12 +222,45 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
+	public List<FeedDp> getFeedDpListByBookId(int bookId, int type,
+			int curUserId, String order) {
+		// TODO Auto-generated method stub
+		List<FeedDp> list = feedDao
+				.queryFeedDpListByBookId(bookId, type, order);
+		FeedDpGenerator generator = null;
+		if (list.size() > 0) {
+			generator = getGeneratorByType(list.get(0).getType());
+		}
+		for (FeedDp feedDp : list) {
+			generator.completeFeedDp(feedDp, curUserId);
+		}
+		return list;
+	}
+
+	@Override
 	public List<FeedDp> getLimitedFeedDpListByBookId(int bookId, int type,
 			int curUserId, int limit) {
 		// TODO Auto-generated method stub
 		List<FeedDp> list = feedDao.queryLimitedFeedDpListByBookId(bookId,
 				type, limit);
-		System.out.println("list: "+list);
+		System.out.println("list: " + list);
+		FeedDpGenerator generator = null;
+		if (list.size() > 0) {
+			generator = getGeneratorByType(list.get(0).getType());
+		}
+		for (FeedDp feedDp : list) {
+			generator.completeFeedDp(feedDp, curUserId);
+		}
+		return list;
+	}
+
+	@Override
+	public List<FeedDp> getLimitedFeedDpListByBookId(int bookId, int type,
+			int curUserId, int limit, String order) {
+		// TODO Auto-generated method stub
+		List<FeedDp> list = feedDao.queryLimitedFeedDpListByBookId(bookId,
+				type, limit, order);
+		System.out.println("list: " + list);
 		FeedDpGenerator generator = null;
 		if (list.size() > 0) {
 			generator = getGeneratorByType(list.get(0).getType());

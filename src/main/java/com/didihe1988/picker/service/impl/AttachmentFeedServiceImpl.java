@@ -88,11 +88,26 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 	}
 
 	@Override
+	public List<AttachmentFeedDp> getAttachmentFeedDpsByBookId(int bookId,
+			String order) {
+		// TODO Auto-generated method stub
+		return attachmentFeedDao.queryAttachmentFeedDpsByBookId(bookId, order);
+	}
+
+	@Override
 	public List<AttachmentFeedDp> getLimitedAttachmentFeedDpsByBookId(
 			int bookId, int limit) {
 		// TODO Auto-generated method stub
 		return attachmentFeedDao.queryLimitedAttachmentFeedDpsByBookId(bookId,
 				limit);
+	}
+
+	@Override
+	public List<AttachmentFeedDp> getLimitedAttachmentFeedDpsByBookId(
+			int bookId, int limit, String order) {
+		// TODO Auto-generated method stub
+		return attachmentFeedDao.queryLimitedAttachmentFeedDpsByBookId(bookId,
+				limit, order);
 	}
 
 	@Override

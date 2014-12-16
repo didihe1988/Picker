@@ -117,19 +117,6 @@ public class FeedDaoImpl implements FeedDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Feed> queryLimitedFeedListByBookId(int bookId, int type,
-			int limit) {
-		// TODO Auto-generated method stub
-		String hql = "from Feed as f where f.bookId=? and type = ? order by f.id asc";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, bookId);
-		query.setInteger(1, type);
-		DaoUtils.setLimit(query, limit);
-		return query.list();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
 	public List<Feed> queryModelListByPage(int bookId, int page) {
 		// TODO Auto-generated method stub
 		String hql = "from Feed as f where f.bookId=? and f.page=? order by f.id asc";
@@ -139,6 +126,9 @@ public class FeedDaoImpl implements FeedDao {
 		return query.list();
 	}
 
+	/*
+	 * ---BookId related start---
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<FeedDp> queryFeedDpListByBookId(int bookId, int type) {
@@ -147,6 +137,32 @@ public class FeedDaoImpl implements FeedDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		query.setInteger(1, type);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FeedDp> queryFeedDpListByBookId(int bookId, int type,
+			String order) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.dp.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id "
+				+ order;
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		query.setInteger(1, type);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Feed> queryLimitedFeedListByBookId(int bookId, int type,
+			int limit) {
+		// TODO Auto-generated method stub
+		String hql = "from Feed as f where f.bookId=? and type = ? order by f.id asc";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		query.setInteger(1, type);
+		DaoUtils.setLimit(query, limit);
 		return query.list();
 	}
 
@@ -162,6 +178,34 @@ public class FeedDaoImpl implements FeedDao {
 		DaoUtils.setLimit(query, limit);
 		return query.list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FeedDp> queryLimitedFeedDpListByBookId(int bookId, int type,
+			int limit, String order) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.dp.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id"
+				+ order;
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		query.setInteger(1, type);
+		DaoUtils.setLimit(query, limit);
+		return query.list();
+	}
+
+	@Override
+	public int getLatestFeedByBookId(int bookId, int type) {
+		// TODO Auto-generated method stub
+		String hql = "select max(f.id) from Feed as f where f.bookId=? and f.type=?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		query.setInteger(1, type);
+		return (Integer) query.uniqueResult();
+	}
+
+	/*
+	 * ---BookId related end---
+	 */
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -195,16 +239,6 @@ public class FeedDaoImpl implements FeedDao {
 		query.setInteger(1, type);
 		DaoUtils.setLimit(query, page - 1);
 		return query.list();
-	}
-
-	@Override   
-	public int getLatestFeedByBookId(int bookId, int type) {
-		// TODO Auto-generated method stub
-		String hql = "select max(f.id) from Feed as f where f.bookId=? and f.type=?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, bookId);
-		query.setInteger(1, type);
-		return (Integer) query.uniqueResult();
 	}
 
 	@Override

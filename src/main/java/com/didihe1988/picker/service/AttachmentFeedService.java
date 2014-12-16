@@ -21,8 +21,15 @@ public interface AttachmentFeedService {
 	public List<AttachmentFeed> getAttachmentFeedsByBookId(int bookId);
 
 	public List<AttachmentFeedDp> getAttachmentFeedDpsByBookId(int bookId);
-	
-	public List<AttachmentFeedDp> getLimitedAttachmentFeedDpsByBookId(int bookId,int limit);
+
+	public List<AttachmentFeedDp> getLimitedAttachmentFeedDpsByBookId(
+			int bookId, int limit);
+
+	public List<AttachmentFeedDp> getAttachmentFeedDpsByBookId(int bookId,
+			String order);
+
+	public List<AttachmentFeedDp> getLimitedAttachmentFeedDpsByBookId(
+			int bookId, int limit, String order);
 
 	public int getLatestAttachmentFeedByBookId(int bookId);
 

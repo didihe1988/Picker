@@ -24,8 +24,8 @@ public interface FeedService {
 	public int updateFeed(Feed feed, int userId);
 
 	public List<Feed> getFeedListByBookId(int bookId, int type);
-	
-	public List<Feed> getLimitedFeedListByBookId(int bookId, int type,int limit);
+
+	public List<Feed> getLimitedFeedListByBookId(int bookId, int type, int limit);
 
 	public List<Feed> getFeedListByUserId(int userId, int type);
 
@@ -34,8 +34,15 @@ public interface FeedService {
 
 	public List<FeedDp> getFeedDpListByBookId(int bookId, int type,
 			int curUserId);
-	
-	public List<FeedDp> getLimitedFeedDpListByBookId(int bookId, int type,int curUserId,int limit);
+
+	public List<FeedDp> getFeedDpListByBookId(int bookId, int type,
+			int curUserId, String order);
+
+	public List<FeedDp> getLimitedFeedDpListByBookId(int bookId, int type,
+			int curUserId, int limit);
+
+	public List<FeedDp> getLimitedFeedDpListByBookId(int bookId, int type,
+			int curUserId, int limit, String order);
 
 	public int getLatestFeedByBookId(int bookId, int type);
 

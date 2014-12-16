@@ -13,10 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.didihe1988.picker.common.DaoConstant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.service.FeedService;
+import com.didihe1988.picker.utils.HttpUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:servlet-context.xml",
@@ -70,6 +73,16 @@ public class FeedServiceTest {
 	public void test5() {
 		Feed feed = feedService.getFeedById(4);
 		assertSame(feed.getType(), Feed.TYPE_QUESTION);
+	}
+
+	@Test
+	public void test6() {
+		int id = 1;
+		int userId = 1;
+		List<FeedDp> list = feedService.getFeedDpListByBookId(id,
+				Feed.TYPE_QUESTION, userId, DaoConstant.FeedPageOrder);
+		System.out.println(list);
+		assertNotNull(list);
 	}
 
 }

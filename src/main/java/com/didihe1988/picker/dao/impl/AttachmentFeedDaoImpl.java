@@ -74,6 +74,9 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 		return false;
 	}
 
+	/*
+	 * ---BookId related start---
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AttachmentFeed> queryAttachmentFeedsByBookId(int bookId) {
@@ -95,10 +98,35 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<AttachmentFeedDp> queryAttachmentFeedDpsByBookId(int bookId,
+			String order) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.dp.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id "
+				+ order;
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<AttachmentFeedDp> queryLimitedAttachmentFeedDpsByBookId(
 			int bookId, int limit) {
 		// TODO Auto-generated method stub
 		String hql = "select new com.didihe1988.picker.model.dp.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id order by a.id";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		DaoUtils.setLimit(query, limit);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AttachmentFeedDp> queryLimitedAttachmentFeedDpsByBookId(
+			int bookId, int limit, String order) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.dp.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id"
+				+ order;
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		DaoUtils.setLimit(query, limit);
@@ -113,6 +141,10 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 		query.setInteger(0, bookId);
 		return (Integer) query.uniqueResult();
 	}
+
+	/*
+	 * ---BookId related end---
+	 */
 
 	@SuppressWarnings("unchecked")
 	@Override
