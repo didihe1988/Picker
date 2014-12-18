@@ -55,6 +55,7 @@ public class Constant {
 	public static final String KEY_FAVORITENUM = "favoriteNum";
 	public static final String KEY_ATTACHMENT_ID = "attachmentId";
 	public static final String KEY_ATTACHMENTFEED = "attachmentFeed";
+	public static final String KEY_SECTION_LIST = "sectionList";
 
 	public static final String PLATFORM_ANDROID = "android";
 

@@ -13,7 +13,7 @@ $(document).ready(function () {
 });
 
 function nano_template(template, data) {
-    // hack patch. 涓轰簡瑙ｅ喅妯℃澘涓浘鐗囧湴鍧�閿欒鍦伴棶棰�
+    // hack patch. 为了解决模板中图片地址错误地问题
     data['hack'] = {
         s: '<!--',
         e: '-->'
@@ -30,7 +30,7 @@ function nano_template(template, data) {
     });
 }
 
-// 鍏充簬瀵艰埅鏉＄殑鍔ㄤ綔
+//关于导航条的动作
 function nav_thing() {
     $('#nav_mail_icon').find('a').hover(function () {
         $('#nav_mail_cnt').css({
@@ -52,7 +52,7 @@ function nav_thing() {
     });
 }
 
-// 娑堟伅锛岀淇′俊鎭幏鍙�
+//消息，私信信息获取
 function get_cnt() {
     $.get('/new_message_count', function (req) {
         if (req['mail']) {
@@ -264,7 +264,7 @@ function read_flag(button) {
 
     button.html('<i class="icon-spinner icon-spin"></i>');
     var error_handle = function () {
-        button.html('宸茶');
+        button.html('已读');
     };
     $.ajax({
         url: '/mail_read_flag/' + mail_id,
@@ -328,7 +328,7 @@ function cancel_follow(t, user_id) {
     })
 }
 
-// 闈㈡澘涔嬮棿鐨勫垏鎹㈡搷浣滃強鍔ㄧ敾
+//面板之间的切换操作及动画
 function set_init_panel(obj) {
     var flag_class = 'current_panel';
     if ($('.' + flag_class).length == 0) {
@@ -547,7 +547,7 @@ function group_search(form) {
     if (name == '') {
         return false;
     }
-    // 鍔ㄦ�佽姹�
+    //动态请求
     NProgress.start();
     $.ajax({
         url: '/group_search',
@@ -568,11 +568,11 @@ function group_search(form) {
         },
         error: function (req) {
             NProgress.done();
-            $('#group_search_content').html('鏌ヨ鍑洪敊')
+            $('#group_search_content').html('查询出错')
         }
     });
 
-    return false; // 闃绘form鎻愪氦
+    return false; //阻止form提交
 }
 
 function show_create_group() {
@@ -583,7 +583,7 @@ function show_create_group() {
 function create_group() {
     if ($('#group_name').val().trim() == ''
         || $('#group_describe').val().trim() == '') {
-        alert('鍦堝瓙鍚嶇О鍜屾弿杩颁笉鑳戒负绌�');
+        alert('圈子名称和描述不能为空');
         return;
     }
 
@@ -602,7 +602,7 @@ function create_group() {
         },
         error: function () {
             NProgress.done();
-            alert('鍒涘缓鍑洪敊');
+            alert('创建出错');
         }
     });
 }
@@ -615,7 +615,7 @@ function show_message_panel() {
 function send_message(receiver_id) {
     NProgress.start();
     if ($("#message_content").val().trim() == '') {
-        alert('娑堟伅涓嶈兘涓虹┖');
+        alert('消息不能为空');
         return;
     }
     $.ajax({
@@ -665,13 +665,13 @@ function gen_dom(post) {
 }
 
 /*
- * 浼犲叆涓�涓猣lag鍏冪礌(load_next_flag鎴栬�卨oad_previous_flag)銆傞�氳繃ajax鍔ㄦ�佸姞杞藉唴瀹�
+ * 传入一个flag元素(load_next_flag或者load_previous_flag)。通过ajax动态加载内容
  */
 function load_page(flag_dom) {
     if (flag_dom.data('lock') == true || flag_dom.data('end') == true) {
         return;
     }
-    flag_dom.data('lock', true); // 涓婇攣
+    flag_dom.data('lock', true); //上锁
     flag_dom.slideDown();
 
     if (flag_dom.data('end') == false) {
@@ -681,7 +681,7 @@ function load_page(flag_dom) {
         var direct = flag_dom.data('direction');
         var error_handle = function (req) {
             flag_dom.hide();
-            flag_dom.data('lock', false); // 瑙ｉ攣
+            flag_dom.data('lock', false); //解锁
         };
         $.ajax({
             url: '/page/' + book_id + '/' + start_page,
@@ -836,9 +836,9 @@ function create_editor() {
             preview: 80
         },
         string: {
-            togglePreview: '棰勮妯″紡',
-            toggleEdit: '缂栬緫妯″紡',
-            toggleFullscreen: '杩涘叆鍏ㄥ睆'
+            togglePreview: '预览模式',
+            toggleEdit: '编辑模式',
+            toggleFullscreen: '进入全屏'
         },
         autogrow: false
     };
@@ -921,7 +921,7 @@ function image_upload() {
         return;
     }
     $('#upload_local_image').find('input[type=button]').attr('value',
-        '鎻愪氦涓�...');
+        '提交中...');
     try {
         $.ajaxFileUpload({
             url: '/image_upload',
@@ -933,28 +933,28 @@ function image_upload() {
                     $('#result').find('span').html(gen_mark(data['url']));
                     $('#result').slideDown();
                 } else {
-                    alert('璇烽�夋嫨鍥剧墖鏂囦欢');
+                    alert('请选择图片文件');
                 }
 
                 $('#upload_local_image').find('input[type=button]').attr(
-                    'value', '鎻愪氦');
+                    'value', '提交');
             },
             error: function (data) {
                 alert('error');
                 $('#upload_local_image').find('input[type=button]').attr(
-                    'value', '鎻愪氦');
+                    'value', '提交');
             }
         });
     } catch (e) {
         $('#upload_local_image').find('input[type=button]')
-            .attr('value', '鎻愪氦');
+            .attr('value', '提交');
     }
 }
 
 function image_link() {
     var url = $('#outside_image_link').val();
     if (url == '') {
-        alert('璇峰厛杈撳叆鍥剧墖鍦板潃');
+        alert('请先输入图片地址');
         return;
     }
     $('#result').find('span').html(gen_mark(url));
@@ -1000,22 +1000,22 @@ function go_to_page(page) {
 function submit_answer() {
     var raw = $(editor.editor).html();
 
-    // 鏈嶅姟绔鏌�, 鏍囩鍙兘寮曡捣瀹夊叏闂
+    //服务端检查, 标签可能引起安全问题
     var rendered = $(editor.previewer).html();
 
     if (!(raw.trim())) {
-        alert('鍐呭涓嶈兘涓虹┖銆�');
+        alert('内容不能为空');
         return false;
     }
 
     $('input[name=raw]').val(raw);
     $('input[name=rendered]').val(rendered);
 
-    // 鎻愪氦鍓嶅垹闄よ崏绋�
+    //提交前删除草稿
     return true;
 }
 
-// ---------------below author lml----------------
+// --------------author lml 14/12/10----------------
 function add_comment(submit_btn, commented_id, type) {
     if (!((type == 'answer') || (type == 'question') || (type == 'note'))) {
         return;
@@ -1075,18 +1075,11 @@ function choose_panel_action(type,page)
     }
 }
 
-function test_reset()
-{
-    reset_specific_url_div($('#questions_url'),3);
-}
-
 function reset_specific_url_div(url_div,page)
 {
     var raw_url=url_div.data('value');
     var root_url=raw_url.substr(0,raw_url.lastIndexOf('/')+1);
-    var reset_url=root_url.concat(page);
-    console.log(reset_url);
-    url_div.data('value',reset_url);
+    url_div.data('value',root_url.concat(page));
 }
 
 

@@ -1,5 +1,6 @@
 package com.didihe1988.picker.controller.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +13,12 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.Section;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.utils.JsonUtils;
+import com.google.gson.Gson;
 
 @RestController
 public class RestBookController {
@@ -70,4 +73,37 @@ public class RestBookController {
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);
 	}
 
+	/*
+	 * ²âÊÔÒ»ÏÂµÝ¹éµÄSection List
+	 */
+	@RequestMapping(value = "/json/test/sections", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getSections() {
+		List<Section> subSections1 = new ArrayList<Section>();
+		Section sub1 = new Section("1.1", "sub1", 1);
+		Section sub2 = new Section("1.2", "sub2", 9);
+		Section sub3 = new Section("1.3", "sub3", 16);
+		subSections1.add(sub1);
+		subSections1.add(sub2);
+		subSections1.add(sub3);
+
+		List<Section> subSections2 = new ArrayList<Section>();
+		Section sub4 = new Section("2.1", "sub4", 17);
+		Section sub5 = new Section("2.2", "sub5", 20);
+		Section sub6 = new Section("2.3", "sub6", 24);
+		Section sub7 = new Section("2.4", "sub7", 29);
+		subSections2.add(sub4);
+		subSections2.add(sub5);
+		subSections2.add(sub6);
+		subSections2.add(sub7);
+
+		Section section = new Section("1", "sec", 1, subSections1);
+		Section section2 = new Section("2", "sec2", 17, subSections2);
+		List<Section> sectionList = new ArrayList<Section>();
+		sectionList.add(section);
+		sectionList.add(section2);
+
+		return JsonUtils.getJsonObjectString(Constant.KEY_SECTION_LIST,
+				sectionList);
+
+	}
 }
