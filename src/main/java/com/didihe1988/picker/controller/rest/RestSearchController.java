@@ -68,7 +68,7 @@ public class RestSearchController {
 				list);
 	}
 
-	@RequestMapping(value = "/json/search/questoin/{string}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/json/search/question/{string}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String searchQuestion(@PathVariable String string,
 			HttpServletRequest request) {
 		if (string.equals("")) {

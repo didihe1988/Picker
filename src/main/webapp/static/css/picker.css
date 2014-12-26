@@ -2213,3 +2213,97 @@ img.user{
     opacity: 0.2;
     display: none;
 }
+
+/*below author lml*/
+/*
+.inventory{
+
+}
+
+
+.inventory .chapter{
+    max-width: 14rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-overflow: clip;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.inventory .chapter:hover{
+    overflow: visible;
+}
+
+.inventory .section{
+    max-width: 11rem;
+    font-size: 0.9rem;
+    padding-left: 1.1rem;
+    text-overflow: clip;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.inventory .section:hover{
+    overflow: visible;
+}
+
+.inventory .apostrophe{
+    font-weight: lighter;
+    color: #888888 ;
+    font-size: 0.9rem;
+}*/
+.inventory{
+    max-width: 100%;
+}
+
+.inv_entity{
+
+}
+
+.inventory .apostrophe{
+    display: inline-block;
+    font-weight: lighter;
+    color: lightgrey;
+    font-size: 0.9rem;
+    text-overflow: clip;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.inventory .inv_page{
+    padding-top: 0.2rem;
+    float: right;
+    display: inline-block;
+    font-weight: lighter;
+    color: dimgrey;
+    font-size: 0.9rem;
+}
+
+.inventory .chapter_title{
+	display: inline-block;
+    max-width: 14rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-overflow: clip;
+    overflow: hidden;
+    white-space: nowrap;
+}
+/*
+.inventory .chapter_title:hover{
+    overflow: visible;
+}*/
+
+.inventory .section_title{
+    display: inline-block;
+	max-width: 10rem;
+    font-size: 0.9rem;
+    padding-left: 1.1rem;
+    text-overflow: clip;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/*
+.inventory .section_title:hover{
+    overflow: visible;
+}*/

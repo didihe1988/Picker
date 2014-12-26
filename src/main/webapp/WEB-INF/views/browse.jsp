@@ -27,7 +27,7 @@
 </head>
 
 <!--TODO: AJAX取消息-->
-<body>
+<body onload="get_inventory();">
 	<div id="nav" class="row">
 		<div id="nav_content">
 			<div class="col-13">
@@ -348,6 +348,53 @@
 							</div>
 						</div>
 					</div>
+                    <!--
+                    <div class="inventory">
+                        <div class="chapter">第5章 向量代数与空间解析几何</div><div class="apostrophe">.....</div>18页
+                            <div class="section">5.1 向量代数</div><div class="apostrophe">.....</div>26页
+                            <div class="section">5.2 平面与空间直线</div><div class="apostrophe">.....</div>32页
+                            <div class="section">5.3 曲面与空间曲线</div><div class="apostrophe">.....</div>38页
+                        <div class="chapter">第6章 多元函数微分学</div><div class="apostrophe">.....</div>39页
+                            <div class="section">6.1 多元函数的基本概念</div><div class="apostrophe">.....</div>40页
+                            <div class="section">6.2 偏导数与全积分</div><div class="apostrophe">.....</div>46页
+                            <div class="section">6.3 复合函数的求导法则</div><div class="apostrophe">.....</div>52页
+                    </div>
+                    -->
+
+                    <div class="inventory">
+                        <!--
+                        <div class="inv_entity row">
+                            <div class="chapter_title">第5章 向量代数与空间解析几何</div>
+                            <div class="apostrophe">-&nbsp;-&nbsp;</div>
+                            <div class="inv_page">18页</div>
+                        </div>
+                        <div class="inv_entity row">
+                            <div class="section_title">5.1 向量代数</div>
+                            <div class="apostrophe">-&nbsp;-&nbsp;</div>
+                            <div class="inv_page">18页</div>
+                        </div>
+                        <div class="inv_entity row">
+                            <div class="section_title">5.2 平面与空间直线</div>
+                            <div class="apostrophe">-&nbsp;-&nbsp;</div>
+                            <div class="inv_page" float>26页</div>
+                        </div>
+                        <div class="inv_entity row">
+                            <div class="chapter_title">第6章 多元函数微分学</div>
+                            <div class="apostrophe">-&nbsp;-&nbsp;</div>
+                            <div class="inv_page">27页</div>
+                        </div>
+                        <div class="inv_entity row">
+                            <div class="section_title">6.1 多元函数的基本概念</div>
+                            <div class="apostrophe">-&nbsp;-&nbsp;</div>
+                            <div class="inv_page">27页</div>
+                        </div>
+                        <div class="inv_entity row">
+                            <div class="section_title">6.2 偏导数与全积分</div>
+                            <div class="apostrophe">-&nbsp;-&nbsp;</div>
+                            <div class="inv_page" float>30页</div>
+                        </div>
+                        -->
+                    </div>
 				</div>
 			</div>
 
@@ -526,6 +573,26 @@
 						{req.feeds}
 					</div>
 				</div>
+
+                <div id="section_template">
+                    <div class="inv_entity row">
+                        <!-- {hack.e}
+                        <div class="section_title">{section.num}&nbsp;{section.name}</div>
+                        <div class="apostrophe">-&nbsp;-&nbsp;</div>
+                        <div class="inv_page">{section.page}</div>
+                        {hack.s} -->
+                    </div>
+                </div>
+
+                <div id="chapter_template">
+                    <div class="inv_entity row">
+                        <!-- {hack.e}
+                        <div class="chapter_title">{section.num}&nbsp;{section.name}</div>
+                        <div class="apostrophe">-&nbsp;-&nbsp;</div>
+                        <div class="inv_page">{section.page}</div>
+                        {hack.s} -->
+                    </div>
+                </div>
 			</div>
 		</div>
 

@@ -1083,4 +1083,69 @@ function reset_specific_url_div(url_div,page)
 }
 
 
+//browse.jsp inventory
+function get_inventory()
+{
+    $.ajax({
+        url: '/json/test/sections',
+        type: 'get',
+        success: function (req) {
+            $(req['sectionList']).each(function(index,section)
+            {
+                var new_chapter_dom = $(nano_template($(
+                    '#chapter_template').html(), {
+                    'section': section
+                }));
+                console.log(new_chapter_dom);
+                $('.inventory').append(new_chapter_dom);
+                /*
+                comments_dom.find('.comments_list').append(
+                    new_chapter_dom);*/
+               $(section['subSections']).each(function(index,subSection)
+               {
+                   //console.log(subSection);
+                   var new_section_dom = $(nano_template($(
+                       '#section_template').html(), {
+                       'section': subSection
+                   }));
+                   //console.log(new_chapter_dom);
+                   $('.inventory').append(new_section_dom);
+               });
+
+            });
+            set_apostrophes();
+        },
+        error: function () {
+            console.log('error');
+        }
+    });
+}
+
+function set_apostrophes()
+{
+    var inv_entities=$('.inv_entity');
+    for(var i=0;i<inv_entities.length;i++)
+    {
+        set_apostrophe($(inv_entities[i]));
+    }
+
+}
+
+function set_apostrophe(inv_entity)
+{
+    inv_entity.find('.apostrophe').width(inv_entity.width()-get_entity_content_width(inv_entity))
+        .text('- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ');
+}
+
+function get_entity_content_width(inv_entity)
+{
+    if(inv_entity.has('.section_title').length!=0)
+    {
+        return inv_entity.find('.section_title').width()+inv_entity.find('.inv_page').width()+30;
+    }
+    return inv_entity.find('.chapter_title').width()+inv_entity.find('.inv_page').width()+15;
+}
+
+
+
 
