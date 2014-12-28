@@ -78,26 +78,27 @@ public class RestBookController {
 	 */
 	@RequestMapping(value = "/json/test/sections", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getSections() {
+		int bookId=1;
 		List<Section> subSections1 = new ArrayList<Section>();
-		Section sub1 = new Section("第一节", "内容提要", 1);
-		Section sub2 = new Section("第二节", "微积分习题选解", 2);
-		Section sub3 = new Section("第三节", "工科数学习题选解", 5);
+		Section sub1 = new Section(bookId,"第一节", "内容提要", 1);
+		Section sub2 = new Section(bookId,"第二节", "微积分习题选解", 2);
+		Section sub3 = new Section(bookId,"第三节", "工科数学习题选解", 5);
 		subSections1.add(sub1);
 		subSections1.add(sub2);
 		subSections1.add(sub3);
 
 		List<Section> subSections2 = new ArrayList<Section>();
-		Section sub4 = new Section("第一节", "数列的极限", 6);
-		Section sub5 = new Section("第二节", "函数的极限", 8);
-		Section sub6 = new Section("第三节", "极限的性质与运算法则", 12);
-		Section sub7 = new Section("第四节", "无穷小及其比较", 16);
+		Section sub4 = new Section(bookId,"第一节", "数列的极限", 6);
+		Section sub5 = new Section(bookId,"第二节", "函数的极限", 8);
+		Section sub6 = new Section(bookId,"第三节", "极限的性质与运算法则", 12);
+		Section sub7 = new Section(bookId,"第四节", "无穷小及其比较", 16);
 		subSections2.add(sub4);
 		subSections2.add(sub5);
 		subSections2.add(sub6);
 		subSections2.add(sub7);
 
-		Section section = new Section("预备知识", "集合、映射与函数", 1, subSections1);
-		Section section2 = new Section("第一章", "极限与连续",6, subSections2);
+		Section section = new Section(bookId,"预备知识", "集合、映射与函数", 1, subSections1);
+		Section section2 = new Section(bookId,"第一章", "极限与连续",6, subSections2);
 		List<Section> sectionList = new ArrayList<Section>();
 		sectionList.add(section);
 		sectionList.add(section2);

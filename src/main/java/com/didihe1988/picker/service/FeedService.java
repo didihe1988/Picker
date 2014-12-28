@@ -2,6 +2,7 @@ package com.didihe1988.picker.service;
 
 import java.util.List;
 
+import com.didihe1988.picker.model.ChapterRange;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.dp.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
@@ -61,4 +62,7 @@ public interface FeedService {
 	public List<QuestionJson> getQuestoinJsons(int userId, int page);
 
 	public List<Feed> getFeedListByPage(int bookId, int page);
+
+	public List<Feed> getFeedListByChapterRange(int bookId,
+			ChapterRange chapterRange);
 }

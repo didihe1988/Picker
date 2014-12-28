@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import com.didihe1988.picker.common.Constant;
+import com.didihe1988.picker.common.Status;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -48,5 +50,11 @@ public class JsonUtils {
 				new TypeToken<List<String>>() {
 				}.getType());
 		return list;
+	}
+	
+	public static String invalidStatus()
+	{
+		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
+				Status.INVALID);
 	}
 }

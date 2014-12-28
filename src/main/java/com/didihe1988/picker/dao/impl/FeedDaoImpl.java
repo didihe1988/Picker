@@ -126,6 +126,19 @@ public class FeedDaoImpl implements FeedDao {
 		return query.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Feed> queryModelListBetweenPage(int bookId, int startPage,
+			int endPage) {
+		// TODO Auto-generated method stub
+		String hql = "from Feed as f where f.bookId=? and f.page between ? and ? order by f.page,f.id asc";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		query.setInteger(1, startPage);
+		query.setInteger(2, endPage);
+		return query.list();
+	}
+
 	/*
 	 * ---BookId related start---
 	 */

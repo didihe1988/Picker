@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AttachmentFeedDao;
 import com.didihe1988.picker.model.AttachmentFeed;
+import com.didihe1988.picker.model.ChapterRange;
 import com.didihe1988.picker.model.dp.AttachmentFeedDp;
 import com.didihe1988.picker.service.AttachmentFeedService;
 
@@ -114,6 +115,14 @@ public class AttachmentFeedServiceImpl implements AttachmentFeedService {
 	public List<AttachmentFeed> getAttachmentFeedListByPage(int bookId, int page) {
 		// TODO Auto-generated method stub
 		return attachmentFeedDao.queryModelListByPage(bookId, page);
+	}
+
+	@Override
+	public List<AttachmentFeed> getAttachmentFeedListByChapterRange(int bookId,
+			ChapterRange chapterRange) {
+		// TODO Auto-generated method stub
+		return attachmentFeedDao.queryModelListBetweenPage(bookId,
+				chapterRange.getStartPage(), chapterRange.getEndPage());
 	}
 
 }

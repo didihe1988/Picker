@@ -74,4 +74,11 @@ public class FeedDaoTest {
 		System.out.println(feeds);
 	}
 	
+	@Test
+	public void test6(){
+		List<Feed> feeds=feedDao.queryModelListBetweenPage(1, 3, 10);
+		assertNotNull(feeds);
+		System.out.println(feeds);
+	}
+	
 }

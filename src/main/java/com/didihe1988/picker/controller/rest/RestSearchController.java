@@ -15,6 +15,7 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.AttachmentFeed;
 import com.didihe1988.picker.model.Book;
+import com.didihe1988.picker.model.ChapterRange;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.User;
@@ -25,6 +26,7 @@ import com.didihe1988.picker.service.AttachmentFeedService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.CircleService;
 import com.didihe1988.picker.service.FeedService;
+import com.didihe1988.picker.service.SectionService;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.JsonUtils;
 import com.didihe1988.picker.utils.StringUtils;
@@ -45,6 +47,9 @@ public class RestSearchController {
 
 	@Autowired
 	private BookService bookService;
+
+	@Autowired
+	private SectionService sectionService;
 
 	@Autowired
 	private CircleService circleService;
@@ -145,12 +150,20 @@ public class RestSearchController {
 	@RequestMapping(value = "/json/search/book/{bookId}/{page}")
 	public String pageSearch(@PathVariable int bookId, @PathVariable int page) {
 		if ((bookId < 1) || (page < 0)) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return JsonUtils.invalidStatus();
 		}
+		// checkPageValidation
+		Book book = bookService.getBookById(bookId);
+		if ((book == null) || (book.getPages() < page)) {
+			return JsonUtils.invalidStatus();
+		}
+		// get ChapterRange
+		ChapterRange chapterRange = sectionService.getChapterRangeByPage(
+				bookId, page, book.hasInventory());
 		List<AttachmentFeed> aFeedList = aFeedService
-				.getAttachmentFeedListByPage(bookId, page);
-		List<Feed> feedList = feedService.getFeedListByPage(bookId, page);
+				.getAttachmentFeedListByChapterRange(bookId, chapterRange);
+		List<Feed> feedList = feedService.getFeedListByChapterRange(bookId,
+				chapterRange);
 		List<SearchResult> list = generator.toSearchResults(aFeedList);
 		list = generator.addSearchResults(list, feedList);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,

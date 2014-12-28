@@ -68,4 +68,6 @@ public class Constant {
 	public static final int MIN_USERNAME_LENGTH = 6;
 
 	public static final int DEFAULT_QUERYRESULT = 10;
+	
+	public static final int DEFAULT_PAGE_RAGE=5;
 }

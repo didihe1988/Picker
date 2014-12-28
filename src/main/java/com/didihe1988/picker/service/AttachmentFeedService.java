@@ -3,6 +3,7 @@ package com.didihe1988.picker.service;
 import java.util.List;
 
 import com.didihe1988.picker.model.AttachmentFeed;
+import com.didihe1988.picker.model.ChapterRange;
 import com.didihe1988.picker.model.dp.AttachmentFeedDp;
 
 public interface AttachmentFeedService {
@@ -34,4 +35,7 @@ public interface AttachmentFeedService {
 	public int getLatestAttachmentFeedByBookId(int bookId);
 
 	public List<AttachmentFeed> getAttachmentFeedListByPage(int bookId, int page);
+
+	public List<AttachmentFeed> getAttachmentFeedListByChapterRange(int bookId,
+			ChapterRange chapterRange);
 }

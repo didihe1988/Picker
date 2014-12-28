@@ -75,7 +75,7 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 	}
 
 	/*
-	 * ---BookId related start---
+	 * ---BookId related---
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -142,10 +142,6 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 		return (Integer) query.uniqueResult();
 	}
 
-	/*
-	 * ---BookId related end---
-	 */
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AttachmentFeed> queryModelListByPage(int bookId, int page) {
@@ -156,5 +152,22 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 		query.setInteger(1, page);
 		return query.list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AttachmentFeed> queryModelListBetweenPage(int bookId,
+			int startPage, int endPage) {
+		// TODO Auto-generated method stub
+		String hql = "from AttachmentFeed as a where a.bookId =? and a.page between ? and ? order by a.page,a.id asc";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		query.setInteger(1, startPage);
+		query.setInteger(2, endPage);
+		return query.list();
+	}
+	
+	
+	
+	
 
 }

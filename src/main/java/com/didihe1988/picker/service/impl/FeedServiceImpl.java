@@ -15,6 +15,7 @@ import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.RelatedImageDao;
 import com.didihe1988.picker.dao.UserDao;
+import com.didihe1988.picker.model.ChapterRange;
 import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
@@ -360,6 +361,14 @@ public class FeedServiceImpl implements FeedService {
 	public List<Feed> getFeedListByPage(int bookId, int page) {
 		// TODO Auto-generated method stub
 		return feedDao.queryModelListByPage(bookId, page);
+	}
+
+	@Override
+	public List<Feed> getFeedListByChapterRange(int bookId,
+			ChapterRange chapterRange) {
+		// TODO Auto-generated method stub
+		return feedDao.queryModelListBetweenPage(bookId,
+				chapterRange.getStartPage(), chapterRange.getEndPage());
 	}
 
 }
