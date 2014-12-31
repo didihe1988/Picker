@@ -31,8 +31,7 @@ public class RestNoteDpController {
 	@RequestMapping(value = "/json/note/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNoteDp(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		FeedDp feedDp = feedService.getFeedDpByFeedId(id,
 				HttpUtils.getSessionUserId(request));
@@ -46,8 +45,7 @@ public class RestNoteDpController {
 	@RequestMapping(value = "/json/note/{id}/commentdps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommetDps(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<CommentDp> list = commentService.getCommentDpListByCommentedId(id,
 				Comment.COMMENT_NOTE, HttpUtils.getSessionUserId(request));

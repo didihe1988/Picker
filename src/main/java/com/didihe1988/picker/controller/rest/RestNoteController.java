@@ -61,8 +61,7 @@ public class RestNoteController implements FavoriteController {
 	@RequestMapping(value = "/json/note/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNote(@PathVariable int id) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		Feed feed = feedService.getFeedById(id);
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_NOTE, feed);
@@ -74,8 +73,7 @@ public class RestNoteController implements FavoriteController {
 	@RequestMapping(value = "/json/note/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommets(@PathVariable int id) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_NOTE);
@@ -89,8 +87,7 @@ public class RestNoteController implements FavoriteController {
 	@RequestMapping(value = "/json/note/{id}/delete", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String deleteNote(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = feedService.deleteFeedById(id, userId);
@@ -104,8 +101,7 @@ public class RestNoteController implements FavoriteController {
 	@RequestMapping(value = "/json/note/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.incModelFavorite(id, userId,
@@ -159,8 +155,7 @@ public class RestNoteController implements FavoriteController {
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.decModelFavorite(id, userId,

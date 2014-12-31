@@ -37,8 +37,7 @@ public class RestBookController {
 	@RequestMapping(value = "/json/book/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getBook(@PathVariable int id) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		Book book = bookService.getBookById(id);
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_BOOK, book);
@@ -50,8 +49,7 @@ public class RestBookController {
 	@RequestMapping(value = "/json/book/{id}/questions", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestions(@PathVariable int id) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		System.out.println(id);
 		List<Feed> list = feedService.getFeedListByBookId(id,
@@ -66,8 +64,7 @@ public class RestBookController {
 	@RequestMapping(value = "/json/book/{id}/notes", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNotes(@PathVariable int id) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<Feed> list = feedService.getFeedListByBookId(id, Feed.TYPE_NOTE);
 		return JsonUtils.getJsonObjectString(Constant.KEY_NOTE_LIST, list);

@@ -48,8 +48,7 @@ public class RestBookDpController {
 	public String getQuestionDps(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<FeedDp> list = new ArrayList<FeedDp>();
 		String type = (String) request.getParameter("type");
@@ -68,8 +67,7 @@ public class RestBookDpController {
 	public String getLimitedQuestionDps(@PathVariable int id,
 			@PathVariable int limit, HttpServletRequest request) {
 		if ((id < 1) || (limit < 0)) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		String type = (String) request.getParameter("type");
 		List<FeedDp> list = new ArrayList<FeedDp>();
@@ -91,8 +89,7 @@ public class RestBookDpController {
 	@RequestMapping(value = "/json/book/{id}/notedps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getNoteDps(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<FeedDp> list = new ArrayList<FeedDp>();
 		String type = (String) request.getParameter("type");
@@ -111,8 +108,7 @@ public class RestBookDpController {
 	public String getLimitedNoteDps(@PathVariable int id,
 			@PathVariable int limit, HttpServletRequest request) {
 		if ((id < 1) || (limit < 0)) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<FeedDp> list = new ArrayList<FeedDp>();
 		String type = (String) request.getParameter("type");
@@ -134,8 +130,7 @@ public class RestBookDpController {
 	public String getAttachments(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<AttachmentFeedDp> list = new ArrayList<AttachmentFeedDp>();
 		String type = (String) request.getParameter("type");
@@ -153,8 +148,7 @@ public class RestBookDpController {
 	public String getLimitedAttachments(@PathVariable int id,
 			@PathVariable int limit, HttpServletRequest request) {
 		if ((id < 1) || (limit < 0)) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<AttachmentFeedDp> list = new ArrayList<AttachmentFeedDp>();
 		String type = (String) request.getParameter("type");

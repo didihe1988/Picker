@@ -50,8 +50,7 @@ public class ImageUploadController {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-							Status.ERROR);
+					return Constant.STATUS_ERROR;
 				}
 				String url = "/resources/tmp/image/" + imageCount + "."
 						+ extension;

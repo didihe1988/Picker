@@ -50,8 +50,7 @@ public class RestCircleController {
 	@RequestMapping(value = "/json/circle/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCircle(@PathVariable int id) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		Circle circle = circleService.getCircleById(id);
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_CIRCLE,
@@ -65,8 +64,7 @@ public class RestCircleController {
 					Status.NULLSESSION);
 		}
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		CircleDp circleDp = circleService.getCircleDpById(id,
 				HttpUtils.getSessionUserId(request));
@@ -80,8 +78,7 @@ public class RestCircleController {
 	@RequestMapping(value = "/json/circle/{id}/members", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getMembers(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<CircleMember> circleMembers = circleMemberService
 				.getCircleMemberListByCircleId(id);
@@ -178,8 +175,7 @@ public class RestCircleController {
 	@RequestMapping(value = "/json/circle/{id}/join", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public String join(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		CircleMember circleMember = new CircleMember(id, userId);
@@ -199,8 +195,7 @@ public class RestCircleController {
 		 * 由于CricleMember对外是透明的，所以不可能获得它的id
 		 */
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = circleMemberService.deleteCircleMember(userId, id);

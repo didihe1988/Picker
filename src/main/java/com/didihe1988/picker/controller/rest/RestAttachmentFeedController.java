@@ -37,8 +37,7 @@ public class RestAttachmentFeedController {
 	public String addAttachmentFeed(@RequestBody AttachmentFeedForm form,
 			HttpServletRequest request) {
 		if (!form.chechValidation()) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.ERROR);
+			return Constant.STATUS_ERROR;
 		}
 		System.out.println(form);
 		AttachmentFeed aFeed = AttachmentFeed.getAttachmentFeed(form,
@@ -57,16 +56,14 @@ public class RestAttachmentFeedController {
 	{
 		if(id<1)
 		{
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.ERROR);
+			return Constant.STATUS_ERROR;
 		}
 		AttachmentFeed aFeed=aFeedService.getAttachmentFeedById(id);
 		if(aFeed!=null)
 		{
 			return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_ATTACHMENTFEED,aFeed);
 		}
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-				Status.ERROR);
+		return Constant.STATUS_ERROR;
 	}
 
 	private void refreshAttachment(AttachmentFeedForm form, int aFeedId) {

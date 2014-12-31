@@ -63,8 +63,7 @@ public class RestSearchController {
 	public String searchUser(@PathVariable String username,
 			HttpServletRequest request) {
 		if (username.equals("")) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		username = StringUtils.toUTF8(username);
 		List<User> userList = userService.search(username);
@@ -77,8 +76,7 @@ public class RestSearchController {
 	public String searchQuestion(@PathVariable String string,
 			HttpServletRequest request) {
 		if (string.equals("")) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		string = StringUtils.toUTF8(string);
 		List<Feed> questoinList = feedService
@@ -92,8 +90,7 @@ public class RestSearchController {
 	public String searchNote(@PathVariable String string,
 			HttpServletRequest request) {
 		if (string.equals("")) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		string = StringUtils.toUTF8(string);
 		List<Feed> noteList = feedService.search(string, Feed.TYPE_NOTE);
@@ -106,8 +103,7 @@ public class RestSearchController {
 	public String searchBook(@PathVariable String string,
 			HttpServletRequest request) {
 		if (string.equals("")) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		string = StringUtils.toUTF8(string);
 		System.out.println(string);
@@ -121,8 +117,7 @@ public class RestSearchController {
 	public String searchCircle(@PathVariable String string,
 			HttpServletRequest request) {
 		if (string.equals("")) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		string = StringUtils.toUTF8(string);
 		List<Circle> circleList = circleService.search(string);
@@ -150,16 +145,16 @@ public class RestSearchController {
 	@RequestMapping(value = "/json/search/book/{bookId}/{page}")
 	public String pageSearch(@PathVariable int bookId, @PathVariable int page) {
 		if ((bookId < 1) || (page < 0)) {
-			return JsonUtils.invalidStatus();
+			return Constant.STATUS_INVALID;
 		}
 		// checkPageValidation
 		Book book = bookService.getBookById(bookId);
 		if ((book == null) || (book.getPages() < page)) {
-			return JsonUtils.invalidStatus();
+			return Constant.STATUS_INVALID;
 		}
 		// get ChapterRange
 		ChapterRange chapterRange = sectionService.getChapterRangeByPage(
-				bookId, page, book.hasInventory());
+				book, page);
 		List<AttachmentFeed> aFeedList = aFeedService
 				.getAttachmentFeedListByChapterRange(bookId, chapterRange);
 		List<Feed> feedList = feedService.getFeedListByChapterRange(bookId,

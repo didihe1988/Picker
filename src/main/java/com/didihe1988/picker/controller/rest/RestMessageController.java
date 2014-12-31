@@ -26,8 +26,7 @@ public class RestMessageController {
 	@RequestMapping(value = "/json/message/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getMessage(@PathVariable int id) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		Message message = messageService.getMessageById(id);
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_MESSAGE,

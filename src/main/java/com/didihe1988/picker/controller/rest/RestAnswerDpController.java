@@ -31,8 +31,7 @@ public class RestAnswerDpController {
 	@RequestMapping(value = "/json/answer/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswerDp(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		AnswerDp answerDp = answerService.getAnswerDpByAnswerId(id,
 				HttpUtils.getSessionUserId(request));

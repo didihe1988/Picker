@@ -39,8 +39,7 @@ public class RestQuestionDpController {
 		 * id´«-1Ê±±Àµô
 		 */
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		FeedDp feedDp = feedService.getFeedDpByFeedId(id,
 				HttpUtils.getSessionUserId(request));
@@ -54,8 +53,7 @@ public class RestQuestionDpController {
 	@RequestMapping(value = "/json/question/{id}/answerdps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswers(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<AnswerDp> list = answerService.getAnswerDpListByQuestionId(id,
 				HttpUtils.getSessionUserId(request));
@@ -68,8 +66,7 @@ public class RestQuestionDpController {
 	@RequestMapping(value = "/json/question/{id}/commentdps", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommets(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<CommentDp> list = commentService.getCommentDpListByCommentedId(id,
 				Comment.COMMENT_QUESTION, HttpUtils.getSessionUserId(request));

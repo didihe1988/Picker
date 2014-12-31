@@ -70,8 +70,7 @@ public class AnswerController implements FavoriteController {
 	@RequestMapping(value = "/json/answer/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody String getAnswer(@PathVariable int id) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		Answer answer = answerService.getAnswerById(id);
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_ANSWER,
@@ -86,8 +85,7 @@ public class AnswerController implements FavoriteController {
 	public @ResponseBody String deleteAnswer(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = answerService.deleteAnswerById(id, userId);
@@ -100,8 +98,7 @@ public class AnswerController implements FavoriteController {
 	@RequestMapping(value = "/json/answer/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody String getCommets(@PathVariable int id) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_ANSWER);
@@ -116,8 +113,7 @@ public class AnswerController implements FavoriteController {
 	public @ResponseBody String subscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.incModelFavorite(id, userId,
@@ -174,8 +170,7 @@ public class AnswerController implements FavoriteController {
 	public @ResponseBody String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.decModelFavorite(id, userId,

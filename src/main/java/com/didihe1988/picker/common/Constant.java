@@ -1,5 +1,7 @@
 package com.didihe1988.picker.common;
 
+import com.didihe1988.picker.utils.JsonUtils;
+
 public class Constant {
 	private Constant() {
 
@@ -59,6 +61,13 @@ public class Constant {
 
 	public static final String PLATFORM_ANDROID = "android";
 
+	public static final String STATUS_INVALID = JsonUtils.getJsonObjectString(
+			Constant.KEY_STATUS, Status.INVALID);
+	public static final String STATUS_SUCCESS = JsonUtils.getJsonObjectString(
+			Constant.KEY_STATUS, Status.SUCCESS);
+	public static final String STATUS_ERROR = JsonUtils.getJsonObjectString(
+			Constant.KEY_STATUS, Status.ERROR);
+
 	public static final int MESSAGE_LENGTH = 20;
 	public static final int MAX_PASSWORD_LENGTH = 20;
 	public static final int MIN_PASSWORD_LENGTH = 6;
@@ -68,6 +77,6 @@ public class Constant {
 	public static final int MIN_USERNAME_LENGTH = 6;
 
 	public static final int DEFAULT_QUERYRESULT = 10;
-	
-	public static final int DEFAULT_PAGE_RAGE=5;
+
+	public static final int DEFAULT_PAGE_RAGE = 5;
 }

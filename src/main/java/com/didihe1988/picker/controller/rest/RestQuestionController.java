@@ -77,8 +77,7 @@ public class RestQuestionController implements FavoriteController {
 	@RequestMapping(value = "/json/question/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getQuestion(@PathVariable int id) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		Feed feed = feedService.getFeedById(id);
 		return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_QUESTION,
@@ -91,8 +90,7 @@ public class RestQuestionController implements FavoriteController {
 	@RequestMapping(value = "/json/question/{id}/answers", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getAnswers(@PathVariable int id) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<Answer> list = answerService.getAnswerListByQuestionId(id);
 		return JsonUtils.getJsonObjectString(Constant.KEY_ANSWER_LIST, list);
@@ -104,8 +102,7 @@ public class RestQuestionController implements FavoriteController {
 	@RequestMapping(value = "/json/question/{id}/comments", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommets(@PathVariable int id) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<Comment> list = commentService.getCommentListByCommentedId(id,
 				Comment.COMMENT_QUESTION);
@@ -120,8 +117,7 @@ public class RestQuestionController implements FavoriteController {
 	public String deleteQuestion(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = feedService.deleteFeedById(id, userId);
@@ -134,8 +130,7 @@ public class RestQuestionController implements FavoriteController {
 	@RequestMapping(value = "/json/question/{id}/followers", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getFollowers(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		List<Follow> followList = followService.getFollowListByQuestionId(id);
 		List<UserDp> list = new ArrayList<UserDp>();
@@ -154,8 +149,7 @@ public class RestQuestionController implements FavoriteController {
 	@RequestMapping(value = "/json/question/{id}/follow", method = RequestMethod.GET, produces = "application/json")
 	public String follow(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		Follow follow = new Follow(Follow.FOLLOW_QUESTION, userId, id);
@@ -173,8 +167,7 @@ public class RestQuestionController implements FavoriteController {
 	public String withdrawFollow(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = followService.deleteFollow(Follow.FOLLOW_QUESTION, userId,
@@ -189,8 +182,7 @@ public class RestQuestionController implements FavoriteController {
 	@RequestMapping(value = "/json/question/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.incModelFavorite(id, userId,
@@ -211,8 +203,7 @@ public class RestQuestionController implements FavoriteController {
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		int status = favoriteService.decModelFavorite(id, userId,

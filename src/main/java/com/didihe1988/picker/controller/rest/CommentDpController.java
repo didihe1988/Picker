@@ -23,8 +23,7 @@ public class CommentDpController {
 	@RequestMapping(value = "/json/comment/{id}/dp", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getCommentDp(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		CommentDp commentDp = commentService.getCommentDpByCommentId(id,
 				HttpUtils.getSessionUserId(request));

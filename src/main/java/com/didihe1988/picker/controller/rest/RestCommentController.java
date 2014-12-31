@@ -66,8 +66,7 @@ public class RestCommentController implements FavoriteController {
 	public String addComment(@RequestBody CommentForm commentForm,
 			HttpServletRequest request) {
 		if (!commentForm.checkFieldValidation()) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		Comment comment = Comment.getComment(commentForm,
 				HttpUtils.getSessionUserId(request));
@@ -93,8 +92,7 @@ public class RestCommentController implements FavoriteController {
 	@RequestMapping(value = "/json/comment/{id}/subscribe", method = RequestMethod.GET, headers = "Accept=application/json", produces = "application/json")
 	public String subscribe(@PathVariable int id, HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		int userId = HttpUtils.getSessionUserId(request);
 		// String userName = HttpUtils.getSessionUserName(request);
@@ -148,8 +146,7 @@ public class RestCommentController implements FavoriteController {
 	public String withdrawSubscribe(@PathVariable int id,
 			HttpServletRequest request) {
 		if (id < 1) {
-			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-					Status.INVALID);
+			return Constant.STATUS_INVALID;
 		}
 		// int userId = HttpUtils.getSessionUser(request).getId();
 		int userId = HttpUtils.getSessionUserId(request);

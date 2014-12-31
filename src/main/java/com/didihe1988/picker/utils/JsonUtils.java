@@ -52,9 +52,4 @@ public class JsonUtils {
 		return list;
 	}
 	
-	public static String invalidStatus()
-	{
-		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
-				Status.INVALID);
-	}
 }
