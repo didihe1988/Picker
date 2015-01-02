@@ -16,7 +16,7 @@ import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.dp.CircleWebDp;
+import com.didihe1988.picker.model.display.CircleWebDp;
 import com.didihe1988.picker.service.CircleMemberService;
 import com.didihe1988.picker.utils.DateUtils;
 

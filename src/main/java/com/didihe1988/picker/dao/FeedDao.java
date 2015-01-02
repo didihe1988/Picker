@@ -7,7 +7,7 @@ import com.didihe1988.picker.dao.interfaces.OperateValidation;
 import com.didihe1988.picker.dao.interfaces.PageRelatedOperation;
 import com.didihe1988.picker.dao.interfaces.SearchOperation;
 import com.didihe1988.picker.model.Feed;
-import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.model.display.FeedDp;
 
 public interface FeedDao extends NumOperationDao<Feed>, OperateValidation,
 		SearchOperation<Feed>, PageRelatedOperation<Feed> {

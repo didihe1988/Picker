@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.didihe1988.picker.dao.AttachmentFeedDao;
 import com.didihe1988.picker.model.AttachmentFeed;
-import com.didihe1988.picker.model.dp.AttachmentFeedDp;
+import com.didihe1988.picker.model.display.AttachmentFeedDp;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:servlet-context.xml",

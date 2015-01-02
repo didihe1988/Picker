@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.dp.Dynamic;
-import com.didihe1988.picker.model.dp.Footprint;
-import com.didihe1988.picker.model.dp.MessageDp;
+import com.didihe1988.picker.model.display.Dynamic;
+import com.didihe1988.picker.model.display.Footprint;
+import com.didihe1988.picker.model.display.MessageDp;
 
 public interface MessageService {
 	public int addMessage(Message message);

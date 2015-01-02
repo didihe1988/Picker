@@ -3,7 +3,7 @@ package com.didihe1988.picker.model.json;
 import java.util.Date;
 import java.util.List;
 
-import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.model.display.FeedDp;
 
 public class NoteJson extends BaseJson {
 	private String brief;

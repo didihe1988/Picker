@@ -1,6 +1,6 @@
 package com.didihe1988.picker.model.json;
 
-import com.didihe1988.picker.model.dp.AnswerDp;
+import com.didihe1988.picker.model.display.AnswerDp;
 
 public class AnswerJson extends BaseJson {
 	private String brief;

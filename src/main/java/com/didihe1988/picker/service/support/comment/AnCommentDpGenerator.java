@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.model.Favorite;
-import com.didihe1988.picker.model.dp.CommentDp;
+import com.didihe1988.picker.model.display.CommentDp;
 
 /*
  * CommentDpGenerator for Answer type

@@ -10,7 +10,7 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AttachmentFeedDao;
 import com.didihe1988.picker.model.AttachmentFeed;
 import com.didihe1988.picker.model.ChapterRange;
-import com.didihe1988.picker.model.dp.AttachmentFeedDp;
+import com.didihe1988.picker.model.display.AttachmentFeedDp;
 import com.didihe1988.picker.service.AttachmentFeedService;
 
 @Service

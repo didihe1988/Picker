@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.didihe1988.picker.model.AttachmentFeed;
 import com.didihe1988.picker.model.ChapterRange;
-import com.didihe1988.picker.model.dp.AttachmentFeedDp;
+import com.didihe1988.picker.model.display.AttachmentFeedDp;
 
 public interface AttachmentFeedService {
 	public AttachmentFeed getAttachmentFeedById(int id);

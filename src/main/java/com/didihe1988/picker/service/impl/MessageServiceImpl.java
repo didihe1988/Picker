@@ -21,9 +21,9 @@ import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.dp.Dynamic;
-import com.didihe1988.picker.model.dp.Footprint;
-import com.didihe1988.picker.model.dp.MessageDp;
+import com.didihe1988.picker.model.display.Dynamic;
+import com.didihe1988.picker.model.display.Footprint;
+import com.didihe1988.picker.model.display.MessageDp;
 import com.didihe1988.picker.service.MessageService;
 
 @Service
@@ -239,13 +239,8 @@ public class MessageServiceImpl implements MessageService {
 				.getAvatarUrl();
 		int type = message.getType();
 		String parentName = "", imageUrl = "";
-		/*
-		 * if ((type == Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION) || (type ==
-		 * Message.MESSAGE_FOLLOWED_ANSWER_QUESTION) || (type ==
-		 * Message.MESSAGE_FOLLOWED_ASKQUESTION) || (type ==
-		 * Message.MESSAGE_FOLLOWED_FAVORITE_NOTE) || (type ==
-		 * Message.MESSAGE_FOLLOWED_ADDNOTE))
-		 */if (message.isFeedRelated()) {
+		
+		 if (message.isFeedRelated()) {
 			parentName = bookDao.queryModelById(message.getParentId())
 					.getBookName();
 			imageUrl = relatedImageDao.queryFirstImageUrlByKey(

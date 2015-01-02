@@ -5,7 +5,7 @@ import java.util.List;
 import com.didihe1988.picker.dao.interfaces.BaseDao;
 import com.didihe1988.picker.dao.interfaces.PageRelatedOperation;
 import com.didihe1988.picker.model.AttachmentFeed;
-import com.didihe1988.picker.model.dp.AttachmentFeedDp;
+import com.didihe1988.picker.model.display.AttachmentFeedDp;
 
 public interface AttachmentFeedDao extends BaseDao<AttachmentFeed>,
 		PageRelatedOperation<AttachmentFeed> {

@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.didihe1988.picker.model.dp.SearchResult;
+import com.didihe1988.picker.model.display.SearchResult;
 import com.didihe1988.picker.model.form.FeedForm;
 import com.didihe1988.picker.model.interfaces.SearchModel;
 import com.didihe1988.picker.utils.MarkdownUtils;

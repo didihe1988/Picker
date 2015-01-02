@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.didihe1988.picker.model.Book;
-import com.didihe1988.picker.model.dp.UserDp;
+import com.didihe1988.picker.model.display.UserDp;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.CircleService;

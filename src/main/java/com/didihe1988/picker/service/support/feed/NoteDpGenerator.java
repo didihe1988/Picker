@@ -10,7 +10,7 @@ import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.model.display.FeedDp;
 
 @Service
 @Transactional

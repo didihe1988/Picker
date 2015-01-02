@@ -18,6 +18,7 @@ public class Message implements Serializable {
 	 * comment的消息只留footprint和dynamic的
 	 */
 	/**
+	 * DYNAMIC Starts
 	 * 由关注产生的消息 用户的动态中显示
 	 */
 	// 小明 提出了问题 家用路由器会遭受攻击吗？
@@ -52,8 +53,12 @@ public class Message implements Serializable {
 	 * 小明(被关注者)关注了XXX
 	 */
 	public static final int MESSAGE_FOLLOWEDUSER_FOLLOW = 17;
-
 	/*
+	 * DYNAMIC Ends
+	 */
+	
+	/*
+	 * UserRelated Starts
 	 * 用户相关的消息 用户在消息通知中接受
 	 */
 	// 你的问题有了新的回答
@@ -74,9 +79,11 @@ public class Message implements Serializable {
 	public static final int MESSAGE_OTHERS_FOLLOW_YOU = 25;
 	/*
 	 * 缺少:XXX加入了你创建的圈子
+	 * UserRelated Ends
 	 */
-
+	
 	/*
+	 * Footprint Starts
 	 * 用户动作产生的消息 在用户的profile里显示
 	 */
 
@@ -93,17 +100,15 @@ public class Message implements Serializable {
 	public static final int MESSAGE_USER_FAVORITE_COMMENT = 36;
 	public static final int MESSAGE_USER_ADDCIRCLE = 37;
 	public static final int MESSAGE_USER_JOINCIRCLE = 38;
-
 	/*
-	 * public static final int MESSAGE_UNCHECKED = 8; public static final int
-	 * MESSAGE_CHECKED = 9;
+	 * Footprint Ends
 	 */
 
 	public enum Filter {
 		/*
 		 * 好友动态(由用户关注的人产生) , 用户足迹 在用户profile上显示 , 与我相关
 		 */
-		MESSAGE_DYNAMIC, MESSAGE_FOOTPRINT, MESSAGE_RELATED;
+		MESSAGE_DYNAMIC, MESSAGE_FOOTPRINT, MESSAGE_SELF_RELATED;
 		private final int startType;
 		private final int endType;
 

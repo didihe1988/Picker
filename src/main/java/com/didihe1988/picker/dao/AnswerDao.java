@@ -7,7 +7,7 @@ import com.didihe1988.picker.dao.interfaces.OperateValidation;
 import com.didihe1988.picker.dao.interfaces.SearchOperation;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.dp.AnswerDp;
+import com.didihe1988.picker.model.display.AnswerDp;
 
 public interface AnswerDao extends NumOperationDao<Answer>, OperateValidation,
 		SearchOperation<Answer> {

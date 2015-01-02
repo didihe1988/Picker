@@ -19,7 +19,7 @@ import com.didihe1988.picker.model.ChapterRange;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.dp.SearchResult;
+import com.didihe1988.picker.model.display.SearchResult;
 import com.didihe1988.picker.model.interfaces.SearchModel;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.AttachmentFeedService;

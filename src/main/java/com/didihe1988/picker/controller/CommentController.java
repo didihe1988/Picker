@@ -16,7 +16,7 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Comment;
 import com.didihe1988.picker.model.Feed;
-import com.didihe1988.picker.model.dp.CommentDp;
+import com.didihe1988.picker.model.display.CommentDp;
 import com.didihe1988.picker.model.form.CommentForm;
 import com.didihe1988.picker.model.json.CommentJson;
 import com.didihe1988.picker.service.AnswerService;

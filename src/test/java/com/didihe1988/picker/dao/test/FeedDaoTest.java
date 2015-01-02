@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.model.Feed;
-import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.service.FeedService;
 
 @RunWith(SpringJUnit4ClassRunner.class)

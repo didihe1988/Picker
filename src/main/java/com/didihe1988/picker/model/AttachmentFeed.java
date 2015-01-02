@@ -13,7 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.didihe1988.picker.model.dp.SearchResult;
+import com.didihe1988.picker.model.display.SearchResult;
 import com.didihe1988.picker.model.form.AttachmentFeedForm;
 import com.didihe1988.picker.model.interfaces.SearchModel;
 

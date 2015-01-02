@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.model.Feed;
-import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.utils.DaoUtils;
 
 @Repository

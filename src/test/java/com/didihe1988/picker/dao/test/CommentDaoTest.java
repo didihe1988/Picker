@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.didihe1988.picker.dao.CommentDao;
 import com.didihe1988.picker.model.Comment;
-import com.didihe1988.picker.model.dp.CommentDp;
+import com.didihe1988.picker.model.display.CommentDp;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:servlet-context.xml",

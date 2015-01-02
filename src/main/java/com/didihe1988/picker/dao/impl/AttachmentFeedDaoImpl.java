@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.AttachmentFeedDao;
 import com.didihe1988.picker.model.AttachmentFeed;
-import com.didihe1988.picker.model.dp.AttachmentFeedDp;
+import com.didihe1988.picker.model.display.AttachmentFeedDp;
 import com.didihe1988.picker.utils.DaoUtils;
 
 @Repository

@@ -20,7 +20,7 @@ import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.RelatedImage;
-import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.model.json.QuestionJson;
 import com.didihe1988.picker.service.FeedService;

@@ -13,8 +13,8 @@ import com.didihe1988.picker.dao.PrivateMessageDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.PrivateMessage;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.dp.PrivateMessageDp;
-import com.didihe1988.picker.model.dp.PrivateMessageSum;
+import com.didihe1988.picker.model.display.PrivateMessageDp;
+import com.didihe1988.picker.model.display.PrivateMessageSum;
 import com.didihe1988.picker.service.PrivateMessageService;
 
 @Service

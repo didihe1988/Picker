@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.didihe1988.picker.model.dp.PrivateMessageSum;
+import com.didihe1988.picker.model.display.PrivateMessageSum;
 import com.didihe1988.picker.service.PrivateMessageService;
 import com.didihe1988.picker.utils.HttpUtils;
 

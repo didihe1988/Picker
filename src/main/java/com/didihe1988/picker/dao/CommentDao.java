@@ -5,7 +5,7 @@ import java.util.List;
 import com.didihe1988.picker.dao.interfaces.NumOperationDao;
 import com.didihe1988.picker.dao.interfaces.OperateValidation;
 import com.didihe1988.picker.model.Comment;
-import com.didihe1988.picker.model.dp.CommentDp;
+import com.didihe1988.picker.model.display.CommentDp;
 
 public interface CommentDao extends NumOperationDao<Comment>, OperateValidation {
 	public Comment queryModelById(int id);

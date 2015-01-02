@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.didihe1988.picker.model.ChapterRange;
 import com.didihe1988.picker.model.Feed;
-import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.model.json.QuestionJson;
 import com.didihe1988.picker.service.interfaces.SearchService;

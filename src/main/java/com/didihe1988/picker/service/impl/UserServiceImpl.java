@@ -12,7 +12,7 @@ import com.didihe1988.picker.dao.FollowDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.dp.UserDp;
+import com.didihe1988.picker.model.display.UserDp;
 import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.StringUtils;
 

@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.model.Answer;
-import com.didihe1988.picker.model.dp.AnswerDp;
+import com.didihe1988.picker.model.display.AnswerDp;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:servlet-context.xml",

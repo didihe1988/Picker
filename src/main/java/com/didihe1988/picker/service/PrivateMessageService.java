@@ -3,8 +3,8 @@ package com.didihe1988.picker.service;
 import java.util.List;
 
 import com.didihe1988.picker.model.PrivateMessage;
-import com.didihe1988.picker.model.dp.PrivateMessageDp;
-import com.didihe1988.picker.model.dp.PrivateMessageSum;
+import com.didihe1988.picker.model.display.PrivateMessageDp;
+import com.didihe1988.picker.model.display.PrivateMessageSum;
 
 public interface PrivateMessageService {
 	public PrivateMessage getPrivateMessageById(int id);

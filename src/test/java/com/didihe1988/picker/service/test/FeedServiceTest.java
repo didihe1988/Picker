@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.didihe1988.picker.common.DaoConstant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Feed;
-import com.didihe1988.picker.model.dp.FeedDp;
+import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.utils.HttpUtils;

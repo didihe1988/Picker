@@ -13,7 +13,7 @@ import com.didihe1988.picker.dao.CircleMemberDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
-import com.didihe1988.picker.model.dp.CircleDp;
+import com.didihe1988.picker.model.display.CircleDp;
 import com.didihe1988.picker.service.AttachmentFeedService;
 import com.didihe1988.picker.service.CircleService;
 
