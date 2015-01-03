@@ -219,12 +219,6 @@ public class MessageServiceImpl implements MessageService {
 				.getAvatarUrl();
 		int type = message.getType();
 		String parentName = "";
-		/*
-		 * if ((type == Message.MESSAGE_USER_ADDQUESTION) || (type ==
-		 * Message.MESSAGE_USER_ADDNOTE) || (type ==
-		 * Message.MESSAGE_USER_FAVORITE_QUESTION) || (type ==
-		 * Message.MESSAGE_USER_FAVORITE_NOTE))
-		 */
 		if (message.isFeedRelated()) {
 			parentName = bookDao.queryModelById(message.getParentId())
 					.getBookName();
@@ -239,8 +233,8 @@ public class MessageServiceImpl implements MessageService {
 				.getAvatarUrl();
 		int type = message.getType();
 		String parentName = "", imageUrl = "";
-		
-		 if (message.isFeedRelated()) {
+
+		if (message.isFeedRelated()) {
 			parentName = bookDao.queryModelById(message.getParentId())
 					.getBookName();
 			imageUrl = relatedImageDao.queryFirstImageUrlByKey(
@@ -285,13 +279,13 @@ public class MessageServiceImpl implements MessageService {
 		// TODO Auto-generated method stub
 		return getMessageDpList(getMessageByReceiverIdAndType(receiverId, type));
 	}
-
+	/*
 	@Override
 	public List<MessageDp> getMessageDpByUserIdAndFilter(int objId,
 			Filter filter) {
 		// TODO Auto-generated method stub
 		return getMessageDpList(getMessageByUserIdAndFilter(objId, filter));
-	}
+	}*/
 
 	@Override
 	public List<Footprint> getFootprintByUserIdAndFilter(int userId,
@@ -313,5 +307,16 @@ public class MessageServiceImpl implements MessageService {
 		return getDynamicList(getLimitedMessageByUserIdAndFilter(userId,
 				Message.Filter.MESSAGE_DYNAMIC, limit));
 	}
+
+	@Override
+	public List<MessageDp> getMessageDpsByUserIdAndFilterType(int userId,
+			int filterType) {
+		// TODO Auto-generated method stub
+		return getMessageDpList(messageDao.queryMessagesByUserIdAndFilterType(
+				userId, filterType));
+	}
+
+	
+	
 
 }

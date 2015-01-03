@@ -32,8 +32,8 @@ public interface MessageService {
 	public List<Message> getLimitedMessageByUserIdAndFilter(int userId,
 			Message.Filter filter,int limit);
 
-	public List<MessageDp> getMessageDpByUserIdAndFilter(int userId,
-			Message.Filter filter);
+	/*public List<MessageDp> getMessageDpByUserIdAndFilter(int userId,
+			Message.Filter filter);*/
 
 	public List<Footprint> getFootprintByUserIdAndFilter(int userId,
 			Message.Filter filter);
@@ -57,12 +57,10 @@ public interface MessageService {
 	/*
 	 * 用户关注的人产生的消息
 	 */
-
+	
 	public void addMessageByFollowedUser(boolean isFeedRelated, int type,
 			User producer, int relatedSourceId, String relatedSourceContent,
 			String extraContent, int parentId);
-
-	// public void addMessageByFollowedUser(FollowedMessage foMessage);
 
 	/*
 	 * 用户关注的问题产生的消息
@@ -71,8 +69,6 @@ public interface MessageService {
 	public void addMessageByFollowedQuestion(int type, User producer,
 			int relatedSourceId, String relatedSourceContent,
 			String extraContent, int parentId);
-
-	// public void addMessageByFollowedQuestion(FollowedMessage foMessage);
 
 	/*
 	 * xxx赞了/关注了 您的XXX
@@ -85,4 +81,6 @@ public interface MessageService {
 	public void addMessageByRecerver(int receiverId, boolean isFeedRelated,
 			int type, User producer, int relatedSourceId,
 			String relatedSourceContent, String extraContent, int parentId);
+	
+	public List<MessageDp> getMessageDpsByUserIdAndFilterType(int userId,int filterType);
 }

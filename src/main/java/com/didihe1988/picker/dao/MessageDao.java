@@ -3,6 +3,7 @@ package com.didihe1988.picker.dao;
 import java.util.List;
 
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.display.MessageDp;
 
 public interface MessageDao {
 	public Message queryMessageById(int id);
@@ -24,7 +25,13 @@ public interface MessageDao {
 	public List<Message> queryMessageByReceiverIdAndType(int receiverId,
 			int type);
 
-	public List<Message> queryMessageByUserIdAndFilter(int objId,Message.Filter filter);
-	
-	public List<Message> queryLimitedMessageByUserIdAndFilter(int objId,Message.Filter filter,int limit);
+	public List<Message> queryMessageByUserIdAndFilter(int objId,
+			Message.Filter filter);
+
+	public List<Message> queryLimitedMessageByUserIdAndFilter(int objId,
+			Message.Filter filter, int limit);
+
+	public List<Message> queryMessagesByUserIdAndFilterType(int userId,
+			int filterType);
+
 }

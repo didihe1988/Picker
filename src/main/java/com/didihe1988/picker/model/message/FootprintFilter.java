@@ -1,6 +1,6 @@
 package com.didihe1988.picker.model.message;
 
-public class FootprintFilter implements MessageFilter{
+public class FootprintFilter{
 	private static final int TYPE_CODE=1;
 	
 	public static final int MESSAGE_USER_ADDQUESTION = 1;
@@ -17,10 +17,9 @@ public class FootprintFilter implements MessageFilter{
 	public static final int MESSAGE_USER_ADDCIRCLE = 12;
 	public static final int MESSAGE_USER_JOINCIRCLE = 13;
 
-	@Override
-	public int getTypeCode() {
+	public static int getTypeCode() {
 		// TODO Auto-generated method stub
-		return this.TYPE_CODE;
+		return TYPE_CODE;
 	}
 	
 	

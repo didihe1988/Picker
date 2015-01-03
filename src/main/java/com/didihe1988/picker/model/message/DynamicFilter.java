@@ -1,6 +1,6 @@
 package com.didihe1988.picker.model.message;
 
-public class DynamicFilter implements MessageFilter {
+public class DynamicFilter {
 	private static final int TYPE_CODE=0;
 	
 	
@@ -40,10 +40,9 @@ public class DynamicFilter implements MessageFilter {
 	 */
 	public static final int MESSAGE_FOLLOWEDUSER_FOLLOW = 17;
 	
-	@Override
-	public int getTypeCode() {
+	public static int getTypeCode() {
 		// TODO Auto-generated method stub
-		return this.TYPE_CODE;
+		return TYPE_CODE;
 	}
 	
 	

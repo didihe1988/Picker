@@ -1,6 +1,6 @@
 package com.didihe1988.picker.model.message;
 
-public class SelfRelatedFilter implements MessageFilter{
+public class SelfRelatedFilter{
 	private static final int TYPE_CODE=2;
 	
 	// 你的问题有了新的回答
@@ -30,10 +30,9 @@ public class SelfRelatedFilter implements MessageFilter{
 	//XXX加入了你建立的圈子 
 	public static final int MESSAGE_OTHERS_JOIN_YOUR_CIRCLE = 9;
 
-	@Override
-	public int getTypeCode() {
+	public static int getTypeCode() {
 		// TODO Auto-generated method stub
-		return this.TYPE_CODE;
+		return TYPE_CODE;
 	}
 	
 }

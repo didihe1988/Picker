@@ -27,6 +27,7 @@ import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.display.Footprint;
 import com.didihe1988.picker.model.display.UserDp;
 import com.didihe1988.picker.model.form.LoginForm;
+import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
@@ -88,7 +89,7 @@ public class UserController {
 			HttpUtils.setSessionUserId(request, user.getId());
 
 			try {
-				//response.sendRedirect("/user/" + user.getId());
+				// response.sendRedirect("/user/" + user.getId());
 				response.sendRedirect("");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -138,7 +139,7 @@ public class UserController {
 	 * @description 问过的问题
 	 * @condition request用于isFollow
 	 */
-	
+
 	@RequestMapping(value = "/user/{id}/questions/{page}")
 	public String getQuestions(@PathVariable int id, @PathVariable int page,
 			Model model, HttpServletRequest request) {
@@ -148,29 +149,29 @@ public class UserController {
 		if (userService.isUserExistsById(id)) {
 			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
 			model.addAttribute("page", page);
-			model.addAttribute("type","0");
+			model.addAttribute("type", "0");
 			return "user";
 		} else {
 			return "error";
 		}
 
 	}
-	
+
 	/**
 	 * @description 回答过的问题
 	 * @condition request用于isFavorite
 	 */
-	
+
 	@RequestMapping(value = "/user/{id}/answers/{page}")
 	public String getAnswers(@PathVariable int id, @PathVariable int page,
 			Model model, HttpServletRequest request) {
-		if ((id < 1) || (page <0 )) {
+		if ((id < 1) || (page < 0)) {
 			return "error";
 		}
 		if (userService.isUserExistsById(id)) {
 			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
 			model.addAttribute("page", page);
-			model.addAttribute("type","1");
+			model.addAttribute("type", "1");
 			return "user";
 		} else {
 			return "error";
@@ -182,7 +183,7 @@ public class UserController {
 	 * @description 写过的笔记
 	 * @condition request用于isFollow
 	 */
-	
+
 	@RequestMapping(value = "/user/{id}/notes/{page}")
 	public String getNotes(@PathVariable int id, @PathVariable int page,
 			Model model, HttpServletRequest request) {
@@ -192,7 +193,7 @@ public class UserController {
 		if (userService.isUserExistsById(id)) {
 			addBaseAttribute(id, model, HttpUtils.getSessionUserId(request));
 			model.addAttribute("page", page);
-			model.addAttribute("type","2");
+			model.addAttribute("type", "2");
 			return "user";
 		} else {
 			return "error";
@@ -207,8 +208,8 @@ public class UserController {
 	public String message(Model model, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		model.addAttribute("messageList", messageService
-				.getMessageDpByUserIdAndFilter(userId,
-						Message.Filter.MESSAGE_RELATED));
+				.getMessageDpsByUserIdAndFilterType(userId,
+						SelfRelatedFilter.getTypeCode()));
 		return "message";
 	}
 
@@ -246,7 +247,7 @@ public class UserController {
 		}
 		return userList;
 	}
-	
+
 	private List<Book> getBooks(int userId) {
 		final List<Bought> boughtList = boughtService.getBoughtByUserId(userId);
 		List<Book> bookList = new ArrayList<Book>();
@@ -256,6 +257,5 @@ public class UserController {
 		}
 		return bookList;
 	}
-	
 
 }

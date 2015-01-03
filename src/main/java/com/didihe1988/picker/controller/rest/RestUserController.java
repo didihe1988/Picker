@@ -31,6 +31,9 @@ import com.didihe1988.picker.model.display.MessageDp;
 import com.didihe1988.picker.model.display.UserDp;
 import com.didihe1988.picker.model.form.LoginForm;
 import com.didihe1988.picker.model.form.RegisterForm;
+import com.didihe1988.picker.model.message.DynamicFilter;
+import com.didihe1988.picker.model.message.FootprintFilter;
+import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
@@ -404,19 +407,21 @@ public class RestUserController {
 			return Constant.STATUS_INVALID;
 		}
 		List<MessageDp> messageList = messageService
-				.getMessageDpByUserIdAndFilter(id, Filter.MESSAGE_FOOTPRINT);
+				.getMessageDpsByUserIdAndFilterType(id,
+						FootprintFilter.getTypeCode());
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
 
 	/**
-	 * @description 用户关注的人的动态
+	 * @description 用户关注的人产生的动态(首页显示)
 	 */
 	@RequestMapping(value = "/json/user/dynamic", method = RequestMethod.GET)
 	public String dynamic(HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		List<MessageDp> messageList = messageService
-				.getMessageDpByUserIdAndFilter(userId, Filter.MESSAGE_DYNAMIC);
+				.getMessageDpsByUserIdAndFilterType(userId,
+						DynamicFilter.getTypeCode());
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
@@ -428,7 +433,8 @@ public class RestUserController {
 	public String related(HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		List<MessageDp> messageList = messageService
-				.getMessageDpByUserIdAndFilter(userId, Filter.MESSAGE_RELATED);
+				.getMessageDpsByUserIdAndFilterType(userId,
+						SelfRelatedFilter.getTypeCode());
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}

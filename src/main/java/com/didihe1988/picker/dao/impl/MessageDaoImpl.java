@@ -13,6 +13,7 @@ import com.didihe1988.picker.dao.MessageDao;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.Message.Filter;
+import com.didihe1988.picker.model.message.FootprintFilter;
 import com.didihe1988.picker.utils.DaoUtils;
 
 @Repository
@@ -154,6 +155,28 @@ public class MessageDaoImpl implements MessageDao {
 		query.setInteger(2, filter.getEndType());
 		return query.list();
 	}
+	
+	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Message> queryMessagesByUserIdAndFilterType(int userId,
+			int filterType) {
+		// TODO Auto-generated method stub
+		String hql = "";
+		if (filterType == FootprintFilter.getTypeCode()) {
+			hql = "from Message as message where message.producerId = ? and message.filterType=?";
+		} else {
+			hql = "from Message as message where message.receiverId = ? and message.filterType=?";
+		}
+
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, userId);
+		query.setInteger(1,filterType);
+		return query.list();
+	}
+	
+
 
 	@SuppressWarnings("unchecked")
 	@Override
