@@ -90,7 +90,7 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AttachmentFeedDp> queryAttachmentFeedDpsByBookId(int bookId) {
-		String hql = "select new com.didihe1988.picker.model.dp.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id order by a.id";
+		String hql = "select new com.didihe1988.picker.model.display.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id order by a.id";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		return query.list();
@@ -101,7 +101,7 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 	public List<AttachmentFeedDp> queryAttachmentFeedDpsByBookId(int bookId,
 			String order) {
 		// TODO Auto-generated method stub
-		String hql = "select new com.didihe1988.picker.model.dp.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id "
+		String hql = "select new com.didihe1988.picker.model.display.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id "
 				+ order;
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
@@ -113,7 +113,7 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 	public List<AttachmentFeedDp> queryLimitedAttachmentFeedDpsByBookId(
 			int bookId, int limit) {
 		// TODO Auto-generated method stub
-		String hql = "select new com.didihe1988.picker.model.dp.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id order by a.id";
+		String hql = "select new com.didihe1988.picker.model.display.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id order by a.id";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		DaoUtils.setLimit(query, limit);
@@ -125,7 +125,7 @@ public class AttachmentFeedDaoImpl implements AttachmentFeedDao {
 	public List<AttachmentFeedDp> queryLimitedAttachmentFeedDpsByBookId(
 			int bookId, int limit, String order) {
 		// TODO Auto-generated method stub
-		String hql = "select new com.didihe1988.picker.model.dp.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id"
+		String hql = "select new com.didihe1988.picker.model.display.AttachmentFeedDp(a,u.username,u.avatarUrl) from AttachmentFeed a ,User u where a.bookId=? and a.userId = u.id"
 				+ order;
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);

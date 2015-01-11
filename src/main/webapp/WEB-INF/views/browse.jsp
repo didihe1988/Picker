@@ -303,8 +303,9 @@
 					<div class="row browse_tool">
 						<div class="col-30 filter">
 							<div class="active" data-filter="all">全部</div>
-							<div data-filter="question">问答</div>
-							<div data-filter="note">笔记</div>
+							<div data-filter="question" onclick="switch_content($(this),${book.id})">问答</div>
+							<div data-filter="note" onclick="switch_content($(this),${book.id})">笔记</div>
+                            <div data-filter="attachment" onclick="switch_content($(this),${book.id})">附件</div>
 						</div>
 						<div class="col-69 action">
 							<div>
@@ -496,16 +497,16 @@
                                 <i class="icon-edit"></i>笔记
                             </div>
                             <div class="photo">
-                                <img src="{post.author_photo_path}">
+                                <img src="{post.userAvatarUrl}">
                             </div>
                         </div>
-                        {post.text_part}
+                        {post.brief}
                         <div class="feed_tool_bar">
                             <div class="line watch" data-action="watch" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-plus"></i>关注问题</div>
                             <div style="display: none" class="line cancel_watch" data-action="cancel_watch" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-ok"></i>取消关注</div>
                             <div class="line show_comment" data-action="get_comment" data-url="/note/{}/comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
                             <div style="display: none" class="line hide_comment" data-action="hide_comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-double-angle-up"></i>收起评论</div>
-                            <span class="time">{post.date}</span>
+                            <span class="time">{post.strDate}</span>
                         </div>
                         <div style="clear: both"></div>
                         <div class="comments clear_fix">
@@ -530,20 +531,20 @@
 						<!-- {hack.e}
                         <div class="browse_list_meta clear_fix">
                             <div class="title">
-                                <a href="/post/{post.id}">{post.title}</a>
+                                <a href="#">{post.title}</a>
                             </div>
                             <div class="photo">
-                                <img src="{post.author_photo_path}">
+                                <img src="{post.userAvatarUrl}">
                             </div>
                         </div>
-                        {post.text_part}
+                        {post.brief}
                         <div class="feed_tool_bar">
                             <div class="line watch" data-action="watch" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-plus"></i>关注问题</div>
                             <div style="display: none" class="line cancel_watch" data-action="cancel_watch" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-ok"></i>取消关注</div>
-                            <div class="line show_comment" data-action="get_comment" data-url="/question/{}/comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
+                            <div class="line show_comment" data-action="get_comment" data-url="/post/{}/comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
                             <div style="display: none" class="line hide_comment" data-action="hide_comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-double-angle-up"></i>收起评论</div>
                             <div class="line" data-action="show_all_answer" data-passage-id="{post.id}"><i class="icon-lightbulb" onclick="tool_bar_action($(this))"></i>2个回答</div>
-                            <span class="time">{post.date}</span>
+                            <span class="time">{post.strDate}</span>
                         </div>
                         <div style="clear: both"></div>
                         <div class="comments clear_fix">
@@ -563,6 +564,45 @@
 					</div>
 				</div>
 
+                <div id="attachment_template">
+                    <div class="feeds">
+                        <!-- {hack.e}
+                        <div class="browse_list_meta clear_fix">
+                            <div class="title">
+                                <a href="#">{post.title}</a>
+                            </div>
+                            <div class="photo">
+                                <img src="{post.userAvatarUrl}">
+                            </div>
+                        </div>
+                        {post.describe}
+                        <div class="feed_tool_bar">
+                            <div class="line show_comment" data-action="get_comment" data-url="/post/{}/comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
+                            <div style="display: none" class="line hide_comment" data-action="hide_comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-double-angle-up"></i>收起评论</div>
+                            <span class="time">{post.strDate}</span>
+                        </div>
+                        <div style="clear: both"></div>
+                        <div class="comments clear_fix">
+                            <div class="waiting">
+                                <i class="icon-spinner icon-spin"></i>
+                            </div>
+                            <div class="comments_list"></div>
+
+                            <div class="do_comment">
+                                <div class="comment clear_fix">
+                                    <input type="text">
+                                    <button class="btn btn-success">提交</button>
+                                </div>
+                            </div>
+                        </div>
+                        {hack.s} -->
+                    </div>
+                </div>
+
+
+
+
+
 				<div id="page_template">
 					<div class="page" data-page="{req.page}">
 						<div class="page_split">
@@ -579,7 +619,7 @@
                         <!-- {hack.e}
                         <div class="section_title">{section.num}&nbsp;{section.name}</div>
                         <div class="apostrophe">-&nbsp;-&nbsp;</div>
-                        <div class="inv_page">{section.page}</div>
+                        <div class="inv_page">{section.startPage}</div>
                         {hack.s} -->
                     </div>
                 </div>
@@ -589,7 +629,7 @@
                         <!-- {hack.e}
                         <div class="chapter_title">{section.num}&nbsp;{section.name}</div>
                         <div class="apostrophe">-&nbsp;-&nbsp;</div>
-                        <div class="inv_page">{section.page}</div>
+                        <div class="inv_page">{section.startPage}</div>
                         {hack.s} -->
                     </div>
                 </div>

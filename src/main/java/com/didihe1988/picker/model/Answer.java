@@ -9,9 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.form.AnswerForm;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.MarkdownUtils;
+import com.didihe1988.picker.utils.StringUtils;
 
 @Entity
 @Table(name = "answer")
@@ -87,7 +89,9 @@ public class Answer implements Serializable {
 
 	public Answer(AnswerForm answerForm, int userId) {
 		this(answerForm.getQuestionId(), userId, answerForm.getRaw(),
-				MarkdownUtils.removeTags(answerForm.getRaw()), new Date());
+				StringUtils.confineStringLength(
+						MarkdownUtils.removeTags(answerForm.getRaw()),
+						Constant.DEFAULT_BRIEF_LENGTH), new Date());
 	}
 
 	public int getId() {
@@ -155,7 +159,9 @@ public class Answer implements Serializable {
 	}
 
 	public void setBriefByContent() {
-		this.brief = MarkdownUtils.removeTags(this.content);
+		this.brief = StringUtils.confineStringLength(
+				MarkdownUtils.removeTags(this.content),
+				Constant.DEFAULT_BRIEF_LENGTH);
 	}
 
 	@Override
@@ -167,7 +173,7 @@ public class Answer implements Serializable {
 	}
 
 	public boolean checkFieldValidation() {
-		if ((this.questionId >0) && (this.content != null)
+		if ((this.questionId > 0) && (this.content != null)
 				&& (!this.content.equals(""))) {
 			return true;
 		}

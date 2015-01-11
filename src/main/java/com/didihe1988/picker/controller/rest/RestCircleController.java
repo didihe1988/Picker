@@ -22,6 +22,8 @@ import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.CircleDp;
 import com.didihe1988.picker.model.display.UserDp;
+import com.didihe1988.picker.model.message.DynamicFilter;
+import com.didihe1988.picker.model.message.FootprintFilter;
 import com.didihe1988.picker.service.CircleMemberService;
 import com.didihe1988.picker.service.CircleService;
 import com.didihe1988.picker.service.MessageService;
@@ -161,11 +163,13 @@ public class RestCircleController {
 				circle.getDescribe(), Constant.MESSAGE_LENGTH);
 
 		messageService.addMessageByFollowedUser(false,
-				Message.MESSAGE_FOLLOWED_ADDCIRCLE, producer, circleId,
+				DynamicFilter.getTypeCode(),
+				DynamicFilter.MESSAGE_FOLLOWED_ADDCIRCLE, producer, circleId,
 				relatedSourceContent, extraContent, Message.NULL_parentId);
 
 		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
-				Message.MESSAGE_USER_ADDCIRCLE, producer, circleId,
+				FootprintFilter.getTypeCode(),
+				FootprintFilter.MESSAGE_USER_ADDCIRCLE, producer, circleId,
 				relatedSourceContent, extraContent, Message.NULL_parentId);
 	}
 
@@ -211,10 +215,12 @@ public class RestCircleController {
 		String extraContent = StringUtils.confineStringLength(
 				circle.getDescribe(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(false,
-				Message.MESSAGE_FOLLOWED_JOINCIRCLE, producer, circleId,
+				DynamicFilter.getTypeCode(),
+				DynamicFilter.MESSAGE_FOLLOWED_JOINCIRCLE, producer, circleId,
 				relatedSourceContent, extraContent, Message.NULL_parentId);
 		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
-				Message.MESSAGE_USER_JOINCIRCLE, producer, circleId,
+				FootprintFilter.getTypeCode(),
+				FootprintFilter.MESSAGE_USER_JOINCIRCLE, producer, circleId,
 				relatedSourceContent, extraContent, Message.NULL_parentId);
 
 	}

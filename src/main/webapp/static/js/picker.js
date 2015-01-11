@@ -1047,27 +1047,24 @@ function add_comment(submit_btn, commented_id, type) {
     });
 }
 
-function set_create_new_feed_url(a_dom,book_id)
-{
-    var page=$('.word').text();
-    a_dom.attr('href','/detail/'+book_id+'/'+page+'/new');
+function set_create_new_feed_url(a_dom, book_id) {
+    var page = $('.word').text();
+    a_dom.attr('href', '/detail/' + book_id + '/' + page + '/new');
 }
 
 //user.jsp
-function choose_panel_action(type,page)
-{
-    switch(type)
-    {
+function choose_panel_action(type, page) {
+    switch (type) {
         case 0:
-            reset_specific_url_div($('#questions_url'),page);
+            reset_specific_url_div($('#questions_url'), page);
             panel_action($('#questions'));
             break;
         case 1:
-            reset_specific_url_div($('#answers_url'),page);
+            reset_specific_url_div($('#answers_url'), page);
             panel_action($('#answers'));
             break;
         case 2:
-            reset_specific_url_div($('#notes_url'),page);
+            reset_specific_url_div($('#notes_url'), page);
             panel_action($('#notes'));
             break;
         default :
@@ -1075,23 +1072,20 @@ function choose_panel_action(type,page)
     }
 }
 
-function reset_specific_url_div(url_div,page)
-{
-    var raw_url=url_div.data('value');
-    var root_url=raw_url.substr(0,raw_url.lastIndexOf('/')+1);
-    url_div.data('value',root_url.concat(page));
+function reset_specific_url_div(url_div, page) {
+    var raw_url = url_div.data('value');
+    var root_url = raw_url.substr(0, raw_url.lastIndexOf('/') + 1);
+    url_div.data('value', root_url.concat(page));
 }
 
 
 //browse.jsp inventory
-function get_inventory()
-{
+function get_inventory() {
     $.ajax({
         url: '/json/test/sections',
         type: 'get',
         success: function (req) {
-            $(req['sectionList']).each(function(index,section)
-            {
+            $(req['sectionList']).each(function (index, section) {
                 var new_chapter_dom = $(nano_template($(
                     '#chapter_template').html(), {
                     'section': section
@@ -1099,18 +1093,15 @@ function get_inventory()
                 console.log(new_chapter_dom);
                 $('.inventory').append(new_chapter_dom);
                 /*
-                comments_dom.find('.comments_list').append(
-                    new_chapter_dom);*/
-               $(section['subSections']).each(function(index,subSection)
-               {
-                   //console.log(subSection);
-                   var new_section_dom = $(nano_template($(
-                       '#section_template').html(), {
-                       'section': subSection
-                   }));
-                   //console.log(new_chapter_dom);
-                   $('.inventory').append(new_section_dom);
-               });
+                 comments_dom.find('.comments_list').append(
+                 new_chapter_dom);*/
+                $(section['subSections']).each(function (index, subSection) {
+                    var new_section_dom = $(nano_template($(
+                        '#section_template').html(), {
+                        'section': subSection
+                    }));
+                    $('.inventory').append(new_section_dom);
+                });
 
             });
             set_apostrophes();
@@ -1121,31 +1112,52 @@ function get_inventory()
     });
 }
 
-function set_apostrophes()
-{
-    var inv_entities=$('.inv_entity');
-    for(var i=0;i<inv_entities.length;i++)
-    {
+function set_apostrophes() {
+    var inv_entities = $('.inv_entity');
+    for (var i = 0; i < inv_entities.length; i++) {
         set_apostrophe($(inv_entities[i]));
     }
 
 }
 
-function set_apostrophe(inv_entity)
-{
-    inv_entity.find('.apostrophe').width(inv_entity.width()-get_entity_content_width(inv_entity))
+function set_apostrophe(inv_entity) {
+    inv_entity.find('.apostrophe').width(inv_entity.width() - get_entity_content_width(inv_entity))
         .text('- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ');
 }
 
-function get_entity_content_width(inv_entity)
-{
-    if(inv_entity.has('.section_title').length!=0)
-    {
-        return inv_entity.find('.section_title').width()+inv_entity.find('.inv_page').width()+30;
+function get_entity_content_width(inv_entity) {
+    if (inv_entity.has('.section_title').length != 0) {
+        return inv_entity.find('.section_title').width() + inv_entity.find('.inv_page').width() + 30;
     }
-    return inv_entity.find('.chapter_title').width()+inv_entity.find('.inv_page').width()+15;
+    return inv_entity.find('.chapter_title').width() + inv_entity.find('.inv_page').width() + 15;
 }
 
+//browse.jsp  switch content among question/note/attachment
+function switch_content(filter_div, book_id) {
+    filter_div.addClass('active');
+    filter_div.siblings().removeClass('active');
+    var type = (filter_div.data('filter'));
+    $.ajax({
+        url: '/json/book/' + book_id + '/' + type + 'dps',
+        type: 'get',
+        success: function (req) {
+            var pages_container=$('#pages_container');
+            pages_container.empty();
+            $(req[type+'List']).each(function (index, post) {
+                console.log(post);
+                var new_post_dom = $(nano_template($(
+                    '#'+type+'_template').html(), {
+                    'post': post
+                }));
+                pages_container.append(new_post_dom);
+            });
+
+        },
+        error: function () {
+            console.log('error');
+        }
+    });
+}
 
 
 

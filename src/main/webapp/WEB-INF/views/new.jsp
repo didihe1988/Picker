@@ -177,7 +177,7 @@
 										<div class="book_info_2x">
 											<a href=<c:url value="/browse/${book.id}/0"/>>${book.bookName}</a>
 										</div>
-										<div class="book_info_2x">[英] ${book.writer}</div>
+										<div class="book_info_2x">${book.writer}</div>
 										<div class="book_info_2x">${book.date}</div>
 									</div>
 								</div>

@@ -146,7 +146,7 @@ public class FeedDaoImpl implements FeedDao {
 	@Override
 	public List<FeedDp> queryFeedDpListByBookId(int bookId, int type) {
 		// TODO Auto-generated method stub?"
-		String hql = "select new com.didihe1988.picker.model.dp.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id order by f.id asc";
+		String hql = "select new com.didihe1988.picker.model.display.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id order by f.id asc";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		query.setInteger(1, type);
@@ -158,7 +158,7 @@ public class FeedDaoImpl implements FeedDao {
 	public List<FeedDp> queryFeedDpListByBookId(int bookId, int type,
 			String order) {
 		// TODO Auto-generated method stub
-		String hql = "select new com.didihe1988.picker.model.dp.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id "
+		String hql = "select new com.didihe1988.picker.model.display.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id "
 				+ order;
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
@@ -184,7 +184,7 @@ public class FeedDaoImpl implements FeedDao {
 	public List<FeedDp> queryLimitedFeedDpListByBookId(int bookId, int type,
 			int limit) {
 		// TODO Auto-generated method stub
-		String hql = "select new com.didihe1988.picker.model.dp.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id order by f.id asc";
+		String hql = "select new com.didihe1988.picker.model.display.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id order by f.id asc";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		query.setInteger(1, type);
@@ -197,7 +197,7 @@ public class FeedDaoImpl implements FeedDao {
 	public List<FeedDp> queryLimitedFeedDpListByBookId(int bookId, int type,
 			int limit, String order) {
 		// TODO Auto-generated method stub
-		String hql = "select new com.didihe1988.picker.model.dp.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id"
+		String hql = "select new com.didihe1988.picker.model.display.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id"
 				+ order;
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
@@ -235,7 +235,7 @@ public class FeedDaoImpl implements FeedDao {
 	@Override
 	public List<FeedDp> queryFeedDpListByUserId(int userId, int type) {
 		// TODO Auto-generated method stub
-		String hql = "select new com.didihe1988.picker.model.dp.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.userId=? and f.type=? and f.userId = u.id order by f.id asc";
+		String hql = "select new com.didihe1988.picker.model.display.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.userId=? and f.type=? and f.userId = u.id order by f.id asc";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
 		query.setInteger(1, type);
@@ -281,7 +281,7 @@ public class FeedDaoImpl implements FeedDao {
 	@Override
 	public List<FeedDp> queryFeedDpListForBrowse(int bookId) {
 		// TODO Auto-generated method stub
-		String hql = "select new com.didihe1988.picker.model.dp.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.userId = u.id order by f.page ,f.date asc";
+		String hql = "select new com.didihe1988.picker.model.display.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.userId = u.id order by f.page ,f.date asc";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		return query.list();

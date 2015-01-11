@@ -1,9 +1,18 @@
 package com.didihe1988.picker.model.message;
 
 public class DynamicFilter {
-	private static final int TYPE_CODE=0;
-	
-	
+	private final static MessageFilter type = MessageFilter.DYNAMIC;
+
+	public static MessageFilter getType() {
+		// TODO Auto-generated method stub
+		return type;
+	}
+
+	public static int getTypeCode() {
+		// TODO Auto-generated method stub
+		return type.ordinal();
+	}
+
 	/*
 	 * 具体消息码
 	 */
@@ -39,12 +48,5 @@ public class DynamicFilter {
 	 * 小明(被关注者)关注了XXX
 	 */
 	public static final int MESSAGE_FOLLOWEDUSER_FOLLOW = 17;
-	
-	public static int getTypeCode() {
-		// TODO Auto-generated method stub
-		return TYPE_CODE;
-	}
-	
-	
-	
+
 }

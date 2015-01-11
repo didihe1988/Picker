@@ -1,8 +1,10 @@
 package com.didihe1988.picker.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.display.UserDp;
 import com.didihe1988.picker.model.form.FeedForm;
+import com.didihe1988.picker.model.message.DynamicFilter;
+import com.didihe1988.picker.model.message.FootprintFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.FeedService;
@@ -97,22 +101,28 @@ public class DetailController {
 	// localhost:5000/detail/112/12/create
 	@RequestMapping(value = "/detail/{bookId}/{page}/create")
 	public String createFeed(@PathVariable int bookId,
-			@ModelAttribute FeedForm feedForm, HttpServletRequest request) {
+			@ModelAttribute FeedForm feedForm, HttpServletRequest request,
+			HttpServletResponse response) {
+
 		if ((bookId < 1) || (feedForm.getPage() < 0)
 				|| (!feedForm.checkValidation())) {
 			return "error";
 		}
-		int curUserId = HttpUtils.getSessionUserId(request);
-		System.out.println(feedForm.toString());
-		Feed feed = new Feed(feedForm, bookId, curUserId);
+		Feed feed = new Feed(feedForm, bookId,
+				HttpUtils.getSessionUserId(request));
 		int status = feedService.addFeed(feed);
 
 		if (status == Status.SUCCESS) {
 			addFeedMessage(feed, request);
 			addFeedImage(feed);
 		}
-
-		return "/detail/" + bookId + "/" + feedForm.getPage();
+		try {
+			response.sendRedirect("/browse/" + bookId + "/"
+					+ feedForm.getPage());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "error";
 	}
 
 	private void addFeedMessage(Feed feed, HttpServletRequest request) {
@@ -125,24 +135,28 @@ public class DetailController {
 		String extraContent = feedService.getFeedById(feedId).getTitle();
 		if (feed.getType() == Feed.TYPE_QUESTION) {
 			messageService.addMessageByFollowedUser(true,
-					Message.MESSAGE_FOLLOWED_ASKQUESTION, producer, feedId,
-					relatedSourceContent, feed.getTitle(), feed.getBookId());
+					DynamicFilter.getTypeCode(),
+					DynamicFilter.MESSAGE_FOLLOWED_ASKQUESTION, producer,
+					feedId, relatedSourceContent, feed.getTitle(),
+					feed.getBookId());
 			/*
 			 * 用户足迹
 			 */
 			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
-					Message.MESSAGE_USER_ADDQUESTION, producer, feedId,
+					FootprintFilter.getTypeCode(),
+					FootprintFilter.MESSAGE_USER_ADDQUESTION, producer, feedId,
 					relatedSourceContent, feed.getTitle(), feed.getBookId());
 		} else {
 			messageService.addMessageByFollowedUser(true,
-					Message.MESSAGE_FOLLOWED_ADDNOTE, producer, feedId,
+					DynamicFilter.getTypeCode(),
+					DynamicFilter.MESSAGE_FOLLOWED_ADDNOTE, producer, feedId,
 					relatedSourceContent, extraContent, feed.getBookId());
-
 			/*
 			 * 用户足迹
 			 */
 			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
-					Message.MESSAGE_USER_ADDNOTE, producer, feedId,
+					FootprintFilter.getTypeCode(),
+					FootprintFilter.MESSAGE_USER_ADDNOTE, producer, feedId,
 					relatedSourceContent, extraContent, -feed.getBookId());
 		}
 	}

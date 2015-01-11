@@ -24,7 +24,7 @@ public class ImageUtils {
 	public static String getNewImageUrl(int type, int objId, int index,
 			String oldImageUrl) {
 		String typeString = getTypeStringFromType(type);
-		return "/resources/image/" + typeString + "/" + objId + "/"
+		return "/resources/" + typeString + "/" + objId + "/"
 				+ getNewFileName(index, oldImageUrl);
 	}
 

@@ -18,12 +18,13 @@ import com.didihe1988.picker.dao.RelatedImageDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
-import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.Dynamic;
 import com.didihe1988.picker.model.display.Footprint;
 import com.didihe1988.picker.model.display.MessageDp;
+import com.didihe1988.picker.model.message.DynamicFilter;
+import com.didihe1988.picker.model.message.MessageFilter;
 import com.didihe1988.picker.service.MessageService;
 
 @Service
@@ -53,61 +54,53 @@ public class MessageServiceImpl implements MessageService {
 	@Autowired
 	private CircleDao circleDao;
 
-	/*
-	 * 用户关注的人产生的消息
-	 */
+	// 用户关注的人产生的消息
 	@Override
-	public void addMessageByFollowedUser(boolean isFeedRelated, int type,
-			User producer, int relatedSourceId, String relatedSourceContent,
-			String extraContent, int parentId) {
+	public void addMessageByFollowedUser(boolean isFeedRelated, int filterType,
+			int type, User producer, int relatedSourceId,
+			String relatedSourceContent, String extraContent, int parentId) {
 		// TODO Auto-generated method stub
 		final List<Follow> followList = followDao
 				.queryFollowListByFollowedUserId(producer.getId());
 		for (Follow follow : followList) {
-			addMessageByRecerver(follow.getFollowerId(), isFeedRelated, type,
-					producer, relatedSourceId, relatedSourceContent,
-					extraContent, parentId);
+			addMessageByRecerver(follow.getFollowerId(), isFeedRelated,
+					filterType, type, producer, relatedSourceId,
+					relatedSourceContent, extraContent, parentId);
 		}
 	}
 
-	/*
-	 * 用户关注的问题产生的消息
-	 */
+	// 用户关注的问题产生的消息
 	@Override
-	public void addMessageByFollowedQuestion(int type, User producer,
-			int relatedSourceId, String relatedSourceContent,
+	public void addMessageByFollowedQuestion(int filterType, int type,
+			User producer, int relatedSourceId, String relatedSourceContent,
 			String extraContent, int parentId) {
 		// TODO Auto-generated method stub
 		final List<Follow> followList = followDao
 				.queryFollowListByQuestionId(producer.getId());
 		for (Follow follow : followList) {
-			addMessageByRecerver(follow.getFollowerId(), false, type, producer,
-					relatedSourceId, relatedSourceContent, extraContent,
-					parentId);
+			addMessageByRecerver(follow.getFollowerId(), false, filterType,
+					type, producer, relatedSourceId, relatedSourceContent,
+					extraContent, parentId);
 		}
 	}
 
-	/*
-	 * xxx赞了/关注了 您的XXX
-	 */
-	/*
-	 * producer:producerId producerName
-	 */
+	// xxx赞了/关注了 您的XXX
 	@Override
 	public void addMessageByRecerver(int receiverId, boolean isFeedRelated,
-			int type, User producer, int relatedSourceId,
+			int filterType, int type, User producer, int relatedSourceId,
 			String relatedSourceContent, String extraContent, int parentId) {
 		// TODO Auto-generated method stub
-		addMessageByRecerver(receiverId, isFeedRelated, type, producer.getId(),
-				producer.getUsername(), relatedSourceId, relatedSourceContent,
-				extraContent, parentId);
+		addMessageByRecerver(receiverId, isFeedRelated, filterType, type,
+				producer.getId(), producer.getUsername(), relatedSourceId,
+				relatedSourceContent, extraContent, parentId);
 	}
 
 	private void addMessageByRecerver(int receiverId, boolean isFeedRelated,
-			int type, int producerId, String producerName, int relatedSourceId,
-			String relatedSourceContent, String extraContent, int parentId) {
-		Message message = new Message(receiverId, isFeedRelated, type,
-				producerId, producerName, relatedSourceId,
+			int filterType, int type, int producerId, String producerName,
+			int relatedSourceId, String relatedSourceContent,
+			String extraContent, int parentId) {
+		Message message = new Message(receiverId, isFeedRelated, filterType,
+				type, producerId, producerName, relatedSourceId,
 				relatedSourceContent, extraContent, parentId);
 		messageDao.addMessage(message);
 	}
@@ -191,17 +184,18 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<Message> getMessageByUserIdAndFilter(int objId, Filter filter) {
+	public List<Message> getMessagesByUserIdAndFilter(int userId,
+			MessageFilter filter) {
 		// TODO Auto-generated method stub
-		return messageDao.queryMessageByUserIdAndFilter(objId, filter);
+		return messageDao.queryMessagesByUserIdAndFilterType(userId, filter);
 	}
 
 	@Override
-	public List<Message> getLimitedMessageByUserIdAndFilter(int userId,
-			Filter filter, int limit) {
+	public List<Message> getLimitedMessagesByUserIdAndFilter(int userId,
+			MessageFilter filter, int limit) {
 		// TODO Auto-generated method stub
-		return messageDao.queryLimitedMessageByUserIdAndFilter(userId, filter,
-				limit);
+		return messageDao.queryLimitedMessagesByUserIdAndFilterType(userId,
+				filter, limit);
 	}
 
 	@Override
@@ -222,12 +216,63 @@ public class MessageServiceImpl implements MessageService {
 		if (message.isFeedRelated()) {
 			parentName = bookDao.queryModelById(message.getParentId())
 					.getBookName();
-		} else if ((type == Message.MESSAGE_USER_ADDANSWER)
-				|| (type == Message.MESSAGE_USER_FAVORITE_ANSWER)) {
 		}
 		return new Footprint(message, avatarUrl, parentName);
 	}
 
+	@Override
+	public List<MessageDp> getMessageDpByReceiverIdAndType(int receiverId,
+			int type) {
+		// TODO Auto-generated method stub
+		return toMessageDpList(getMessageByReceiverIdAndType(receiverId, type));
+	}
+
+	@Override
+	public List<MessageDp> getMessageDpsByUserIdAndFilter(int userId,
+			MessageFilter filter) {
+		// TODO Auto-generated method stub
+		return toMessageDpList(getMessagesByUserIdAndFilter(userId, filter));
+	}
+
+	@Override
+	public List<MessageDp> getLimitedMessageDpsByUserIdAndFilter(int userId,
+			MessageFilter filter, int limit) {
+		// TODO Auto-generated method stub
+		return toMessageDpList(getLimitedMessagesByUserIdAndFilter(userId,
+				filter, limit));
+	}
+
+	@Override
+	public List<Footprint> getFootprintsByUserId(int userId) {
+		// TODO Auto-generated method stub
+		return toFootprintList(getMessagesByUserIdAndFilter(userId,
+				MessageFilter.FOOTPRINT));
+	}
+
+	@Override
+	public List<Footprint> getLimitedFootprintsByUserId(int userId, int limit) {
+		// TODO Auto-generated method stub
+		return toFootprintList(getLimitedMessagesByUserIdAndFilter(userId,
+				MessageFilter.FOOTPRINT, limit));
+	}
+
+	@Override
+	public List<Dynamic> getDynamicsByUserId(int userId) {
+		// TODO Auto-generated method stub
+		return toDynamicList(getMessagesByUserIdAndFilter(userId,
+				MessageFilter.DYNAMIC));
+	}
+
+	@Override
+	public List<Dynamic> getLimitedDynamicsByUserId(int userId, int limit) {
+		// TODO Auto-generated method stub
+		return toDynamicList(getLimitedMessagesByUserIdAndFilter(userId,
+				MessageFilter.DYNAMIC, limit));
+	}
+
+	/*
+	 * ---turn to SubMessgaeType starts---
+	 */
 	private Dynamic getDynamicFromMessage(Message message) {
 		String avatarUrl = userDao.queryModelById(message.getProducerId())
 				.getAvatarUrl();
@@ -239,14 +284,14 @@ public class MessageServiceImpl implements MessageService {
 					.getBookName();
 			imageUrl = relatedImageDao.queryFirstImageUrlByKey(
 					message.getRelatedSourceId(), RelatedImage.FEED_IMAGE);
-		} else if (type == Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER) {
+		} else if (type == DynamicFilter.MESSAGE_FOLLOWED_FAVORITE_ANSWER) {
 			imageUrl = relatedImageDao.queryFirstImageUrlByKey(
 					message.getRelatedSourceId(), RelatedImage.ANSWER_IMAGE);
 		}
 		return new Dynamic(message, avatarUrl, parentName, imageUrl);
 	}
 
-	private List<Dynamic> getDynamicList(List<Message> messages) {
+	private List<Dynamic> toDynamicList(List<Message> messages) {
 		List<Dynamic> list = new ArrayList<Dynamic>();
 		for (Message message : messages) {
 			Dynamic dynamic = getDynamicFromMessage(message);
@@ -255,7 +300,7 @@ public class MessageServiceImpl implements MessageService {
 		return list;
 	}
 
-	private List<MessageDp> getMessageDpList(List<Message> messages) {
+	private List<MessageDp> toMessageDpList(List<Message> messages) {
 		List<MessageDp> list = new ArrayList<MessageDp>();
 		for (Message message : messages) {
 			MessageDp messageDp = getMessageDpFromMessage(message);
@@ -264,7 +309,7 @@ public class MessageServiceImpl implements MessageService {
 		return list;
 	}
 
-	private List<Footprint> getFootprintList(List<Message> messages) {
+	private List<Footprint> toFootprintList(List<Message> messages) {
 		List<Footprint> list = new ArrayList<Footprint>();
 		for (Message message : messages) {
 			Footprint fullMessage = getFootprintFromMessage(message);
@@ -272,51 +317,7 @@ public class MessageServiceImpl implements MessageService {
 		}
 		return list;
 	}
-
-	@Override
-	public List<MessageDp> getMessageDpByReceiverIdAndType(int receiverId,
-			int type) {
-		// TODO Auto-generated method stub
-		return getMessageDpList(getMessageByReceiverIdAndType(receiverId, type));
-	}
 	/*
-	@Override
-	public List<MessageDp> getMessageDpByUserIdAndFilter(int objId,
-			Filter filter) {
-		// TODO Auto-generated method stub
-		return getMessageDpList(getMessageByUserIdAndFilter(objId, filter));
-	}*/
-
-	@Override
-	public List<Footprint> getFootprintByUserIdAndFilter(int userId,
-			Filter filter) {
-		// TODO Auto-generated method stub
-		return getFootprintList(getMessageByUserIdAndFilter(userId, filter));
-	}
-
-	@Override
-	public List<Dynamic> getDynamicByUserId(int userId) {
-		// TODO Auto-generated method stub
-		return getDynamicList(getMessageByUserIdAndFilter(userId,
-				Message.Filter.MESSAGE_DYNAMIC));
-	}
-
-	@Override
-	public List<Dynamic> getLimitedDynamicByUserId(int userId, int limit) {
-		// TODO Auto-generated method stub
-		return getDynamicList(getLimitedMessageByUserIdAndFilter(userId,
-				Message.Filter.MESSAGE_DYNAMIC, limit));
-	}
-
-	@Override
-	public List<MessageDp> getMessageDpsByUserIdAndFilterType(int userId,
-			int filterType) {
-		// TODO Auto-generated method stub
-		return getMessageDpList(messageDao.queryMessagesByUserIdAndFilterType(
-				userId, filterType));
-	}
-
-	
-	
-
+	 * ---turn to SubMessgaeType starts---
+	 */
 }

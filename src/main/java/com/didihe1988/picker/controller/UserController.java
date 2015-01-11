@@ -27,6 +27,7 @@ import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.display.Footprint;
 import com.didihe1988.picker.model.display.UserDp;
 import com.didihe1988.picker.model.form.LoginForm;
+import com.didihe1988.picker.model.message.MessageFilter;
 import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
@@ -115,9 +116,7 @@ public class UserController {
 			addBaseAttribute(id, model, curUserId);
 			model.addAttribute("bookList", getBooks(id));
 			List<Footprint> list = messageService
-					.getFootprintByUserIdAndFilter(curUserId,
-							Message.Filter.MESSAGE_FOOTPRINT);
-			System.out.println(list);
+					.getFootprintsByUserId(curUserId);
 			model.addAttribute("messageList", list);
 			return "user";
 		} else {
@@ -208,8 +207,8 @@ public class UserController {
 	public String message(Model model, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
 		model.addAttribute("messageList", messageService
-				.getMessageDpsByUserIdAndFilterType(userId,
-						SelfRelatedFilter.getTypeCode()));
+				.getMessageDpsByUserIdAndFilter(userId,
+						MessageFilter.SELF_RELATED));
 		return "message";
 	}
 

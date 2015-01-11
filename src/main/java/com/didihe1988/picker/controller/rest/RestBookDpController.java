@@ -140,7 +140,7 @@ public class RestBookDpController {
 		} else {
 			list = attachmentFeedService.getAttachmentFeedDpsByBookId(id);
 		}
-		return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENTFEED_LIST,
+		return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENT_LIST,
 				list);
 	}
 
@@ -160,7 +160,7 @@ public class RestBookDpController {
 			list = attachmentFeedService.getLimitedAttachmentFeedDpsByBookId(
 					id, limit);
 		}
-		return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENTFEED_LIST,
+		return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENT_LIST,
 				list);
 	}
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
-import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.AttachmentFeed;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.ChapterRange;
@@ -21,6 +20,7 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.SearchResult;
 import com.didihe1988.picker.model.interfaces.SearchModel;
+import com.didihe1988.picker.model.json.CircleJson;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.AttachmentFeedService;
 import com.didihe1988.picker.service.BookService;
@@ -126,21 +126,20 @@ public class RestSearchController {
 				list);
 	}
 
-	/*
-	 * @RequestMapping(value = "/group_search", produces = "application/json",
-	 * headers = "Accept=application/json") public String
-	 * groupSearch(HttpServletRequest request) {
-	 * 
-	 * // 如果为""怎么办
-	 * 
-	 * String groupName = (String) request.getParameter("group_name");
-	 * groupName=toUTF8(groupName); List<Circle> circleList =
-	 * circleService.search(groupName);
-	 * 
-	 * List<CircleJson> list = new ArrayList<CircleJson>(); for (Circle circle :
-	 * circleList) { list.add(circle.toCircleJson()); } return
-	 * JsonUtils.getJsonObjectString("groups", list); }
-	 */
+	// 用于前端圈子的搜索
+	@RequestMapping(value = "/group_search", produces = "application/json", headers = "Accept=application/json")
+	public String groupSearch(HttpServletRequest request) {
+		// 如果为""怎么办
+		String groupName = (String) request.getParameter("group_name");
+		groupName = StringUtils.toUTF8(groupName);
+		List<Circle> circleList = circleService.search(groupName);
+
+		List<CircleJson> list = new ArrayList<CircleJson>();
+		for (Circle circle : circleList) {
+			list.add(circle.toCircleJson());
+		}
+		return JsonUtils.getJsonObjectString("groups", list);
+	}
 
 	@RequestMapping(value = "/json/search/book/{bookId}/{page}")
 	public String pageSearch(@PathVariable int bookId, @PathVariable int page) {
@@ -153,8 +152,8 @@ public class RestSearchController {
 			return Constant.STATUS_INVALID;
 		}
 		// get ChapterRange
-		ChapterRange chapterRange = sectionService.getChapterRangeByPage(
-				book, page);
+		ChapterRange chapterRange = sectionService.getChapterRangeByPage(book,
+				page);
 		List<AttachmentFeed> aFeedList = aFeedService
 				.getAttachmentFeedListByChapterRange(bookId, chapterRange);
 		List<Feed> feedList = feedService.getFeedListByChapterRange(bookId,

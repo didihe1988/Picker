@@ -1,8 +1,18 @@
 package com.didihe1988.picker.model.message;
 
-public class FootprintFilter{
-	private static final int TYPE_CODE=1;
-	
+public class FootprintFilter {
+	private final static MessageFilter type = MessageFilter.FOOTPRINT;
+
+	public static MessageFilter getType() {
+		// TODO Auto-generated method stub
+		return type;
+	}
+
+	public static int getTypeCode() {
+		// TODO Auto-generated method stub
+		return type.ordinal();
+	}
+
 	public static final int MESSAGE_USER_ADDQUESTION = 1;
 	public static final int MESSAGE_USER_ADDANSWER = 2;
 	public static final int MESSAGE_USER_ADD_QUESTIONCOMMENT = 3;
@@ -17,10 +27,4 @@ public class FootprintFilter{
 	public static final int MESSAGE_USER_ADDCIRCLE = 12;
 	public static final int MESSAGE_USER_JOINCIRCLE = 13;
 
-	public static int getTypeCode() {
-		// TODO Auto-generated method stub
-		return TYPE_CODE;
-	}
-	
-	
 }

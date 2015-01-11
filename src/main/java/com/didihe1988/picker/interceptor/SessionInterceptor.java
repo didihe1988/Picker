@@ -20,8 +20,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		// TODO Auto-generated method stub
 		logger.debug("In SessionInterceptor");
 		String uri = request.getRequestURI();
-		if (!(uri.endsWith("enter") || uri.endsWith("login") || uri
-				.endsWith("register"))) {
+		if (!(uri.endsWith("enter") || uri.endsWith("login")
+				|| uri.endsWith("register") || uri.startsWith("resources"))) {
 			if (!HttpUtils.isSessionUserIdExists(request)) {
 				// 来自Android的请求不进行重定向
 				/*

@@ -14,7 +14,7 @@ public class CircleJson {
 	private String join_link;
 
 	private Date create_date;
-
+	
 	public String getLink() {
 		return link;
 	}
@@ -62,6 +62,7 @@ public class CircleJson {
 	public void setCreate_date(Date create_date) {
 		this.create_date = create_date;
 	}
+
 
 	public CircleJson() {
 

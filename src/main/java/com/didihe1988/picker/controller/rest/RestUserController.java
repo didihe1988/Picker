@@ -23,7 +23,6 @@ import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
-import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.AnswerDp;
 import com.didihe1988.picker.model.display.FeedDp;
@@ -33,6 +32,7 @@ import com.didihe1988.picker.model.form.LoginForm;
 import com.didihe1988.picker.model.form.RegisterForm;
 import com.didihe1988.picker.model.message.DynamicFilter;
 import com.didihe1988.picker.model.message.FootprintFilter;
+import com.didihe1988.picker.model.message.MessageFilter;
 import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
@@ -368,20 +368,26 @@ public class RestUserController {
 		 * 与我相关
 		 */
 		messageService.addMessageByRecerver(followedId, false,
-				Message.MESSAGE_OTHERS_FOLLOW_YOU, producer, followedId,
-				followedName, Message.NULL_ExtraContent, Message.NULL_parentId);
+				SelfRelatedFilter.getTypeCode(),
+				SelfRelatedFilter.MESSAGE_OTHERS_FOLLOW_YOU, producer,
+				followedId, followedName, Message.NULL_ExtraContent,
+				Message.NULL_parentId);
 		/*
 		 * 通知关注者 小明(被关注者)关注了xxx
 		 */
 		messageService.addMessageByFollowedUser(false,
-				Message.MESSAGE_FOLLOWEDUSER_FOLLOW, producer, followedId,
-				followedName, Message.NULL_ExtraContent, Message.NULL_parentId);
+				DynamicFilter.getTypeCode(),
+				DynamicFilter.MESSAGE_FOLLOWEDUSER_FOLLOW, producer,
+				followedId, followedName, Message.NULL_ExtraContent,
+				Message.NULL_parentId);
 		/*
 		 * 用户动态
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
-				Message.MESSAGE_USER_FOLLOW_OTHER, producer, followedId,
-				followedName, Message.NULL_ExtraContent, Message.NULL_parentId);
+				FootprintFilter.getTypeCode(),
+				FootprintFilter.MESSAGE_USER_FOLLOW_OTHER, producer,
+				followedId, followedName, Message.NULL_ExtraContent,
+				Message.NULL_parentId);
 	}
 
 	/**
@@ -406,9 +412,13 @@ public class RestUserController {
 		if (id < 1) {
 			return Constant.STATUS_INVALID;
 		}
+		/*
+		 * List<MessageDp> messageList = messageService
+		 * .getMessageDpsByUserIdAndFilterType(id,
+		 * FootprintFilter.getTypeCode());
+		 */
 		List<MessageDp> messageList = messageService
-				.getMessageDpsByUserIdAndFilterType(id,
-						FootprintFilter.getTypeCode());
+				.getMessageDpsByUserIdAndFilter(id, MessageFilter.FOOTPRINT);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
@@ -419,9 +429,13 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/dynamic", method = RequestMethod.GET)
 	public String dynamic(HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
+		/*
+		 * List<MessageDp> messageList = messageService
+		 * .getMessageDpsByUserIdAndFilterType(userId,
+		 * DynamicFilter.getTypeCode());
+		 */
 		List<MessageDp> messageList = messageService
-				.getMessageDpsByUserIdAndFilterType(userId,
-						DynamicFilter.getTypeCode());
+				.getMessageDpsByUserIdAndFilter(userId, MessageFilter.DYNAMIC);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
@@ -432,9 +446,14 @@ public class RestUserController {
 	@RequestMapping(value = "/json/user/related_message", method = RequestMethod.GET)
 	public String related(HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
+		/*
+		 * List<MessageDp> messageList = messageService
+		 * .getMessageDpsByUserIdAndFilterType(userId,
+		 * SelfRelatedFilter.getTypeCode());
+		 */
 		List<MessageDp> messageList = messageService
-				.getMessageDpsByUserIdAndFilterType(userId,
-						SelfRelatedFilter.getTypeCode());
+				.getMessageDpsByUserIdAndFilter(userId,
+						MessageFilter.SELF_RELATED);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}

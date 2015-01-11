@@ -21,6 +21,9 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
+import com.didihe1988.picker.model.message.DynamicFilter;
+import com.didihe1988.picker.model.message.FootprintFilter;
+import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.FeedService;
@@ -130,20 +133,22 @@ public class RestNoteController implements FavoriteController {
 		 * 与我相关
 		 */
 		messageService.addMessageByRecerver(feed.getUserId(), true,
-				Message.MESSAGE_YOUR_NOTE_FAVORITED, producer, feedId,
-				relatedSourceContent, extraContent, feed.getBookId());
+				SelfRelatedFilter.getTypeCode(),
+				SelfRelatedFilter.MESSAGE_YOUR_NOTE_FAVORITED, producer,
+				feedId, relatedSourceContent, extraContent, feed.getBookId());
 		/*
 		 * 通知关注者 小明 (被关注者)赞了XXX的问题
 		 */
 		messageService.addMessageByFollowedUser(true,
-				Message.MESSAGE_FOLLOWED_FAVORITE_NOTE, producer, feedId,
+				DynamicFilter.getTypeCode(),
+				DynamicFilter.MESSAGE_FOLLOWED_FAVORITE_NOTE, producer, feedId,
 				relatedSourceContent, extraContent, feed.getBookId());
 		/*
 		 * 用户动态
 		 */
-
 		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
-				Message.MESSAGE_USER_FAVORITE_NOTE, producer, feedId,
+				FootprintFilter.getTypeCode(),
+				FootprintFilter.MESSAGE_USER_FAVORITE_NOTE, producer, feedId,
 				relatedSourceContent, extraContent, feed.getBookId());
 	}
 
@@ -209,15 +214,17 @@ public class RestNoteController implements FavoriteController {
 				Feed.TYPE_NOTE);
 		String extraContent = feedService.getFeedById(noteId).getTitle();
 		messageService.addMessageByFollowedUser(true,
-				Message.MESSAGE_FOLLOWED_ADDNOTE, producer, noteId,
+				DynamicFilter.getTypeCode(),
+				DynamicFilter.MESSAGE_FOLLOWED_ADDNOTE, producer, noteId,
 				relatedSourceContent, extraContent, feed.getBookId());
 
 		/*
 		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
-				Message.MESSAGE_USER_ADDNOTE, producer, noteId,
-				relatedSourceContent, extraContent, -feed.getBookId());
+				FootprintFilter.getTypeCode(),
+				FootprintFilter.MESSAGE_USER_ADDNOTE, producer, noteId,
+				relatedSourceContent, extraContent, feed.getBookId());
 	}
 
 	private void addNoteImage(Feed feed) {

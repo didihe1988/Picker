@@ -7,40 +7,15 @@ import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.Dynamic;
 import com.didihe1988.picker.model.display.Footprint;
 import com.didihe1988.picker.model.display.MessageDp;
+import com.didihe1988.picker.model.message.MessageFilter;
 
 public interface MessageService {
+
 	public int addMessage(Message message);
 
 	public int updateMessage(Message message);
 
 	public int deleteMessage(Message message);
-
-	public List<Message> getMessageByReceiverId(int receiverId);
-
-	public List<Message> getMessageByReceiverIdAndType(int receiverId, int type);
-
-	public List<MessageDp> getMessageDpByReceiverIdAndType(int receiverId,
-			int type);
-
-	/**
-	 * 
-	 * @description 用户足迹userId:producerId 动态、与我相关 userId:receiverId
-	 */
-	public List<Message> getMessageByUserIdAndFilter(int userId,
-			Message.Filter filter);
-
-	public List<Message> getLimitedMessageByUserIdAndFilter(int userId,
-			Message.Filter filter,int limit);
-
-	/*public List<MessageDp> getMessageDpByUserIdAndFilter(int userId,
-			Message.Filter filter);*/
-
-	public List<Footprint> getFootprintByUserIdAndFilter(int userId,
-			Message.Filter filter);
-
-	public List<Dynamic> getDynamicByUserId(int userId);
-	
-	public List<Dynamic> getLimitedDynamicByUserId(int userId,int limit);
 
 	public boolean isMessageExists(Message message);
 
@@ -54,33 +29,56 @@ public interface MessageService {
 
 	public int setMessageChecked(int id);
 
-	/*
-	 * 用户关注的人产生的消息
-	 */
-	
-	public void addMessageByFollowedUser(boolean isFeedRelated, int type,
+	// 用户关注的人产生的消息
+	public void addMessageByFollowedUser(boolean isFeedRelated, int filterType,
+			int type, User producer, int relatedSourceId,
+			String relatedSourceContent, String extraContent, int parentId);
+
+	// 用户关注的问题产生的消息
+	public void addMessageByFollowedQuestion(int filterType, int type,
 			User producer, int relatedSourceId, String relatedSourceContent,
 			String extraContent, int parentId);
 
-	/*
-	 * 用户关注的问题产生的消息
-	 */
-	
-	public void addMessageByFollowedQuestion(int type, User producer,
-			int relatedSourceId, String relatedSourceContent,
-			String extraContent, int parentId);
+	// xxx赞了/关注了 您的XXX
+	public void addMessageByRecerver(int receiverId, boolean isFeedRelated,
+			int filterType, int type, User producer, int relatedSourceId,
+			String relatedSourceContent, String extraContent, int parentId);
 
 	/*
-	 * xxx赞了/关注了 您的XXX
+	 * ---getMessageList starts---
 	 */
+
+	public List<Message> getMessageByReceiverId(int receiverId);
+
+	public List<Message> getMessageByReceiverIdAndType(int receiverId, int type);
+
+	public List<MessageDp> getMessageDpByReceiverIdAndType(int receiverId,
+			int type);
+
+	/**
+	 * @param userId 对用户足迹来说:producerId 动态、与我相关:receiverId
+	 */
+	public List<Message> getMessagesByUserIdAndFilter(int userId,
+			MessageFilter filter);
+
+	public List<Message> getLimitedMessagesByUserIdAndFilter(int userId,
+			MessageFilter filter, int limit);
+
+	public List<MessageDp> getMessageDpsByUserIdAndFilter(int userId,
+			MessageFilter filter);
+
+	public List<MessageDp> getLimitedMessageDpsByUserIdAndFilter(int userId,
+			MessageFilter filter, int limit);
+
+	public List<Footprint> getFootprintsByUserId(int userId);
+
+	public List<Footprint> getLimitedFootprintsByUserId(int userId, int limit);
+
+	public List<Dynamic> getDynamicsByUserId(int userId);
+
+	public List<Dynamic> getLimitedDynamicsByUserId(int userId, int limit);
+
 	/*
-	 * public void addMessageByRecerver(int receiverId, int type, int
-	 * producerId, String producerName, int relatedSourceId, String
-	 * relatedSourceContent, String extraContent, int parentId);
+	 * ---getMessageList ends---
 	 */
-	public void addMessageByRecerver(int receiverId, boolean isFeedRelated,
-			int type, User producer, int relatedSourceId,
-			String relatedSourceContent, String extraContent, int parentId);
-	
-	public List<MessageDp> getMessageDpsByUserIdAndFilterType(int userId,int filterType);
 }

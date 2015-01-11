@@ -9,10 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.display.SearchResult;
 import com.didihe1988.picker.model.form.FeedForm;
 import com.didihe1988.picker.model.interfaces.SearchModel;
 import com.didihe1988.picker.utils.MarkdownUtils;
+import com.didihe1988.picker.utils.StringUtils;
 
 @Entity
 @Table(name = "feed")
@@ -187,7 +189,9 @@ public class Feed implements Serializable, SearchModel {
 	 * @description ÒÆ³ýcontentµÄMarkDown tag
 	 */
 	public void setBriefByContent() {
-		this.brief = MarkdownUtils.removeTags(this.content);
+		this.brief = StringUtils.confineStringLength(
+				MarkdownUtils.removeTags(this.content),
+				Constant.DEFAULT_BRIEF_LENGTH);
 	}
 
 	public Feed() {
@@ -255,11 +259,13 @@ public class Feed implements Serializable, SearchModel {
 
 	public Feed(FeedForm feedForm, int bookId, int userId) {
 		this(bookId, userId, feedForm.getTitle(), feedForm.getRaw(),
-				MarkdownUtils.removeTags(feedForm.getRaw()),
-				feedForm.getPage(), getType(feedForm.getType()));
+				StringUtils.confineStringLength(
+						MarkdownUtils.removeTags(feedForm.getRaw()),
+						Constant.DEFAULT_BRIEF_LENGTH), feedForm.getPage(),
+				toType(feedForm.getType()));
 	}
 
-	private static int getType(String formType) {
+	private static int toType(String formType) {
 		int type = Feed.TYPE_NOTE;
 		if (formType.equals("question")) {
 			type = Feed.TYPE_QUESTION;
@@ -296,7 +302,7 @@ public class Feed implements Serializable, SearchModel {
 		/*
 		 * ËãÉÏÁËpage==0
 		 */
-		if ((this.bookId >0) && (this.title != null)
+		if ((this.bookId > 0) && (this.title != null)
 				&& (!this.title.equals("")) && (this.content != null)
 				&& (!this.content.equals("")) && (this.page >= 0)) {
 			return true;
@@ -309,7 +315,7 @@ public class Feed implements Serializable, SearchModel {
 	public SearchResult toSearchResult() {
 		// TODO Auto-generated method stub
 
-		return new SearchResult(this.bookId, getSearchResultType(), this.title,
+		return new SearchResult(this.id, getSearchResultType(), this.title,
 				this.brief);
 	}
 

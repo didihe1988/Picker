@@ -1,8 +1,5 @@
 package com.didihe1988.picker.model.display;
 
-import java.util.List;
-
-import com.didihe1988.picker.model.Attachment;
 import com.didihe1988.picker.model.Circle;
 
 public class CircleDp extends Circle {

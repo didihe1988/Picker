@@ -19,6 +19,9 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.form.CommentForm;
+import com.didihe1988.picker.model.message.DynamicFilter;
+import com.didihe1988.picker.model.message.FootprintFilter;
+import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -111,24 +114,27 @@ public class RestCommentController implements FavoriteController {
 			String relatedSourceContent = StringUtils.confineStringLength(
 					comment.getContent(), Constant.MESSAGE_LENGTH);
 			messageService.addMessageByRecerver(comment.getProducerId(), false,
-					Message.MESSAGE_YOUR_COMMENT_FAVORITED, producer, id,
-					relatedSourceContent, Message.NULL_ExtraContent,
+					SelfRelatedFilter.getTypeCode(),
+					SelfRelatedFilter.MESSAGE_YOUR_COMMENT_FAVORITED, producer,
+					id, relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
 
 			/*
 			 * 通知关注者 小明 (被关注者)赞了XXX的评论
 			 */
 			messageService.addMessageByFollowedUser(false,
-					Message.MESSAGE_FOLLOWED_FAVORITE_COMMENT, producer, id,
-					relatedSourceContent, Message.NULL_ExtraContent,
+					DynamicFilter.getTypeCode(),
+					DynamicFilter.MESSAGE_FOLLOWED_FAVORITE_COMMENT, producer,
+					id, relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
 
 			/*
 			 * 用户动态
 			 */
 			messageService.addMessageByRecerver(Message.NULL_receiverId, false,
-					Message.MESSAGE_USER_FAVORITE_COMMENT, producer, id,
-					relatedSourceContent, Message.NULL_ExtraContent,
+					FootprintFilter.getTypeCode(),
+					FootprintFilter.MESSAGE_USER_FAVORITE_COMMENT, producer,
+					id, relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
 		}
 
@@ -184,9 +190,10 @@ public class RestCommentController implements FavoriteController {
 		if (comment.getType() == Comment.COMMENT_QUESTION) {
 			Feed feed = feedService.getFeedById(comment.getCommentedId());
 			messageService.addMessageByRecerver(feed.getUserId(), false,
-					Message.MESSAGE_YOUR_QUESTION_COMMENTED, producer,
-					commentId, relatedSourceContent, Message.NULL_ExtraContent,
-					Message.NULL_parentId);
+					SelfRelatedFilter.getTypeCode(),
+					SelfRelatedFilter.MESSAGE_YOUR_QUESTION_COMMENTED,
+					producer, commentId, relatedSourceContent,
+					Message.NULL_ExtraContent, Message.NULL_parentId);
 		}
 
 		/*
@@ -196,8 +203,9 @@ public class RestCommentController implements FavoriteController {
 			Answer answer = answerService.getAnswerById(comment
 					.getCommentedId());
 			messageService.addMessageByRecerver(answer.getReplierId(), false,
-					Message.MESSAGE_YOUR_ANSWER_COMMENTED, producer, commentId,
-					relatedSourceContent, Message.NULL_ExtraContent,
+					SelfRelatedFilter.getTypeCode(),
+					SelfRelatedFilter.MESSAGE_YOUR_ANSWER_COMMENTED, producer,
+					commentId, relatedSourceContent, Message.NULL_ExtraContent,
 					Message.NULL_parentId);
 		}
 

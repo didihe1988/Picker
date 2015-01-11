@@ -28,6 +28,9 @@ import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.UserDp;
 import com.didihe1988.picker.model.form.FeedForm;
+import com.didihe1988.picker.model.message.DynamicFilter;
+import com.didihe1988.picker.model.message.FootprintFilter;
+import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -225,6 +228,7 @@ public class RestQuestionController implements FavoriteController {
 		if (status == Status.SUCCESS) {
 			produceQuestionMessage(feed, request);
 			addQuestionImage(feed);
+			feedService.updateFeed(feed, HttpUtils.getSessionUserId(request));
 		}
 
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
@@ -256,13 +260,15 @@ public class RestQuestionController implements FavoriteController {
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getBrief(), Constant.MESSAGE_LENGTH);
 		messageService.addMessageByFollowedUser(true,
-				Message.MESSAGE_FOLLOWED_ASKQUESTION, producer, feedId,
+				DynamicFilter.getTypeCode(),
+				DynamicFilter.MESSAGE_FOLLOWED_ASKQUESTION, producer, feedId,
 				relatedSourceContent, feed.getTitle(), feed.getBookId());
 		/*
 		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
-				Message.MESSAGE_USER_ADDQUESTION, producer, feedId,
+				FootprintFilter.getTypeCode(),
+				FootprintFilter.MESSAGE_USER_ADDQUESTION, producer, feedId,
 				relatedSourceContent, feed.getTitle(), feed.getBookId());
 	}
 
@@ -279,22 +285,30 @@ public class RestQuestionController implements FavoriteController {
 		/*
 		 * 与我相关
 		 */
-		messageService.addMessageByRecerver(feed.getUserId(), true,
-				Message.MESSAGE_YOUR_QUESTION_FAVORITED, producer, feedId,
-				relatedSourceContent, feed.getTitle(), feed.getBookId());
+		messageService
+				.addMessageByRecerver(feed.getUserId(), true,
+						SelfRelatedFilter.getTypeCode(),
+						SelfRelatedFilter.MESSAGE_YOUR_QUESTION_FAVORITED,
+						producer, feedId, relatedSourceContent,
+						feed.getTitle(), feed.getBookId());
 		/*
 		 * 通知关注者 小明 (被关注者)赞了XXX的问题
 		 */
-		messageService.addMessageByFollowedUser(true,
-				Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION, producer, feedId,
-				relatedSourceContent, feed.getTitle(), feed.getBookId());
+		messageService
+				.addMessageByFollowedUser(true, DynamicFilter.getTypeCode(),
+						DynamicFilter.MESSAGE_FOLLOWED_FAVORITE_QEUSTION,
+						producer, feedId, relatedSourceContent,
+						feed.getTitle(), feed.getBookId());
 		/*
 		 * 用户动态
 		 */
 
-		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
-				Message.MESSAGE_USER_FAVORITE_QUESTION, producer, feedId,
-				relatedSourceContent, feed.getTitle(), feed.getBookId());
+		messageService
+				.addMessageByRecerver(Message.NULL_receiverId, true,
+						FootprintFilter.getTypeCode(),
+						FootprintFilter.MESSAGE_USER_FAVORITE_QUESTION,
+						producer, feedId, relatedSourceContent,
+						feed.getTitle(), feed.getBookId());
 
 	}
 
@@ -307,11 +321,11 @@ public class RestQuestionController implements FavoriteController {
 		 * false情况: file剪切出错或是没有imageUrl
 		 */
 		if (isSuccess) {
-			addNewUrl(feed.getContent(), questionId);
+			feed.setContent(addNewUrl(feed.getContent(), questionId));
 		}
 	}
 
-	private void addNewUrl(String content, int questionId) {
+	private String addNewUrl(String content, int questionId) {
 		List<String> list = ImageUtils.getTmpUrlsFromContent(content);
 		for (int i = 0; i < list.size(); i++) {
 			/*
@@ -319,14 +333,17 @@ public class RestQuestionController implements FavoriteController {
 			 */
 			String newImageUrl = ImageUtils.getNewImageUrl(
 					RelatedImage.FEED_IMAGE, questionId, i, list.get(i));
-			content = content.replace(list.get(i), newImageUrl);
+			content = content.replace(list.get(i), "http://192.168.1.107:8080"
+					+ newImageUrl);
 			/*
 			 * 添加RelatedImage
 			 */
 			RelatedImage relatedImage = new RelatedImage(questionId,
-					RelatedImage.FEED_IMAGE, newImageUrl);
+					RelatedImage.FEED_IMAGE, "http://192.168.1.107:8080"
+							+ newImageUrl);
 			relatedImageService.addRelatedImage(relatedImage);
 		}
+		return content;
 	}
 
 }

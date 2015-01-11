@@ -75,33 +75,93 @@ public class RestBookController {
 	 */
 	@RequestMapping(value = "/json/test/sections", method = RequestMethod.GET, headers = "Accept=application/json")
 	public String getSections() {
-		int bookId = 1;
+		int bookId = 1035;
 		List<Section> subSections1 = new ArrayList<Section>();
-		Section sub1 = new Section(bookId, "第一节", "内容提要", 1, 3);
-		Section sub2 = new Section(bookId, "第二节", "微积分习题选解", 4, 6);
-		Section sub3 = new Section(bookId, "第三节", "工科数学习题选解", 7, 9);
+		Section sub1 = new Section(bookId, "第一节", "抽象过程", 1, 8);
+		Section sub2 = new Section(bookId, "第二节", "继承", 9, 14);
+		Section sub3 = new Section(bookId, "第三节", "对象的创建和生命期",15, 10);
 		subSections1.add(sub1);
 		subSections1.add(sub2);
 		subSections1.add(sub3);
 
 		List<Section> subSections2 = new ArrayList<Section>();
-		Section sub4 = new Section(bookId, "第一节", "数列的极限", 10, 12);
-		Section sub5 = new Section(bookId, "第二节", "函数的极限", 13, 15);
-		Section sub6 = new Section(bookId, "第三节", "极限的性质与运算法则", 16, 18);
-		Section sub7 = new Section(bookId, "第四节", "无穷小及其比较", 19, 20);
+		Section sub4 = new Section(bookId, "第一节", "用引用操纵对象", 21, 25);
+		Section sub5 = new Section(bookId, "第二节", "必须由你创建所有对象", 26, 30);
+		Section sub6 = new Section(bookId, "第三节", "永远不需要销毁对象", 31, 33);
+		Section sub7 = new Section(bookId, "第四节", "你的第一个java程序", 34, 37);
 		subSections2.add(sub4);
 		subSections2.add(sub5);
 		subSections2.add(sub6);
 		subSections2.add(sub7);
+		
+		List<Section> subSections3 = new ArrayList<Section>();
+		Section sub8 = new Section(bookId, "第一节", "使用java操作符", 38, 45);
+		Section sub9 = new Section(bookId, "第二节", "常犯的错误",46, 52);
+		Section sub10 = new Section(bookId, "第三节", "操作符小结", 53,63);
+		subSections3.add(sub8);
+		subSections3.add(sub9);
+		subSections3.add(sub10);
+		
+		List<Section> subSections4 = new ArrayList<Section>();
+		Section sub11 = new Section(bookId, "第一节", "if-else", 64, 67);
+		Section sub12 = new Section(bookId, "第二节", "迭代",68, 72);
+		Section sub13 = new Section(bookId, "第三节", "foreach", 73,75);
+		subSections4.add(sub11);
+		subSections4.add(sub12);
+		subSections4.add(sub13);
+		
+		List<Section> subSections5 = new ArrayList<Section>();
+		Section sub14 = new Section(bookId, "第一节", "this关键字", 76, 83);
+		Section sub15 = new Section(bookId, "第二节", "清理:垃圾回收",84, 92);
+		Section sub16 = new Section(bookId, "第三节", "成员初始化",93,100);
+		Section sub17 = new Section(bookId, "第四节", "总结",101,107);
+		subSections5.add(sub14);
+		subSections5.add(sub15);
+		subSections5.add(sub16);
+		subSections5.add(sub17);
+		
+		List<Section> subSections6 = new ArrayList<Section>();
+		Section sub18 = new Section(bookId, "第一节", "包:库单元", 108, 112);
+		Section sub19 = new Section(bookId, "第二节", "访问权限修饰词",113, 117);
+		Section sub20 = new Section(bookId, "第三节", "接口和实现",118,123);
+		subSections6.add(sub18);
+		subSections6.add(sub19);
+		subSections6.add(sub20);
+		
+		List<Section> subSections7 = new ArrayList<Section>();
+		Section sub21 = new Section(bookId, "第一节", "组合继承语法", 124, 132);
+		Section sub22 = new Section(bookId, "第二节", "protected关键字",133,140);
+		Section sub23 = new Section(bookId, "第三节", "final关键字",141,147);
+		subSections7.add(sub21);
+		subSections7.add(sub22);
+		subSections7.add(sub23);
+		
+		
 
-		Section section = new Section(bookId, "预备知识", "集合、映射与函数", 1, 9,
+		Section section = new Section(bookId, "第一章", "对象导论", 1, 20,
 				subSections1);
-		Section section2 = new Section(bookId, "第一章", "极限与连续", 10, 20,
+		Section section2 = new Section(bookId, "第二章", "一切都是对象", 21, 37,
 				subSections2);
+		Section section3 = new Section(bookId, "第三章", "操作符", 38, 63,
+				subSections3);
+		Section section4 = new Section(bookId, "第四章", "控制执行流程",64,75,
+				subSections4);
+		Section section5 = new Section(bookId, "第五章", "初始化与清理",76,107,
+				subSections5);
+		Section section6 = new Section(bookId, "第六章", "访问权限控制",108,123,
+				subSections6);
+		Section section7 = new Section(bookId, "第七章", "复用类",124,147,
+				subSections7);
+
+		
 		List<Section> sectionList = new ArrayList<Section>();
 		sectionList.add(section);
 		sectionList.add(section2);
-
+		sectionList.add(section3);
+		sectionList.add(section4);
+		sectionList.add(section5);
+		sectionList.add(section6);
+		sectionList.add(section7);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SECTION_LIST,
 				sectionList);
 

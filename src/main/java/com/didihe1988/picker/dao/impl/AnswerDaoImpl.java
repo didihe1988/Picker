@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.AnswerDao;
 import com.didihe1988.picker.model.Answer;
 import com.didihe1988.picker.model.display.AnswerDp;
@@ -56,7 +55,7 @@ public class AnswerDaoImpl implements AnswerDao {
 		getCurrentSession().delete(answer);
 		return 1;
 	}
-	
+
 	@Override
 	public int deleteModelById(int id) {
 		// TODO Auto-generated method stub
@@ -117,7 +116,7 @@ public class AnswerDaoImpl implements AnswerDao {
 	@Override
 	public List<AnswerDp> queryAnswerDpByQuestionId(int id) {
 		// TODO Auto-generated method stub
-		String hql = "select new com.didihe1988.picker.model.dp.AnswerDp(a,q.title,u.username,u.signature,u.avatarUrl) from Answer a ,Feed q,User u where a.questionId=? and a.questionId = q.id and a.replierId = u.id";
+		String hql = "select new com.didihe1988.picker.model.display.AnswerDp(a,q.title,u.username,u.signature,u.avatarUrl) from Answer a ,Feed q,User u where a.questionId=? and a.questionId = q.id and a.replierId = u.id";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.list();
@@ -137,7 +136,7 @@ public class AnswerDaoImpl implements AnswerDao {
 	@Override
 	public List<AnswerDp> queryAnswerDpByReplierId(int id) {
 		// TODO Auto-generated method stub
-		String hql = "select new com.didihe1988.picker.model.dp.AnswerDp(a,q.title) from Answer a ,Feed q where a.replierId=? and a.questionId = q.id";
+		String hql = "select new com.didihe1988.picker.model.display.AnswerDp(a,q.title) from Answer a ,Feed q where a.replierId=? and a.questionId = q.id";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, id);
 		return query.list();

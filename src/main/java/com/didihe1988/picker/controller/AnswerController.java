@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,6 +27,9 @@ import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.form.AnswerForm;
+import com.didihe1988.picker.model.message.DynamicFilter;
+import com.didihe1988.picker.model.message.FootprintFilter;
+import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -143,7 +147,8 @@ public class AnswerController implements FavoriteController {
 		String extraContent = feedService.getFeedById(answer.getQuestionId())
 				.getTitle();
 		messageService.addMessageByRecerver(answer.getReplierId(), false,
-				Message.MESSAGE_YOUR_ANSWER_FAVORITED, producer,
+				SelfRelatedFilter.getTypeCode(),
+				SelfRelatedFilter.MESSAGE_YOUR_ANSWER_FAVORITED, producer,
 				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
 
@@ -151,7 +156,8 @@ public class AnswerController implements FavoriteController {
 		 * 通知关注者 小明 (被关注者)赞了XXX的
 		 */
 		messageService.addMessageByFollowedUser(false,
-				Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, producer,
+				DynamicFilter.getTypeCode(),
+				DynamicFilter.MESSAGE_FOLLOWED_FAVORITE_ANSWER, producer,
 				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
 		/*
@@ -161,7 +167,8 @@ public class AnswerController implements FavoriteController {
 		 * 用户动态
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
-				Message.MESSAGE_USER_FAVORITE_ANSWER, producer,
+				FootprintFilter.getTypeCode(),
+				FootprintFilter.MESSAGE_USER_FAVORITE_ANSWER, producer,
 				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
 	}
@@ -239,26 +246,32 @@ public class AnswerController implements FavoriteController {
 		 * 通知提问者XXX回答了您的问题
 		 */
 		messageService.addMessageByRecerver(askerId, false,
-				Message.MESSAGE_YOUR_QUESTION_UPDATE, producer, answerId,
-				relatedSourceContent, extraContent, answer.getQuestionId());
+				SelfRelatedFilter.getTypeCode(),
+				SelfRelatedFilter.MESSAGE_YOUR_QUESTION_UPDATE, producer,
+				answerId, relatedSourceContent, extraContent,
+				answer.getQuestionId());
 		/*
 		 * 通知关注该问题的人 问题有了新的回答
 		 */
 		messageService.addMessageByFollowedQuestion(
-				Message.MESSAGE_QUESTION_NEWANSWER, producer, answerId,
+				DynamicFilter.getTypeCode(),
+				DynamicFilter.MESSAGE_QUESTION_NEWANSWER, producer, answerId,
 				relatedSourceContent, extraContent, answer.getQuestionId());
 		/*
 		 * 通知关注者 小明 (被关注者)回答了一个问题
 		 */
 
 		messageService.addMessageByFollowedUser(false,
-				Message.MESSAGE_FOLLOWED_ANSWER_QUESTION, producer, answerId,
-				relatedSourceContent, extraContent, answer.getQuestionId());
+				DynamicFilter.getTypeCode(),
+				DynamicFilter.MESSAGE_FOLLOWED_ANSWER_QUESTION, producer,
+				answerId, relatedSourceContent, extraContent,
+				answer.getQuestionId());
 		/*
 		 * 用户足迹
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
-				Message.MESSAGE_USER_ADDANSWER, producer, answerId,
+				FootprintFilter.getTypeCode(),
+				FootprintFilter.MESSAGE_USER_ADDANSWER, producer, answerId,
 				relatedSourceContent, extraContent, answer.getQuestionId());
 	}
 
@@ -303,17 +316,17 @@ public class AnswerController implements FavoriteController {
 		if (!answerForm.checkFieldValidation()) {
 			return "error";
 		}
+	
 		Answer answer = new Answer(answerForm,
 				HttpUtils.getSessionUserId(request));
 		int status = answerService.addAnswer(answer);
 		if (status == Status.SUCCESS) {
-			// addAnserImage(answer);
-			// produceAnswerMessage(answer, request);
+			addAnserImage(answer);
+			produceAnswerMessage(answer, request);
 		}
 		try {
 			response.sendRedirect("/detail/" + answer.getQuestionId());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "error";

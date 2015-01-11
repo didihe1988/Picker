@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.didihe1988.picker.dao.MessageDao;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
-import com.didihe1988.picker.model.Message.Filter;
-import com.didihe1988.picker.model.message.FootprintFilter;
+import com.didihe1988.picker.model.message.MessageFilter;
 import com.didihe1988.picker.utils.DaoUtils;
 
 @Repository
@@ -138,33 +137,29 @@ public class MessageDaoImpl implements MessageDao {
 		return query.list();
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Message> queryMessageByUserIdAndFilter(int objId, Filter filter) {
-		// TODO Auto-generated method stub
-		String hql = "";
-		if (filter == Filter.MESSAGE_FOOTPRINT) {
-			hql = "from Message as message where message.producerId = ? and message.type between ? and ?";
-		} else {
-			hql = "from Message as message where message.receiverId = ? and message.type between ? and ?";
-		}
-
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, objId);
-		query.setInteger(1, filter.getStartType());
-		query.setInteger(2, filter.getEndType());
-		return query.list();
-	}
-	
-	
+	/*
+	 * @SuppressWarnings("unchecked")
+	 * 
+	 * @Override public List<Message> queryMessagesByUserIdAndFilter(int objId,
+	 * Filter filter) { // TODO Auto-generated method stub String hql = ""; if
+	 * (filter == Filter.MESSAGE_FOOTPRINT) { hql =
+	 * "from Message as message where message.producerId = ? and message.type between ? and ?"
+	 * ; } else { hql =
+	 * "from Message as message where message.receiverId = ? and message.type between ? and ?"
+	 * ; }
+	 * 
+	 * Query query = getCurrentSession().createQuery(hql); query.setInteger(0,
+	 * objId); query.setInteger(1, filter.getStartType()); query.setInteger(2,
+	 * filter.getEndType()); return query.list(); }
+	 */
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Message> queryMessagesByUserIdAndFilterType(int userId,
-			int filterType) {
+			MessageFilter filter) {
 		// TODO Auto-generated method stub
 		String hql = "";
-		if (filterType == FootprintFilter.getTypeCode()) {
+		if (filter.equals(MessageFilter.FOOTPRINT)) {
 			hql = "from Message as message where message.producerId = ? and message.filterType=?";
 		} else {
 			hql = "from Message as message where message.receiverId = ? and message.filterType=?";
@@ -172,30 +167,44 @@ public class MessageDaoImpl implements MessageDao {
 
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
-		query.setInteger(1,filterType);
+		query.setInteger(1, filter.ordinal());
 		return query.list();
 	}
-	
-
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Message> queryLimitedMessageByUserIdAndFilter(int objId,
-			Filter filter, int limit) {
+	public List<Message> queryLimitedMessagesByUserIdAndFilterType(int userId,
+			MessageFilter filter, int limit) {
 		// TODO Auto-generated method stub
 		String hql = "";
-		if (filter == Filter.MESSAGE_FOOTPRINT) {
-			hql = "from Message as message where message.producerId = ? and message.type between ? and ?";
+		if (filter.equals(MessageFilter.FOOTPRINT)) {
+			hql = "from Message as message where message.producerId = ? and message.filterType=?";
 		} else {
-			hql = "from Message as message where message.receiverId = ? and message.type between ? and ?";
+			hql = "from Message as message where message.receiverId = ? and message.filterType=?";
 		}
 
 		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, objId);
-		query.setInteger(1, filter.getStartType());
-		query.setInteger(2, filter.getEndType());
+		query.setInteger(0, userId);
+		query.setInteger(1, filter.ordinal());
 		DaoUtils.setLimit(query, limit);
 		return query.list();
 	}
+
+	/*
+	 * @SuppressWarnings("unchecked")
+	 * 
+	 * @Override public List<Message> queryLimitedMessagesByUserIdAndFilter(int
+	 * objId, Filter filter, int limit) { // TODO Auto-generated method stub
+	 * String hql = ""; if (filter == Filter.MESSAGE_FOOTPRINT) { hql =
+	 * "from Message as message where message.producerId = ? and message.type between ? and ?"
+	 * ; } else { hql =
+	 * "from Message as message where message.receiverId = ? and message.type between ? and ?"
+	 * ; }
+	 * 
+	 * Query query = getCurrentSession().createQuery(hql); query.setInteger(0,
+	 * objId); query.setInteger(1, filter.getStartType()); query.setInteger(2,
+	 * filter.getEndType()); DaoUtils.setLimit(query, limit); return
+	 * query.list(); }
+	 */
 
 }

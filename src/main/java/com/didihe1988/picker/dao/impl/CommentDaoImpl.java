@@ -116,7 +116,7 @@ public class CommentDaoImpl implements CommentDao {
 	public List<CommentDp> queryCommentDpListByCommentedId(int commentedId,
 			int type) {
 		// TODO Auto-generated method stub
-		String hql = "select new com.didihe1988.picker.model.dp.CommentDp(c,u.username,u.avatarUrl) from Comment c,User u where c.commentedId=? and c.type=? and u.id= c.producerId";
+		String hql = "select new com.didihe1988.picker.model.display.CommentDp(c,u.username,u.avatarUrl) from Comment c,User u where c.commentedId=? and c.type=? and u.id= c.producerId";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, commentedId);
 		query.setInteger(1, type);

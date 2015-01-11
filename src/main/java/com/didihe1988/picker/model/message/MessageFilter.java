@@ -1,6 +1,5 @@
 package com.didihe1988.picker.model.message;
 
-public interface MessageFilter {
-	
-	public int getTypeCode();
+public enum MessageFilter {
+	DYNAMIC, FOOTPRINT, SELF_RELATED;
 }

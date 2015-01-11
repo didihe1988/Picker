@@ -38,7 +38,7 @@ public class DynamicController {
 	public String dynamic(Model model, HttpServletRequest request) {
 		int curUserId = HttpUtils.getSessionUserId(request);
 		model.addAttribute("messageList",
-				messageService.getDynamicByUserId(curUserId));
+				messageService.getDynamicsByUserId(curUserId));
 		model.addAttribute("bookList", getBooks(curUserId));
 		return "index";
 	}
