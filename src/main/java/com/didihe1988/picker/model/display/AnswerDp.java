@@ -83,7 +83,7 @@ public class AnswerDp extends Answer implements IsFavorite {
 	public AnswerDp(Answer answer, String questionName, String replierName,
 			String replierSignature, String replierAvatarUrl, boolean isFavorite) {
 		super(answer);
-		this.strDate = DateUtils.getDate(answer.getDate());
+		this.strDate = DateUtils.toDate(answer.getDate());
 		this.questionName = questionName;
 		this.replierName = replierName;
 		this.replierSignature = replierSignature;
@@ -94,7 +94,7 @@ public class AnswerDp extends Answer implements IsFavorite {
 	public AnswerDp(Answer answer, String questionName, String replierName,
 			String replierSignature, String replierAvatarUrl) {
 		super(answer);
-		this.strDate = DateUtils.getDate(answer.getDate());
+		this.strDate = DateUtils.toDate(answer.getDate());
 		this.questionName = questionName;
 		this.replierName = replierName;
 		this.replierSignature = replierSignature;
@@ -104,7 +104,7 @@ public class AnswerDp extends Answer implements IsFavorite {
 
 	public AnswerDp(Answer answer, String questionName) {
 		super(answer);
-		this.strDate = DateUtils.getDate(answer.getDate());
+		this.strDate = DateUtils.toDate(answer.getDate());
 		this.questionName = questionName;
 		this.isFavorite = false;
 	}

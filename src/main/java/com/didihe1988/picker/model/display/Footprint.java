@@ -48,7 +48,7 @@ public class Footprint extends Message {
 	public Footprint(Message message, String producerAvatarUrl,
 			String parentName) {
 		super(message);
-		this.strDate = DateUtils.getDate(message.getTime());
+		this.strDate = DateUtils.toDate(message.getTime());
 		this.producerAvatarUrl = producerAvatarUrl;
 		this.parentName = parentName;
 	}

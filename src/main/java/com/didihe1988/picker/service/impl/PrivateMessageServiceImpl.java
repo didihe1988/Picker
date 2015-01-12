@@ -16,6 +16,7 @@ import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.PrivateMessageDp;
 import com.didihe1988.picker.model.display.PrivateMessageSum;
 import com.didihe1988.picker.service.PrivateMessageService;
+import com.didihe1988.picker.utils.DateUtils;
 
 @Service
 @Transactional
@@ -114,7 +115,8 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
 		User sender = userDao.queryModelById(privateMessage.getSenderId());
 		return new PrivateMessageDp(privateMessage, sender.getUsername(),
 				sender.getAvatarUrl(), receiver.getUsername(),
-				receiver.getAvatarUrl());
+				receiver.getAvatarUrl(), DateUtils.toDate(privateMessage
+						.getTime()));
 	}
 
 	@Override
@@ -148,7 +150,8 @@ public class PrivateMessageServiceImpl implements PrivateMessageService {
 				.getCount();
 		return new PrivateMessageSum(privateMessage, sender.getUsername(),
 				sender.getAvatarUrl(), receiver.getUsername(),
-				receiver.getAvatarUrl(), count);
+				receiver.getAvatarUrl(), DateUtils.toDate(privateMessage
+						.getTime()), count);
 	}
 
 	private List<PrivateMessageSum> getPrivateMessageSumList(

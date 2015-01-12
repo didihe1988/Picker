@@ -236,7 +236,7 @@ public class AnswerServiceImpl implements AnswerService {
 			Feed feed = feedDao.queryModelById(answer.getQuestionId());
 			AnswerJson answerJson = new AnswerJson(feed.getTitle(), imageUrl,
 					"/detail/" + answer.getQuestionId(),
-					DateUtils.getDate(answer.getDate()), answer.getContent());
+					DateUtils.toDate(answer.getDate()), answer.getContent());
 			list.add(answerJson);
 		}
 		return list;

@@ -45,7 +45,7 @@ public class AttachmentFeedDp extends AttachmentFeed {
 		super(attachmentFeed);
 		this.userAvatarUrl = userAvatarUrl;
 		this.userName = userName;
-		this.strDate = DateUtils.getDate(attachmentFeed.getDate());
+		this.strDate = DateUtils.toDate(attachmentFeed.getDate());
 	}
 
 	@Override

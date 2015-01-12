@@ -69,12 +69,12 @@ public class CommentDp extends Comment implements IsFavorite {
 		this.producerName = producerName;
 		this.userAvatarUrl = userAvatarUrl;
 		this.isFavorite = isFavorite;
-		this.strDate = DateUtils.getDate(comment.getDate());
+		this.strDate = DateUtils.toDate(comment.getDate());
 	}
 
 	public CommentDp(Comment comment, String producerName, String userAvatarUrl) {
 		super(comment);
-		this.strDate = DateUtils.getDate(comment.getDate());
+		this.strDate = DateUtils.toDate(comment.getDate());
 		this.producerName = producerName;
 		this.userAvatarUrl = userAvatarUrl;
 		this.isFavorite = false;

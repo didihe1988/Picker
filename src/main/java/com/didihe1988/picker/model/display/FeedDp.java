@@ -78,7 +78,7 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 	public FeedDp(Feed feed, String userName, String userAvatarUrl,
 			boolean isFollow, boolean isFavorite) {
 		super(feed);
-		this.strDate = DateUtils.getDate(feed.getDate());
+		this.strDate = DateUtils.toDate(feed.getDate());
 		this.userName = userName;
 		this.userAvatarUrl = userAvatarUrl;
 		this.isFollow = isFollow;
@@ -87,7 +87,7 @@ public class FeedDp extends Feed implements IsFavorite, IsFollow {
 
 	public FeedDp(Feed feed, String userName, String userAvatarUrl) {
 		super(feed);
-		this.strDate = DateUtils.getDate(feed.getDate());
+		this.strDate = DateUtils.toDate(feed.getDate());
 		this.userName = userName;
 		this.userAvatarUrl = userAvatarUrl;
 		this.isFollow = false;

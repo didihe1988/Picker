@@ -52,7 +52,7 @@ public class Dynamic extends Message {
 	public Dynamic(Message message, String producerAvatarUrl,
 			String parentName, String imageUrl) {
 		super(message);
-		this.strDate = DateUtils.getDate(message.getTime());
+		this.strDate = DateUtils.toDate(message.getTime());
 		this.producerAvatarUrl = producerAvatarUrl;
 		this.parentName = parentName;
 		this.imageUrl = imageUrl;

@@ -41,7 +41,7 @@ public class CircleWebDp extends Circle {
 		 * È¥µô password
 		 */
 		super(circle);
-		this.strDate = DateUtils.getDate(circle.getEstablishTime());
+		this.strDate = DateUtils.toDate(circle.getEstablishTime());
 		this.memberJoinTime = memberJoinTime;
 	}
 

@@ -145,15 +145,16 @@
 												onclick="reply_message(${mail.senderId}, '${mail.senderName}')">回复</a>
 										</div>
 										<!-- change end -->
-										<div onclick="toggle_my_reply($(this).parents('.mail'))">
-											<a>回复记录</a>
+										<div onclick="get_replies($(this).parents('.mail'),${mail.dialogId},${curUserId})">
+											<a>对话记录</a>
 										</div>
 									</div>
 									<div class="mail_text">${mail.content}</div>
-									<div class="mail_time">${mail.time}</div>
+									<div class="mail_time">${mail.strDate}</div>
 									<div class="mail_time" style="margin-right: 10px">共${mail.count}条对话</div>
 									<div style="clear: both"></div>
 									<div class="my_replies">
+                                        <!--
 										<div class="clear_fix">
 											<div class="my_reply_text">
 												<span style="color: #999999">我：</span>你好呀
@@ -166,6 +167,7 @@
 											</div>
 											<div class="my_reply_time">1天前</div>
 										</div>
+                                        -->
 									</div>
 								</div>
 							</c:when>
@@ -188,15 +190,16 @@
 												onclick="reply_message(${mail.receiverId}, '${mail.receiverName}')">回复</a>
 										</div>
 										<!-- change end -->
-										<div onclick="toggle_my_reply($(this).parents('.mail'))">
+										<div onclick="get_replies($(this).parents('.mail'),${mail.dialogId},${curUserId})">
 											<a>回复记录</a>
 										</div>
 									</div>
 									<div class="mail_text">${mail.content}</div>
-									<div class="mail_time">${mail.time}</div>
+									<div class="mail_time">${mail.strDate}</div>
 									<div class="mail_time" style="margin-right: 10px">共${mail.count}条对话</div>
 									<div style="clear: both"></div>
 									<div class="my_replies">
+										<!-- 
 										<div class="clear_fix">
 											<div class="my_reply_text">
 												<span style="color: #999999">我：</span>你好呀
@@ -209,6 +212,7 @@
 											</div>
 											<div class="my_reply_time">1天前</div>
 										</div>
+										 -->
 									</div>
 								</div>
 							</c:otherwise>
@@ -256,7 +260,32 @@
 				</div> -->
 			</div>
 		</div>
+
+        <div id="sender_template">
+            <div class="clear_fix">
+            <!-- {hack.e}
+                <div class="my_reply_text">
+                    <span style="color: #999999">我：</span>{mail.content}
+                </div>
+                <div class="my_reply_time">{mail.strDate}</div>
+            {hack.s} -->
+            </div>
+        </div>
+
+        <div id="replier_template">
+            <div class="clear_fix">
+            <!-- {hack.e}
+                <div class="my_reply_text">
+                    <span style="color: #999999">{mail.senderName}：</span>{mail.content}
+                </div>
+                <div class="my_reply_time">{mail.strDate}</div>
+            {hack.s} -->
+            </div>
+        </div>
+
 		<!--xx**-->
 	</div>
+
+
 </body>
 </html>

@@ -164,7 +164,7 @@ public class CircleMemberServiceImpl implements CircleMemberService {
 			Circle circle = circleDao.queryModelById(circleMember
 					.getCircleId());
 			CircleWebDp circleWebDp = new CircleWebDp(circle,
-					DateUtils.getDate(circleMember.getJoinTime()));
+					DateUtils.toDate(circleMember.getJoinTime()));
 			list.add(circleWebDp);
 		}
 		return list;

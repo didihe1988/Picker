@@ -1138,18 +1138,21 @@ function switch_content(filter_div, book_id) {
     filter_div.siblings().removeClass('active');
     var type = (filter_div.data('filter'));
     $.ajax({
-        url: '/json/book/' + book_id + '/' + type + 'dps',
+        url: '/json/book/' + book_id + '/' + type + 'dps?type=page',
         type: 'get',
         success: function (req) {
-            var pages_container=$('#pages_container');
-            pages_container.empty();
-            $(req[type+'List']).each(function (index, post) {
-                console.log(post);
+            $('#pages_container').empty();
+            var cur_page;
+            $(req[type + 'List']).each(function (index, post) {
                 var new_post_dom = $(nano_template($(
-                    '#'+type+'_template').html(), {
+                        '#' + type + '_template').html(), {
                     'post': post
                 }));
-                pages_container.append(new_post_dom);
+                if (cur_page == post.page) {
+                    new_post_dom.find('.page_split').hide();
+                }
+                $('#pages_container').append(new_post_dom);
+                cur_page = post.page;
             });
 
         },
@@ -1159,5 +1162,32 @@ function switch_content(filter_div, book_id) {
     });
 }
 
+//mail.jsp
+function get_replies(mail,dialog_id,cur_user_id) {
+    var my_replies=mail.find('.my_replies');
+    $.ajax({
+        url: '/json/pmessage/'+dialog_id+'/dp',
+        type: 'get',
+        success: function (req) {
+            my_replies.empty();
+            $(req['privateMessageList']).each(function (index, mail) {
+                var template_name='replier_template';
+                if(cur_user_id==mail.senderId)
+                {
+                    template_name='sender_template';
+                }
+                var new_reply_dom = $(nano_template($(
+                        '#' +template_name).html(), {
+                    'mail': mail
+                }));
+                my_replies.append(new_reply_dom);
+            });
+            my_replies.toggle();
+        },
+        error: function () {
+            console.log('error');
+        }
+    });
+}
 
 

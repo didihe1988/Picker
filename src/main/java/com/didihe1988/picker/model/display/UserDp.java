@@ -54,7 +54,7 @@ public class UserDp extends User implements IsFollow {
 						.getNoteNum(), user.getCircleNum(), user.getBookNum(),
 				user.getAvatarUrl(), user.getSignature());
 		this.isFollow = isFollow;
-		this.strDate = DateUtils.getDate(user.getRegisterTime());
+		this.strDate = DateUtils.toDate(user.getRegisterTime());
 	}
 
 	public UserDp(UserDp userDp) {

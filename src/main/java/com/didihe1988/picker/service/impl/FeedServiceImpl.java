@@ -333,7 +333,7 @@ public class FeedServiceImpl implements FeedService {
 					feed.getId(), RelatedImage.FEED_IMAGE);
 			NoteJson noteJson = new NoteJson(feed.getTitle(), imageUrl,
 					"/detail/" + feed.getId(),
-					DateUtils.getDate(feed.getDate()), feed.getContent());
+					DateUtils.toDate(feed.getDate()), feed.getContent());
 			list.add(noteJson);
 		}
 		return list;
@@ -349,7 +349,7 @@ public class FeedServiceImpl implements FeedService {
 			String imageUrl = relatedImageDao.queryFirstImageUrlByKey(
 					feed.getId(), RelatedImage.FEED_IMAGE);
 			QuestionJson questionJson = new QuestionJson(feed.getTitle(),
-					imageUrl, "/detail/" + feed.getId(), DateUtils.getDate(feed
+					imageUrl, "/detail/" + feed.getId(), DateUtils.toDate(feed
 							.getDate()), feed.getCommentNum(),
 					feed.getAnswerNum());
 			list.add(questionJson);

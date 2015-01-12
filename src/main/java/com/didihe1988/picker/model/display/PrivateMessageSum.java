@@ -20,6 +20,8 @@ public class PrivateMessageSum extends PrivateMessage {
 
 	private String receiverAvatarUrl;
 
+	private String strDate;
+
 	private int count;
 
 	public int getCount() {
@@ -62,18 +64,27 @@ public class PrivateMessageSum extends PrivateMessage {
 		this.receiverAvatarUrl = receiverAvatarUrl;
 	}
 
+	public String getStrDate() {
+		return strDate;
+	}
+
+	public void setStrDate(String strDate) {
+		this.strDate = strDate;
+	}
+
 	public PrivateMessageSum() {
 
 	}
 
 	public PrivateMessageSum(PrivateMessage privateMessage, String senderName,
 			String senderAvatarUrl, String receiverName,
-			String receiverAvatarUrl, int count) {
+			String receiverAvatarUrl, String strDate, int count) {
 		super(privateMessage);
 		this.senderName = senderName;
 		this.senderAvatarUrl = senderAvatarUrl;
 		this.receiverName = receiverName;
 		this.receiverAvatarUrl = receiverAvatarUrl;
+		this.strDate = strDate;
 		this.count = count;
 	}
 

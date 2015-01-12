@@ -16,6 +16,8 @@ public class PrivateMessageDp extends PrivateMessage {
 
 	private String receiverAvatarUrl;
 
+	private String strDate;
+
 	public String getSenderName() {
 		return senderName;
 	}
@@ -48,18 +50,27 @@ public class PrivateMessageDp extends PrivateMessage {
 		this.receiverAvatarUrl = receiverAvatarUrl;
 	}
 
+	public String getStrDate() {
+		return strDate;
+	}
+
+	public void setStrDate(String strDate) {
+		this.strDate = strDate;
+	}
+
 	public PrivateMessageDp() {
 
 	}
 
 	public PrivateMessageDp(PrivateMessage privateMessage, String senderName,
 			String senderAvatarUrl, String receiverName,
-			String receiverAvatarUrl) {
+			String receiverAvatarUrl, String strDate) {
 		super(privateMessage);
 		this.senderName = senderName;
 		this.senderAvatarUrl = senderAvatarUrl;
 		this.receiverName = receiverName;
 		this.receiverAvatarUrl = receiverAvatarUrl;
+		this.strDate = strDate;
 	}
 
 }

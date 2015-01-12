@@ -157,7 +157,7 @@ public class DetailController {
 			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 					FootprintFilter.getTypeCode(),
 					FootprintFilter.MESSAGE_USER_ADDNOTE, producer, feedId,
-					relatedSourceContent, extraContent, -feed.getBookId());
+					relatedSourceContent, extraContent, feed.getBookId());
 		}
 	}
 
