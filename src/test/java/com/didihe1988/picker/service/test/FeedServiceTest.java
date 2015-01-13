@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.didihe1988.picker.common.DaoConstant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.display.AttachmentFeedDp;
 import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.service.FeedService;
@@ -77,12 +77,29 @@ public class FeedServiceTest {
 
 	@Test
 	public void test6() {
+		/*
 		int id = 1;
 		int userId = 1;
 		List<FeedDp> list = feedService.getFeedDpListByBookId(id,
 				Feed.TYPE_QUESTION, userId, DaoConstant.FeedPageOrder);
 		System.out.println(list);
+		assertNotNull(list);*/
+	}
+	
+	@Test
+	public void test7() {
+		int bookId=1035;
+		List<AttachmentFeedDp> list=feedService.getAttFeedDpsByBookId(bookId);
+		System.out.println(list);
 		assertNotNull(list);
+	}
+	
+	@Test
+	public void test8()
+	{
+		AttachmentFeedDp attFeedDp=feedService.getAttFeedDpByFeedId(23);
+		assertNotNull(attFeedDp);
+		System.out.println(attFeedDp);
 	}
 
 }

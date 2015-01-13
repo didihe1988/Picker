@@ -99,7 +99,7 @@
 			<div id="message_list">
 				<c:forEach var="message" items="${messageList}">
 					<c:choose>
-						<c:when test="${message.type==1 }">
+						<c:when test="${message.type==18 }">
 							<div class="message clear_fix">
 								<div style="width: 40px">
 									<img src="<c:url value="${message.producerAvatarUrl}"/>">
@@ -112,7 +112,7 @@
 								</div>
 							</div>
 						</c:when>
-						<c:when test="${message.type==2 }">
+						<c:when test="${message.type==19 }">
 							<div class="message clear_fix">
 								<div style="width: 40px">
 									<img src="<c:url value="${message.producerAvatarUrl}"/>">
@@ -125,7 +125,7 @@
 								</div>
 							</div>
 						</c:when>
-						<c:when test="${message.type==3}">
+						<c:when test="${message.type==20}">
 							<div class="message clear_fix">
 								<div style="width: 40px">
 									<img src="<c:url value="${message.producerAvatarUrl}"/>">
@@ -138,7 +138,7 @@
 								</div>
 							</div>
 						</c:when>
-						<c:when test="${message.type==5}">
+						<c:when test="${message.type==22}">
 							<div class="message clear_fix">
 								<div style="width: 40px">
 									<img src="<c:url value="${message.producerAvatarUrl}"/>">
@@ -151,7 +151,7 @@
 							</div>
 						</c:when>
 
-						<c:when test="${message.type==8 }">
+						<c:when test="${message.type==25 }">
 							<div class="message clear_fix">
 								<div style="width: 40px">
 									<img src="<c:url value="${message.producerAvatarUrl}"/>">

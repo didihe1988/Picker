@@ -18,6 +18,8 @@ public interface FeedDao extends NumOperationDao<Feed>, OperateValidation,
 	public int deleteFeed(Feed feed);
 	
 	public int getLatestFeedByBookId(int bookId, int type);
+	
+	public AttachmentFeedDp queryAttFeedDpByFeedId(int id);
 
 	/*
 	 * ---queryFeedList starts---

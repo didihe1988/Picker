@@ -17,6 +17,8 @@ public interface FeedService {
 	public Feed getFeedById(int id);
 
 	public FeedDp getFeedDpByFeedId(int id, int curUserId);
+	
+	public AttachmentFeedDp getAttFeedDpByFeedId(int id);
 
 	public int addFeed(Feed feed);
 
@@ -29,6 +31,7 @@ public interface FeedService {
 	public int getLatestFeedByBookId(int bookId, int type);
 
 	public boolean isFeedExistsById(int id);
+	
 
 	/*
 	 * ---getFeedList starts---

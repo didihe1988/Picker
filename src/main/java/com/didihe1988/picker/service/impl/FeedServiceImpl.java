@@ -163,6 +163,14 @@ public class FeedServiceImpl implements FeedService {
 				curUserId);
 	}
 
+	@Override
+	public AttachmentFeedDp getAttFeedDpByFeedId(int id) {
+		// TODO Auto-generated method stub
+		AttachmentFeedDp attFeedDp=feedDao.queryAttFeedDpByFeedId(id);
+		setAttachments(attFeedDp);
+		return attFeedDp;
+	}
+
 	/*
 	 * 整个list已经确定了类型、不应该在FeedDp中switch 因此把FeedDp生成的过程抽成一个类
 	 */

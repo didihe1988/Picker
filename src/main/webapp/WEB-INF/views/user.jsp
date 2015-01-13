@@ -283,7 +283,7 @@
 					<div id="user_feeds">
 						<c:forEach var="message" items="${messageList}">
 							<!-- MESSAGE_USER_ADDQUESTION -->
-							<c:if test="${message.type==1 }">
+							<c:if test="${message.type==26 }">
 								<div class="user_feed">
 									<div>
 										<span class="user_feed_label">提出了问题 @ </span> <span
@@ -310,7 +310,7 @@
 								</div>
 							</c:if>
 							<!-- MESSAGE_USER_ADDANSWER -->
-							<c:if test="${message.type==2 }">
+							<c:if test="${message.type==27 }">
 								<div class="user_feed">
 									<div>
 										<span class="user_feed_label">回答了问题 @ </span> <span
@@ -333,7 +333,7 @@
 								</div>
 							</c:if>
 							<!-- MESSAGE_USER_ADDNOTE -->
-							<c:if test="${message.type==6 }">
+							<c:if test="${message.type==31 }">
 								<div class="user_feed">
 									<div>
 										<span class="user_feed_label">添加了笔记 @ </span> <span
@@ -360,7 +360,7 @@
 								</div>
 							</c:if>
 							<!-- MESSAGE_USER_FOLLOW_OTHER -->
-							<c:if test="${message.type==7 }">
+							<c:if test="${message.type==32 }">
 								<div class="user_feed">
 									<div>
 										<span class="user_feed_label">关注了用户 </span> <span
@@ -382,7 +382,7 @@
 								</div>
 							</c:if>
 							<!-- MESSAGE_USER_FAVORITE_QUESTION -->
-							<c:if test="${message.type==8 }">
+							<c:if test="${message.type==33 }">
 								<div class="user_feed">
 									<div>
 										<span class="user_feed_label">赞了问题@ </span> <span
@@ -409,7 +409,7 @@
 								</div>
 							</c:if>
 							<!-- MESSAGE_USER_FAVORITE_NOTE -->
-							<c:if test="${message.type==9 }">
+							<c:if test="${message.type==34 }">
 								<div class="user_feed">
 									<div>
 										<span class="user_feed_label">赞了笔记@ </span> <span
@@ -436,7 +436,7 @@
 								</div>
 							</c:if>
 							<!--MESSAGE_USER_FAVORITE_ANSWER-->
-							<c:if test="${message.type==10 }">
+							<c:if test="${message.type==35 }">
 								<div class="user_feed">
 									<div>
 										<span class="user_feed_label">赞了回答@ </span> <span
@@ -459,7 +459,7 @@
 								</div>
 							</c:if>
 							<!--MESSAGE_USER_ADDCIRCLE-->
-							<c:if test="${message.type==12 }">
+							<c:if test="${message.type==37 }">
 								<div class="user_feed">
 									<div>
 										<span class="user_feed_label">创建圈子@ </span> <span
@@ -482,7 +482,7 @@
 								</div>
 							</c:if>
 							<!--MESSAGE_USER_JOINCIRCLE-->
-							<c:if test="${message.type==13 }">
+							<c:if test="${message.type==38 }">
 								<div class="user_feed">
 									<div>
 										<span class="user_feed_label">加入圈子@ </span> <span

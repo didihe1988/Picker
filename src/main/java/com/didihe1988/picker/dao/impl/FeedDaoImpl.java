@@ -208,6 +208,16 @@ public class FeedDaoImpl implements FeedDao {
 		return query.list();
 	}
 
+	@Override
+	public AttachmentFeedDp queryAttFeedDpByFeedId(int id) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.display.AttachmentFeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.id=? and f.type=? and f.userId = u.id";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		query.setInteger(1, Feed.TYPE_ATTACHMENT_FEED);
+		return (AttachmentFeedDp)query.uniqueResult();
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<AttachmentFeedDp> queryAttFeedDpsByBookId(int bookId,

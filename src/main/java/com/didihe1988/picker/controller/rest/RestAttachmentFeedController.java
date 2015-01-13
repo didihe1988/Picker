@@ -15,6 +15,7 @@ import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Attachment;
 import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.display.AttachmentFeedDp;
 import com.didihe1988.picker.model.form.AttachmentFeedForm;
 import com.didihe1988.picker.service.AttachmentService;
 import com.didihe1988.picker.service.FeedService;
@@ -50,7 +51,8 @@ public class RestAttachmentFeedController {
 		if (id < 1) {
 			return Constant.STATUS_ERROR;
 		}
-		Feed attFeed = feedService.getFeedById(id);
+		//Feed attFeed = feedService.getFeedById(id);
+		AttachmentFeedDp attFeed=feedService.getAttFeedDpByFeedId(id);
 		if (attFeed != null) {
 			return JsonUtils.getJsonObjectStringFromModel(
 					Constant.KEY_ATTACHMENTFEED, attFeed);

@@ -23,6 +23,7 @@ import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.AnswerDp;
 import com.didihe1988.picker.model.display.FeedDp;
@@ -30,10 +31,6 @@ import com.didihe1988.picker.model.display.MessageDp;
 import com.didihe1988.picker.model.display.UserDp;
 import com.didihe1988.picker.model.form.LoginForm;
 import com.didihe1988.picker.model.form.RegisterForm;
-import com.didihe1988.picker.model.message.DynamicFilter;
-import com.didihe1988.picker.model.message.FootprintFilter;
-import com.didihe1988.picker.model.message.MessageFilter;
-import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
@@ -364,30 +361,42 @@ public class RestUserController {
 		String followedName = userService.getUserById(followedId).getUsername();
 		// 发起关注动作的人是producer
 		User producer = userService.getUserById(followerId);
+		
 		/*
-		 * 与我相关
-		 */
+		//与我相关
 		messageService.addMessageByRecerver(followedId, false,
 				SelfRelatedFilter.getTypeCode(),
 				SelfRelatedFilter.MESSAGE_OTHERS_FOLLOW_YOU, producer,
 				followedId, followedName, Message.NULL_ExtraContent,
 				Message.NULL_parentId);
-		/*
-		 * 通知关注者 小明(被关注者)关注了xxx
-		 */
+		//通知关注者 小明(被关注者)关注了xxx
 		messageService.addMessageByFollowedUser(false,
 				DynamicFilter.getTypeCode(),
 				DynamicFilter.MESSAGE_FOLLOWEDUSER_FOLLOW, producer,
 				followedId, followedName, Message.NULL_ExtraContent,
 				Message.NULL_parentId);
-		/*
-		 * 用户动态
-		 */
+		//用户动态
 		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
 				FootprintFilter.getTypeCode(),
 				FootprintFilter.MESSAGE_USER_FOLLOW_OTHER, producer,
 				followedId, followedName, Message.NULL_ExtraContent,
-				Message.NULL_parentId);
+				Message.NULL_parentId);*/
+		
+		//与我相关
+				messageService.addMessageByRecerver(followedId, false,
+						Message.MESSAGE_OTHERS_FOLLOW_YOU, producer,
+						followedId, followedName, Message.NULL_ExtraContent,
+						Message.NULL_parentId);
+				//通知关注者 小明(被关注者)关注了xxx
+				messageService.addMessageByFollowedUser(false,
+						Message.MESSAGE_FOLLOWEDUSER_FOLLOW, producer,
+						followedId, followedName, Message.NULL_ExtraContent,
+						Message.NULL_parentId);
+				//用户动态
+				messageService.addMessageByRecerver(Message.NULL_receiverId, false,
+						Message.MESSAGE_USER_FOLLOW_OTHER, producer,
+						followedId, followedName, Message.NULL_ExtraContent,
+						Message.NULL_parentId);		
 	}
 
 	/**
@@ -418,7 +427,7 @@ public class RestUserController {
 		 * FootprintFilter.getTypeCode());
 		 */
 		List<MessageDp> messageList = messageService
-				.getMessageDpsByUserIdAndFilter(id, MessageFilter.FOOTPRINT);
+				.getMessageDpsByUserIdAndFilter(id,Filter.MESSAGE_FOOTPRINT);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
@@ -435,7 +444,7 @@ public class RestUserController {
 		 * DynamicFilter.getTypeCode());
 		 */
 		List<MessageDp> messageList = messageService
-				.getMessageDpsByUserIdAndFilter(userId, MessageFilter.DYNAMIC);
+				.getMessageDpsByUserIdAndFilter(userId,Filter.MESSAGE_DYNAMIC);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}
@@ -453,7 +462,7 @@ public class RestUserController {
 		 */
 		List<MessageDp> messageList = messageService
 				.getMessageDpsByUserIdAndFilter(userId,
-						MessageFilter.SELF_RELATED);
+						Filter.MESSAGE_RELATED);
 		return JsonUtils.getJsonObjectString(Constant.KEY_MESSAGE_LIST,
 				messageList);
 	}

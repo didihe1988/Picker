@@ -14,7 +14,6 @@ import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.message.DynamicFilter;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
 import com.didihe1988.picker.service.MessageService;
@@ -67,9 +66,14 @@ public class BoughtController {
 				bought.getBookId()).getBookName();
 		String extraContent = bookService.getBookById(bought.getBookId())
 				.getWriter();
+		/*
 		messageService.addMessageByFollowedUser(false,
 				DynamicFilter.getTypeCode(),
 				DynamicFilter.MESSAGE_FOLLOWED_ADDBOUGHT, producer,
+				bought.getBookId(), relatedSourceContent, extraContent,
+				Message.NULL_parentId);*/
+		messageService.addMessageByFollowedUser(false,
+				Message.MESSAGE_FOLLOWED_ADDBOUGHT, producer,
 				bought.getBookId(), relatedSourceContent, extraContent,
 				Message.NULL_parentId);
 	}

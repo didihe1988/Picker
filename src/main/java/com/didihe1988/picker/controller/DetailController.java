@@ -23,8 +23,6 @@ import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.display.UserDp;
 import com.didihe1988.picker.model.form.FeedForm;
-import com.didihe1988.picker.model.message.DynamicFilter;
-import com.didihe1988.picker.model.message.FootprintFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.FeedService;
@@ -134,29 +132,42 @@ public class DetailController {
 				feed.getBrief(), Constant.MESSAGE_LENGTH);
 		String extraContent = feedService.getFeedById(feedId).getTitle();
 		if (feed.getType() == Feed.TYPE_QUESTION) {
+			/*
 			messageService.addMessageByFollowedUser(true,
 					DynamicFilter.getTypeCode(),
 					DynamicFilter.MESSAGE_FOLLOWED_ASKQUESTION, producer,
 					feedId, relatedSourceContent, feed.getTitle(),
 					feed.getBookId());
-			/*
-			 * 用户足迹
-			 */
+			//用户足迹
 			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 					FootprintFilter.getTypeCode(),
 					FootprintFilter.MESSAGE_USER_ADDQUESTION, producer, feedId,
+					relatedSourceContent, feed.getTitle(), feed.getBookId());*/
+			messageService.addMessageByFollowedUser(true,
+					Message.MESSAGE_FOLLOWED_ASKQUESTION, producer,
+					feedId, relatedSourceContent, feed.getTitle(),
+					feed.getBookId());
+			//用户足迹
+			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
+					Message.MESSAGE_USER_ADDQUESTION, producer, feedId,
 					relatedSourceContent, feed.getTitle(), feed.getBookId());
 		} else {
+			/*
 			messageService.addMessageByFollowedUser(true,
 					DynamicFilter.getTypeCode(),
 					DynamicFilter.MESSAGE_FOLLOWED_ADDNOTE, producer, feedId,
 					relatedSourceContent, extraContent, feed.getBookId());
-			/*
-			 * 用户足迹
-			 */
+			//用户足迹			 
 			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 					FootprintFilter.getTypeCode(),
 					FootprintFilter.MESSAGE_USER_ADDNOTE, producer, feedId,
+					relatedSourceContent, extraContent, feed.getBookId());*/
+			messageService.addMessageByFollowedUser(true,
+					Message.MESSAGE_FOLLOWED_ADDNOTE, producer, feedId,
+					relatedSourceContent, extraContent, feed.getBookId());
+			//用户足迹			 
+			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
+					Message.MESSAGE_USER_ADDNOTE, producer, feedId,
 					relatedSourceContent, extraContent, feed.getBookId());
 		}
 	}

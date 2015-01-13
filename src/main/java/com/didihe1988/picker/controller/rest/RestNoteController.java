@@ -21,9 +21,6 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
-import com.didihe1988.picker.model.message.DynamicFilter;
-import com.didihe1988.picker.model.message.FootprintFilter;
-import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
 import com.didihe1988.picker.service.FeedService;
@@ -129,26 +126,38 @@ public class RestNoteController implements FavoriteController {
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getContent(), Constant.MESSAGE_LENGTH);
 		String extraContent = feed.getTitle();
+		
 		/*
-		 * 与我相关
-		 */
+		//与我相关
 		messageService.addMessageByRecerver(feed.getUserId(), true,
 				SelfRelatedFilter.getTypeCode(),
 				SelfRelatedFilter.MESSAGE_YOUR_NOTE_FAVORITED, producer,
 				feedId, relatedSourceContent, extraContent, feed.getBookId());
-		/*
-		 * 通知关注者 小明 (被关注者)赞了XXX的问题
-		 */
+		
+		//通知关注者 小明 (被关注者)赞了XXX的问题
 		messageService.addMessageByFollowedUser(true,
 				DynamicFilter.getTypeCode(),
 				DynamicFilter.MESSAGE_FOLLOWED_FAVORITE_NOTE, producer, feedId,
 				relatedSourceContent, extraContent, feed.getBookId());
-		/*
-		 * 用户动态
-		 */
+		
+		//用户动态
 		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 				FootprintFilter.getTypeCode(),
 				FootprintFilter.MESSAGE_USER_FAVORITE_NOTE, producer, feedId,
+				relatedSourceContent, extraContent, feed.getBookId());*/
+		
+		messageService.addMessageByRecerver(feed.getUserId(), true,
+				Message.MESSAGE_YOUR_NOTE_FAVORITED, producer,
+				feedId, relatedSourceContent, extraContent, feed.getBookId());
+		
+		//通知关注者 小明 (被关注者)赞了XXX的问题
+		messageService.addMessageByFollowedUser(true,
+				Message.MESSAGE_FOLLOWED_FAVORITE_NOTE, producer, feedId,
+				relatedSourceContent, extraContent, feed.getBookId());
+		
+		//用户动态
+		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
+				Message.MESSAGE_USER_FAVORITE_NOTE, producer, feedId,
 				relatedSourceContent, extraContent, feed.getBookId());
 	}
 
@@ -213,17 +222,24 @@ public class RestNoteController implements FavoriteController {
 		int noteId = feedService.getLatestFeedByBookId(feed.getBookId(),
 				Feed.TYPE_NOTE);
 		String extraContent = feedService.getFeedById(noteId).getTitle();
+		/*
 		messageService.addMessageByFollowedUser(true,
 				DynamicFilter.getTypeCode(),
 				DynamicFilter.MESSAGE_FOLLOWED_ADDNOTE, producer, noteId,
 				relatedSourceContent, extraContent, feed.getBookId());
 
-		/*
-		 * 用户足迹
-		 */
+		//用户足迹
 		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 				FootprintFilter.getTypeCode(),
 				FootprintFilter.MESSAGE_USER_ADDNOTE, producer, noteId,
+				relatedSourceContent, extraContent, feed.getBookId());*/
+		messageService.addMessageByFollowedUser(true,
+				Message.MESSAGE_FOLLOWED_ADDNOTE, producer, noteId,
+				relatedSourceContent, extraContent, feed.getBookId());
+
+		//用户足迹
+		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
+				Message.MESSAGE_USER_ADDNOTE, producer, noteId,
 				relatedSourceContent, extraContent, feed.getBookId());
 	}
 

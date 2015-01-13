@@ -28,9 +28,6 @@ import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.UserDp;
 import com.didihe1988.picker.model.form.FeedForm;
-import com.didihe1988.picker.model.message.DynamicFilter;
-import com.didihe1988.picker.model.message.FootprintFilter;
-import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -259,16 +256,22 @@ public class RestQuestionController implements FavoriteController {
 				Feed.TYPE_QUESTION);
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getBrief(), Constant.MESSAGE_LENGTH);
+		/*
 		messageService.addMessageByFollowedUser(true,
 				DynamicFilter.getTypeCode(),
 				DynamicFilter.MESSAGE_FOLLOWED_ASKQUESTION, producer, feedId,
 				relatedSourceContent, feed.getTitle(), feed.getBookId());
-		/*
-		 * 用户足迹
-		 */
+		//用户足迹
 		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 				FootprintFilter.getTypeCode(),
 				FootprintFilter.MESSAGE_USER_ADDQUESTION, producer, feedId,
+				relatedSourceContent, feed.getTitle(), feed.getBookId());*/
+		messageService.addMessageByFollowedUser(true,
+				Message.MESSAGE_FOLLOWED_ASKQUESTION, producer, feedId,
+				relatedSourceContent, feed.getTitle(), feed.getBookId());
+		//用户足迹
+		messageService.addMessageByRecerver(Message.NULL_receiverId, true,
+				Message.MESSAGE_USER_ADDQUESTION, producer, feedId,
 				relatedSourceContent, feed.getTitle(), feed.getBookId());
 	}
 
@@ -283,32 +286,46 @@ public class RestQuestionController implements FavoriteController {
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getContent(), Constant.MESSAGE_LENGTH);
 		/*
-		 * 与我相关
-		 */
+		//与我相关
 		messageService
 				.addMessageByRecerver(feed.getUserId(), true,
 						SelfRelatedFilter.getTypeCode(),
 						SelfRelatedFilter.MESSAGE_YOUR_QUESTION_FAVORITED,
 						producer, feedId, relatedSourceContent,
 						feed.getTitle(), feed.getBookId());
-		/*
-		 * 通知关注者 小明 (被关注者)赞了XXX的问题
-		 */
+		//通知关注者 小明 (被关注者)赞了XXX的问题
 		messageService
 				.addMessageByFollowedUser(true, DynamicFilter.getTypeCode(),
 						DynamicFilter.MESSAGE_FOLLOWED_FAVORITE_QEUSTION,
 						producer, feedId, relatedSourceContent,
 						feed.getTitle(), feed.getBookId());
-		/*
-		 * 用户动态
-		 */
-
+		//用户动态
 		messageService
 				.addMessageByRecerver(Message.NULL_receiverId, true,
 						FootprintFilter.getTypeCode(),
 						FootprintFilter.MESSAGE_USER_FAVORITE_QUESTION,
 						producer, feedId, relatedSourceContent,
+						feed.getTitle(), feed.getBookId());*/
+		
+		//与我相关
+		messageService
+				.addMessageByRecerver(feed.getUserId(), true,
+						Message.MESSAGE_YOUR_QUESTION_FAVORITED,
+						producer, feedId, relatedSourceContent,
 						feed.getTitle(), feed.getBookId());
+		//通知关注者 小明 (被关注者)赞了XXX的问题
+		messageService
+				.addMessageByFollowedUser(true,
+						Message.MESSAGE_FOLLOWED_FAVORITE_QEUSTION,
+						producer, feedId, relatedSourceContent,
+						feed.getTitle(), feed.getBookId());
+		//用户动态
+		messageService
+				.addMessageByRecerver(Message.NULL_receiverId, true,
+						Message.MESSAGE_USER_FAVORITE_QUESTION,
+						producer, feedId, relatedSourceContent,
+						feed.getTitle(), feed.getBookId());
+
 
 	}
 

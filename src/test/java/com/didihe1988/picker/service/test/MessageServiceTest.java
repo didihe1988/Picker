@@ -22,7 +22,7 @@ import com.didihe1988.picker.service.MessageService;
 public class MessageServiceTest {
 	@Autowired
 	private MessageService messageService;
-	
+	/*
 	@Test
 	public void test0() {
 		List<Message> messageList=messageService.getMessageByReceiverIdAndFilter(1,Filter.MESSAGE_FOOTPRINT);
@@ -39,6 +39,6 @@ public class MessageServiceTest {
 	public void test2() {
 		List<Message> messageList=messageService.getMessageByReceiverIdAndFilter(1,Filter.MESSAGE_RELATED);
 		System.out.println(messageList);
-	}
+	}*/
 	
 }

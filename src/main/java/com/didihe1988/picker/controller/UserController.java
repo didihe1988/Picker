@@ -22,13 +22,12 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.User;
+import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.model.display.AnswerDp;
 import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.display.Footprint;
 import com.didihe1988.picker.model.display.UserDp;
 import com.didihe1988.picker.model.form.LoginForm;
-import com.didihe1988.picker.model.message.MessageFilter;
-import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
@@ -206,9 +205,12 @@ public class UserController {
 	@RequestMapping(value = "/message")
 	public String message(Model model, HttpServletRequest request) {
 		int userId = HttpUtils.getSessionUserId(request);
+		/*model.addAttribute("messageList", messageService
+				.getMessageDpsByUserIdAndFilter(userId,
+						MessageFilter.SELF_RELATED));*/
 		model.addAttribute("messageList", messageService
 				.getMessageDpsByUserIdAndFilter(userId,
-						MessageFilter.SELF_RELATED));
+						Filter.MESSAGE_RELATED));
 		return "message";
 	}
 

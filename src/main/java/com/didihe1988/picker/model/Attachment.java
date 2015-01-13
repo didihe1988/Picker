@@ -101,4 +101,19 @@ public class Attachment implements Serializable {
 	 * attachment.getBookId(), attachment.getUserId(), attachment.getName(),
 	 * attachment .getPath(), attachment.getDate()); }
 	 */
+	public String getFileName(Attachment attachment)
+	{
+		String name=attachment.getName();
+		//没有后缀名
+		if(name.lastIndexOf('.')!=-1)
+		{
+			name=name+getExtension(attachment.getPath());
+		}
+		return name;
+	}
+	
+	private String getExtension(String filename) {
+		int i = filename.lastIndexOf('.');
+		return filename.substring(i + 1);
+	}
 }

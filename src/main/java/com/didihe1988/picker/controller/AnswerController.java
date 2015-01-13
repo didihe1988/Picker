@@ -27,9 +27,6 @@ import com.didihe1988.picker.model.Message;
 import com.didihe1988.picker.model.RelatedImage;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.form.AnswerForm;
-import com.didihe1988.picker.model.message.DynamicFilter;
-import com.didihe1988.picker.model.message.FootprintFilter;
-import com.didihe1988.picker.model.message.SelfRelatedFilter;
 import com.didihe1988.picker.service.AnswerService;
 import com.didihe1988.picker.service.CommentService;
 import com.didihe1988.picker.service.FavoriteService;
@@ -147,8 +144,7 @@ public class AnswerController implements FavoriteController {
 		String extraContent = feedService.getFeedById(answer.getQuestionId())
 				.getTitle();
 		messageService.addMessageByRecerver(answer.getReplierId(), false,
-				SelfRelatedFilter.getTypeCode(),
-				SelfRelatedFilter.MESSAGE_YOUR_ANSWER_FAVORITED, producer,
+				Message.MESSAGE_YOUR_ANSWER_FAVORITED, producer,
 				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
 
@@ -156,8 +152,7 @@ public class AnswerController implements FavoriteController {
 		 * 通知关注者 小明 (被关注者)赞了XXX的
 		 */
 		messageService.addMessageByFollowedUser(false,
-				DynamicFilter.getTypeCode(),
-				DynamicFilter.MESSAGE_FOLLOWED_FAVORITE_ANSWER, producer,
+				Message.MESSAGE_FOLLOWED_FAVORITE_ANSWER, producer,
 				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
 		/*
@@ -167,8 +162,7 @@ public class AnswerController implements FavoriteController {
 		 * 用户动态
 		 */
 		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
-				FootprintFilter.getTypeCode(),
-				FootprintFilter.MESSAGE_USER_FAVORITE_ANSWER, producer,
+				Message.MESSAGE_USER_FAVORITE_ANSWER, producer,
 				answer.getQuestionId(), relatedSourceContent, extraContent,
 				answer.getQuestionId());
 	}
@@ -242,36 +236,52 @@ public class AnswerController implements FavoriteController {
 				answer.getContent(), Constant.MESSAGE_LENGTH);
 		String extraContent = feedService.getFeedById(answer.getQuestionId())
 				.getTitle();
+		
 		/*
-		 * 通知提问者XXX回答了您的问题
-		 */
+		//通知提问者XXX回答了您的问题
 		messageService.addMessageByRecerver(askerId, false,
 				SelfRelatedFilter.getTypeCode(),
 				SelfRelatedFilter.MESSAGE_YOUR_QUESTION_UPDATE, producer,
 				answerId, relatedSourceContent, extraContent,
 				answer.getQuestionId());
-		/*
-		 * 通知关注该问题的人 问题有了新的回答
-		 */
+		
+		//通知关注该问题的人 问题有了新的回答
 		messageService.addMessageByFollowedQuestion(
 				DynamicFilter.getTypeCode(),
 				DynamicFilter.MESSAGE_QUESTION_NEWANSWER, producer, answerId,
-				relatedSourceContent, extraContent, answer.getQuestionId());
-		/*
-		 * 通知关注者 小明 (被关注者)回答了一个问题
-		 */
-
+			relatedSourceContent, extraContent, answer.getQuestionId());
+		
+		//通知关注者 小明 (被关注者)回答了一个问题
 		messageService.addMessageByFollowedUser(false,
 				DynamicFilter.getTypeCode(),
 				DynamicFilter.MESSAGE_FOLLOWED_ANSWER_QUESTION, producer,
 				answerId, relatedSourceContent, extraContent,
 				answer.getQuestionId());
-		/*
-		 * 用户足迹
-		 */
+		//用户足迹
 		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
 				FootprintFilter.getTypeCode(),
 				FootprintFilter.MESSAGE_USER_ADDANSWER, producer, answerId,
+				relatedSourceContent, extraContent, answer.getQuestionId());*/
+		
+		//通知提问者XXX回答了您的问题
+		messageService.addMessageByRecerver(askerId, false,
+				Message.MESSAGE_YOUR_QUESTION_UPDATE, producer,
+				answerId, relatedSourceContent, extraContent,
+				answer.getQuestionId());
+		
+		//通知关注该问题的人 问题有了新的回答
+		messageService.addMessageByFollowedQuestion(
+				Message.MESSAGE_QUESTION_NEWANSWER, producer, answerId,
+			relatedSourceContent, extraContent, answer.getQuestionId());
+		
+		//通知关注者 小明 (被关注者)回答了一个问题
+		messageService.addMessageByFollowedUser(false,
+			Message.MESSAGE_FOLLOWED_ANSWER_QUESTION, producer,
+				answerId, relatedSourceContent, extraContent,
+				answer.getQuestionId());
+		//用户足迹
+		messageService.addMessageByRecerver(Message.NULL_receiverId, false,
+				Message.MESSAGE_USER_ADDANSWER, producer, answerId,
 				relatedSourceContent, extraContent, answer.getQuestionId());
 	}
 
