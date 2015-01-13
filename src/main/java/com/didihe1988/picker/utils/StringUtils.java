@@ -5,6 +5,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import com.didihe1988.picker.common.Constant;
+
 public class StringUtils {
 	private StringUtils() {
 
@@ -40,12 +42,17 @@ public class StringUtils {
 		}
 		return stringBuffer.toString();
 	}
-
+	
 	public static String confineStringLength(String rawString, int length) {
 		if (rawString.length() < length) {
 			return rawString;
 		}
 		return rawString.substring(0, length - 1);
+	}
+
+	public static String toBrief(String content) {
+		return confineStringLength(MarkdownUtils.removeTags(content),
+				Constant.DEFAULT_BRIEF_LENGTH);
 	}
 
 	public static boolean isStringLengthOverLong(String string, int length) {

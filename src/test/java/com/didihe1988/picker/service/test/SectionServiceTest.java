@@ -1,7 +1,9 @@
-package com.didihe1988.picker.dao.test;
+package com.didihe1988.picker.service.test;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.List;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -11,42 +13,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.didihe1988.picker.dao.SectionDao;
+import com.didihe1988.picker.model.ChapterRange;
 import com.didihe1988.picker.model.Section;
+import com.didihe1988.picker.service.SectionService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:servlet-context.xml",
 		"classpath:root-context.xml" })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SectionDaoTest {
+public class SectionServiceTest {
 	@Autowired
-	private SectionDao sectionDao;
+	private SectionService sectionService;
 
 	@Test
 	public void test0() {
 		int bookId = 1035;
-		int page = 14;
-		Section section = sectionDao.querySectionByPage(bookId,
-				Section.CHAPTER, page);
-		assertNotNull(section);
-		assertSame(
-				true,
-				(page >= section.getStartPage())
-						&& (page <= section.getEndPage()));
-		System.out.println(section);
+		List<Section> sections = sectionService.getSectionsByBookId(bookId);
+		assertNotNull(sections);
+		System.out.println(sections);
 	}
 
 	@Test
 	public void test1() {
 		int bookId = 1035;
-		int page = 21;
-		Section section = sectionDao.querySectionByPage(bookId,
-				Section.CHAPTER, page);
-		assertNotNull(section);
-		assertSame(
-				true,
-				(page >= section.getStartPage())
-						&& (page <= section.getEndPage()));
-		System.out.println(section);
+		ChapterRange range = sectionService.getChapterRangeByPage(bookId,
+				Section.CHAPTER, 14);
+		assertNotNull(range);
+		System.out.println(range);
 	}
 }

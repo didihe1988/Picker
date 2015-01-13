@@ -12,8 +12,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Constant;
+import com.didihe1988.picker.common.DaoOrder;
 import com.didihe1988.picker.dao.FeedDao;
 import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.display.AttachmentFeedDp;
 import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.utils.DaoUtils;
 
@@ -156,10 +158,10 @@ public class FeedDaoImpl implements FeedDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<FeedDp> queryFeedDpListByBookId(int bookId, int type,
-			String order) {
+			DaoOrder order) {
 		// TODO Auto-generated method stub
 		String hql = "select new com.didihe1988.picker.model.display.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id "
-				+ order;
+				+ order.getContent();
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		query.setInteger(1, type);
@@ -195,13 +197,40 @@ public class FeedDaoImpl implements FeedDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<FeedDp> queryLimitedFeedDpListByBookId(int bookId, int type,
-			int limit, String order) {
+			int limit, DaoOrder order) {
 		// TODO Auto-generated method stub
 		String hql = "select new com.didihe1988.picker.model.display.FeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id"
-				+ order;
+				+ order.getContent();
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, bookId);
 		query.setInteger(1, type);
+		DaoUtils.setLimit(query, limit);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AttachmentFeedDp> queryAttFeedDpsByBookId(int bookId,
+			DaoOrder order) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.display.AttachmentFeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id"
+				+ order.getContent();
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		query.setInteger(1, Feed.TYPE_ATTACHMENT_FEED);
+		return query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<AttachmentFeedDp> queryLimitedAttFeedDpsByBookId(int bookId,
+			int limit, DaoOrder order) {
+		// TODO Auto-generated method stub
+		String hql = "select new com.didihe1988.picker.model.display.AttachmentFeedDp(f,u.username,u.avatarUrl) from Feed f ,User u where f.bookId=? and f.type=? and f.userId = u.id"
+				+ order.getContent();
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, bookId);
+		query.setInteger(1, Feed.TYPE_ATTACHMENT_FEED);
 		DaoUtils.setLimit(query, limit);
 		return query.list();
 	}

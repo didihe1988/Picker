@@ -1,34 +1,30 @@
 package com.didihe1988.picker.controller.rest;
 
 import java.io.File;
-import java.text.Normalizer.Form;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.aspectj.weaver.patterns.IfPointcut.IfFalsePointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Attachment;
-import com.didihe1988.picker.model.AttachmentFeed;
+import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.form.AttachmentFeedForm;
-import com.didihe1988.picker.service.AttachmentFeedService;
 import com.didihe1988.picker.service.AttachmentService;
+import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.utils.HttpUtils;
 import com.didihe1988.picker.utils.JsonUtils;
 
 @RestController
 public class RestAttachmentFeedController {
 	@Autowired
-	private AttachmentFeedService aFeedService;
+	private FeedService feedService;
 
 	@Autowired
 	private AttachmentService attachmentService;
@@ -39,50 +35,42 @@ public class RestAttachmentFeedController {
 		if (!form.chechValidation()) {
 			return Constant.STATUS_ERROR;
 		}
-		System.out.println(form);
-		AttachmentFeed aFeed = AttachmentFeed.getAttachmentFeed(form,
-				HttpUtils.getSessionUserId(request));
-		int status = aFeedService.addAttachmentFeed(aFeed);
+		Feed feed = new Feed(form, HttpUtils.getSessionUserId(request));
+		int status = feedService.addFeed(feed);
 		if (status == Status.SUCCESS) {
-			refreshAttachment(form,
-					aFeedService.getLatestAttachmentFeedByBookId(form
-							.getBookId()));
+			bindAttachment(form, feedService.getLatestFeedByBookId(
+					form.getBookId(), Feed.TYPE_ATTACHMENT_FEED));
+
 		}
 		return JsonUtils.getJsonObjectString(Constant.KEY_STATUS, status);
 	}
-	
-	@RequestMapping(value="/json/attachment_feed/{id}",method=RequestMethod.GET, headers = "Accept=application/json")
-	public String afeed(@PathVariable int id)
-	{
-		if(id<1)
-		{
+
+	@RequestMapping(value = "/json/attachment_feed/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String afeed(@PathVariable int id) {
+		if (id < 1) {
 			return Constant.STATUS_ERROR;
 		}
-		AttachmentFeed aFeed=aFeedService.getAttachmentFeedById(id);
-		if(aFeed!=null)
-		{
-			return JsonUtils.getJsonObjectStringFromModel(Constant.KEY_ATTACHMENTFEED,aFeed);
+		Feed attFeed = feedService.getFeedById(id);
+		if (attFeed != null) {
+			return JsonUtils.getJsonObjectStringFromModel(
+					Constant.KEY_ATTACHMENTFEED, attFeed);
 		}
 		return Constant.STATUS_ERROR;
 	}
 
-	private void refreshAttachment(AttachmentFeedForm form, int aFeedId) {
+	private void bindAttachment(AttachmentFeedForm form, int attFeedId) {
 		for (int id : form.getAttachmentIds()) {
 			Attachment attachment = attachmentService.getAttachmentById(id);
 			if (attachment == null) {
 				// 需要报错还是怎样？
 				break;
 			}
-			/*
-			 * uplate
-			 */
-			attachment.setaFeedId(aFeedId);
+			// uplate
+			attachment.setaFeedId(attFeedId);
 			attachment.setPath("/resources/attachment/book/" + form.getBookId()
-					+ "/"+attachment.getName());
+					+ "/" + attachment.getName());
 			attachmentService.updateAttachment(attachment);
-			/*
-			 * move file
-			 */
+			// move file
 			moveAttachmentFile(form.getBookId(), attachment.getName());
 
 		}

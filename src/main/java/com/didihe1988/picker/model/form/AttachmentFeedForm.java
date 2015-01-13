@@ -9,7 +9,7 @@ public class AttachmentFeedForm {
 
 	private String title;
 
-	private String describe;
+	private String content;
 
 	private List<Integer> attachmentIds;
 
@@ -37,12 +37,12 @@ public class AttachmentFeedForm {
 		this.page = page;
 	}
 
-	public String getDescribe() {
-		return describe;
+	public String getContent() {
+		return content;
 	}
 
-	public void setDescribe(String describe) {
-		this.describe = describe;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public List<Integer> getAttachmentIds() {
@@ -58,25 +58,25 @@ public class AttachmentFeedForm {
 	}
 
 	public AttachmentFeedForm(int bookId, int page, String title,
-			String describe, List<Integer> attachmentIds) {
+			String content, List<Integer> attachmentIds) {
 		super();
 		this.bookId = bookId;
 		this.page = page;
 		this.title = title;
-		this.describe = describe;
+		this.content = content;
 		this.attachmentIds = attachmentIds;
 	}
 
 	@Override
 	public String toString() {
 		return "AttachmentFeedForm [bookId=" + bookId + ", page=" + page
-				+ ", title=" + title + ", describe=" + describe
+				+ ", title=" + title + ", content=" + content
 				+ ", attachmentIds=" + attachmentIds + "]";
 	}
 
 	public boolean chechValidation() {
-		if ((this.bookId > 0) && (this.page >= 0) && (this.describe != null)
-				&& (!this.describe.equals("")) && (this.attachmentIds != null)
+		if ((this.bookId > 0) && (this.page >= 0) && (this.content != null)
+				&& (!this.content.equals("")) && (this.attachmentIds != null)
 				&& (this.title != null) && (!this.title.equals(""))) {
 			return true;
 		}

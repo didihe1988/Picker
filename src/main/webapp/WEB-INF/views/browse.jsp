@@ -266,7 +266,59 @@
 									</div>
 								</div>
 							</c:if>
+							<c:if test="${feed.type ==3}">
+								<div class="feeds">
+									<div class="browse_list_meta clear_fix">
+										<div class="title note">
+											<i class="icon-edit"></i>附件
+										</div>
+										<div class="photo">
+											<img src=<c:url value="${feed.userAvatarUrl}"/>>
+										</div>
 
+									</div>
+									<div class="browse_brief clear_fix">
+										<div class="feed_text_wrap">
+											<a href="/">
+												<div class="feed_text">${feed.content}</div>
+											</a>
+										</div>
+										<div style="width: 2%; height: 1px; float: left"></div>
+										<div class="feed_picture">
+											<img src="/static/images/content/1.png">
+										</div>
+									</div>
+									<div class="feed_tool_bar">
+
+										<div class="line show_comment" data-action="get_comment"
+											data-url="<c:url value="/note/${feed.id}/comments"/>"
+											data-passage-id="${book.id}"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-comments-alt"></i><span id="comment_num">${feed.commentNum}</span>条评论
+										</div>
+										<div style="display: none" class="line hide_comment"
+											data-action="hide_comment" data-passage-id="123"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-double-angle-up"></i>收起评论
+										</div>
+										<span class="time">${feed.strDate}</span>
+									</div>
+									<div style="clear: both"></div>
+									<div class="comments clear_fix">
+										<div class="waiting">
+											<i class="icon-spinner icon-spin"></i>
+										</div>
+										<div class="comments_list"></div>
+
+										<div class="do_comment">
+											<div class="comment clear_fix">
+												<input id="content" type="text">
+												<button class="btn btn-success" onclick="add_comment($(this),${feed.id},'note')">提交</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
 						</div>
 					</c:forEach>
 				</div>

@@ -1,9 +1,12 @@
 package com.didihe1988.picker.model.display;
 
-import com.didihe1988.picker.model.AttachmentFeed;
+import java.util.List;
+
+import com.didihe1988.picker.model.Attachment;
+import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.utils.DateUtils;
 
-public class AttachmentFeedDp extends AttachmentFeed {
+public class AttachmentFeedDp extends Feed {
 
 	/**
 	 * 
@@ -15,6 +18,8 @@ public class AttachmentFeedDp extends AttachmentFeed {
 	private String userAvatarUrl;
 
 	private String strDate;
+
+	private List<Attachment> attachments;
 
 	public String getUserName() {
 		return userName;
@@ -40,18 +45,35 @@ public class AttachmentFeedDp extends AttachmentFeed {
 		this.strDate = strDate;
 	}
 
-	public AttachmentFeedDp(AttachmentFeed attachmentFeed, String userName,
-			String userAvatarUrl) {
-		super(attachmentFeed);
+	public List<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<Attachment> attachments) {
+		this.attachments = attachments;
+	}
+
+	public AttachmentFeedDp(Feed feed, String userName, String userAvatarUrl) {
+		super(feed);
 		this.userAvatarUrl = userAvatarUrl;
 		this.userName = userName;
-		this.strDate = DateUtils.toDate(attachmentFeed.getDate());
+		this.strDate = DateUtils.toDate(feed.getDate());
+	}
+
+	public AttachmentFeedDp(Feed feed, String userName, String userAvatarUrl,
+			List<Attachment> attachments) {
+		super(feed);
+		this.userAvatarUrl = userAvatarUrl;
+		this.userName = userName;
+		this.strDate = DateUtils.toDate(feed.getDate());
+		this.attachments = attachments;
 	}
 
 	@Override
 	public String toString() {
 		return "AttachmentFeedDp [userName=" + userName + ", userAvatarUrl="
-				+ userAvatarUrl + ", strDate=" + strDate + "]";
+				+ userAvatarUrl + ", strDate=" + strDate + ", attachments="
+				+ attachments + "]";
 	}
 
 }

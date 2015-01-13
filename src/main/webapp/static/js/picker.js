@@ -1141,6 +1141,8 @@ function switch_content(filter_div, book_id) {
         url: '/json/book/' + book_id + '/' + type + 'dps?type=page',
         type: 'get',
         success: function (req) {
+            //window.history.pushState(null,"类型",window.location.href+'?type='+type);
+            window.history.pushState(null,"类型",get_type_url(window.location.href,type));
             $('#pages_container').empty();
             var cur_page;
             $(req[type + 'List']).each(function (index, post) {
@@ -1160,6 +1162,18 @@ function switch_content(filter_div, book_id) {
             console.log('error');
         }
     });
+}
+
+function get_type_url(cur_url,type)
+{
+   var index=cur_url.indexOf('?');
+    if(index!=-1)
+    {
+        cur_url=cur_url.substring(0,index);
+        console.log(cur_url);
+    }
+    cur_url+='?type='+type;
+    return cur_url;
 }
 
 //mail.jsp

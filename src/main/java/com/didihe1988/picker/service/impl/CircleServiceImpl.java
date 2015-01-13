@@ -7,14 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.common.Status;
-import com.didihe1988.picker.dao.AttachmentFeedDao;
 import com.didihe1988.picker.dao.CircleDao;
 import com.didihe1988.picker.dao.CircleMemberDao;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.CircleMember;
 import com.didihe1988.picker.model.display.CircleDp;
-import com.didihe1988.picker.service.AttachmentFeedService;
 import com.didihe1988.picker.service.CircleService;
 
 @Service
@@ -29,8 +27,6 @@ public class CircleServiceImpl implements CircleService {
 	@Autowired
 	private UserDao userDao;
 
-	@Autowired
-	private AttachmentFeedDao attachmentDao;
 
 	@Override
 	public int addCircle(Circle circle) {

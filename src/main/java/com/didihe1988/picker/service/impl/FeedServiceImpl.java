@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.DaoOrder;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.dao.AttachmentDao;
 import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.dao.FavoriteDao;
 import com.didihe1988.picker.dao.FeedDao;
@@ -20,6 +22,7 @@ import com.didihe1988.picker.model.Favorite;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Follow;
 import com.didihe1988.picker.model.RelatedImage;
+import com.didihe1988.picker.model.display.AttachmentFeedDp;
 import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.model.json.QuestionJson;
@@ -47,6 +50,9 @@ public class FeedServiceImpl implements FeedService {
 
 	@Autowired
 	private RelatedImageDao relatedImageDao;
+
+	@Autowired
+	private AttachmentDao attachmentDao;
 
 	@Autowired
 	@Qualifier("questionDpGenerator")
@@ -224,7 +230,7 @@ public class FeedServiceImpl implements FeedService {
 
 	@Override
 	public List<FeedDp> getFeedDpListByBookId(int bookId, int type,
-			int curUserId, String order) {
+			int curUserId, DaoOrder order) {
 		// TODO Auto-generated method stub
 		List<FeedDp> list = feedDao
 				.queryFeedDpListByBookId(bookId, type, order);
@@ -257,7 +263,7 @@ public class FeedServiceImpl implements FeedService {
 
 	@Override
 	public List<FeedDp> getLimitedFeedDpListByBookId(int bookId, int type,
-			int curUserId, int limit, String order) {
+			int curUserId, int limit, DaoOrder order) {
 		// TODO Auto-generated method stub
 		List<FeedDp> list = feedDao.queryLimitedFeedDpListByBookId(bookId,
 				type, limit, order);
@@ -369,6 +375,59 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		return feedDao.queryModelListBetweenPage(bookId,
 				chapterRange.getStartPage(), chapterRange.getEndPage());
+	}
+
+	@Override
+	public List<AttachmentFeedDp> getAttFeedDpsByBookId(int bookId) {
+		// TODO Auto-generated method stub
+		List<AttachmentFeedDp> attFeedDps = feedDao.queryAttFeedDpsByBookId(
+				bookId, DaoOrder.FeedIdOrder);
+		for (AttachmentFeedDp attFeedDp : attFeedDps) {
+			setAttachments(attFeedDp);
+		}
+		return attFeedDps;
+	}
+
+	@Override
+	public List<AttachmentFeedDp> getAttFeedDpsByBookId(int bookId,
+			DaoOrder order) {
+		// TODO Auto-generated method stub
+		List<AttachmentFeedDp> attFeedDps = feedDao.queryAttFeedDpsByBookId(
+				bookId, order);
+		for (AttachmentFeedDp attFeedDp : attFeedDps) {
+			setAttachments(attFeedDp);
+		}
+		return attFeedDps;
+	}
+
+	@Override
+	public List<AttachmentFeedDp> getLimitedAttFeedDpsByBookId(int bookId,
+			int limit) {
+		// TODO Auto-generated method stub
+		List<AttachmentFeedDp> attFeedDps = feedDao
+				.queryLimitedAttFeedDpsByBookId(bookId, limit,
+						DaoOrder.FeedIdOrder);
+		for (AttachmentFeedDp attFeedDp : attFeedDps) {
+			setAttachments(attFeedDp);
+		}
+		return attFeedDps;
+	}
+
+	@Override
+	public List<AttachmentFeedDp> getLimitedAttFeedDpsByBookId(int bookId,
+			int limit, DaoOrder order) {
+		// TODO Auto-generated method stub
+		List<AttachmentFeedDp> attFeedDps = feedDao
+				.queryLimitedAttFeedDpsByBookId(bookId, limit, order);
+		for (AttachmentFeedDp attFeedDp : attFeedDps) {
+			setAttachments(attFeedDp);
+		}
+		return attFeedDps;
+	}
+
+	private void setAttachments(AttachmentFeedDp attFeedDp) {
+		attFeedDp.setAttachments(attachmentDao.queryAttachments(attFeedDp
+				.getId()));
 	}
 
 }

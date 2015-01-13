@@ -89,9 +89,7 @@ public class Answer implements Serializable {
 
 	public Answer(AnswerForm answerForm, int userId) {
 		this(answerForm.getQuestionId(), userId, answerForm.getRaw(),
-				StringUtils.confineStringLength(
-						MarkdownUtils.removeTags(answerForm.getRaw()),
-						Constant.DEFAULT_BRIEF_LENGTH), new Date());
+				StringUtils.toBrief(answerForm.getRaw()), new Date());
 	}
 
 	public int getId() {
@@ -159,9 +157,7 @@ public class Answer implements Serializable {
 	}
 
 	public void setBriefByContent() {
-		this.brief = StringUtils.confineStringLength(
-				MarkdownUtils.removeTags(this.content),
-				Constant.DEFAULT_BRIEF_LENGTH);
+		this.brief = StringUtils.toBrief(this.content);
 	}
 
 	@Override

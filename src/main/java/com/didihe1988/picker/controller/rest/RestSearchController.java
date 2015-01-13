@@ -12,17 +12,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.didihe1988.picker.common.Constant;
-import com.didihe1988.picker.model.AttachmentFeed;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.ChapterRange;
 import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.model.Section;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.SearchResult;
 import com.didihe1988.picker.model.interfaces.SearchModel;
 import com.didihe1988.picker.model.json.CircleJson;
 import com.didihe1988.picker.service.AnswerService;
-import com.didihe1988.picker.service.AttachmentFeedService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.CircleService;
 import com.didihe1988.picker.service.FeedService;
@@ -53,9 +52,6 @@ public class RestSearchController {
 
 	@Autowired
 	private CircleService circleService;
-
-	@Autowired
-	private AttachmentFeedService aFeedService;
 
 	private SearchModelListGenerator generator = new SearchModelListGenerator();
 
@@ -153,13 +149,10 @@ public class RestSearchController {
 		}
 		// get ChapterRange
 		ChapterRange chapterRange = sectionService.getChapterRangeByPage(book,
-				page);
-		List<AttachmentFeed> aFeedList = aFeedService
-				.getAttachmentFeedListByChapterRange(bookId, chapterRange);
+				Section.CHAPTER, page);
 		List<Feed> feedList = feedService.getFeedListByChapterRange(bookId,
 				chapterRange);
-		List<SearchResult> list = generator.toSearchResults(aFeedList);
-		list = generator.addSearchResults(list, feedList);
+		List<SearchResult> list = generator.toSearchResults(feedList);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
 				list);
 	}

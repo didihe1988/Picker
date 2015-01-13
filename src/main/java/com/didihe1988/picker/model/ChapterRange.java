@@ -36,4 +36,10 @@ public class ChapterRange {
 				+ range);
 	}
 
+	@Override
+	public String toString() {
+		return "ChapterRange [startPage=" + startPage + ", endPage=" + endPage
+				+ "]";
+	}
+
 }

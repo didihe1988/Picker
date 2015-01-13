@@ -1,5 +1,7 @@
 package com.didihe1988.picker.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.didihe1988.picker.dao.AttachmentDao;
 import com.didihe1988.picker.model.Attachment;
+import com.didihe1988.picker.model.Feed;
+import com.didihe1988.picker.utils.DaoUtils;
 
 @Repository
 @Transactional
@@ -74,6 +78,16 @@ public class AttachmentDaoImpl implements AttachmentDao {
 		String hql = "select max(a.id) from Attachment as a";
 		Query query = getCurrentSession().createQuery(hql);
 		return (Integer) query.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Attachment> queryAttachments(int attFeedId) {
+		// TODO Auto-generated method stub
+		String hql = "from Attachment where aFeedId = ?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, attFeedId);
+		return query.list();
 	}
 
 }

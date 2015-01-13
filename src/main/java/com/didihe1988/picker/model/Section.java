@@ -12,8 +12,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "chapter")
+@Table(name = "section")
 public class Section implements Serializable {
+
+	public static final int CHAPTER = 1;
+	public static final int SECTION = 2;
+	public static final int SUBSECTION = 3;
+
 	/**
 	 * 
 	 */
@@ -25,31 +30,33 @@ public class Section implements Serializable {
 	 */
 	@Id
 	@GeneratedValue
-	@Column(name = "chapter_id")
+	@Column(name = "section_id")
 	private long id;
-	
+
 	/*
-	 * 用于扫页码出章节相关资源功能
-	 * 由前端在编辑时自动填充，对用户透明
+	 * 用于扫页码出章节相关资源功能 由前端在编辑时自动填充，对用户透明
 	 */
-	@Column(name = "chapter_bookid")
+	@Column(name = "section_bookid")
 	private int bookId;
 
+	@Column(name = "section_type")
+	private int type;
+
 	// 1.1 1.1.2 ...
-	@Column(name = "chapter_num")
+	@Column(name = "section_num")
 	private String num;
 
-	@Column(name = "chapter_name")
+	@Column(name = "section_name")
 	private String name;
-	
-	@Column(name = "chapter_startpage")
+
+	// 每一章节下的小节的页码范围应该在章节页码之间，可以通过这个选取List<小节>
+	@Column(name = "section_startpage")
 	private int startPage;
-	
+
 	/*
-	 * 用于扫页码时快速得到该页所属章节
-	 * 由前端在编辑时自动填充，对用户透明
+	 * 用于扫页码时快速得到该页所属章节 由前端在编辑时自动填充，对用户透明
 	 */
-	@Column(name = "chapter_endpage")
+	@Column(name = "section_endpage")
 	private int endPage;
 
 	@Transient
@@ -69,6 +76,14 @@ public class Section implements Serializable {
 
 	public void setBookId(int bookId) {
 		this.bookId = bookId;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 
 	public String getNum() {
@@ -110,39 +125,43 @@ public class Section implements Serializable {
 	public void setSubSections(List<Section> subSections) {
 		this.subSections = subSections;
 	}
-	
+
 	public Section() {
 
 	}
 
-	public Section(long id, int bookId, String num, String name, int startPage,int endPage,
-			List<Section> subSections) {
+	public Section(long id, int bookId, int type, String num, String name,
+			int startPage, int endPage, List<Section> subSections) {
 		super();
 		this.id = id;
 		this.bookId = bookId;
+		this.type = type;
 		this.num = num;
 		this.name = name;
-		this.startPage=startPage;
-		this.endPage=endPage;
+		this.startPage = startPage;
+		this.endPage = endPage;
 		this.subSections = subSections;
 	}
 
-	public Section(int bookId, String num, String name, int startPage,int endPage,
-			List<Section> subSections) {
+	public Section(int bookId, int type, String num, String name,
+			int startPage, int endPage, List<Section> subSections) {
 		this.bookId = bookId;
+		this.type = type;
 		this.num = num;
 		this.name = name;
-		this.startPage=startPage;
-		this.endPage=endPage;
+		this.startPage = startPage;
+		this.endPage = endPage;
 		this.subSections = subSections;
 	}
 
-	public Section(int bookId, String num, String name, int startPage,int endPage) {
+	public Section(int bookId, int type, String num, String name,
+			int startPage, int endPage) {
 		this.bookId = bookId;
+		this.type = type;
 		this.num = num;
 		this.name = name;
-		this.startPage=startPage;
-		this.endPage=endPage;
+		this.startPage = startPage;
+		this.endPage = endPage;
 		this.subSections = NULL_SUB_SECTIONS;
 	}
 
@@ -152,11 +171,10 @@ public class Section implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Section [id=" + id + ", bookId=" + bookId + ", num=" + num
-				+ ", name=" + name + ", startPage=" + startPage + ", endPage="
-				+ endPage + ", subSections=" + subSections + "]";
+		return "Section [id=" + id + ", bookId=" + bookId + ", type=" + type
+				+ ", num=" + num + ", name=" + name + ", startPage="
+				+ startPage + ", endPage=" + endPage + ", subSections="
+				+ subSections + "]";
 	}
 
-
-	
 }

@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.model.display.SearchResult;
+import com.didihe1988.picker.model.form.AttachmentFeedForm;
 import com.didihe1988.picker.model.form.FeedForm;
 import com.didihe1988.picker.model.interfaces.SearchModel;
 import com.didihe1988.picker.utils.MarkdownUtils;
@@ -28,6 +29,7 @@ public class Feed implements Serializable, SearchModel {
 	public static final int TYPE_ALL = 0;
 	public static final int TYPE_QUESTION = 1;
 	public static final int TYPE_NOTE = 2;
+	public static final int TYPE_ATTACHMENT_FEED = 3;
 
 	@Id
 	@GeneratedValue
@@ -189,9 +191,7 @@ public class Feed implements Serializable, SearchModel {
 	 * @description 移除content的MarkDown tag
 	 */
 	public void setBriefByContent() {
-		this.brief = StringUtils.confineStringLength(
-				MarkdownUtils.removeTags(this.content),
-				Constant.DEFAULT_BRIEF_LENGTH);
+		this.brief = StringUtils.toBrief(this.content);
 	}
 
 	public Feed() {
@@ -259,10 +259,14 @@ public class Feed implements Serializable, SearchModel {
 
 	public Feed(FeedForm feedForm, int bookId, int userId) {
 		this(bookId, userId, feedForm.getTitle(), feedForm.getRaw(),
-				StringUtils.confineStringLength(
-						MarkdownUtils.removeTags(feedForm.getRaw()),
-						Constant.DEFAULT_BRIEF_LENGTH), feedForm.getPage(),
+				StringUtils.toBrief(feedForm.getRaw()), feedForm.getPage(),
 				toType(feedForm.getType()));
+	}
+
+	public Feed(AttachmentFeedForm form, int curUserId) {
+		this(form.getBookId(), curUserId, form.getTitle(), form.getContent(),
+				StringUtils.toBrief(form.getContent()), form.getPage(),
+				Feed.TYPE_ATTACHMENT_FEED);
 	}
 
 	private static int toType(String formType) {
@@ -295,26 +299,20 @@ public class Feed implements Serializable, SearchModel {
 	}
 
 	/**
-	 * 
 	 * @description check: bookId userId title content page
 	 */
 	public boolean checkFieldValidation() {
-		/*
-		 * 算上了page==0
-		 */
+		// 算上了page==0
 		if ((this.bookId > 0) && (this.title != null)
 				&& (!this.title.equals("")) && (this.content != null)
 				&& (!this.content.equals("")) && (this.page >= 0)) {
 			return true;
 		}
 		return false;
-
 	}
 
 	@Override
 	public SearchResult toSearchResult() {
-		// TODO Auto-generated method stub
-
 		return new SearchResult(this.id, getSearchResultType(), this.title,
 				this.brief);
 	}
