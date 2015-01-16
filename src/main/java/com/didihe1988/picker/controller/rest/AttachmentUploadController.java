@@ -4,6 +4,9 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +20,7 @@ import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.model.Attachment;
 import com.didihe1988.picker.service.AttachmentService;
 import com.didihe1988.picker.utils.JsonUtils;
+import com.didihe1988.picker.utils.StringUtils;
 
 @RestController
 public class AttachmentUploadController {
@@ -25,13 +29,24 @@ public class AttachmentUploadController {
 
 	@RequestMapping(value = "/json/attachment_upload", method = RequestMethod.POST, headers = "Accept=application/json")
 	public String attachmentUpload(
-			@RequestParam("attachment") MultipartFile file) {
+			@RequestParam("attachment") MultipartFile file,HttpServletRequest request) {
+		if(request.getCharacterEncoding()==null)
+		{
+			try {
+				request.setCharacterEncoding("UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		if (file.isEmpty()) {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.EMPTY);
 		}
+		System.out.println(request.getCharacterEncoding());
 		System.out.println("file name: "+file.getName());
-		String name = file.getOriginalFilename();
+		String name = StringUtils.toUTF8(file.getOriginalFilename());
+		System.out.println(name);
 		/*
 		 * if (attachmentService.isAttachmentExistsByName(name, bookId)) {
 		 * return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,

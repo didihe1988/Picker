@@ -90,7 +90,7 @@ public class UserController {
 
 			try {
 				// response.sendRedirect("/user/" + user.getId());
-				response.sendRedirect("");
+				response.sendRedirect("/dynamic/1");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

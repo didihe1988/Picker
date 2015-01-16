@@ -25,7 +25,7 @@
 </head>
 
 <!--TODO: AJAX取消息-->
-<body>
+<body onload="gen_pagination(${curPage},${totalPage})">
 	<!-- set curUserId -->
 	<%
 		int curUserId = (Integer) request.getSession().getAttribute(

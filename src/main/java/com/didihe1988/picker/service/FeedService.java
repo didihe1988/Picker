@@ -17,7 +17,7 @@ public interface FeedService {
 	public Feed getFeedById(int id);
 
 	public FeedDp getFeedDpByFeedId(int id, int curUserId);
-	
+
 	public AttachmentFeedDp getAttFeedDpByFeedId(int id);
 
 	public int addFeed(Feed feed);
@@ -31,7 +31,6 @@ public interface FeedService {
 	public int getLatestFeedByBookId(int bookId, int type);
 
 	public boolean isFeedExistsById(int id);
-	
 
 	/*
 	 * ---getFeedList starts---
@@ -49,21 +48,28 @@ public interface FeedService {
 			int curUserId);
 
 	public List<FeedDp> getFeedDpListByBookId(int bookId, int type,
-			int curUserId,DaoOrder order);
+			int curUserId, DaoOrder order);
 
 	public List<FeedDp> getLimitedFeedDpListByBookId(int bookId, int type,
 			int curUserId, int limit);
 
 	public List<FeedDp> getLimitedFeedDpListByBookId(int bookId, int type,
-			int curUserId, int limit,DaoOrder order);
-	
+			int curUserId, int limit, DaoOrder order);
+
+	// 所有种类的Feed
+	List<FeedDp> getLimitedFeedDpsByBookId(int bookId, int limit,
+			int curUserId, DaoOrder order);
+
 	public List<AttachmentFeedDp> getAttFeedDpsByBookId(int bookId);
-	
-	public List<AttachmentFeedDp> getAttFeedDpsByBookId(int bookId,DaoOrder order);
-	
-	public List<AttachmentFeedDp> getLimitedAttFeedDpsByBookId(int bookId,int limit);
-	
-	public List<AttachmentFeedDp> getLimitedAttFeedDpsByBookId(int bookId,int limit,DaoOrder order);
+
+	public List<AttachmentFeedDp> getAttFeedDpsByBookId(int bookId,
+			DaoOrder order);
+
+	public List<AttachmentFeedDp> getLimitedAttFeedDpsByBookId(int bookId,
+			int limit);
+
+	public List<AttachmentFeedDp> getLimitedAttFeedDpsByBookId(int bookId,
+			int limit, DaoOrder order);
 
 	public List<Feed> getFeedListForBrowse(int bookId);
 
@@ -81,8 +87,6 @@ public interface FeedService {
 
 	public List<Feed> getFeedListByChapterRange(int bookId,
 			ChapterRange chapterRange);
-	
-	
 
 	/*
 	 * ---getFeedList ends---

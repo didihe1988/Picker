@@ -41,8 +41,8 @@ public class Book implements Serializable, SearchModel {
 
 	@Column(name = "book_date")
 	private String date;
-	
-	@Column(name="book_inventory")
+
+	@Column(name = "book_inventory")
 	private boolean hasInventory;
 
 	@Column(name = "book_follownum")
@@ -53,6 +53,9 @@ public class Book implements Serializable, SearchModel {
 
 	@Column(name = "book_notenum")
 	private int noteNum;
+
+	@Column(name = "book_attnum")
+	private int attachmentNum;
 
 	@Column(name = "book_imageurl")
 	private String imageUrl;
@@ -136,8 +139,7 @@ public class Book implements Serializable, SearchModel {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
-	
+
 	public boolean hasInventory() {
 		return hasInventory;
 	}
@@ -153,16 +155,23 @@ public class Book implements Serializable, SearchModel {
 	public void setNoteNum(int noteNum) {
 		this.noteNum = noteNum;
 	}
-	
-	
+
+	public int getAttachmentNum() {
+		return attachmentNum;
+	}
+
+	public void setAttachmentNum(int attachmentNum) {
+		this.attachmentNum = attachmentNum;
+	}
 
 	public Book() {
 
 	}
 
 	public Book(int id, String bookName, String isbn, String writer,
-			String press, int pages, String date, int followNum,
-			int questionNum, int noteNum, String imageUrl) {
+			String press, int pages, String date, boolean hasInventory,
+			int followNum, int questionNum, int noteNum, int attachmentNum,
+			String imageUrl) {
 		super();
 		this.id = id;
 		this.bookName = bookName;
@@ -171,11 +180,12 @@ public class Book implements Serializable, SearchModel {
 		this.press = press;
 		this.pages = pages;
 		this.date = date;
+		this.hasInventory = hasInventory;
 		this.followNum = followNum;
 		this.questionNum = questionNum;
 		this.noteNum = noteNum;
+		this.attachmentNum = attachmentNum;
 		this.imageUrl = imageUrl;
-		this.hasInventory=false;
 	}
 
 	public Book(String bookName, String isbn, String writer, String press,
@@ -188,10 +198,8 @@ public class Book implements Serializable, SearchModel {
 		this.pages = pages;
 		this.date = date;
 		this.imageUrl = imageUrl;
-		this.hasInventory=false;
+		this.hasInventory = false;
 	}
-
-	
 
 	@Override
 	public String toString() {
@@ -199,7 +207,8 @@ public class Book implements Serializable, SearchModel {
 				+ ", writer=" + writer + ", press=" + press + ", pages="
 				+ pages + ", date=" + date + ", hasInventory=" + hasInventory
 				+ ", followNum=" + followNum + ", questionNum=" + questionNum
-				+ ", noteNum=" + noteNum + ", imageUrl=" + imageUrl + "]";
+				+ ", noteNum=" + noteNum + ", attachmentNum=" + attachmentNum
+				+ ", imageUrl=" + imageUrl + "]";
 	}
 
 	@Override
@@ -212,8 +221,8 @@ public class Book implements Serializable, SearchModel {
 		 * return new SearchResult(this.id, Type.Book, this.bookName, "作者: " +
 		 * this.writer, this.imageUrl);
 		 */
-		return new SearchResult(this.id,SearchResult.RESULT_BOOK, this.bookName, "作者: "
-				+ this.writer,this.imageUrl);
+		return new SearchResult(this.id, SearchResult.RESULT_BOOK,
+				this.bookName, "作者: " + this.writer, this.imageUrl);
 	}
-	
+
 }

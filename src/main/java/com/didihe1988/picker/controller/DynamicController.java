@@ -8,14 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Bought;
+import com.didihe1988.picker.model.Message;
+import com.didihe1988.picker.model.Message.Filter;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.BoughtService;
 import com.didihe1988.picker.service.MessageService;
 import com.didihe1988.picker.utils.HttpUtils;
+import com.didihe1988.picker.utils.JsonUtils;
 
 @Controller
 public class DynamicController {
@@ -31,15 +35,20 @@ public class DynamicController {
 	/**
 	 * @description 显示我的动态
 	 */
-	/*
-	 * localhost:8090
-	 */
-	@RequestMapping(value = "")
-	public String dynamic(Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/dynamic/{page}")
+	public String dynamic(@PathVariable int page, Model model,
+			HttpServletRequest request) {
+		if (page < 1) {
+			return "error";
+		}
 		int curUserId = HttpUtils.getSessionUserId(request);
 		model.addAttribute("messageList",
-				messageService.getDynamicsByUserId(curUserId));
+				messageService.getLimitedDynamicsByUserId(curUserId, page - 1));
 		model.addAttribute("bookList", getBooks(curUserId));
+		model.addAttribute("totalPage", JsonUtils
+				.getTotalPage(messageService.getMessagesByUserIdAndFilter(
+						curUserId, Filter.MESSAGE_DYNAMIC).size()));
+		model.addAttribute("curPage", page);
 		return "index";
 	}
 

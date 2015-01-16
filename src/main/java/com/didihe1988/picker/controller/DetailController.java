@@ -127,7 +127,7 @@ public class DetailController {
 		int userId = HttpUtils.getSessionUserId(request);
 		User producer = userService.getUserById(userId);
 		int feedId = feedService.getLatestFeedByBookId(feed.getBookId(),
-				Feed.TYPE_QUESTION);
+				feed.getType());
 		String relatedSourceContent = StringUtils.confineStringLength(
 				feed.getBrief(), Constant.MESSAGE_LENGTH);
 		String extraContent = feedService.getFeedById(feedId).getTitle();

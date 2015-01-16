@@ -1052,7 +1052,7 @@ function set_create_new_feed_url(a_dom, book_id) {
     a_dom.attr('href', '/detail/' + book_id + '/' + page + '/new');
 }
 
-//user.jsp
+//---user.jsp---
 function choose_panel_action(type, page) {
     switch (type) {
         case 0:
@@ -1079,7 +1079,7 @@ function reset_specific_url_div(url_div, page) {
 }
 
 
-//browse.jsp inventory
+//---browse.jsp inventory---
 function get_inventory() {
     $.ajax({
         url: '/json/test/sections',
@@ -1110,6 +1110,7 @@ function get_inventory() {
             console.log('error');
         }
     });
+
 }
 
 function set_apostrophes() {
@@ -1132,24 +1133,47 @@ function get_entity_content_width(inv_entity) {
     return inv_entity.find('.chapter_title').width() + inv_entity.find('.inv_page').width() + 15;
 }
 
-//browse.jsp  switch content among question/note/attachment
+//---browse.jsp---
+function choose_content(book_id, page) {
+    var type = $('#cur_content_type').text();
+    var url_div = $('#' + type + 's_url');
+    reset_specific_url_div(url_div, page);
+    switch_content($('#' + type + '_content'), book_id);
+}
+
+//switch content among question/note/attachment
 function switch_content(filter_div, book_id) {
     filter_div.addClass('active');
     filter_div.siblings().removeClass('active');
     var type = (filter_div.data('filter'));
+    var url_div = $('#' + type + 's_url');
     $.ajax({
-        url: '/json/book/' + book_id + '/' + type + 'dps?type=page',
+        url: '/json' + url_div.data('value'),
         type: 'get',
         success: function (req) {
-            //window.history.pushState(null,"类型",window.location.href+'?type='+type);
-            window.history.pushState(null,"类型",get_type_url(window.location.href,type));
+            window.history.pushState(null, "类型", url_div.data('value'));
             $('#pages_container').empty();
             var cur_page;
-            $(req[type + 'List']).each(function (index, post) {
-                var new_post_dom = $(nano_template($(
-                        '#' + type + '_template').html(), {
-                    'post': post
-                }));
+            $(req['feedList']).each(function (index, post) {
+                var new_post_dom;
+                if (post.type == 1) {
+                    new_post_dom = $(nano_template($(
+                        '#question_template').html(), {
+                        'post': post
+                    }));
+                }
+                else if (post.type == 2) {
+                    new_post_dom = $(nano_template($(
+                        '#note_template').html(), {
+                        'post': post
+                    }));
+                }
+                else if (post.type == 3) {
+                    new_post_dom = $(nano_template($(
+                        '#attachment_template').html(), {
+                        'post': post
+                    }));
+                }
                 if (cur_page == post.page) {
                     new_post_dom.find('.page_split').hide();
                 }
@@ -1157,6 +1181,10 @@ function switch_content(filter_div, book_id) {
                 cur_page = post.page;
             });
 
+            var pagination = gen_paging(parseInt(req['current_page']),
+                parseInt(req['total_page']),
+                    '/browse/' + book_id + '/' + type + 's');
+            $('#pages_container').append(pagination);
         },
         error: function () {
             console.log('error');
@@ -1164,34 +1192,28 @@ function switch_content(filter_div, book_id) {
     });
 }
 
-function get_type_url(cur_url,type)
-{
-   var index=cur_url.indexOf('?');
-    if(index!=-1)
-    {
-        cur_url=cur_url.substring(0,index);
-        console.log(cur_url);
-    }
-    cur_url+='?type='+type;
-    return cur_url;
+//index.jsp
+function gen_pagination(current_page, total_page) {
+    var pagination_div = gen_paging(current_page, total_page,
+        '/dynamic');
+    $('.pagination').replaceWith(pagination_div);
 }
 
-//mail.jsp
-function get_replies(mail,dialog_id,cur_user_id) {
-    var my_replies=mail.find('.my_replies');
+//---mail.jsp---
+function get_replies(mail, dialog_id, cur_user_id) {
+    var my_replies = mail.find('.my_replies');
     $.ajax({
-        url: '/json/pmessage/'+dialog_id+'/dp',
+        url: '/json/pmessage/' + dialog_id + '/dp',
         type: 'get',
         success: function (req) {
             my_replies.empty();
             $(req['privateMessageList']).each(function (index, mail) {
-                var template_name='replier_template';
-                if(cur_user_id==mail.senderId)
-                {
-                    template_name='sender_template';
+                var template_name = 'replier_template';
+                if (cur_user_id == mail.senderId) {
+                    template_name = 'sender_template';
                 }
                 var new_reply_dom = $(nano_template($(
-                        '#' +template_name).html(), {
+                        '#' + template_name).html(), {
                     'mail': mail
                 }));
                 my_replies.append(new_reply_dom);

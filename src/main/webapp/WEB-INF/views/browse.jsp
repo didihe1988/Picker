@@ -27,7 +27,15 @@
 </head>
 
 <!--TODO: AJAX取消息-->
-<body onload="get_inventory();">
+<body onload="choose_content(${book.id},${page})">
+    <div id="cur_content_type" style="display: none">${type}</div>
+
+    <!--为 全部/提问/笔记/附件 提供url定位-->
+    <div id="feeds_url" data-value="/browse/${book.id}/feeds/1" style="display: none"></div>
+    <div id="notes_url" data-value="/browse/${book.id}/notes/1" style="display: none"></div>
+    <div id="questions_url" data-value="/browse/${book.id}/questions/1" style="display: none"></div>
+    <div id="attachments_url" data-value="/browse/${book.id}/attachments/1" style="display: none"></div>
+
 	<div id="nav" class="row">
 		<div id="nav_content">
 			<div class="col-13">
@@ -354,10 +362,10 @@
 					</div>
 					<div class="row browse_tool">
 						<div class="col-30 filter">
-							<div class="active" data-filter="all">全部</div>
-							<div data-filter="question" onclick="switch_content($(this),${book.id})">问答</div>
-							<div data-filter="note" onclick="switch_content($(this),${book.id})">笔记</div>
-                            <div data-filter="attachment" onclick="switch_content($(this),${book.id})">附件</div>
+							<div id="feed_content" class="active" data-filter="feed" onclick="switch_content($(this),${book.id})">全部</div>
+							<div id="question_content" data-filter="question" onclick="switch_content($(this),${book.id})">问答</div>
+							<div id="note_content" data-filter="note" onclick="switch_content($(this),${book.id})">笔记</div>
+                            <div id="attachment_content" data-filter="attachment" onclick="switch_content($(this),${book.id})">附件</div>
 						</div>
 						<div class="col-69 action">
 							<div>
@@ -372,6 +380,7 @@
 							</div>
 						</div>
 					</div>
+                    <!--
 					<div class="recommend_list">
 						<div class="title">本书热门推荐</div>
 						<ul>
@@ -401,6 +410,7 @@
 							</div>
 						</div>
 					</div>
+                    -->
                     <!--
                     <div class="inventory">
                         <div class="chapter">第5章 向量代数与空间解析几何</div><div class="apostrophe">.....</div>18页
@@ -691,6 +701,18 @@
 						{req.feeds}
 					</div>
 				</div>
+
+                <div id="pagination_template">
+                    <div style="text-align: center">
+                    <!-- {hack.e}
+                    <ul class="pagination">
+                        {pagination.pre()}
+                        {pagination.paging()}
+                        {pagination.next()}
+                    </ul>
+                    {hack.s} -->
+                    </div>
+                </div>
 
                 <div id="section_template">
                     <div class="inv_entity row">

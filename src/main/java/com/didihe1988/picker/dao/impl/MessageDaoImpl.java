@@ -224,7 +224,7 @@ public class MessageDaoImpl implements MessageDao {
 		Query query = getCurrentSession().createQuery(hql);
 		query.setInteger(0, userId);
 		query.setInteger(1,filter.getStartType());
-		query.setInteger(1,filter.getEndType());
+		query.setInteger(2,filter.getEndType());
 		DaoUtils.setLimit(query, limit);
 		return query.list();
 	}

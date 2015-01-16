@@ -82,6 +82,7 @@ public class StringUtils {
 		return true;
 	}
 
+	//”√”⁄RestSearchController
 	public static String toUTF8(String rawString) {
 		try {
 			rawString = new String(rawString.getBytes("ISO-8859-1"), "UTF-8");
@@ -91,5 +92,7 @@ public class StringUtils {
 		}
 		return rawString;
 	}
+	
+	
 
 }

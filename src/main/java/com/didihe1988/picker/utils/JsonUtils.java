@@ -52,4 +52,8 @@ public class JsonUtils {
 		return list;
 	}
 	
+	public static int getTotalPage(int num) {
+		return num / Constant.DEFAULT_QUERYRESULT + 1;
+	}
+	
 }

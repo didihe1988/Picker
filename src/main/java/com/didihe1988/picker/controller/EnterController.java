@@ -11,4 +11,9 @@ public class EnterController {
 		return "enter";
 	}
 	
+	@RequestMapping(value=" ")
+	public String defaul()
+	{
+		return "enter";
+	}
 }

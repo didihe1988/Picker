@@ -166,7 +166,7 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public AttachmentFeedDp getAttFeedDpByFeedId(int id) {
 		// TODO Auto-generated method stub
-		AttachmentFeedDp attFeedDp=feedDao.queryAttFeedDpByFeedId(id);
+		AttachmentFeedDp attFeedDp = feedDao.queryAttFeedDpByFeedId(id);
 		setAttachments(attFeedDp);
 		return attFeedDp;
 	}
@@ -275,13 +275,28 @@ public class FeedServiceImpl implements FeedService {
 		// TODO Auto-generated method stub
 		List<FeedDp> list = feedDao.queryLimitedFeedDpListByBookId(bookId,
 				type, limit, order);
-		System.out.println("list: " + list);
 		FeedDpGenerator generator = null;
 		if (list.size() > 0) {
 			generator = getGeneratorByType(list.get(0).getType());
 		}
 		for (FeedDp feedDp : list) {
 			generator.completeFeedDp(feedDp, curUserId);
+		}
+		return list;
+	}
+
+	@Override
+	public List<FeedDp> getLimitedFeedDpsByBookId(int bookId, int curUserId,
+			int limit, DaoOrder order) {
+		// TODO Auto-generated method stub
+		List<FeedDp> list = feedDao.queryLimitedFeedDpsByBookId(bookId, limit,
+				order);
+		for (FeedDp feedDp : list) {
+			if (feedDp.getType() == Feed.TYPE_QUESTION) {
+				questionDpGenerator.completeFeedDp(feedDp, curUserId);
+			} else if (feedDp.getType() == Feed.TYPE_NOTE) {
+				noteDpGenerator.completeFeedDp(feedDp, curUserId);
+			}
 		}
 		return list;
 	}
