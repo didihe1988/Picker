@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.UserDao;
 import com.didihe1988.picker.model.User;
+import com.didihe1988.picker.utils.DaoUtils;
 
 @Repository
 @Transactional
@@ -169,11 +171,14 @@ public class UserDaoImpl implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> search(String string) {
+	public List<User> search(String string, boolean isLimited) {
 		// TODO Auto-generated method stub
 		String hql = "from User as u where u.username like ?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setString(0, "%" + string + "%");
+		if (isLimited) {
+			DaoUtils.setLimitNum(query, Constant.DEFAULT_SEARCH_LIMITNUM);
+		}
 		return query.list();
 	}
 

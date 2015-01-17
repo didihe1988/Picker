@@ -352,25 +352,43 @@ public class FeedDaoImpl implements FeedDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Feed> search(String string) {
+	public List<Feed> search(String string, boolean isLimited) {
 		// TODO Auto-generated method stub
 		String hql = "from Feed as f where f.title like ? or f.content like ?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setString(0, "%" + string + "%");
 		query.setString(1, "%" + string + "%");
+		if (isLimited) {
+			DaoUtils.setLimitNum(query, Constant.DEFAULT_SEARCH_LIMITNUM);
+		}
 		return query.list();
 	}
 
+	//这个函数以后需要改
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Feed> search(String string, int type) {
+	public List<Feed> search(String string, int type, boolean isLimited) {
 		// TODO Auto-generated method stub
-		String hql = "from Feed as f where (f.title like ? or f.content like ?) and f.type=?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setString(0, "%" + string + "%");
-		query.setString(1, "%" + string + "%");
-		query.setInteger(2, type);
-		return query.list();
+		String hql = "from Feed as f where (f.title like ? or f.content like ?)";
+		if (type == Feed.TYPE_ALL) {
+			Query query = getCurrentSession().createQuery(hql);
+			query.setString(0, "%" + string + "%");
+			query.setString(1, "%" + string + "%");
+			if (isLimited) {
+				DaoUtils.setLimitNum(query, Constant.DEFAULT_SEARCH_LIMITNUM);
+			}
+			return query.list();
+		} else {
+			hql = hql + " and f.type=?";
+			Query query = getCurrentSession().createQuery(hql);
+			query.setString(0, "%" + string + "%");
+			query.setString(1, "%" + string + "%");
+			query.setInteger(2, type);
+			if (isLimited) {
+				DaoUtils.setLimitNum(query, Constant.DEFAULT_SEARCH_LIMITNUM);
+			}
+			return query.list();
+		}
 	}
 
 }

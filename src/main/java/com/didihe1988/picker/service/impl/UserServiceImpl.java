@@ -158,9 +158,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDp> search(String username, int curUserId) {
+	public List<UserDp> search(String username, int curUserId, boolean isLimited) {
 		// TODO Auto-generated method stub
-		return getUserDpList(userDao.search(username), curUserId);
+		return getUserDpList(userDao.search(username, isLimited), curUserId);
 	}
 
 	@Override
@@ -170,9 +170,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> search(String username) {
+	public List<User> search(String username, boolean isLimited) {
 		// TODO Auto-generated method stub
-		return userDao.search(username);
+		return userDao.search(username, isLimited);
 	}
 
 }

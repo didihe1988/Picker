@@ -118,7 +118,7 @@
 									<div class="feed_meta_word">
 										<div class="feed_approve">
 											<span class="feed_user">${message.producerName}</span> 提出问题@
-											<a href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a>
+											<a href="<c:url value="/browse/${message.parentId}/feeds/1"/>">《${message.parentName}》</a>
 										</div>
 										<div class="feed_title">
 											<a data-pjax
@@ -176,7 +176,7 @@
 									<div class="feed_meta_word">
 										<div class="feed_approve">
 											<span class="feed_user">${message.producerName}</span> 回答问题@
-											<a href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a>
+											<a href="<c:url value="/browse/${message.parentId}/feeds/1"/>">《${message.parentName}》</a>
 										</div>
 										<div class="feed_title">
 											<a data-pjax
@@ -234,7 +234,7 @@
 									<div class="feed_meta_word">
 										<div class="feed_approve">
 											<span class="feed_user">${message.producerName}</span> 赞同问题@
-											<a href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a>
+											<a href="<c:url value="/browse/${message.parentId}/feeds/1"/>">《${message.parentName}》</a>
 										</div>
 										<div class="feed_title">
 											<a data-pjax
@@ -350,7 +350,7 @@
 									<div class="feed_meta_word">
 										<div class="feed_approve">
 											<span class="feed_user">${message.producerName}</span> 赞同笔记@
-											<a href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a>
+											<a href="<c:url value="/browse/${message.parentId}/feeds/1"/>">《${message.parentName}》</a>
 										</div>
 										<div class="feed_title">
 											<a data-pjax
@@ -411,7 +411,7 @@
 										<div class="feed_approve">
 											<span class="feed_user">${message.producerName}</span> 添加书籍@
 											<a
-												href="<c:url value="/browse/${message.relatedSourceId}/0"/>">《${message.relatedSourceContent}》</a>
+												href="<c:url value="/browse/${message.relatedSourceId}/feeds/1"/>">《${message.relatedSourceContent}》</a>
 										</div>
 
 									</div>
@@ -647,7 +647,7 @@
 									<div class="feed_meta_word">
 										<div class="feed_approve">
 											<span class="feed_user">${message.producerName}</span> 添加笔记@
-											<a href="<c:url value="/browse/${message.parentId}/0"/>">《${message.parentName}》</a>
+											<a href="<c:url value="/browse/${message.parentId}/feeds/1"/>">《${message.parentName}》</a>
 										</div>
 										<div class="feed_title">
 											<a data-pjax
@@ -730,7 +730,7 @@
 						<c:if test="${status.count%3==1 }">
 							<div class="row">
 								<div class="col-30">
-									<a data-pjax href="<c:url value="/browse/${book.id}/0"/>"><img
+									<a data-pjax href="<c:url value="/browse/${book.id}/feeds/1"/>"><img
 										src="<c:url value="${book.imageUrl}"/>"
 										style="max-width: 100%"></a>
 								</div>
@@ -738,14 +738,14 @@
 						</c:if>
 						<c:if test="${status.count%3==2 }">
 							<div class="col-30">
-								<a data-pjax href="<c:url value="/browse/${book.id}/0"/>"><img
+								<a data-pjax href="<c:url value="/browse/${book.id}/feeds/1"/>"><img
 									src="<c:url value="${book.imageUrl}"/>" style="max-width: 100%"></a>
 							</div>
 							<div class="col-5"></div>
 						</c:if>
 						<c:if test="${status.count%3==0 }">
 							<div class="col-30">
-								<a data-pjax href="<c:url value="/browse/${book.id}/0"/>"><img
+								<a data-pjax href="<c:url value="/browse/${book.id}/feeds/1"/>"><img
 									src="<c:url value="${book.imageUrl}"/>" style="max-width: 100%"></a>
 							</div>
 				</div>

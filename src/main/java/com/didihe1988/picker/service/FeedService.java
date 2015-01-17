@@ -9,7 +9,6 @@ import com.didihe1988.picker.model.display.AttachmentFeedDp;
 import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
 import com.didihe1988.picker.model.json.QuestionJson;
-import com.didihe1988.picker.service.interfaces.SearchService;
 
 public interface FeedService {
 	public boolean checkOperateValidation(int userId, int feedId);
@@ -75,9 +74,9 @@ public interface FeedService {
 
 	public List<FeedDp> getFeedDpListForBrowse(int bookId, int curUserId);
 
-	public List<FeedDp> search(String string, int type, int curUserId);
+	public List<FeedDp> search(String string, int type, int curUserId,boolean isLimited);
 
-	public List<Feed> search(String string, int type);
+	public List<Feed> search(String string, int type,boolean isLimited);
 
 	public List<NoteJson> getNoteJsons(int userId, int page);
 

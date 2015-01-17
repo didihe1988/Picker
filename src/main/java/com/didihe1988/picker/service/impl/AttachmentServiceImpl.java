@@ -1,5 +1,7 @@
 package com.didihe1988.picker.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,6 +72,12 @@ public class AttachmentServiceImpl implements AttachmentService {
 	public int getLatestAttachmentId() {
 		// TODO Auto-generated method stub
 		return attachmentDao.queryLatestAttachmentId();
+	}
+
+	@Override
+	public List<Attachment> getAttachments(int attFeedId) {
+		// TODO Auto-generated method stub
+		return attachmentDao.queryAttachments(attFeedId);
 	}
 
 }

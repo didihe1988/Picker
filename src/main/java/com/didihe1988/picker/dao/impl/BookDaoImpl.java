@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.model.Book;
+import com.didihe1988.picker.utils.DaoUtils;
 
 @Repository
 @Transactional
@@ -151,11 +153,14 @@ public class BookDaoImpl implements BookDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Book> search(String string) {
+	public List<Book> search(String string, boolean isLimited) {
 		// TODO Auto-generated method stub
 		String hql = "from Book as b where b.bookName like ?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setString(0, "%" + string + "%");
+		if (isLimited) {
+			DaoUtils.setLimitNum(query, Constant.DEFAULT_SEARCH_LIMITNUM);
+		}
 		return query.list();
 	}
 

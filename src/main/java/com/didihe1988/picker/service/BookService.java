@@ -3,8 +3,6 @@ package com.didihe1988.picker.service;
 import java.util.List;
 
 import com.didihe1988.picker.model.Book;
-import com.didihe1988.picker.model.display.UserDp;
-import com.didihe1988.picker.service.interfaces.SearchService;
 
 public interface BookService {
 	// public List<Book> findAllByUserId(int id);
@@ -26,5 +24,5 @@ public interface BookService {
 
 	public int decrementQuestionNum(int id);
 
-	public List<Book> search(String bookName);
+	public List<Book> search(String bookName,boolean isLimited);
 }

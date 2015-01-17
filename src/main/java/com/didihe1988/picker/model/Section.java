@@ -127,7 +127,10 @@ public class Section implements Serializable {
 	}
 
 	public Section() {
-
+		// 从数据库查询出来后保证subSections不为null
+		if (subSections == null) {
+			this.subSections = NULL_SUB_SECTIONS;
+		}
 	}
 
 	public Section(long id, int bookId, int type, String num, String name,

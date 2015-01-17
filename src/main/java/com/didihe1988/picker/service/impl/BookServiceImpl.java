@@ -108,9 +108,9 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<Book> search(String bookName) {
+	public List<Book> search(String bookName, boolean isLimited) {
 		// TODO Auto-generated method stub
-		return bookDao.search(bookName);
+		return bookDao.search(bookName, isLimited);
 	}
 
 }

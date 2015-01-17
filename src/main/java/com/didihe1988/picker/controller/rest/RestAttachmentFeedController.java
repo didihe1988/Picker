@@ -51,13 +51,22 @@ public class RestAttachmentFeedController {
 		if (id < 1) {
 			return Constant.STATUS_ERROR;
 		}
-		//Feed attFeed = feedService.getFeedById(id);
-		AttachmentFeedDp attFeed=feedService.getAttFeedDpByFeedId(id);
+		// Feed attFeed = feedService.getFeedById(id);
+		AttachmentFeedDp attFeed = feedService.getAttFeedDpByFeedId(id);
 		if (attFeed != null) {
 			return JsonUtils.getJsonObjectStringFromModel(
 					Constant.KEY_ATTACHMENTFEED, attFeed);
 		}
 		return Constant.STATUS_ERROR;
+	}
+
+	@RequestMapping(value = "/json/attachment_feed/{id}/atts", method = RequestMethod.GET, headers = "Accept=application/json")
+	public String getAttachments(@PathVariable int id) {
+		if ((id < 1) || (!feedService.isFeedExistsById(id))) {
+			return Constant.STATUS_INVALID;
+		}
+		return JsonUtils.getJsonObjectString(Constant.KEY_ATTACHMENT_LIST,
+				attachmentService.getAttachments(id));
 	}
 
 	private void bindAttachment(AttachmentFeedForm form, int attFeedId) {

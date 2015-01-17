@@ -1,4 +1,5 @@
 ﻿<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -104,13 +105,13 @@
 								<div class="row">
 									<div class="col-25">
 										<a href="#"> <img
-											src="<c:url value="/browse/${book.id}/0"/>">
+											src="<c:url value="${book.imageUrl}"/>">
 										</a>
 									</div>
 									<div class="col-5"></div>
 									<div class="col-65 cover_page">
 										<div class="name" style="margin-bottom: 10px">
-											<a href="#">${book.bookName}</a>
+											<a href="<c:url value="/browse/${book.id}/feeds/1"/>">${book.bookName}</a>
 										</div>
 										<div class="info">
 											作者：<span>[美] ${book.writer} </span>
@@ -206,7 +207,30 @@
 					<div class="search_split">
 						<a href="#"><i class="icon-user"></i>成员</a>
 					</div>
+
 					<div class="row">
+                        <c:forEach var="user" items="${userList}">
+                            <div class="col-33">
+                                <div class="row">
+                                    <div class="col-15">
+                                        <img src="<c:url value="${user.avatarUrl}"/>" class="user">
+                                    </div>
+                                    <div class="col-5"></div>
+                                    <div class="col-75 user">
+                                        <div class="name">
+                                            <a href="<c:url value="/user/${user.id}"/>"">${user.username}</a>
+                                        </div>
+                                        <div>
+                                            <span> <a href="#" class="gray">关注 ${user.followNum}</a></span>
+                                            <span> <a href="#" class="gray">提问 ${user.questionNum}</a></span>
+                                            <span> <a href="#" class="gray">回答 ${user.answerNum}</a></span>
+                                            <span> <a href="#" class="gray">笔记 ${user.noteNum}</a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                        <!--
 						<div class="col-33">
 							<div class="row">
 								<div class="col-15">
@@ -267,20 +291,21 @@
 								</div>
 							</div>
 						</div>
+                        -->
 					</div>
 				</div>
 				<!--笔记/问答-->
 				<div class="search_part">
 					<div class="search_split">
-						<a href="#"><i class="icon-lightbulb"></i>问答 · 笔记</a>
+						<a href="#"><i class="icon-lightbulb"></i>问题 · 笔记 · 附件</a>
 					</div>
-
+                     <!--
 					<div class="feeds">
 						<div class="browse_list_meta clear_fix">
 							<div class="title">
 								<a data-pjax href="/detail/777">历史上，有没有哪两个人真的算得上是一辈子的敌人？</a>
 							</div>
-							<!--<div class="feed_time">31分钟前</div>-->
+
 						</div>
 						<div class="browse_brief clear_fix">
 							<div class="feed_text_wrap">
@@ -318,6 +343,185 @@
 							</div>
 						</div>
 					</div>
+                    -->
+					<c:forEach var="feed" items="${feedList}">
+							<c:if test="${feed.type ==1}">
+								<div class="feeds">
+									<div class="browse_list_meta clear_fix">
+										<div class="title">
+											<a data-pjax href="<c:url value="/detail/${feed.id}"/>">${feed.title}</a>
+										</div>
+						
+
+									</div>
+									<div class="browse_brief clear_fix">
+										<div class="feed_text_wrap">
+											<a data-pjax href="/detail/777">
+												<div class="feed_text">${feed.content}</div>
+											</a>
+										</div>
+										<div style="width: 2%; height: 1px; float: left"></div>
+								
+									</div>
+									<div class="feed_tool_bar">
+										<c:choose>
+											<c:when test="${feed.follow}">
+												<div style="display: none" class="line watch"
+													data-action="watch" data-passage-id="${feed.id}"
+													onclick="tool_bar_action($(this))">
+													<i class="icon-plus"></i>关注问题
+												</div>
+												<div class="line cancel_watch" data-action="cancel_watch"
+													data-passage-id="${feed.id}" onclick="tool_bar_action($(this))">
+													<i class="icon-ok"></i>取消关注
+												</div>
+											</c:when>
+											<c:otherwise>
+												<div class="line watch" data-action="watch"
+													data-passage-id="${feed.id}" onclick="tool_bar_action($(this))">
+													<i class="icon-plus"></i>关注问题
+												</div>
+												<div style="display: none" class="line cancel_watch"
+													data-action="cancel_watch" data-passage-id="${feed.id}"
+													onclick="tool_bar_action($(this))">
+													<i class="icon-ok"></i>取消关注
+												</div>
+											</c:otherwise>
+										</c:choose>
+
+										<div class="line show_comment" data-action="get_comment"
+											data-url="<c:url value="/question/${feed.id}/comments"/>"
+											data-passage-id="${book.id}"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-comments-alt"></i><span id="comment_num">${feed.commentNum}</span>条评论
+										</div>
+										<div style="display: none" class="line hide_comment"
+											data-action="hide_comment" data-passage-id="123"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-double-angle-up"></i>收起评论
+										</div>
+										<div class="line" data-action="show_all_answer"
+											data-passage-id="123">
+											<i class="icon-lightbulb" onclick="tool_bar_action($(this))"></i>${feed.answerNum}个回答
+										</div>
+										<span class="time">${feed.strDate}</span>
+									</div>
+									<div style="clear: both"></div>
+									<div class="comments clear_fix">
+										<div class="waiting">
+											<i class="icon-spinner icon-spin"></i>
+										</div>
+										<div class="comments_list"></div>
+
+										<div class="do_comment">
+											<div class="comment clear_fix">
+												<input id="content" type="text">
+												<button class="btn btn-success" onclick="add_comment($(this),${feed.id},'question')">提交</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
+							<c:if test="${feed.type ==2}">
+								<div class="feeds">
+									<div class="browse_list_meta clear_fix">
+										<div class="title note">
+											<i class="icon-edit"></i>笔记
+										</div>
+									
+
+									</div>
+									<div class="browse_brief clear_fix">
+										<div class="feed_text_wrap">
+											<a href="/">
+												<div class="feed_text">${feed.content}</div>
+											</a>
+										</div>
+										<div style="width: 2%; height: 1px; float: left"></div>
+									
+									</div>
+									<div class="feed_tool_bar">
+
+										<div class="line show_comment" data-action="get_comment"
+											data-url="<c:url value="/note/${feed.id}/comments"/>"
+											data-passage-id="${book.id}"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-comments-alt"></i><span id="comment_num">${feed.commentNum}</span>条评论
+										</div>
+										<div style="display: none" class="line hide_comment"
+											data-action="hide_comment" data-passage-id="123"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-double-angle-up"></i>收起评论
+										</div>
+										<span class="time">${feed.strDate}</span>
+									</div>
+									<div style="clear: both"></div>
+									<div class="comments clear_fix">
+										<div class="waiting">
+											<i class="icon-spinner icon-spin"></i>
+										</div>
+										<div class="comments_list"></div>
+
+										<div class="do_comment">
+											<div class="comment clear_fix">
+												<input id="content" type="text">
+												<button class="btn btn-success" onclick="add_comment($(this),${feed.id},'note')">提交</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
+							<c:if test="${feed.type ==3}">
+								<div class="feeds">
+									<div class="browse_list_meta clear_fix">
+										<div class="title note">
+											<i class="icon-edit"></i>附件
+										</div>
+										
+
+									</div>
+									<div class="browse_brief clear_fix">
+										<div class="feed_text_wrap">
+											<a href="/">
+												<div class="feed_text">${feed.content}</div>
+											</a>
+										</div>
+										<div style="width: 2%; height: 1px; float: left"></div>
+									
+									</div>
+									<div class="feed_tool_bar">
+
+										<div class="line show_comment" data-action="get_comment"
+											data-url="<c:url value="/note/${feed.id}/comments"/>"
+											data-passage-id="${book.id}"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-comments-alt"></i><span id="comment_num">${feed.commentNum}</span>条评论
+										</div>
+										<div style="display: none" class="line hide_comment"
+											data-action="hide_comment" data-passage-id="123"
+											onclick="tool_bar_action($(this))">
+											<i class="icon-double-angle-up"></i>收起评论
+										</div>
+										<span class="time">${feed.strDate}</span>
+									</div>
+									<div style="clear: both"></div>
+									<div class="comments clear_fix">
+										<div class="waiting">
+											<i class="icon-spinner icon-spin"></i>
+										</div>
+										<div class="comments_list"></div>
+
+										<div class="do_comment">
+											<div class="comment clear_fix">
+												<input id="content" type="text">
+												<button class="btn btn-success" onclick="add_comment($(this),${feed.id},'note')">提交</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</c:if>
+						
+					</c:forEach>
 				</div>
 				<div class="col-5"></div>
 			</div>

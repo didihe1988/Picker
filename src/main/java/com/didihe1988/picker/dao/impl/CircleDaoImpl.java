@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.dao.CircleDao;
 import com.didihe1988.picker.model.Circle;
+import com.didihe1988.picker.utils.DaoUtils;
 
 @Repository
 @Transactional
@@ -165,11 +167,14 @@ public class CircleDaoImpl implements CircleDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Circle> search(String name) {
+	public List<Circle> search(String name, boolean isLimited) {
 		// TODO Auto-generated method stub
 		String hql = "from Circle as c where c.name like ?";
 		Query query = getCurrentSession().createQuery(hql);
 		query.setString(0, "%" + name + "%");
+		if (isLimited) {
+			DaoUtils.setLimitNum(query, Constant.DEFAULT_SEARCH_LIMITNUM);
+		}
 		return query.list();
 	}
 

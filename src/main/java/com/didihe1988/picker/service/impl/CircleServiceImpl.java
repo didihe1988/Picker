@@ -27,7 +27,6 @@ public class CircleServiceImpl implements CircleService {
 	@Autowired
 	private UserDao userDao;
 
-
 	@Override
 	public int addCircle(Circle circle) {
 		// TODO Auto-generated method stub
@@ -125,9 +124,9 @@ public class CircleServiceImpl implements CircleService {
 	}
 
 	@Override
-	public List<Circle> search(String name) {
+	public List<Circle> search(String name, boolean isLimited) {
 		// TODO Auto-generated method stub
-		return circleDao.search(name);
+		return circleDao.search(name, isLimited);
 	}
 
 	@Override

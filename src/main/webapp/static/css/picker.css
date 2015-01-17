@@ -1600,6 +1600,16 @@ textarea{
     font-size: 1rem;
 }
 
+.upload_button{
+    background-color: dodgerblue;
+    padding: 5px;
+    border: 0;
+    border-radius: 5px;
+    color: #ffffff;
+    margin-top: 5px;
+    font-size: 1rem;
+}
+
 .ans_split{
     margin-left:15px;
     border-bottom: 1px solid #eeeeee;
@@ -2307,3 +2317,9 @@ img.user{
 .inventory .section_title:hover{
     overflow: visible;
 }*/
+
+.upload_span{
+    display: none;
+    float: right;
+    padding-right:5px;
+}

@@ -54,7 +54,7 @@ public interface FeedDao extends NumOperationDao<Feed>, OperateValidation,
 	
 	public List<FeedDp> queryLimitedFeedDpsForBrowse(int bookId,int limit);
 
-	public List<Feed> search(String string, int type);
+	public List<Feed> search(String string, int type,boolean isLimited);
 	
 	/*
 	 * ---queryFeedList ends---

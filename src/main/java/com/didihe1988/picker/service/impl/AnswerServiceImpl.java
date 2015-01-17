@@ -219,9 +219,10 @@ public class AnswerServiceImpl implements AnswerService {
 	}
 
 	@Override
-	public List<AnswerDp> search(String content, int userId) {
+	public List<AnswerDp> search(String content, int userId, boolean isLimited) {
 		// TODO Auto-generated method stub
-		return getAnswerDpListFormAnswerList(answerDao.search(content), userId);
+		return getAnswerDpListFormAnswerList(
+				answerDao.search(content, isLimited), userId);
 	}
 
 	@Override

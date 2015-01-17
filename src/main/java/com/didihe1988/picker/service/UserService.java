@@ -2,10 +2,8 @@ package com.didihe1988.picker.service;
 
 import java.util.List;
 
-import com.didihe1988.picker.model.Circle;
 import com.didihe1988.picker.model.User;
 import com.didihe1988.picker.model.display.UserDp;
-import com.didihe1988.picker.service.interfaces.SearchService;
 
 public interface UserService{
 	public boolean hasMatchUser(String email, String password);
@@ -35,7 +33,7 @@ public interface UserService{
 
 	public boolean isUsernameExists(String username);
 
-	public List<UserDp> search(String username, int curUserId);
+	public List<UserDp> search(String username, int curUserId,boolean isLimited);
 
-	public List<User> search(String username);
+	public List<User> search(String username,boolean isLimited);
 }

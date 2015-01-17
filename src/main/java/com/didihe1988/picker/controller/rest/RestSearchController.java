@@ -62,7 +62,7 @@ public class RestSearchController {
 			return Constant.STATUS_INVALID;
 		}
 		username = StringUtils.toUTF8(username);
-		List<User> userList = userService.search(username);
+		List<User> userList = userService.search(username, false);
 		List<SearchResult> list = generator.toSearchResults(userList);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
 				list);
@@ -75,8 +75,8 @@ public class RestSearchController {
 			return Constant.STATUS_INVALID;
 		}
 		string = StringUtils.toUTF8(string);
-		List<Feed> questoinList = feedService
-				.search(string, Feed.TYPE_QUESTION);
+		List<Feed> questoinList = feedService.search(string,
+				Feed.TYPE_QUESTION, false);
 		List<SearchResult> list = generator.toSearchResults(questoinList);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
 				list);
@@ -89,7 +89,7 @@ public class RestSearchController {
 			return Constant.STATUS_INVALID;
 		}
 		string = StringUtils.toUTF8(string);
-		List<Feed> noteList = feedService.search(string, Feed.TYPE_NOTE);
+		List<Feed> noteList = feedService.search(string, Feed.TYPE_NOTE, false);
 		List<SearchResult> list = generator.toSearchResults(noteList);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
 				list);
@@ -103,7 +103,7 @@ public class RestSearchController {
 		}
 		string = StringUtils.toUTF8(string);
 		System.out.println(string);
-		List<Book> bookList = bookService.search(string);
+		List<Book> bookList = bookService.search(string, false);
 		List<SearchResult> list = generator.toSearchResults(bookList);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
 				list);
@@ -116,7 +116,7 @@ public class RestSearchController {
 			return Constant.STATUS_INVALID;
 		}
 		string = StringUtils.toUTF8(string);
-		List<Circle> circleList = circleService.search(string);
+		List<Circle> circleList = circleService.search(string, false);
 		List<SearchResult> list = generator.toSearchResults(circleList);
 		return JsonUtils.getJsonObjectString(Constant.KEY_SEARCHRESULT_LIST,
 				list);
@@ -128,7 +128,7 @@ public class RestSearchController {
 		// 如果为""怎么办
 		String groupName = (String) request.getParameter("group_name");
 		groupName = StringUtils.toUTF8(groupName);
-		List<Circle> circleList = circleService.search(groupName);
+		List<Circle> circleList = circleService.search(groupName, false);
 
 		List<CircleJson> list = new ArrayList<CircleJson>();
 		for (Circle circle : circleList) {

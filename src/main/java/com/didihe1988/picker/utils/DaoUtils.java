@@ -12,5 +12,10 @@ public class DaoUtils {
 		// once 10 results
 		query.setMaxResults(Constant.DEFAULT_QUERYRESULT);
 	}
-	
+
+	public static void setLimitNum(Query query, int limitNum) {
+		query.setFirstResult(0);
+		query.setMaxResults(limitNum);
+	}
+
 }

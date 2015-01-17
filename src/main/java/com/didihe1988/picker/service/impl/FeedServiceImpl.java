@@ -340,15 +340,15 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public List<FeedDp> search(String string, int type, int curUserId) {
+	public List<FeedDp> search(String string, int type, int curUserId,boolean isLimited) {
 		// TODO Auto-generated method stub
-		return getFeedDpList(feedDao.search(string, type), curUserId);
+		return getFeedDpList(feedDao.search(string, type,isLimited), curUserId);
 	}
 
 	@Override
-	public List<Feed> search(String string, int type) {
+	public List<Feed> search(String string, int type,boolean isLimited) {
 		// TODO Auto-generated method stub
-		return feedDao.search(string, type);
+		return feedDao.search(string, type,isLimited);
 	}
 
 	@Override

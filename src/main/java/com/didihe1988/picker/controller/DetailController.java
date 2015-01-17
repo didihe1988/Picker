@@ -106,6 +106,8 @@ public class DetailController {
 				|| (!feedForm.checkValidation())) {
 			return "error";
 		}
+		feedForm.setTitle(StringUtils.toUTF8(feedForm.getTitle()));
+		feedForm.setRaw(StringUtils.toUTF8(feedForm.getRaw()));
 		Feed feed = new Feed(feedForm, bookId,
 				HttpUtils.getSessionUserId(request));
 		int status = feedService.addFeed(feed);
@@ -133,39 +135,37 @@ public class DetailController {
 		String extraContent = feedService.getFeedById(feedId).getTitle();
 		if (feed.getType() == Feed.TYPE_QUESTION) {
 			/*
+			 * messageService.addMessageByFollowedUser(true,
+			 * DynamicFilter.getTypeCode(),
+			 * DynamicFilter.MESSAGE_FOLLOWED_ASKQUESTION, producer, feedId,
+			 * relatedSourceContent, feed.getTitle(), feed.getBookId()); //用户足迹
+			 * messageService.addMessageByRecerver(Message.NULL_receiverId,
+			 * true, FootprintFilter.getTypeCode(),
+			 * FootprintFilter.MESSAGE_USER_ADDQUESTION, producer, feedId,
+			 * relatedSourceContent, feed.getTitle(), feed.getBookId());
+			 */
 			messageService.addMessageByFollowedUser(true,
-					DynamicFilter.getTypeCode(),
-					DynamicFilter.MESSAGE_FOLLOWED_ASKQUESTION, producer,
-					feedId, relatedSourceContent, feed.getTitle(),
-					feed.getBookId());
-			//用户足迹
-			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
-					FootprintFilter.getTypeCode(),
-					FootprintFilter.MESSAGE_USER_ADDQUESTION, producer, feedId,
-					relatedSourceContent, feed.getTitle(), feed.getBookId());*/
-			messageService.addMessageByFollowedUser(true,
-					Message.MESSAGE_FOLLOWED_ASKQUESTION, producer,
-					feedId, relatedSourceContent, feed.getTitle(),
-					feed.getBookId());
-			//用户足迹
+					Message.MESSAGE_FOLLOWED_ASKQUESTION, producer, feedId,
+					relatedSourceContent, feed.getTitle(), feed.getBookId());
+			// 用户足迹
 			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 					Message.MESSAGE_USER_ADDQUESTION, producer, feedId,
 					relatedSourceContent, feed.getTitle(), feed.getBookId());
 		} else {
 			/*
-			messageService.addMessageByFollowedUser(true,
-					DynamicFilter.getTypeCode(),
-					DynamicFilter.MESSAGE_FOLLOWED_ADDNOTE, producer, feedId,
-					relatedSourceContent, extraContent, feed.getBookId());
-			//用户足迹			 
-			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
-					FootprintFilter.getTypeCode(),
-					FootprintFilter.MESSAGE_USER_ADDNOTE, producer, feedId,
-					relatedSourceContent, extraContent, feed.getBookId());*/
+			 * messageService.addMessageByFollowedUser(true,
+			 * DynamicFilter.getTypeCode(),
+			 * DynamicFilter.MESSAGE_FOLLOWED_ADDNOTE, producer, feedId,
+			 * relatedSourceContent, extraContent, feed.getBookId()); //用户足迹
+			 * messageService.addMessageByRecerver(Message.NULL_receiverId,
+			 * true, FootprintFilter.getTypeCode(),
+			 * FootprintFilter.MESSAGE_USER_ADDNOTE, producer, feedId,
+			 * relatedSourceContent, extraContent, feed.getBookId());
+			 */
 			messageService.addMessageByFollowedUser(true,
 					Message.MESSAGE_FOLLOWED_ADDNOTE, producer, feedId,
 					relatedSourceContent, extraContent, feed.getBookId());
-			//用户足迹			 
+			// 用户足迹
 			messageService.addMessageByRecerver(Message.NULL_receiverId, true,
 					Message.MESSAGE_USER_ADDNOTE, producer, feedId,
 					relatedSourceContent, extraContent, feed.getBookId());

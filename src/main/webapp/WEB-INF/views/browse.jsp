@@ -370,7 +370,7 @@
 						<div class="col-69 action">
 							<div>
                                 <a data-pjax href="#" onclick="set_create_new_feed_url($(this),${book.id})">
-                                <i class="icon-pencil"></i>添加问题/笔记</a>
+                                <i class="icon-pencil"></i>添加内容</a>
 							</div>
 							<div>
 								<a href="#"><i class="icon-hand-right"></i>页数跳转</a>
@@ -573,7 +573,7 @@
                         <div class="feed_tool_bar">
                             <div class="line watch" data-action="watch" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-plus"></i>关注问题</div>
                             <div style="display: none" class="line cancel_watch" data-action="cancel_watch" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-ok"></i>取消关注</div>
-                            <div class="line show_comment" data-action="get_comment" data-url="/note/{}/comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
+                            <div class="line show_comment" data-action="get_comment" data-url="/note/{post.id}/comments" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
                             <div style="display: none" class="line hide_comment" data-action="hide_comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-double-angle-up"></i>收起评论</div>
                             <span class="time">{post.strDate}</span>
                         </div>
@@ -619,7 +619,7 @@
                         <div class="feed_tool_bar">
                             <div class="line watch" data-action="watch" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-plus"></i>关注问题</div>
                             <div style="display: none" class="line cancel_watch" data-action="cancel_watch" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-ok"></i>取消关注</div>
-                            <div class="line show_comment" data-action="get_comment" data-url="/post/{}/comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
+                            <div class="line show_comment" data-action="get_comment" data-url="/question/{post.id}/comments" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
                             <div style="display: none" class="line hide_comment" data-action="hide_comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-double-angle-up"></i>收起评论</div>
                             <div class="line" data-action="show_all_answer" data-passage-id="{post.id}"><i class="icon-lightbulb" onclick="tool_bar_action($(this))"></i>2个回答</div>
                             <span class="time">{post.strDate}</span>
@@ -645,6 +645,7 @@
 				</div>
 
                 <div id="attachment_template">
+
                     <!-- {hack.e}
                     <div class="page" data-page="{post.page}">
                          <div class="page_split">
@@ -655,16 +656,18 @@
                         <div class="feeds">
                             <div class="browse_list_meta clear_fix">
                                 <div class="title">
-                                    <a href="#">{post.title}</a>
+                                    <i class="icon-paper-clip"></i>{post.title}
                                 </div>
                                 <div class="photo">
                                     <img src="{post.userAvatarUrl}">
                                 </div>
                             </div>
-                            {post.describe}
+                            {post.detail}
                             <div class="feed_tool_bar">
-                                <div class="line show_comment" data-action="get_comment" data-url="/post/{}/comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
+                                <div class="line show_comment" data-action="get_comment" data-url="/attachment/{post.id}/comments" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
                                 <div style="display: none" class="line hide_comment" data-action="hide_comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-double-angle-up"></i>收起评论</div>
+                                <div class="line show_attachment" data-action="get_attachment" data-url="/json/attachment_feed/{post.id}/atts" data-passage-id="{post.id}" onclick="tool_bar_action($(this))">查看附件</div>
+                                <div style="display: none" class="line hide_attachment" data-action="hide_attachment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-double-angle-up"></i>收起附件</div>
                                 <span class="time">{post.strDate}</span>
                             </div>
                             <div style="clear: both"></div>
@@ -680,6 +683,11 @@
                                         <button class="btn btn-success">提交</button>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div style="clear: both"></div>
+                            <div class="attachments clear_fix">
+                                <div class="attachments_list"></div>
                             </div>
 
                         </div>
@@ -732,6 +740,21 @@
                         <div class="inv_page">{section.startPage}</div>
                         {hack.s} -->
                     </div>
+                </div>
+                <div id="att_template">
+                <!-- {hack.e}
+                        <div class="row attachment_border">
+                             <div class="col-85">
+                                    <div class="attachment">
+                                        <div class="attachment_text">{attachment.name}</div>
+                                    </div>
+                             </div>
+                            <div class="col-10">
+                                <a href="{attachment.path}">下载</a>
+                            </div>
+                        </div>
+                {hack.s} -->
+
                 </div>
 			</div>
 		</div>

@@ -3,6 +3,8 @@ package com.didihe1988.picker.dao.test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
+import java.util.List;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +45,7 @@ public class BookDaoTest {
 	// testQueryBookById book not exists
 	@Test
 	public void test03() {
-		//Book book = bookDao.
+		// Book book = bookDao.
 		assertSame(null, book);
 	}
 
@@ -90,7 +92,7 @@ public class BookDaoTest {
 	public void test09() {
 
 		try {
-			for (int id = 9135; id <=9293; id++) {
+			for (int id = 9135; id <= 9293; id++) {
 				Book book = bookDao.queryBookById(id);
 				if (book != null) {
 					book.setImageUrl("/resources/image/book/" + id
@@ -132,5 +134,13 @@ public class BookDaoTest {
 	public void test13() {
 		int result = bookDao.incrementComment(1);
 		System.out.println(result);
+	}
+
+	// test search
+	@Test
+	public void test14() {
+		List<Book> list = bookDao.search("¿œ¬Î ∂Õæ");
+		assertNotNull(list);
+		assertNotNull(list.get(0));
 	}
 }

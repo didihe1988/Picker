@@ -232,6 +232,45 @@ function tool_bar_action(tool_div) {
             feeds.find('.hide_comment').hide();
             feeds.find('.show_comment').show();
             feeds.find('.comments').slideUp();
+        },
+
+        get_attachment: function (pid, feeds, url) {
+            var attachments_dom = feeds.find('.attachments');
+            feeds.find('.show_attachment').hide();
+            feeds.find('.hide_attachment').show();
+
+            if (attachments_dom.find('.attachments_list').html() == '') {
+                attachments_dom.show();
+                NProgress.start();
+                var error_handle = function () {
+                    NProgress.done();
+                    attachments_dom.find('.waiting').hide();
+                };
+                $.ajax({
+                    url: url,
+                    success: function (req) {
+                            $.each(req['attachmentList'], function (i, attachment) {
+                                var new_attachment_dom = $(nano_template($(
+                                    '#att_template').html(), {
+                                    'attachment': attachment
+                                }));
+                                attachments_dom.find('.attachments_list').append(
+                                    new_attachment_dom);
+                            });
+                            NProgress.done();
+                            attachments_dom.find('.waiting').hide();
+                            attachments_dom.find('.attachments_list').slideDown();
+                    },
+                    error: error_handle
+                });
+            } else {
+                attachments_dom.slideDown();
+            }
+        },
+        hide_attachment: function (pid, feeds) {
+            feeds.find('.hide_attachment').hide();
+            feeds.find('.show_attachment').show();
+            feeds.find('.attachments').slideUp();
         }
     };
 
@@ -627,8 +666,11 @@ function send_message(receiver_id) {
         },
         success: function () {
             NProgress.done();
+            /*
             hide_panel($('#message_panel'), $('#cancel_message_panel'));
-            $("#message_content").val('');
+            $("#message_content").val('');*/
+            //先强制刷新页面
+            location.reload(true);
         },
         error: function () {
             NProgress.done();
@@ -1226,4 +1268,54 @@ function get_replies(mail, dialog_id, cur_user_id) {
     });
 }
 
+//new.jsp
+function show_file_upload_panel() {
+    //$('#cancel_image_insert').show();
+    $('#file_upload_panel').fadeIn();
+}
 
+function file_upload() {
+
+    if (!$('#attachment_file').val()) {
+        console.log('请先选择文件');
+        return;
+    }
+
+    $('#upload_attachment_file').find('input[type=button]').attr('value',
+        '提交中...');
+    try {
+        $('#attachment_file').val();
+        $.ajaxFileUpload({
+            url: '/json/attachment_upload',
+            secureuri: false,
+            fileElementId: 'attachment_file',
+            dataType: 'json',
+            success: function (data) {
+                $('.upload_button').text("继续上传");
+                $('#upload_attachment_file').find('input[type=button]').attr('value',
+                    '提交');
+                $('#file_upload_panel').fadeOut();
+                console.log(data);
+                /*
+                if (data['status'] == 'success') {
+                    $('#result').find('span').html(gen_mark(data['url']));
+                    $('#result').slideDown();
+                } else {
+                    alert('请选择图片文件');
+                }
+
+            },
+            error: function (data) {
+
+                alert('error');
+                /*
+                $('#upload_local_image').find('input[type=button]').attr(
+                    'value', '提交');*/
+            }
+        });
+    } catch (e) {
+        /*
+        $('#upload_local_image').find('input[type=button]')
+            .attr('value', '提交');*/
+    }
+}

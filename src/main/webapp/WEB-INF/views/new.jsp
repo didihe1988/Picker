@@ -111,8 +111,8 @@
 					</div>
 
 					<div id="upload_local_image">
-						<input id="image_file" type="file" name="image" /> <input
-							type="button" value="提交" onclick="image_upload()" />
+						<input id="image_file" type="file" name="image" />
+                        <input type="button" value="提交" onclick="image_upload()" />
 					</div>
 					<div id="link_image">
 						<input id="outside_image_link" type="text" placeholder="图片地址" />
@@ -124,6 +124,18 @@
 				</div>
 			</form>
 		</div>
+
+        <div id="file_upload_panel" class="shadow">
+            <form>
+                <div class="content">
+                    <div id="upload_attachment_file">
+                        <input id="attachment_file" type="file" name="attachment" />
+                        <input type="button" value="提交" onclick="file_upload()" />
+                    </div>
+                </div>
+            </form>
+        </div>
+
 		<div id="cancel_image_insert" class="cancel_panel"
 			onclick="hide_panel($('#image_insert_panel'), $(this))"></div>
 		<div id="cancel_page_change" class="cancel_panel"
@@ -133,31 +145,41 @@
 		<form method="post"
 			action=<c:url value="/detail/${book.id}/12/create"/>
 			onsubmit="return submit_check();">
-			<input type="hidden" name="page" value="" /> <input type="hidden"
-				name="raw" value="" /> <input type="hidden" name="rendered"
-				value="" />
+			<input type="hidden" name="page" value="" />
+            <input type="hidden" name="raw" value="" />
+            <input type="hidden" name="rendered" value="" />
 			<div style="padding-left: 100px; padding-right: 100px;">
 				<div class="row">
 					<div class="col-70">
 						<div id="new_form_type">
-							<label onclick="choose_note();"><input type="radio"
-								name="type" value="note" checked />笔记</label> <label
-								onclick="choose_question();"><input type="radio"
-								name="type" value="question" />提问</label>
+                            <label onclick="choose_question();">
+                                <input type="radio" name="type" value="question" checked  />提问
+                            </label>
+
+							<label onclick="choose_note();">
+                                <input type="radio"	name="type" value="note" />笔记
+                            </label>
+
+                            <label onclick="choose_attachment();">
+                                <input type="radio" name="type" value="attachment" />附件
+                            </label>
 						</div>
 						<div id="new_form_title">
-							<span class="note"><i class="icon-edit"></i>笔记：</span> <span
-								class="question" style="display: none"><i
-								class="icon-lightbulb"></i>提问：</span> <span> <input type="text"
-								name="title" placeholder="标题(可选)" />
-							</span>
+                            <span class="question" ><i class="icon-lightbulb"></i>提问：</span>
+							<span class="note" style="display: none"><i class="icon-edit"></i>笔记：</span>
+                            <span class="attachment" style="display: none"><i class="icon-paper-clip"></i>附件：</span>
+                            <span> <input type="text" name="title" placeholder="标题(必填)" /> </span>
 						</div>
 						<div>
 							<div id="epiceditor" style="height: 300px"></div>
-							<div style="margin-top: 10px">
-								<span style="float: right;">
-									<button type="submit" class="commit_button">提交</button>
-								</span>
+							<div style="margin-top: 10px" class="row">
+                                <span style="float: right;">
+                                    <button type="submit" class="commit_button">提交</button>
+                                </span>
+                                <span class="upload_span">
+                                    <button class="upload_button" onclick="show_file_upload_panel()">上传附件</button>
+                                </span>
+
 								<div style="clear: both"></div>
 							</div>
 						</div>
@@ -206,17 +228,27 @@
 
 			function choose_note() {
 				$('#new_form_title').find('.question').hide();
+                $('#new_form_title').find('.attachment').hide();
 				$('#new_form_title').find('.note').show();
 				$('#new_form_title').find('input')
-						.attr('placeholder', '标题(可选)');
+						.attr('placeholder', '标题(必填)');
 			}
 
 			function choose_question() {
 				$('#new_form_title').find('.note').hide();
+                $('#new_form_title').find('.attachment').hide();
 				$('#new_form_title').find('.question').show();
 				$('#new_form_title').find('input')
 						.attr('placeholder', '标题(必填)');
 			}
+
+            function choose_attachment() {
+                $('#new_form_title').find('.note').hide();
+                $('#new_form_title').find('.question').hide();
+                $('#new_form_title').find('.attachment').show();
+                $('#new_form_title').find('input').attr('placeholder', '标题(必填)');
+                $('.upload_span').show();
+            }
 
 			function show_input() {
 				$('#p_new_page').find('.page').hide();
@@ -224,6 +256,8 @@
 				$('#p_new_page').find('input').show().focus();
 				$('#cancel_page_change').show();
 			}
+
+
 
 			//当page改变，url地址无刷新改变。此函数用于生成新地址
 			function gen_current_new_url(page) {
