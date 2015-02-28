@@ -35,8 +35,6 @@ public class RestAttachmentController {
 			return JsonUtils.getJsonObjectString(Constant.KEY_STATUS,
 					Status.EMPTY);
 		}
-		System.out.println(file.getOriginalFilename());
-		System.out.println(StringUtils.toUTF8(file.getOriginalFilename()));
 		String name = StringUtils.toUTF8(file.getOriginalFilename());
 		// System.out.println(name);
 		/*

@@ -1277,6 +1277,11 @@ textarea{
     line-height: 30px;
 }
 
+.browse_list_meta .attachment_title
+{
+    color: #5082AA;;
+}
+
 .browse_list_meta .photo img{
     float: right;
     height: 25px;
@@ -1993,6 +1998,11 @@ textarea{
     width: 100%;
 }
 
+.search_notice{
+    font-size:0.9rem;
+    color: dimgrey;
+}
+
 img.user{
     border-radius: 5px;
 }
@@ -2154,7 +2164,7 @@ img.user{
 .shadow{
     z-index: 901;
     position: fixed;
-    width: 500px;
+    width: 400px;
     background-color: #ffffff;
     margin:0 auto;
     left:0;
@@ -2280,7 +2290,7 @@ img.user{
     white-space: nowrap;
 }
 
-.inventory .inv_page{
+.inventory .inv_start_page{
     padding-top: 0.2rem;
     float: right;
     display: inline-block;
@@ -2298,6 +2308,14 @@ img.user{
     overflow: hidden;
     white-space: nowrap;
 }
+
+.inv_entity:hover{
+    color: #009EDA;
+}
+
+.cur_inventory{
+    color: #5082AA;
+}
 /*
 .inventory .chapter_title:hover{
     overflow: visible;
@@ -2313,6 +2331,42 @@ img.user{
     white-space: nowrap;
 }
 
+
+.inventory_switch{
+    padding-top: 8px;
+    border-top: 2px solid #eeeeee;
+    font-size: 1.1rem;
+    color: #5082AA;
+}
+
+.inventory_switch:hover{
+    color: #009EDA;
+}
+
+.inventory_switch .title{
+    font-weight: bold;
+}
+
+.notice {
+    width:200px;
+    height:20px;
+    height:auto;
+    position:absolute;
+    left:50%;
+    margin-left:-100px;
+    bottom:10px;
+    background-color: #383838;
+    color: #F0F0F0;
+    font-family: Calibri;
+    font-size: 0.8rem;
+    padding:10px;
+    text-align:center;
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    -moz-box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+    box-shadow: 0px 0px 24px -1px rgba(56, 56, 56, 1);
+}
+
 /*
 .inventory .section_title:hover{
     overflow: visible;
@@ -2321,5 +2375,33 @@ img.user{
 .upload_span{
     display: none;
     float: right;
-    padding-right:5px;
+    padding-right:10px;
 }
+
+.attachment_entity{
+    margin-top: 3px;
+    margin-left: 5px;
+}
+
+.attachment_part{
+    display: none;
+}
+
+.attachment_part .title{
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-top: 2px dashed #5082AA;
+    padding-top:10px;
+    padding-bottom: 5px;
+    color: #5082AA;
+}
+
+.attachment_part .attachment_icon{
+    color: #5082AA;
+}
+
+
+.attachment_part .attachment_name{
+    padding-left: 2px;
+}
+

@@ -101,7 +101,6 @@ public class RestUserController {
 		if (!registerForm.checkFieldValidation()) {
 			return Constant.STATUS_INVALID;
 		}
-		System.out.println(registerForm.toString());
 		int status = Status.ERROR;
 		if (userService.isEmailExists(registerForm.getEmail())) {
 			status = Status.EXISTS;
@@ -109,7 +108,7 @@ public class RestUserController {
 		} else {
 			User user = new User(registerForm.getName(),
 					registerForm.getEmail(), registerForm.getPassword(),
-					"/resources/image/avatar/user_avatar2.jpg", "tmp");
+					"/resources/image/avatar/default_user_avatar.jpg", "暂无签名");
 			/*
 			 * 加密在UserService完成
 			 */

@@ -9,6 +9,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -18,7 +19,9 @@ import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.display.AttachmentFeedDp;
 import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.json.NoteJson;
+import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.FeedService;
+import com.didihe1988.picker.service.UserService;
 import com.didihe1988.picker.utils.HttpUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,6 +31,12 @@ import com.didihe1988.picker.utils.HttpUtils;
 public class FeedServiceTest {
 	@Autowired
 	private FeedService feedService;
+	
+	@Autowired
+	private BookService bookService;
+	
+	@Autowired
+	private UserService userService;
 
 	@Test
 	public void test0() {
@@ -101,5 +110,45 @@ public class FeedServiceTest {
 		assertNotNull(attFeedDp);
 		System.out.println(attFeedDp);
 	}
+	
+	
+	@Test
+	public void testRelatedQuestionNum()
+	{
+		int bookId=1;
+		int userId=1;
+		int bookQueNum=bookService.getBookById(bookId).getQuestionNum();
+		int userQueNum=userService.getUserById(userId).getQuestionNum();
+		Feed feed=new Feed(bookId, userId, "test related num","test test","test test",5, Feed.TYPE_QUESTION);
+		feedService.addFeed(feed);
+		assertSame(++bookQueNum, bookService.getBookById(bookId).getQuestionNum());
+		assertSame(++userQueNum, userService.getUserById(userId).getQuestionNum());
+	}
+	
+	@Test
+	public void testRelatedNoteNum()
+	{
+		int bookId=1;
+		int userId=1;
+		int bookNoteNum=bookService.getBookById(bookId).getNoteNum();
+		int userNoteNum=userService.getUserById(userId).getNoteNum();
+		Feed feed=new Feed(bookId, userId, "test related note num","test test","test test",5, Feed.TYPE_NOTE);
+		feedService.addFeed(feed);
+		assertSame(++bookNoteNum, bookService.getBookById(bookId).getNoteNum());
+		assertSame(++userNoteNum, userService.getUserById(userId).getNoteNum());
+	}
+	
+	@Test
+	public void testRelatedAttNum()
+	{
+		int bookId=1;
+		int userId=1;
+		int attNum=bookService.getBookById(bookId).getAttachmentNum();
+		Feed feed=new Feed(bookId, userId, "test related att num","test test","test test",5, Feed.TYPE_ATTACHMENT_FEED);
+		feedService.addFeed(feed);
+		assertSame(++attNum, bookService.getBookById(bookId).getAttachmentNum());
+	}
+	
+	
 
 }

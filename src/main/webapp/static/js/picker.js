@@ -249,17 +249,17 @@ function tool_bar_action(tool_div) {
                 $.ajax({
                     url: url,
                     success: function (req) {
-                            $.each(req['attachmentList'], function (i, attachment) {
-                                var new_attachment_dom = $(nano_template($(
-                                    '#att_template').html(), {
-                                    'attachment': attachment
-                                }));
-                                attachments_dom.find('.attachments_list').append(
-                                    new_attachment_dom);
-                            });
-                            NProgress.done();
-                            attachments_dom.find('.waiting').hide();
-                            attachments_dom.find('.attachments_list').slideDown();
+                        $.each(req['attachmentList'], function (i, attachment) {
+                            var new_attachment_dom = $(nano_template($(
+                                '#att_template').html(), {
+                                'attachment': attachment
+                            }));
+                            attachments_dom.find('.attachments_list').append(
+                                new_attachment_dom);
+                        });
+                        NProgress.done();
+                        attachments_dom.find('.waiting').hide();
+                        attachments_dom.find('.attachments_list').slideDown();
                     },
                     error: error_handle
                 });
@@ -288,7 +288,7 @@ function go_back() {
     if (pre != '' && pre != window.location.href) {
         history.go(-1);
     } else {
-        window.location.href = '/';
+        window.location.href = '/dynamic/1';
     }
 }
 
@@ -667,8 +667,8 @@ function send_message(receiver_id) {
         success: function () {
             NProgress.done();
             /*
-            hide_panel($('#message_panel'), $('#cancel_message_panel'));
-            $("#message_content").val('');*/
+             hide_panel($('#message_panel'), $('#cancel_message_panel'));
+             $("#message_content").val('');*/
             //先强制刷新页面
             location.reload(true);
         },
@@ -817,22 +817,25 @@ function browse_page_change_init() {
                                 + $(c).height()) {
                                 var word_dom = $(
                                     '.current_page').find(
-                                    '.word')
+                                    '.word');
                                 if (word_dom.html() != page) {
+                                    find_cur_section(page);
                                     word_dom.hide().html(
                                         $(c).data('page'))
                                         .fadeIn();
                                 }
+
                                 settled = true
                             }
                         }
                     });
 
-                //底部触发更新
-                if ($(window).scrollTop() + $(window).height() == $(
-                    document).height()) {
-                    load_page($('#load_next_flag'));
-                }
+                //底部触发更新 改成分页所以暂时不用
+                /*
+                 if ($(window).scrollTop() + $(window).height() == $(
+                 document).height()) {
+                 load_page($('#load_next_flag'));
+                 }*/
                 if ($(window).scrollTop() == 0) {
                     load_page($('#load_previous_flag'));
                 }
@@ -1122,9 +1125,31 @@ function reset_specific_url_div(url_div, page) {
 
 
 //---browse.jsp inventory---
-function get_inventory() {
+
+function switch_inventory(book_id) {
+    var inventory_switch = $('.inventory_switch');
+    if (inventory_switch.find('.title').text() == "展开目录") {
+        if ($('.inventory').children().length > 0) {
+            $('.inventory').show();
+        }
+        else {
+            get_inventory(book_id);
+        }
+        inventory_switch.find('.title').text("收起目录");
+        inventory_switch.find('i').removeClass("icon-double-angle-down");
+        inventory_switch.find('i').addClass("icon-double-angle-up");
+    }
+    else {
+        inventory_switch.find('.title').text("展开目录");
+        inventory_switch.find('i').removeClass("icon-double-angle-up");
+        inventory_switch.find('i').addClass("icon-double-angle-down");
+        $('.inventory').hide();
+    }
+}
+
+function get_inventory(book_id) {
     $.ajax({
-        url: '/json/test/sections',
+        url: '/json/book/' + book_id + '/sections',
         type: 'get',
         success: function (req) {
             $(req['sectionList']).each(function (index, section) {
@@ -1134,9 +1159,6 @@ function get_inventory() {
                 }));
                 console.log(new_chapter_dom);
                 $('.inventory').append(new_chapter_dom);
-                /*
-                 comments_dom.find('.comments_list').append(
-                 new_chapter_dom);*/
                 $(section['subSections']).each(function (index, subSection) {
                     var new_section_dom = $(nano_template($(
                         '#section_template').html(), {
@@ -1169,10 +1191,10 @@ function set_apostrophe(inv_entity) {
 }
 
 function get_entity_content_width(inv_entity) {
-    if (inv_entity.has('.section_title').length != 0) {
-        return inv_entity.find('.section_title').width() + inv_entity.find('.inv_page').width() + 30;
+    if (inv_entity.has('.section_title').length > 0) {
+        return inv_entity.find('.section_title').width() + inv_entity.find('.inv_page').width() + 40;
     }
-    return inv_entity.find('.chapter_title').width() + inv_entity.find('.inv_page').width() + 15;
+    return inv_entity.find('.chapter_title').width() + inv_entity.find('.inv_page').width() + 20;
 }
 
 //---browse.jsp---
@@ -1268,7 +1290,7 @@ function get_replies(mail, dialog_id, cur_user_id) {
     });
 }
 
-//new.jsp
+//---new.jsp---
 function show_file_upload_panel() {
     //$('#cancel_image_insert').show();
     $('#file_upload_panel').fadeIn();
@@ -1284,7 +1306,7 @@ function file_upload() {
     $('#upload_attachment_file').find('input[type=button]').attr('value',
         '提交中...');
     try {
-        $('#attachment_file').val();
+        var file_name = get_file_name($('#attachment_file').val());
         $.ajaxFileUpload({
             url: '/json/attachment_upload',
             secureuri: false,
@@ -1295,27 +1317,93 @@ function file_upload() {
                 $('#upload_attachment_file').find('input[type=button]').attr('value',
                     '提交');
                 $('#file_upload_panel').fadeOut();
+
                 console.log(data);
-                /*
-                if (data['status'] == 'success') {
-                    $('#result').find('span').html(gen_mark(data['url']));
-                    $('#result').slideDown();
-                } else {
-                    alert('请选择图片文件');
-                }
+                if (data['attachmentId'])
+                    var new_attachment_entity_dom = $(nano_template($(
+                        '#attachment_entity_template').html(), {
+                        'attachmentId': data['attachmentId']
+                    }));
+
+                $(new_attachment_entity_dom).find('.attachment_name').text(file_name);
+                $('#list_title').show();
+                $('.attachment_list').append(new_attachment_entity_dom);
 
             },
             error: function (data) {
 
                 alert('error');
-                /*
-                $('#upload_local_image').find('input[type=button]').attr(
-                    'value', '提交');*/
+                $('#upload_attachment_file').find('input[type=button]').attr(
+                    'value', '提交');
             }
         });
     } catch (e) {
-        /*
-        $('#upload_local_image').find('input[type=button]')
-            .attr('value', '提交');*/
+        $('#upload_attachment_file').find('input[type=button]')
+            .attr('value', '提交');
     }
+}
+
+function get_file_name(file_path) {
+    return file_path.substr(file_path.lastIndexOf('\\') + 1);
+}
+
+function set_attachment_list() {
+    var attachmentIds = '';
+    var entities = $('.attachment_list').children('.attachment_entity');
+    $(entities).each(function (index, entity) {
+        attachmentIds += $(entity).find('.attachment_id').text() + '.';
+    });
+    //去掉最后一个点
+    attachmentIds = attachmentIds.substring(0, attachmentIds.length - 1);
+    console.log($('input[name=attachmentIds]').val());
+    $('input[name=attachmentIds]').val(attachmentIds);
+
+}
+
+function hide_panel(panel) {
+    panel.hide();
+}
+
+function test_get_page() {
+    console.log($('.regular_page:first').data('page'));
+    console.log($('.regular_page:last').data('page'));
+}
+
+function find_cur_section(page) {
+    $('.inv_entity').removeClass("cur_inventory");
+    $('.inv_entity').each(function (index, entity) {
+            if ((page >= $(entity).children('.inv_start_page').text()) && (page <= $(entity).children('.inv_end_page').text())) {
+                $(entity).addClass("cur_inventory");
+            }
+        }
+    );
+}
+
+function inventory_jump(entity) {
+
+    var inv_start_page = entity.children('.inv_start_page').text();
+    if ((inv_start_page > $('.regular_page:last').data('page')) || (inv_start_page < $('.regular_page:first').data('page'))) {
+        $('.notice').text("所选章节不在当前页");
+        $('.notice').fadeIn().delay(300).fadeOut(50);
+    }
+    else
+    {
+        var pages=$('.regular_page');
+        for(var i=0;i<pages.length;i++)
+        {
+            if($(pages[i]).data('page')>=inv_start_page)
+            {
+                //加上导航条距离
+                $("html,body").scrollTop($(pages[i]).offset().top-50);
+                if($(pages[i]).data('page')>entity.children('.inv_end_page').text())
+                {
+                    $('.notice').text("没有该章节资源，已跳转到临近章节");
+                    $('.notice').fadeIn().delay(300).fadeOut(50);
+                }
+                break;
+
+            }
+        }
+    }
+
 }

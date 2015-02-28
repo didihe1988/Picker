@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.DaoOrder;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.AttachmentDao;
@@ -41,6 +42,9 @@ public class FeedServiceImpl implements FeedService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private BookDao bookDao;
 
 	@Autowired
 	private FollowDao followDao;
@@ -85,10 +89,23 @@ public class FeedServiceImpl implements FeedService {
 			return Status.EXISTS;
 		}
 
-		/*
-		 * User questionNum++
-		 */
-		// userDao.incrementNum(Constant.QUESTION_NUM, question.getAskerId());
+		//related num ++
+		//需要重构 
+		if(feed.getType()==Feed.TYPE_QUESTION)
+		{
+			userDao.incrementNum(Constant.QUESTION_NUM, feed.getUserId());
+			bookDao.incrementNum(Constant.QUESTION_NUM, feed.getBookId());
+		}
+		else if(feed.getType()==Feed.TYPE_NOTE)
+		{
+			userDao.incrementNum(Constant.NOTE_NUM, feed.getUserId());
+			bookDao.incrementNum(Constant.NOTE_NUM, feed.getBookId());
+		}
+		else if(feed.getType()==Feed.TYPE_ATTACHMENT_FEED)
+		{
+			//User还没有AttachmentNum(上传过的附件)，先不写了
+			bookDao.incrementNum(Constant.ATTACH_FEED_NUM, feed.getBookId());
+		}
 		return Status.SUCCESS;
 	}
 
@@ -102,6 +119,7 @@ public class FeedServiceImpl implements FeedService {
 			return Status.INVALID;
 		}
 		feedDao.deleteFeed(feed);
+		//related num --
 		return Status.SUCCESS;
 	}
 

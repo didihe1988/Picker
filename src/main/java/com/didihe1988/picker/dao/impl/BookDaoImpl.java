@@ -16,7 +16,7 @@ import com.didihe1988.picker.utils.DaoUtils;
 
 @Repository
 @Transactional
-public class BookDaoImpl implements BookDao {
+public class BookDaoImpl implements BookDao{
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -116,6 +116,26 @@ public class BookDaoImpl implements BookDao {
 	}
 
 	@Override
+	public int incrementNum(String property, int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Book as b set b." + property + "=b." + property
+				+ "+1 where b.id =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
+	@Override
+	public int decrementNum(String property, int id) {
+		// TODO Auto-generated method stub
+		String hql = "update Book as b set b." + property + "=b." + property
+				+ "-1 where b.id =?";
+		Query query = getCurrentSession().createQuery(hql);
+		query.setInteger(0, id);
+		return query.executeUpdate();
+	}
+
+	@Override
 	public int incrementFollowNum(int bookId) {
 		// TODO Auto-generated method stub
 		String hql = "update Book as book set book.followNum =book.followNum+1 where book.id=?";
@@ -133,23 +153,6 @@ public class BookDaoImpl implements BookDao {
 		return query.executeUpdate();
 	}
 
-	@Override
-	public int incrementQuestionNum(int id) {
-		// TODO Auto-generated method stub
-		String hql = "update Book as book set book.questionNum =book.questionNum+1 where book.id=?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, id);
-		return query.executeUpdate();
-	}
-
-	@Override
-	public int decrementQuestionNum(int id) {
-		// TODO Auto-generated method stub
-		String hql = "update Book as book set book.questionNum =book.questionNum-1 where book.id=?";
-		Query query = getCurrentSession().createQuery(hql);
-		query.setInteger(0, id);
-		return query.executeUpdate();
-	}
 
 	@SuppressWarnings("unchecked")
 	@Override

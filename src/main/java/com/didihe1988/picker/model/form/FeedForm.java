@@ -9,6 +9,8 @@ public class FeedForm {
 
 	private String raw;
 
+	private String attachmentIds;
+
 	public String getType() {
 		return type;
 	}
@@ -41,16 +43,25 @@ public class FeedForm {
 		this.raw = raw;
 	}
 
+	public String getAttachmentIds() {
+		return attachmentIds;
+	}
+
+	public void setAttachmentIds(String attachmentIds) {
+		this.attachmentIds = attachmentIds;
+	}
+
 	public FeedForm() {
 
 	}
 
-	public FeedForm(String type, String title, int page, String raw) {
-		super();
+	public FeedForm(String type, String title, int page, String raw,
+			String attachmentIds) {
 		this.type = type;
 		this.title = title;
 		this.page = page;
 		this.raw = raw;
+		this.attachmentIds = attachmentIds;
 	}
 
 	public boolean checkValidation() {
@@ -59,7 +70,8 @@ public class FeedForm {
 				|| (raw.equals(""))) {
 			return false;
 		}
-		if ((!(type.equals("note"))) && (!(type.equals("question")))) {
+		if (!(type.equals("note") || type.equals("question") || type
+				.equals("attachment"))) {
 			return false;
 		}
 		return true;
@@ -69,7 +81,7 @@ public class FeedForm {
 	@Override
 	public String toString() {
 		return "FeedForm [type=" + type + ", title=" + title + ", page=" + page
-				+ ", raw=" + raw + "]";
+				+ ", raw=" + raw + ", attachmentIds=" + attachmentIds + "]";
 	}
 
 }

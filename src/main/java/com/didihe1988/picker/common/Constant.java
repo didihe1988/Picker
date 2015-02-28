@@ -25,6 +25,7 @@ public class Constant {
 	public static final String CIRCLE_NUM = "circleNum";
 	public static final String NOTE_NUM = "noteNum";
 	public static final String QUESTION_NUM = "questionNum";
+	public static final String ATTACH_FEED_NUM = "attachmentNum";
 	public static final String BOOK_NUM = "bookNum";
 
 	public static final String KEY_SESSIONID = "JSESSIONID";

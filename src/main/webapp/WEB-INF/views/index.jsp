@@ -41,7 +41,7 @@
 						<img src="/static/images/elements/logo.png">
 					</div>
 					<div class="col-65">
-						<span id="go_index"><a data-pjax href="/">Picker</a></span>
+						<span id="go_index"><a data-pjax href="/dynamic/1">Picker</a></span>
 					</div>
 				</div>
 			</div>
@@ -56,9 +56,11 @@
 			</div>
 			<div class="col-25">
 				<div class="row">
+                    <!--
 					<div class="col-33">
 						<span class="nav_link"><a href="#">发现</a></span>
 					</div>
+                    -->
 					<div class="col-33">
 						<span class="nav_link"><a data-pjax href="/group">圈子</a></span>
 					</div>
@@ -71,7 +73,7 @@
 			<div class="col-40">
 				<!--user bar-->
 				<div style="float: right">
-					<a data-pjax href="/user/1234">
+					<a data-pjax href="<c:url value="/user/${curUserId}"/> ">
 						<div id="nav_user">
 							<div id="nav_photo">
 								<img src="/static/images/photo/0.png">
@@ -131,7 +133,7 @@
 									<div class="feed_text_wrap">
 										<div class="feed_text" data-passage-id="123"
 											onclick="show_full($(this))">
-											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
+											${message.relatedSourceContent} <!--<span class="feed_show_full">完整显示</span>!-->
 										</div>
 										<div class="feed_tool_bar">
 											<div class="line watch" data-action="watch"
@@ -175,8 +177,8 @@
 									</div>
 									<div class="feed_meta_word">
 										<div class="feed_approve">
-											<span class="feed_user">${message.producerName}</span> 回答问题@
-											<a href="<c:url value="/browse/${message.parentId}/feeds/1"/>">《${message.parentName}》</a>
+											<span class="feed_user">${message.producerName}</span> 回答问题
+											<a href="<c:url value="/browse/${message.parentId}/feeds/1"/>"></a>
 										</div>
 										<div class="feed_title">
 											<a data-pjax
@@ -189,7 +191,7 @@
 									<div class="feed_text_wrap">
 										<div class="feed_text" data-passage-id="123"
 											onclick="show_full($(this))">
-											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
+											${message.relatedSourceContent} <!--<span class="feed_show_full">完整显示</span> !-->
 										</div>
 										<div class="feed_tool_bar">
 											<div class="line watch" data-action="watch"
@@ -245,9 +247,10 @@
 								</div>
 								<div class="feed_brief clear_fix">
 									<div class="feed_text_wrap">
+
 										<div class="feed_text" data-passage-id="123"
 											onclick="show_full($(this))">
-											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
+											${message.relatedSourceContent} <!--<span class="feed_show_full">完整显示</span> !-->
 										</div>
 										<div class="feed_tool_bar">
 									
@@ -305,7 +308,7 @@
 									<div class="feed_text_wrap">
 										<div class="feed_text" data-passage-id="123"
 											onclick="show_full($(this))">
-											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
+											${message.relatedSourceContent} <!--<span class="feed_show_full">完整显示</span> !-->
 										</div>
 										<div class="feed_tool_bar">
 											<div class="line watch" data-action="watch"
@@ -363,7 +366,7 @@
 									<div class="feed_text_wrap">
 										<div class="feed_text" data-passage-id="123"
 											onclick="show_full($(this))">
-											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
+											${message.relatedSourceContent} <!--<span class="feed_show_full">完整显示</span> !-->
 										</div>
 										<div class="feed_tool_bar">
 											<!-- 
@@ -421,7 +424,7 @@
 									<div class="feed_text_wrap">
 										<div class="feed_text" data-passage-id="123"
 											onclick="show_full($(this))">
-											${message.extraContent} 著<span class="feed_show_full">完整显示</span>
+											${message.extraContent} 著<!--<span class="feed_show_full">完整显示</span> !-->
 										</div>
 										<div class="feed_tool_bar">
 											<div class="line watch" data-action="watch"
@@ -483,7 +486,7 @@
 									<div class="feed_text_wrap">
 										<div class="feed_text" data-passage-id="123"
 											onclick="show_full($(this))">
-											${message.extraContent} <span class="feed_show_full">完整显示</span>
+											${message.extraContent} <!--<span class="feed_show_full">完整显示</span>-->
 										</div>
 										<div class="feed_tool_bar">
 											<div class="line watch" data-action="watch"
@@ -546,7 +549,7 @@
 									<div class="feed_text_wrap">
 										<div class="feed_text" data-passage-id="123"
 											onclick="show_full($(this))">
-											${message.extraContent} <span class="feed_show_full">完整显示</span>
+											${message.extraContent} <!--<span class="feed_show_full">完整显示</span> !-->
 										</div>
 										<div class="feed_tool_bar">
 											<div class="line watch" data-action="watch"
@@ -660,7 +663,7 @@
 									<div class="feed_text_wrap">
 										<div class="feed_text" data-passage-id="123"
 											onclick="show_full($(this))">
-											${message.relatedSourceContent} <span class="feed_show_full">完整显示</span>
+											${message.relatedSourceContent} <!--<span class="feed_show_full">完整显示</span> -->
 										</div>
 										<div class="feed_tool_bar">
 											<!-- 
@@ -758,7 +761,7 @@
 
 		</div>
 		<div id="script_box">
-			<a data-pjax href="/drafts"><i class="icon-save"></i>草稿箱（<span
+			<a data-pjax href="#"><i class="icon-save"></i>草稿箱（<span
 				id="drafts_count">0</span>）</a>
 		</div>
 		<script>

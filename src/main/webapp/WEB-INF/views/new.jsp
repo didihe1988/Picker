@@ -33,7 +33,7 @@
 						<img src="/static/images/elements/logo.png">
 					</div>
 					<div class="col-65">
-						<span id="go_index"><a data-pjax href="/">Picker</a></span>
+						<span id="go_index"><a data-pjax href="/dynamic/1">Picker</a></span>
 					</div>
 				</div>
 			</div>
@@ -48,9 +48,11 @@
 			</div>
 			<div class="col-25">
 				<div class="row">
+                    <!--
 					<div class="col-33">
 						<span class="nav_link"><a href="#">发现</a></span>
 					</div>
+                    -->
 					<div class="col-33">
 						<span class="nav_link"><a data-pjax href="/group">圈子</a></span>
 					</div>
@@ -63,7 +65,7 @@
 			<div class="col-40">
 				<!--user bar-->
 				<div style="float: right">
-					<a data-pjax href="/user/1234">
+					<a data-pjax href="<c:url value="/user/${curUserId}"/> ">
 						<div id="nav_user">
 							<div id="nav_photo">
 								<img src="/static/images/photo/0.png">
@@ -98,9 +100,7 @@
 			<form action="" method="POST" enctype="multipart/form-data">
 				<div class="title clear_fix">
 					<div style="float: left">上传图片</div>
-					<div class="point_cursor"
-						onclick="hide_panel($('#image_insert_panel'), $('#cancel_image_insert'))"
-						style="float: right">
+					<div class="point_cursor"onclick="hide_panel($('#image_insert_panel'), $('#cancel_image_insert'))" style="float: right">
 						<i class="icon-remove"></i>
 					</div>
 				</div>
@@ -127,6 +127,12 @@
 
         <div id="file_upload_panel" class="shadow">
             <form>
+                <div class="title clear_fix">
+                    <div style="float: left">上传附件</div>
+                    <div class="point_cursor"onclick="hide_panel($('#file_upload_panel'))" style="float: right">
+                        <i class="icon-remove"></i>
+                    </div>
+                </div>
                 <div class="content">
                     <div id="upload_attachment_file">
                         <input id="attachment_file" type="file" name="attachment" />
@@ -142,12 +148,14 @@
 			onclick="hide_panel(null, $(this))"></div>
 		<!--图片上传 结束-->
 		<!--  /detail/112/12/create-->
+
 		<form method="post"
 			action=<c:url value="/detail/${book.id}/12/create"/>
 			onsubmit="return submit_check();">
 			<input type="hidden" name="page" value="" />
             <input type="hidden" name="raw" value="" />
             <input type="hidden" name="rendered" value="" />
+            <input type="hidden" name="attachmentIds" value="" />
 			<div style="padding-left: 100px; padding-right: 100px;">
 				<div class="row">
 					<div class="col-70">
@@ -176,12 +184,21 @@
                                 <span style="float: right;">
                                     <button type="submit" class="commit_button">提交</button>
                                 </span>
+
                                 <span class="upload_span">
-                                    <button class="upload_button" onclick="show_file_upload_panel()">上传附件</button>
+                                    <button type="button" class="upload_button" onclick="show_file_upload_panel()">上传附件</button>
                                 </span>
 
 								<div style="clear: both"></div>
 							</div>
+
+                            <div style="margin-top: 10px;" class="attachment_part row">
+                                <div id="list_title" class="title">已上传附件</div>
+                                <div class="attachment_list">
+
+
+                                </div>
+                            </div>
 						</div>
 					</div>
 
@@ -215,6 +232,7 @@
 			</div>
 		</form>
 
+        <!--<button onclick="test_attachment_list()"></button>-->
 		<script>
 			var editor = create_editor();
 			editor_listened();
@@ -232,6 +250,8 @@
 				$('#new_form_title').find('.note').show();
 				$('#new_form_title').find('input')
 						.attr('placeholder', '标题(必填)');
+                $('.upload_span').hide();
+                $('.attachment_part').hide();
 			}
 
 			function choose_question() {
@@ -240,6 +260,8 @@
 				$('#new_form_title').find('.question').show();
 				$('#new_form_title').find('input')
 						.attr('placeholder', '标题(必填)');
+                $('.upload_span').hide();
+                $('.attachment_part').hide();
 			}
 
             function choose_attachment() {
@@ -248,6 +270,7 @@
                 $('#new_form_title').find('.attachment').show();
                 $('#new_form_title').find('input').attr('placeholder', '标题(必填)');
                 $('.upload_span').show();
+                $('.attachment_part').show();
             }
 
 			function show_input() {
@@ -297,6 +320,8 @@
 			}
 
 			function submit_check() {
+
+
 				var type = $('input[name=type]:checked').val();
 				var title = $('#new_form_title').find('input').val();
 				var page = parseInt($('#p_new_page').find('.page').html());
@@ -304,10 +329,17 @@
 
 				//服务端检查, 标签可能引起安全问题
 				var rendered = $(editor.previewer).html();
-				if (type == 'question' && !title) {
+				if (!title) {
 					alert('请填写标题。');
 					return false;
 				}
+
+                if (!raw) {
+                    alert('请填写内容。');
+                    return false;
+                }
+
+
 				if (isNaN(page) || page <= 0) {
 					var page_input = $('#p_new_page').find('input');
 					if (page_input.css('display') != 'none') {
@@ -318,14 +350,23 @@
 					}
 					return false;
 				}
+
 				if (!(title.trim()) && !(raw.trim())) {
-					alert('标题和内容不能同时为空。');
+					alert('标题和内容不能为空。');
 					return false;
 				}
+
+                console.log($('.attachment_list').children('.attachment_entity').length);
+                if($('.attachment_list').children('.attachment_entity').length==0)
+                {
+                    alert('还未上传附件。');
+                    return false;
+                }
 
 				$('input[name=page]').val(page);
 				$('input[name=raw]').val(raw);
 				$('input[name=rendered]').val(rendered);
+                set_attachment_list();
 
 				//提交前删除草稿
 				var dir = JSON.parse(localStorage['dir']);
@@ -340,6 +381,24 @@
 			}
 		</script>
 		<!--xx**-->
+
+        <div id="attachment_entity_template">
+        <!-- {hack.e}
+        <div class="attachment_entity">
+            <div class="col-70">
+                <div class="attachment_id" style="display:none;">{attachmentId}</div>
+                <div class="attachment_name" >勘误表.pdf</div>
+            </div>
+            <div class="col-30">
+                <i class="icon-ok-sign attachment_icon" style="float:left"></i>
+            </div>
+
+            <div style="clear: both"></div>
+        </div>
+        {hack.s} -->
+
+        </div>
+
 	</div>
 </body>
 </html>

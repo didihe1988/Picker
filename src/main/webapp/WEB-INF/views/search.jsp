@@ -34,7 +34,7 @@
 						<img src="/static/images/elements/logo.png">
 					</div>
 					<div class="col-65">
-						<span id="go_index"><a data-pjax href="/">Picker</a></span>
+						<span id="go_index"><a data-pjax href="/dynamic/1">Picker</a></span>
 					</div>
 				</div>
 			</div>
@@ -49,9 +49,11 @@
 			</div>
 			<div class="col-25">
 				<div class="row">
+                    <!--
 					<div class="col-33">
 						<span class="nav_link"><a href="#">发现</a></span>
 					</div>
+                    -->
 					<div class="col-33">
 						<span class="nav_link"><a data-pjax href="/group">圈子</a></span>
 					</div>
@@ -64,7 +66,7 @@
 			<div class="col-40">
 				<!--user bar-->
 				<div style="float: right">
-					<a data-pjax href="/user/1234">
+					<a data-pjax href="<c:url value="/user/${curUserId}"/> ">
 						<div id="nav_user">
 							<div id="nav_photo">
 								<img src="/static/images/photo/0.png">
@@ -99,8 +101,16 @@
 					<div class="search_split">
 						<a href="#"><i class="icon-book"></i>相关书籍</a>
 					</div>
-					<div class="row">
-						<c:forEach var="book" items="${bookList}">
+                    <c:set var="bookList" scope="page" value="${bookList}" />
+                    <c:if test="${fn:length(bookList) == 0}">
+                        <div class="search_notice">未查找到相关书籍</div>
+                    </c:if>
+					<!--<div class="row">-->
+
+						<c:forEach var="book" varStatus="num" items="${bookList}">
+                        <c:if test="${num.count%3==1}">
+                            <div class="row">
+                        </c:if>
 							<div class="col-33">
 								<div class="row">
 									<div class="col-25">
@@ -114,93 +124,28 @@
 											<a href="<c:url value="/browse/${book.id}/feeds/1"/>">${book.bookName}</a>
 										</div>
 										<div class="info">
-											作者：<span>[美] ${book.writer} </span>
+											作者：<span>${book.writer} </span>
 										</div>
 										<div class="info">
 											出版：<span>${book.press}</span>
 										</div>
 										<div class="info">
-											年份：<span>2007-9</span>
+											年份：<span>${book.date}</span>
 										</div>
 									</div>
 									<div class="col-5"></div>
 								</div>
 							</div>
+                            <c:if test="${num.count%3==0}">
+                            </div>
+                            </c:if>
 						</c:forEach>
-						<!--
-						<div class="col-33">
-							<div class="row">
-								<div class="col-25">
-									<a href="#"> <img src="/static/images/books/1.jpg">
-									</a>
-								</div>
-								<div class="col-5"></div>
-								<div class="col-65 cover_page">
-									<div class="name" style="margin-bottom: 10px">
-										<a href="#">灿烂千阳</a>
-									</div>
-									<div class="info">
-										作者：<span>[美] 卡勒德·胡赛尼 </span>
-									</div>
-									<div class="info">
-										出版：<span>上海人民出版社</span>
-									</div>
-									<div class="info">
-										年份：<span>2007-9</span>
-									</div>
-								</div>
-								<div class="col-5"></div>
-							</div>
-						</div>
-						<div class="col-34">
-							<div class="row">
-								<div class="col-25">
-									<a href="#"> <img src="/static/images/books/1.jpg">
-									</a>
-								</div>
-								<div class="col-5"></div>
-								<div class="col-65 cover_page">
-									<div class="name" style="margin-bottom: 10px">
-										<a href="#">灿烂千阳</a>
-									</div>
-									<div class="info">
-										作者：<span>[美] 卡勒德·胡赛尼 </span>
-									</div>
-									<div class="info">
-										出版：<span>上海人民出版社</span>
-									</div>
-									<div class="info">
-										年份：<span>2007-9</span>
-									</div>
-								</div>
-								<div class="col-5"></div>
-							</div>
-						</div>
-						<div class="col-33">
-							<div class="row">
-								<div class="col-25">
-									<a href="#"> <img src="/static/images/books/1.jpg">
-									</a>
-								</div>
-								<div class="col-5"></div>
-								<div class="col-65 cover_page">
-									<div class="name" style="margin-bottom: 10px">
-										<a href="#">灿烂千阳</a>
-									</div>
-									<div class="info">
-										作者：<span>[美] 卡勒德·胡赛尼 </span>
-									</div>
-									<div class="info">
-										出版：<span>上海人民出版社</span>
-									</div>
-									<div class="info">
-										年份：<span>2007-9</span>
-									</div>
-								</div>
-								<div class="col-5"></div>
-							</div>
-						</div>-->
-					</div>
+
+
+					<!--</div>-->
+
+
+
 				</div>
 				<!--用户-->
 				<div class="search_part">
@@ -209,6 +154,10 @@
 					</div>
 
 					<div class="row">
+                    <c:set var="userList" scope="page" value="${userList}" />
+                    <c:if test="${fn:length(userList) == 0}">
+                        <div class="search_notice">未查找到相关用户</div>
+                    </c:if>
                         <c:forEach var="user" items="${userList}">
                             <div class="col-33">
                                 <div class="row">
@@ -299,6 +248,10 @@
 					<div class="search_split">
 						<a href="#"><i class="icon-lightbulb"></i>问题 · 笔记 · 附件</a>
 					</div>
+                    <c:set var="feedList" scope="page" value="${feedList}" />
+                    <c:if test="${fn:length(feedList) == 0}">
+                        <div class="search_notice">未查找到相关资源</div>
+                    </c:if>
                      <!--
 					<div class="feeds">
 						<div class="browse_list_meta clear_fix">

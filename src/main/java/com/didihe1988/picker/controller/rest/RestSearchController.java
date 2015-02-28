@@ -135,10 +135,12 @@ public class RestSearchController {
 			list.add(circle.toCircleJson());
 		}
 		return JsonUtils.getJsonObjectString("groups", list);
+		
+		
 	}
 
 	@RequestMapping(value = "/json/search/book/{bookId}/{page}")
-	public String pageSearch(@PathVariable int bookId, @PathVariable int page) {
+	public String pageSearch(@PathVariable int bookId, @PathVariable int page,HttpServletRequest request) {
 		if ((bookId < 1) || (page < 0)) {
 			return Constant.STATUS_INVALID;
 		}
@@ -147,9 +149,14 @@ public class RestSearchController {
 		if ((book == null) || (book.getPages() < page)) {
 			return Constant.STATUS_INVALID;
 		}
+		int secType=Section.CHAPTER;
+		String type = (String) request.getParameter("type");
+		if ((type != null) && (type.equals("section"))) {
+			secType=Section.SECTION;
+		}
 		// get ChapterRange
 		ChapterRange chapterRange = sectionService.getChapterRangeByPage(book,
-				Section.CHAPTER, page);
+				secType, page);
 		List<Feed> feedList = feedService.getFeedListByChapterRange(bookId,
 				chapterRange);
 		List<SearchResult> list = generator.toSearchResults(feedList);

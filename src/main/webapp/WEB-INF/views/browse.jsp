@@ -14,6 +14,8 @@
 	href="/static/lib/fake_bootstrap/fake_bootstrap.css">
 <link type="text/css" rel="stylesheet" charset="UTF-8"
 	href="/static/css/picker.css">
+<link type="text/css" rel="stylesheet" charset="UTF-8"
+    href="/static/css/tinyscrollbar.css">
 
 
 
@@ -23,11 +25,18 @@
 <script src="/static/js/picker.js"></script>
 <script src="/static/js/epiceditor/js/epiceditor.min.js"></script>
 <script src="/static/js/ajaxfileupload.js"></script>
+<script src="/static/js/jquery.tinyscrollbar.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#inv_scrollbar').tinyscrollbar();
+    });
+</script>
 
 </head>
 
 <!--TODO: AJAX取消息-->
-<body onload="choose_content(${book.id},${page})">
+<body>
     <div id="cur_content_type" style="display: none">${type}</div>
 
     <!--为 全部/提问/笔记/附件 提供url定位-->
@@ -44,22 +53,26 @@
 						<img src="/static/images/elements/logo.png">
 					</div>
 					<div class="col-65">
-						<span id="go_index"><a data-pjax href="/">Picker</a></span>
+						<span id="go_index"><a data-pjax href="/dynamic/1">Picker</a></span>
 					</div>
 				</div>
 			</div>
 			<div class="col-22">
 				<div id="search_bar">
 					<!--<i class="icon-search"></i>-->
-					<label for="search" style="display: none">搜索</label> <input
-						type="text" id="search" name="search" placeholder="搜索书、笔记或人...">
+                    <form action="/search" method="get">
+                        <label for="search" style="display: none">搜索</label>
+                        <input type="text" id="search" name="s" placeholder="搜索书、笔记或人...">
+                    </form>
 				</div>
 			</div>
 			<div class="col-25">
 				<div class="row">
+                    <!--
 					<div class="col-33">
 						<span class="nav_link"><a href="#">发现</a></span>
 					</div>
+                    -->
 					<div class="col-33">
 						<span class="nav_link"><a data-pjax href="/group">圈子</a></span>
 					</div>
@@ -72,7 +85,7 @@
 			<div class="col-40">
 				<!--user bar-->
 				<div style="float: right">
-					<a data-pjax href="/user/1234">
+					<a data-pjax href="<c:url value="/user/${curUserId}"/> ">
 						<div id="nav_user">
 							<div id="nav_photo">
 								<img src="/static/images/photo/0.png">
@@ -330,7 +343,7 @@
 						</div>
 					</c:forEach>
 				</div>
-
+                <div class='notice' style='display:none'>所选章节不在当前页</div>
 				<div id="load_next_flag" data-start-page="110" data-end="false"
 					data-lock="false" data-direction="down">
 					<i class="icon-spinner icon-spin"></i>
@@ -380,6 +393,7 @@
 							</div>
 						</div>
 					</div>
+
                     <!--
 					<div class="recommend_list">
 						<div class="title">本书热门推荐</div>
@@ -424,40 +438,36 @@
                     </div>
                     -->
 
-                    <div class="inventory">
-                        <!--
-                        <div class="inv_entity row">
-                            <div class="chapter_title">第5章 向量代数与空间解析几何</div>
-                            <div class="apostrophe">-&nbsp;-&nbsp;</div>
-                            <div class="inv_page">18页</div>
+                    <div class="inventory_switch row" onclick="switch_inventory(${book.id})">
+                        <div class="col-25">
+                            <div class="title">展开目录</div>
                         </div>
-                        <div class="inv_entity row">
-                            <div class="section_title">5.1 向量代数</div>
-                            <div class="apostrophe">-&nbsp;-&nbsp;</div>
-                            <div class="inv_page">18页</div>
+                        <div class="col-75">
+                            <i class="icon-double-angle-down" style="float:left;padding-top:1.5px"></i>
                         </div>
-                        <div class="inv_entity row">
-                            <div class="section_title">5.2 平面与空间直线</div>
-                            <div class="apostrophe">-&nbsp;-&nbsp;</div>
-                            <div class="inv_page" float>26页</div>
-                        </div>
-                        <div class="inv_entity row">
-                            <div class="chapter_title">第6章 多元函数微分学</div>
-                            <div class="apostrophe">-&nbsp;-&nbsp;</div>
-                            <div class="inv_page">27页</div>
-                        </div>
-                        <div class="inv_entity row">
-                            <div class="section_title">6.1 多元函数的基本概念</div>
-                            <div class="apostrophe">-&nbsp;-&nbsp;</div>
-                            <div class="inv_page">27页</div>
-                        </div>
-                        <div class="inv_entity row">
-                            <div class="section_title">6.2 偏导数与全积分</div>
-                            <div class="apostrophe">-&nbsp;-&nbsp;</div>
-                            <div class="inv_page" float>30页</div>
-                        </div>
-                        -->
+
+                        <div style="clear: both"></div>
                     </div>
+
+                    <div id="inv_scrollbar">
+
+                        <div class="scrollbar">
+                            <div class="track">
+                                <div class="thumb">
+                                    <div class="end"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="viewport">
+                            <div class="overview">
+                                <div class="inventory">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
 				</div>
 			</div>
 
@@ -541,7 +551,8 @@
 
 				<div id="text_with_no_picture_template">
 					<div class="browse_brief clear_fix">
-						<!-- {hack.e}
+
+									<!-- {hack.e}
                         <div>
                             <a href="/">
                                 <div class="feed_text">{post.brief}</div>
@@ -553,7 +564,7 @@
 
 				<div id="note_template">
                 <!-- {hack.e}
-                <div class="page" data-page="{post.page}">
+                <div class="page regular_page" data-page="{post.page}">
                     <div class="page_split">
                         <div>
                             <div>Page.{post.page}</div>
@@ -571,9 +582,7 @@
                         </div>
                         {post.brief}
                         <div class="feed_tool_bar">
-                            <div class="line watch" data-action="watch" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-plus"></i>关注问题</div>
-                            <div style="display: none" class="line cancel_watch" data-action="cancel_watch" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-ok"></i>取消关注</div>
-                            <div class="line show_comment" data-action="get_comment" data-url="/note/{post.id}/comments" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
+                            <div class="line show_comment" data-action="get_comment" data-url="/note/{post.id}/comments" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>{post.commentNum}评论</div>
                             <div style="display: none" class="line hide_comment" data-action="hide_comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-double-angle-up"></i>收起评论</div>
                             <span class="time">{post.strDate}</span>
                         </div>
@@ -599,7 +608,7 @@
 
 				<div id="question_template">
                 <!-- {hack.e}
-                <div class="page" data-page="{post.page}">
+                <div class="page regular_page" data-page="{post.page}">
                     <div class="page_split">
                         <div>
                             <div>Page.{post.page}</div>
@@ -609,7 +618,7 @@
 
                         <div class="browse_list_meta clear_fix">
                             <div class="title">
-                                <a href="#">{post.title}</a>
+                                <a href="/detail/{post.id}">{post.title}</a>
                             </div>
                             <div class="photo">
                                 <img src="{post.userAvatarUrl}">
@@ -619,9 +628,9 @@
                         <div class="feed_tool_bar">
                             <div class="line watch" data-action="watch" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-plus"></i>关注问题</div>
                             <div style="display: none" class="line cancel_watch" data-action="cancel_watch" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-ok"></i>取消关注</div>
-                            <div class="line show_comment" data-action="get_comment" data-url="/question/{post.id}/comments" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
+                            <div class="line show_comment" data-action="get_comment" data-url="/question/{post.id}/comments" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>{post.commentNum}条评论</div>
                             <div style="display: none" class="line hide_comment" data-action="hide_comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-double-angle-up"></i>收起评论</div>
-                            <div class="line" data-action="show_all_answer" data-passage-id="{post.id}"><i class="icon-lightbulb" onclick="tool_bar_action($(this))"></i>2个回答</div>
+                            <div class="line" data-action="show_all_answer" data-passage-id="{post.id}"><i class="icon-lightbulb" onclick="tool_bar_action($(this))"></i>{post.answerNum}个回答</div>
                             <span class="time">{post.strDate}</span>
                         </div>
                         <div style="clear: both"></div>
@@ -647,7 +656,7 @@
                 <div id="attachment_template">
 
                     <!-- {hack.e}
-                    <div class="page" data-page="{post.page}">
+                    <div class="page regular_page" data-page="{post.page}">
                          <div class="page_split">
                             <div>
                                 <div>Page.{post.page}</div>
@@ -655,7 +664,7 @@
                          </div>
                         <div class="feeds">
                             <div class="browse_list_meta clear_fix">
-                                <div class="title">
+                                <div class="title attachment_title">
                                     <i class="icon-paper-clip"></i>{post.title}
                                 </div>
                                 <div class="photo">
@@ -664,7 +673,7 @@
                             </div>
                             {post.detail}
                             <div class="feed_tool_bar">
-                                <div class="line show_comment" data-action="get_comment" data-url="/attachment/{post.id}/comments" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>32条评论</div>
+                                <div class="line show_comment" data-action="get_comment" data-url="/attachment/{post.id}/comments" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-comments-alt"></i>{post.commentNum}条评论</div>
                                 <div style="display: none" class="line hide_comment" data-action="hide_comment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-double-angle-up"></i>收起评论</div>
                                 <div class="line show_attachment" data-action="get_attachment" data-url="/json/attachment_feed/{post.id}/atts" data-passage-id="{post.id}" onclick="tool_bar_action($(this))">查看附件</div>
                                 <div style="display: none" class="line hide_attachment" data-action="hide_attachment" data-passage-id="{post.id}" onclick="tool_bar_action($(this))"><i class="icon-double-angle-up"></i>收起附件</div>
@@ -698,9 +707,9 @@
 
 
 
-
+                <!--
 				<div id="page_template">
-					<div class="page" data-page="{req.page}">
+					<div class="page " data-page="{req.page}">
 						<div class="page_split">
 							<div>
 								<div>Page.{req.page}</div>
@@ -709,6 +718,7 @@
 						{req.feeds}
 					</div>
 				</div>
+                -->
 
                 <div id="pagination_template">
                     <div style="text-align: center">
@@ -723,21 +733,23 @@
                 </div>
 
                 <div id="section_template">
-                    <div class="inv_entity row">
+                    <div class="inv_entity row" onclick="inventory_jump($(this))">
                         <!-- {hack.e}
                         <div class="section_title">{section.num}&nbsp;{section.name}</div>
                         <div class="apostrophe">-&nbsp;-&nbsp;</div>
-                        <div class="inv_page">{section.startPage}</div>
+                        <div class="inv_start_page">{section.startPage}</div>
+                        <div class="inv_end_page" style="display:none;">{section.endPage}</div>
                         {hack.s} -->
                     </div>
                 </div>
 
                 <div id="chapter_template">
-                    <div class="inv_entity row">
+                    <div class="inv_entity row" onclick="inventory_jump($(this))">
                         <!-- {hack.e}
                         <div class="chapter_title">{section.num}&nbsp;{section.name}</div>
                         <div class="apostrophe">-&nbsp;-&nbsp;</div>
-                        <div class="inv_page">{section.startPage}</div>
+                        <div class="inv_start_page">{section.startPage}</div>
+                        <div class="inv_end_page" style="display:none;">{section.endPage}</div>
                         {hack.s} -->
                     </div>
                 </div>
@@ -756,11 +768,14 @@
                 {hack.s} -->
 
                 </div>
+
+
 			</div>
 		</div>
 
 		<script>
 			browse_page_change_init();
+            choose_content(${book.id},${page});
 		</script>
 		<!--xx**-->
 	</div>

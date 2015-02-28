@@ -270,11 +270,12 @@ public class Feed implements Serializable, SearchModel {
 	}
 
 	private static int toType(String formType) {
-		int type = Feed.TYPE_NOTE;
 		if (formType.equals("question")) {
-			type = Feed.TYPE_QUESTION;
+			return Feed.TYPE_QUESTION;
+		} else if (formType.equals("note")) {
+			return Feed.TYPE_NOTE;
 		}
-		return type;
+		return Feed.TYPE_ATTACHMENT_FEED;
 	}
 
 	/*

@@ -1,6 +1,8 @@
 package com.didihe1988.picker.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
+import com.didihe1988.picker.model.Attachment;
 import com.didihe1988.picker.model.Book;
 import com.didihe1988.picker.model.Feed;
 import com.didihe1988.picker.model.Message;
@@ -24,6 +27,7 @@ import com.didihe1988.picker.model.display.FeedDp;
 import com.didihe1988.picker.model.display.UserDp;
 import com.didihe1988.picker.model.form.FeedForm;
 import com.didihe1988.picker.service.AnswerService;
+import com.didihe1988.picker.service.AttachmentService;
 import com.didihe1988.picker.service.BookService;
 import com.didihe1988.picker.service.FeedService;
 import com.didihe1988.picker.service.MessageService;
@@ -52,6 +56,9 @@ public class DetailController {
 
 	@Autowired
 	private RelatedImageService relatedImageService;
+
+	@Autowired
+	private AttachmentService attachmentService;
 
 	@RequestMapping(value = "/detail/{id}")
 	public String question(@PathVariable int id, Model model,
@@ -113,16 +120,77 @@ public class DetailController {
 		int status = feedService.addFeed(feed);
 
 		if (status == Status.SUCCESS) {
-			addFeedMessage(feed, request);
-			addFeedImage(feed);
+			// 一会儿再改、添加附件的消息
+			// addFeedMessage(feed, request);
+			// addFeedImage(feed);
+		}
+		if (status == Status.SUCCESS) {
+			if(feedForm.getType().equals("attachment"))
+			{
+				bindAttachment(toAttachmentIdList(feedForm.getAttachmentIds()),
+						bookId, feedService.getLatestFeedByBookId(bookId,
+								Feed.TYPE_ATTACHMENT_FEED));
+			}
+		
 		}
 		try {
-			response.sendRedirect("/browse/" + bookId + "/"
-					+ feedForm.getPage());
+			response.sendRedirect("/browse/" + bookId + "/feeds/1");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return "error";
+	}
+
+	private List<Integer> toAttachmentIdList(String attachmentIds) {
+		List<Integer> list = new ArrayList<Integer>();
+		String[] ids = attachmentIds.split("\\.");
+		for (String id : ids) {
+			try {
+				list.add(Integer.parseInt(id));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+		return list;
+	}
+
+	private void bindAttachment(List<Integer> attachmentIds, int bookId,
+			int attFeedId) {
+		for (int id : attachmentIds) {
+			Attachment attachment = attachmentService.getAttachmentById(id);
+			if (attachment == null) {
+				// 需要报错还是怎样？
+				break;
+			}
+			// uplate
+			attachment.setaFeedId(attFeedId);
+			attachment.setPath("/resources/attachment/book/" + bookId + "/"
+					+ attachment.getName());
+			attachmentService.updateAttachment(attachment);
+			// move file
+			moveAttachmentFile(bookId, attachment.getName());
+
+		}
+	}
+
+	private void moveAttachmentFile(int bookId, String fileName) {
+		String dirString = Constant.ROOTDIR + "attachment/book/" + bookId + "/";
+		File dir = new File(dirString);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		File oldFile = new File(Constant.ROOTDIR + "tmp/attachment/" + fileName);
+		if (!oldFile.exists()) {
+			return;
+		}
+		try {
+			oldFile.renameTo(new File(dirString + fileName));
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
 	}
 
 	private void addFeedMessage(Feed feed, HttpServletRequest request) {

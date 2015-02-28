@@ -33,7 +33,7 @@
 						<img src="/static/images/elements/logo.png">
 					</div>
 					<div class="col-65">
-						<span id="go_index"><a data-pjax href="/">Picker</a></span>
+						<span id="go_index"><a data-pjax href="/dynamic/1">Picker</a></span>
 					</div>
 				</div>
 			</div>
@@ -48,9 +48,11 @@
 			</div>
 			<div class="col-25">
 				<div class="row">
+                    <!--
 					<div class="col-33">
 						<span class="nav_link"><a href="#">发现</a></span>
 					</div>
+                    -->
 					<div class="col-33">
 						<span class="nav_link"><a data-pjax href="/group">圈子</a></span>
 					</div>
@@ -63,7 +65,7 @@
 			<div class="col-40">
 				<!--user bar-->
 				<div style="float: right">
-					<a data-pjax href="/user/1234">
+					<a data-pjax href="<c:url value="/user/${curUserId}"/> ">
 						<div id="nav_user">
 							<div id="nav_photo">
 								<img src="/static/images/photo/0.png">

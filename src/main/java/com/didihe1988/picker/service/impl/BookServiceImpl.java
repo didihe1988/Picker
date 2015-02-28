@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.didihe1988.picker.common.Constant;
 import com.didihe1988.picker.common.Status;
 import com.didihe1988.picker.dao.BookDao;
 import com.didihe1988.picker.model.Book;
@@ -102,7 +103,7 @@ public class BookServiceImpl implements BookService {
 		if (getBookById(id) == null) {
 			return Status.NOT_EXISTS;
 		}
-		int status = bookDao.decrementQuestionNum(id);
+		int status = bookDao.decrementNum(Constant.QUESTION_NUM, id);
 		// 这个应该怎样判断返回
 		return Status.SUCCESS;
 	}
