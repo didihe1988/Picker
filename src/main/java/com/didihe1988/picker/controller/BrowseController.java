@@ -148,13 +148,6 @@ public class BrowseController {
 		Book book = bookService.getBookById(bookId);
 
 		Gson gson = new Gson();
-		/*
-		 * JSONObject jsonObject = new JSONObject();
-		 * 
-		 * jsonObject.put("page", 0); jsonObject.put("end", "false");
-		 * jsonObject.put("status", "success"); jsonObject.put("book",
-		 * gson.toJson(getBookJson(book))); return jsonObject.toString();
-		 */
 		return gson.toJson(getBookJson(book));
 	}
 
@@ -165,7 +158,7 @@ public class BrowseController {
 				book.getWriter(),
 				book.getPress(),
 				book.getDate(),
-				"  本书赢得了全球程序员的广泛赞誉，即使是最晦涩的概念，在Bruce Eckel的文字亲和力和小而直接的编程示例面前也会化解于无形。从Java的基础语法到最高级特性（深入的面向对象概念、多线程、自动项目构建、单元测试和调试等），本书都能逐步指导你轻松掌握。\n  从本书获得的各项大奖以及来自世界各地的读者评论中，不难看出这是一本经典之作。本书的作者拥有多年教学经验，对C、C++以及Java语言都有独到、深入的见解，以通俗易懂及小而直接的示例解释了一个个晦涩抽象的概念。本书共22章，包括操作符、控制执行流程、访问权限控制、复用类、多态、接口、通过异常处理错误、字符串、泛型、数组、容器深入研究、Java I/O系统、枚举类型、并发以及图形化用户界面等内容。这些丰富的内容，包含了Java语言基础语法以及高级特性，适合各个层次的Java程序员阅读，同时也是高等院校讲授面向对象程序设计语言以及Java语言的绝佳教材和参考书。\n第4版特点：\n适合初学者与专业人员的经典的面向对象叙述方式，为更新的Java SE5/6增加了新的示例和章节。");
+				"暂无简介");
 	}
 
 }

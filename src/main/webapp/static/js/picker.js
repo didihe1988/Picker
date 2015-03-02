@@ -1386,17 +1386,13 @@ function inventory_jump(entity) {
         $('.notice').text("所选章节不在当前页");
         $('.notice').fadeIn().delay(300).fadeOut(50);
     }
-    else
-    {
-        var pages=$('.regular_page');
-        for(var i=0;i<pages.length;i++)
-        {
-            if($(pages[i]).data('page')>=inv_start_page)
-            {
+    else {
+        var pages = $('.regular_page');
+        for (var i = 0; i < pages.length; i++) {
+            if ($(pages[i]).data('page') >= inv_start_page) {
                 //加上导航条距离
-                $("html,body").scrollTop($(pages[i]).offset().top-50);
-                if($(pages[i]).data('page')>entity.children('.inv_end_page').text())
-                {
+                $("html,body").scrollTop($(pages[i]).offset().top - 50);
+                if ($(pages[i]).data('page') > entity.children('.inv_end_page').text()) {
                     $('.notice').text("没有该章节资源，已跳转到临近章节");
                     $('.notice').fadeIn().delay(300).fadeOut(50);
                 }
@@ -1406,4 +1402,34 @@ function inventory_jump(entity) {
         }
     }
 
+}
+
+//browse.jsp
+function load_page_cover(book_id) {
+    $.ajax({
+        url: '/page/' + book_id + '/0',
+        type: 'get',
+        success: function (req) {
+            if (req.status == 'success') {
+                if (req.page == '0') {
+                    var new_dom = $(nano_template($('#cover_page_template')
+                        .html(), {
+                        book: req.book
+                    }));
+
+                    $('#pages_container').prepend(new_dom);
+                    /*
+                    //保持目前窗口不移动. 20是flag_dom的上下margin
+                    $(window).scrollTop(
+                            $(window).scrollTop() + new_dom.height()
+                            - flag_dom.height() - 20);*/
+                }
+
+            } else
+                error_handle(req);
+        },
+        error: function (req) {
+            error_handle(req);
+        }
+    });
 }

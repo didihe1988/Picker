@@ -14,8 +14,7 @@
 	href="/static/lib/fake_bootstrap/fake_bootstrap.css">
 <link type="text/css" rel="stylesheet" charset="UTF-8"
 	href="/static/css/picker.css">
-<link type="text/css" rel="stylesheet" charset="UTF-8"
-    href="/static/css/tinyscrollbar.css">
+
 
 
 
@@ -25,13 +24,7 @@
 <script src="/static/js/picker.js"></script>
 <script src="/static/js/epiceditor/js/epiceditor.min.js"></script>
 <script src="/static/js/ajaxfileupload.js"></script>
-<script src="/static/js/jquery.tinyscrollbar.min.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#inv_scrollbar').tinyscrollbar();
-    });
-</script>
 
 </head>
 
@@ -381,16 +374,21 @@
                             <div id="attachment_content" data-filter="attachment" onclick="switch_content($(this),${book.id})">附件</div>
 						</div>
 						<div class="col-69 action">
+                            <div>
+                                <a onclick=" load_page($('#load_previous_flag'))"><i class="icon-book"></i>书籍信息</a>
+                            </div>
 							<div>
                                 <a data-pjax href="#" onclick="set_create_new_feed_url($(this),${book.id})">
                                 <i class="icon-pencil"></i>添加内容</a>
 							</div>
+                            <!--
 							<div>
 								<a href="#"><i class="icon-hand-right"></i>页数跳转</a>
 							</div>
 							<div>
 								<a href="#"><i class="icon-filter"></i>筛选内容</a>
 							</div>
+                            -->
 						</div>
 					</div>
 
@@ -449,24 +447,6 @@
                         <div style="clear: both"></div>
                     </div>
 
-                    <div id="inv_scrollbar">
-
-                        <div class="scrollbar">
-                            <div class="track">
-                                <div class="thumb">
-                                    <div class="end"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="viewport">
-                            <div class="overview">
-                                <div class="inventory">
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
 
 				</div>
 			</div>
