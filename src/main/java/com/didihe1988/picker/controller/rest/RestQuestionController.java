@@ -279,8 +279,6 @@ public class RestQuestionController implements FavoriteController {
 		/*
 		 * XXX赞了您的问题
 		 */
-		// String curUserName =
-		// userService.getUserById(curUserId).getUsername();
 		User producer = userService.getUserById(curUserId);
 		Feed feed = feedService.getFeedById(feedId);
 		String relatedSourceContent = StringUtils.confineStringLength(

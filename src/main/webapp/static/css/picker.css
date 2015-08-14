@@ -2405,3 +2405,29 @@ img.user{
     padding-left: 2px;
 }
 
+.attachments{
+    display: none;
+    margin-top: 15px;
+    border: 1px solid #eeeeee;
+    border-radius: 5px;
+}
+
+.attachment{
+    padding: 10px;
+    /*overflow: hidden;*/
+
+}
+
+.attachment_border{
+    border-bottom: 1px solid #eeeeee;
+}
+
+.attachment img{
+    width: 42px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.attachment > div{
+    float: left;
+}

@@ -675,8 +675,8 @@
                             </div>
 
                             <div style="clear: both"></div>
-                            <div class="attachments clear_fix">
-                                <div class="attachments_list"></div>
+                            <div class="attachments clear_fix" style="display:block;">
+                                <div class="attachments_list" style="display:block;"></div>
                             </div>
 
                         </div>
